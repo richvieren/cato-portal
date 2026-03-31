@@ -39,7 +39,7 @@ function renderBlueprintCard(state, grant) {
     locked: {
       status: '',
       ctaText: 'Get your reading',
-      ctaHref: 'https://catovermeulen.com/blueprint',
+      ctaHref: 'https://catovermeulen.com/category-of-one',
     },
     intake: {
       status: 'Complete your details to begin',
