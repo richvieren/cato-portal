@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cato Vermeulen — Client Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js"></script>
+  <script src="db.js"></script>
+  <script src="dashboard.js"></script>
+</head>
+<body>
+
+  <!-- ── Login screen ──────────────────────────────────── -->
+  <div id="login-screen" class="page-center" style="display:none">
+    <div class="login-wrap">
+      <h1>Cato Vermeulen</h1>
+      <p>Client Portal</p>
+
+      <div id="login-form">
+        <input type="email" id="email-input" placeholder="Your email address" autocomplete="email">
+        <button class="btn btn-primary" id="send-link-btn" onclick="handleSendLink()">Send access link</button>
+        <div class="error-msg" id="login-error"></div>
+      </div>
+
+      <div id="login-sent" class="login-sent" style="display:none">
+        <p>Check your inbox.</p>
+        <p style="margin-top:0.8rem;color:var(--stone);font-size:0.85rem">
+          We've sent a login link to your email.<br>Click it to enter your portal.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Dashboard ─────────────────────────────────────── -->
+  <div id="dashboard-screen" class="container" style="display:none">
+    <div class="dashboard-header">
+      <h1>Your Portal</h1>
+      <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card" id="blueprint-card">
+        <div class="card-label">Blueprint Reading</div>
+        <h2>Category of One</h2>
+        <div class="card-status">Loading...</div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Course</div>
+        <h2>Coming Soon</h2>
+        <div class="card-status"></div>
+        <a href="https://catovermeulen.com" class="card-cta">Learn more</a>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Mini Reading</div>
+        <h2>Coming Soon</h2>
+        <div class="card-status"></div>
+        <a href="https://catovermeulen.com" class="card-cta">Learn more</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.SUPABASE_URL = 'SUPABASE_PLACEHOLDER';
+
+    async function init() {
+      const session = await getSession();
+      if (!session) {
+        document.getElementById('login-screen').style.display = 'flex';
+        return;
+      }
+      await loadDashboard(session);
+    }
+
+    async function loadDashboard(session) {
+      document.getElementById('dashboard-screen').style.display = 'block';
+      const grant = await getBlueprintGrant();
+      const profile = await getProfile();
+      const state = blueprintState(grant, profile);
+      renderBlueprintCard(state, grant);
+    }
+
+    async function handleSendLink() {
+      const email = document.getElementById('email-input').value.trim();
+      const errEl = document.getElementById('login-error');
+      const btn = document.getElementById('send-link-btn');
+      errEl.textContent = '';
+
+      if (!email) { errEl.textContent = 'Enter your email address.'; return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      const { error } = await sendMagicLink(email);
+
+      if (error) {
+        errEl.textContent = error.message || 'Something went wrong. Try again.';
+        btn.disabled = false;
+        btn.textContent = 'Send access link';
+      } else {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('login-sent').style.display = 'block';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
