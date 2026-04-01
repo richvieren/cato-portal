@@ -37,10 +37,21 @@ async function sendWelcomeEmail(email: string, magicLink: string): Promise<void>
       to: email,
       subject: 'Your Blueprint Portal Access',
       html: `
-        <p>Hi,</p>
-        <p>Your Category of One Blueprint is on its way.</p>
-        <p>Click the link below to access your portal and complete your birth details so Cato can begin your reading:</p>
-        <p><a href="${magicLink}" style="color:#9F8261">Enter your portal →</a></p>
+        <p>Your payment went through. Here is what happens next.</p>
+
+        <p><strong>Step 1 — Enter your portal</strong><br>
+        Click the link below. It takes you straight in.<br>
+        <a href="${magicLink}" style="color:#9F8261">Enter your portal →</a></p>
+
+        <p><strong>Step 2 — Fill in your details</strong><br>
+        Your reading is built on your birth data and your business context. Take 5 minutes to fill in the form accurately. The quality of the reading depends on it.</p>
+
+        <p><strong>Step 3 — Your reading is prepared</strong><br>
+        Once you've submitted, Cato gets to work. Your Blueprint will be ready within 24 hours.</p>
+
+        <p><strong>Step 4 — Download your Blueprint</strong><br>
+        You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+
         <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Blueprint, you can ignore this email.</p>
         <p>— Cato</p>
       `
