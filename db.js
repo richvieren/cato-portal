@@ -11,6 +11,7 @@ async function getMiniReadingGrant() {
     .select('id, available_at, granted_at')
     .eq('product', 'mini_reading')
     .is('revoked_at', null)
+    .limit(1)
     .maybeSingle();
   if (error) { console.error('getMiniReadingGrant error:', error); return null; }
   return data;
@@ -74,6 +75,7 @@ async function getBlueprintGrant() {
     .select('id, available_at, granted_at')
     .eq('product', 'blueprint')
     .is('revoked_at', null)
+    .limit(1)
     .maybeSingle();
   if (error) { console.error('getBlueprintGrant error:', error); return null; }
   return data;
@@ -102,6 +104,7 @@ async function getCourseGrant() {
     .select('id, granted_at')
     .eq('product', 'course')
     .is('revoked_at', null)
+    .limit(1)
     .maybeSingle();
   if (error) { console.error('getCourseGrant error:', error); return null; }
   return data;
