@@ -127,7 +127,7 @@ function renderCourseCard(state) {
 
   card.innerHTML = `
     <div class="card-label">Introduction Course</div>
-    <h2>Astrology Business Reading</h2>
+    <h2>Introduction Course</h2>
     <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
     ${c.ctaText
       ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
