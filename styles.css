@@ -169,6 +169,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .sign-out-btn:hover { color: var(--mist); }
 
+.header-right {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+}
+
+.user-email {
+  font-size: 0.75rem;
+  color: var(--stone);
+  letter-spacing: 0.02em;
+}
+
 /* ── Product cards ───────────────────────────────────── */
 
 .cards-grid {
