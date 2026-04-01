@@ -119,7 +119,11 @@
 
       if (state === 'pending') {
         document.getElementById('pending-view').style.display = 'block';
-        startCountdown(grant.available_at);
+        if (grant.available_at) {
+          startCountdown(grant.available_at);
+        } else {
+          document.getElementById('countdown-display').textContent = '–';
+        }
         return;
       }
 
