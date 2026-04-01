@@ -171,7 +171,7 @@
     <h1 class="w-title">Read the Chart.<br>Scale the <em>Business.</em></h1>
     <p class="w-sub">A 6-module introduction for coaches who want to learn astrology business readings — from the 12 archetypes through planets, houses, personal branding, and soul purpose.</p>
     <button class="w-cta" onclick="enterCourse()">Begin the Introduction Course →</button>
-    <div id="init-error" style="margin-top:1.5rem;color:#e07070;font-size:0.85rem;font-family:monospace;"></div>
+
     <div class="w-div"></div>
     <div class="mod-grid">
       <div class="mod-card">
@@ -1078,16 +1078,10 @@ function enterCourse() {
 
 async function init() {
   const session = await getSession();
-  if (!session) {
-    document.getElementById('init-error').textContent = 'ERROR: No session — not logged in.';
-    return;
-  }
+  if (!session) { window.location.href = 'index.html'; return; }
 
   const grant = await getCourseGrant();
-  if (!grant) {
-    document.getElementById('init-error').textContent = 'ERROR: No course grant found for ' + session.user.email;
-    return;
-  }
+  if (!grant) { window.location.href = 'index.html'; return; }
 
   completed = await getCourseProgress();
   buildNav();
