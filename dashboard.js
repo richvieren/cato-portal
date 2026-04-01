@@ -1,7 +1,7 @@
-// dashboard.js — Blueprint card state logic
+// dashboard.js — Reading card state logic
 
 /**
- * Determine blueprint card state.
+ * Determine reading card state.
  *
  * locked   — no grant row
  * intake   — grant exists, profile not yet submitted
@@ -16,6 +16,9 @@ function blueprintState(grant, profile) {
   if (Date.now() < available.getTime()) return 'pending';
   return 'ready';
 }
+
+// Alias — same logic works for mini reading
+const miniReadingState = blueprintState;
 
 /**
  * Format countdown: "Xh Ym"
@@ -88,4 +91,46 @@ function renderBlueprintCard(state, grant) {
       }
     }, 60000);
   }
+}
+
+/**
+ * Render the Mini Business Reading card into #mini-reading-card.
+ */
+function renderMiniReadingCard(state, grant) {
+  const card = document.getElementById('mini-reading-card');
+  if (!card) return;
+
+  const configs = {
+    locked: {
+      status: '',
+      ctaText: 'Get your reading',
+      ctaHref: 'https://catovermeulen.com',
+    },
+    intake: {
+      status: 'Complete your details to begin',
+      ctaText: 'Complete your details →',
+      ctaHref: 'mini-reading.html',
+    },
+    pending: {
+      status: 'Your reading is being prepared',
+      ctaText: null,
+      ctaHref: null,
+    },
+    ready: {
+      status: 'Your reading is ready',
+      ctaText: 'View reading →',
+      ctaHref: 'mini-reading.html',
+    },
+  };
+
+  const c = configs[state];
+
+  card.innerHTML = `
+    <div class="card-label">Mini Reading</div>
+    <h2>Mini Business Reading</h2>
+    <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
+    ${c.ctaText
+      ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
+      : ''}
+  `;
 }

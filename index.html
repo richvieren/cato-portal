@@ -54,11 +54,10 @@
         <a href="https://catovermeulen.com" class="card-cta">Learn more</a>
       </div>
 
-      <div class="card">
+      <div class="card" id="mini-reading-card">
         <div class="card-label">Mini Reading</div>
-        <h2>Coming Soon</h2>
-        <div class="card-status"></div>
-        <a href="https://catovermeulen.com" class="card-cta">Learn more</a>
+        <h2>Mini Business Reading</h2>
+        <div class="card-status">Loading...</div>
       </div>
     </div>
   </div>
@@ -77,10 +76,13 @@
 
     async function loadDashboard(session) {
       document.getElementById('dashboard-screen').style.display = 'block';
-      const grant = await getBlueprintGrant();
-      const profile = await getProfile();
-      const state = blueprintState(grant, profile);
-      renderBlueprintCard(state, grant);
+      const [grant, miniGrant, profile] = await Promise.all([
+        getBlueprintGrant(),
+        getMiniReadingGrant(),
+        getProfile(),
+      ]);
+      renderBlueprintCard(blueprintState(grant, profile), grant);
+      renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant);
     }
 
     async function handleSendLink() {

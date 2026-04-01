@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mini Business Reading — Cato Vermeulen</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js"></script>
+  <script src="db.js"></script>
+  <script src="dashboard.js"></script>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to portal</a>
+
+    <div class="blueprint-wrap">
+
+      <!-- Intake view -->
+      <div id="intake-view" style="display:none">
+        <h1>Mini Business Reading</h1>
+        <p class="subtitle">Enter your birth details so Cato can prepare your reading.</p>
+
+        <form id="intake-form" onsubmit="handleIntakeSubmit(event)">
+          <div class="field-group">
+            <label class="field-label" for="full-name">Full name</label>
+            <input type="text" id="full-name" placeholder="Your full name" required>
+          </div>
+
+          <div class="two-col">
+            <div class="field-group">
+              <label class="field-label" for="dob">Date of birth</label>
+              <input type="date" id="dob" required>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="tob">Time of birth</label>
+              <input type="time" id="tob">
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field-group">
+              <label class="field-label" for="city">City of birth</label>
+              <input type="text" id="city" placeholder="e.g. Amsterdam" required>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="country">Country</label>
+              <input type="text" id="country" placeholder="e.g. Netherlands" required>
+            </div>
+          </div>
+
+          <div class="error-msg" id="intake-error"></div>
+          <button type="submit" class="btn btn-primary" id="submit-btn" style="margin-top:1rem">
+            Submit details
+          </button>
+        </form>
+      </div>
+
+      <!-- Pending view -->
+      <div id="pending-view" style="display:none">
+        <h1>Mini Business Reading</h1>
+        <p class="subtitle">Your reading is being prepared.</p>
+      </div>
+
+      <!-- Ready view -->
+      <div id="ready-view" style="display:none">
+        <h1>Mini Business Reading</h1>
+        <p class="subtitle">Your reading is ready.</p>
+        <p style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem">
+          Your Mini Business Reading is ready to download.
+        </p>
+        <a id="download-btn" class="btn btn-primary" style="display:none">Download your reading</a>
+        <p id="download-loading" style="color:var(--stone);font-size:0.85rem">Loading your file...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
+
+    async function init() {
+      const session = await getSession();
+      if (!session) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const grant = await getMiniReadingGrant();
+      const profile = await getProfile();
+      const state = miniReadingState(grant, profile);
+
+      if (state === 'locked') {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      if (state === 'intake') {
+        document.getElementById('intake-view').style.display = 'block';
+        return;
+      }
+
+      if (state === 'pending') {
+        document.getElementById('pending-view').style.display = 'block';
+        return;
+      }
+
+      // Ready — show download button
+      document.getElementById('ready-view').style.display = 'block';
+      await loadDownloadButton(session.user.email);
+    }
+
+    async function loadDownloadButton(email) {
+      const encodedEmail = email.replace('@', '%40');
+      const { data, error } = await window.sb.storage
+        .from('blueprints')
+        .createSignedUrl(encodedEmail + '/mini_reading.pdf', 3600);
+
+      const loadingEl = document.getElementById('download-loading');
+      const btnEl = document.getElementById('download-btn');
+
+      if (error || !data) {
+        loadingEl.textContent = 'Your reading is being finalised. Check back shortly.';
+        return;
+      }
+
+      loadingEl.style.display = 'none';
+      btnEl.href = data.signedUrl;
+      btnEl.download = 'Mini-Business-Reading.pdf';
+      btnEl.style.display = 'inline-block';
+    }
+
+    async function handleIntakeSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const errEl = document.getElementById('intake-error');
+      errEl.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const { data: { session } } = await window.sb.auth.getSession();
+
+      const { error } = await submitMiniIntake(session.user.id, {
+        email: session.user.email,
+        full_name: document.getElementById('full-name').value.trim(),
+        dob: document.getElementById('dob').value,
+        tob: document.getElementById('tob').value || null,
+        city: document.getElementById('city').value.trim(),
+        country: document.getElementById('country').value.trim(),
+      });
+
+      if (error) {
+        errEl.textContent = typeof error === 'string' ? error : 'Something went wrong. Try again.';
+        btn.disabled = false;
+        btn.textContent = 'Submit details';
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

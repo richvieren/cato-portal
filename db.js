@@ -2,6 +2,69 @@
 // Depends on window.sb from auth.js
 
 /**
+ * Fetch Mini Business Reading access grant for current user.
+ * Returns grant row or null.
+ */
+async function getMiniReadingGrant() {
+  const { data, error } = await window.sb
+    .from('access_grants')
+    .select('id, available_at, granted_at')
+    .eq('product', 'mini_reading')
+    .is('revoked_at', null)
+    .maybeSingle();
+  if (error) { console.error('getMiniReadingGrant error:', error); return null; }
+  return data;
+}
+
+/**
+ * Submit mini reading intake: upsert profile (birth data only) + set available_at + trigger pipeline.
+ * Returns { error } or {}.
+ */
+async function submitMiniIntake(userId, fields) {
+  // 1. Upsert profile (birth data only)
+  const { error: profileErr } = await window.sb
+    .from('profiles')
+    .upsert({
+      id: userId,
+      email: fields.email,
+      full_name: fields.full_name,
+      dob: fields.dob,
+      tob: fields.tob || null,
+      city: fields.city,
+      country: fields.country,
+      submitted_at: new Date().toISOString(),
+    }, { onConflict: 'id' });
+  if (profileErr) return { error: profileErr };
+
+  // 2. Set available_at immediately via Edge Function
+  const { data: { session } } = await window.sb.auth.getSession();
+  const res = await fetch(
+    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({ product: 'mini_reading' }),
+    }
+  );
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    return { error: body.error || 'Failed to set available_at' };
+  }
+
+  // 3. Trigger VPS pipeline
+  await fetch('https://api.catovermeulen.com/mini-reading-portal', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  }).catch(err => console.error('Mini reading pipeline trigger failed:', err));
+
+  return {};
+}
+
+/**
  * Fetch Blueprint access grant for current user.
  * Returns grant row or null.
  */
