@@ -133,9 +133,10 @@
     }
 
     async function loadDownloadButton(email) {
+      const encodedEmail = email.replace('@', '%40');
       const { data, error } = await window.sb.storage
         .from('blueprints')
-        .createSignedUrl(email + '/blueprint.pdf', 3600);
+        .createSignedUrl(encodedEmail + '/blueprint.pdf', 3600);
 
       const loadingEl = document.getElementById('download-loading');
       const btnEl = document.getElementById('download-btn');
