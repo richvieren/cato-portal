@@ -112,9 +112,9 @@ function renderCourseCard(state) {
 
   const configs = {
     locked: {
-      status: '',
-      ctaText: 'Get the course',
-      ctaHref: 'https://catovermeulen.com',
+      status: 'Not yet unlocked',
+      ctaText: null,
+      ctaHref: null,
     },
     ready: {
       status: 'You have access',
