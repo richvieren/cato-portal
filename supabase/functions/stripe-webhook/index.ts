@@ -25,7 +25,71 @@ async function generateMagicLink(email: string): Promise<string> {
   return data.properties.action_link;
 }
 
-async function sendWelcomeEmail(email: string, magicLink: string): Promise<void> {
+const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html: string }> = {
+  blueprint: (link) => ({
+    subject: 'Your Blueprint Portal Access',
+    html: `
+      <p>Your payment went through. Here is what happens next.</p>
+
+      <p><strong>Step 1 — Enter your portal</strong><br>
+      Click the link below. It takes you straight in.<br>
+      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+
+      <p><strong>Step 2 — Fill in your details</strong><br>
+      Your reading is built on your birth data and your business context. Take 5 minutes to fill in the form accurately. The quality of the reading depends on it.</p>
+
+      <p><strong>Step 3 — Your reading is prepared</strong><br>
+      Once you've submitted, Cato gets to work. Your Blueprint will be ready within 24 hours.</p>
+
+      <p><strong>Step 4 — Download your Blueprint</strong><br>
+      You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+
+      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Blueprint, you can ignore this email.</p>
+      <p>— Cato</p>
+    `,
+  }),
+
+  mini_reading: (link) => ({
+    subject: 'Your Mini Business Reading Access',
+    html: `
+      <p>Your payment went through. Here is what happens next.</p>
+
+      <p><strong>Step 1 — Enter your portal</strong><br>
+      Click the link below. It takes you straight in.<br>
+      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+
+      <p><strong>Step 2 — Fill in your birth details</strong><br>
+      Your reading is built on your natal chart. Take a moment to fill in your birth date, time, and place accurately.</p>
+
+      <p><strong>Step 3 — Your reading is ready</strong><br>
+      Once you've submitted, your Mini Business Reading is generated immediately. You'll find it waiting in your portal as a PDF to download and keep.</p>
+
+      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Mini Business Reading, you can ignore this email.</p>
+      <p>— Cato</p>
+    `,
+  }),
+
+  course: (link) => ({
+    subject: 'Your Introduction Course Access',
+    html: `
+      <p>Your payment went through. Your course access is ready.</p>
+
+      <p><strong>Enter your portal</strong><br>
+      Click the link below to go straight to your course.<br>
+      <a href="${link}" style="color:#9F8261">Enter your course →</a></p>
+
+      <p>Inside you'll find all 6 modules of the Astrology Business Reading Introduction Course — self-paced, with progress tracking so you can pick up where you left off.</p>
+
+      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase the Introduction Course, you can ignore this email.</p>
+      <p>— Cato</p>
+    `,
+  }),
+};
+
+async function sendWelcomeEmail(email: string, magicLink: string, product: string): Promise<void> {
+  const template = EMAIL_TEMPLATES[product] ?? EMAIL_TEMPLATES['blueprint'];
+  const { subject, html } = template(magicLink);
+
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -35,27 +99,9 @@ async function sendWelcomeEmail(email: string, magicLink: string): Promise<void>
     body: JSON.stringify({
       from: 'Cato Vermeulen <noreply@mail.catovermeulen.com>',
       to: email,
-      subject: 'Your Blueprint Portal Access',
-      html: `
-        <p>Your payment went through. Here is what happens next.</p>
-
-        <p><strong>Step 1 — Enter your portal</strong><br>
-        Click the link below. It takes you straight in.<br>
-        <a href="${magicLink}" style="color:#9F8261">Enter your portal →</a></p>
-
-        <p><strong>Step 2 — Fill in your details</strong><br>
-        Your reading is built on your birth data and your business context. Take 5 minutes to fill in the form accurately. The quality of the reading depends on it.</p>
-
-        <p><strong>Step 3 — Your reading is prepared</strong><br>
-        Once you've submitted, Cato gets to work. Your Blueprint will be ready within 24 hours.</p>
-
-        <p><strong>Step 4 — Download your Blueprint</strong><br>
-        You'll find it waiting in your portal. A full PDF, yours to keep.</p>
-
-        <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Blueprint, you can ignore this email.</p>
-        <p>— Cato</p>
-      `
-    })
+      subject,
+      html,
+    }),
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -99,14 +145,21 @@ Deno.serve(async (req) => {
     return respond(200);
   }
 
+  // Determine product from session metadata — default to 'blueprint' for backward compatibility
+  const product = (session.metadata?.product as string) || 'blueprint';
+
+  // available_at: null for blueprint (set on intake submit) and mini_reading (set on intake submit)
+  // course has no intake, so we set available_at immediately
+  const available_at = product === 'course' ? new Date().toISOString() : null;
+
   const supabase = supabaseAdmin();
 
   // Upsert access_grants — UNIQUE on stripe_session_id prevents duplicate grants on Stripe retries
   const { error: grantErr } = await supabase.from('access_grants').upsert({
     email,
-    product: 'blueprint',
+    product,
     stripe_session_id: sessionId,
-    available_at: null,  // set when intake form submitted
+    available_at,
   }, { onConflict: 'stripe_session_id' });
 
   if (grantErr) {
@@ -114,13 +167,13 @@ Deno.serve(async (req) => {
     return respond(200);
   }
 
-  console.log('Access granted:', email, sessionId);
+  console.log('Access granted:', email, product, sessionId);
 
   // Generate magic link + send welcome email
   try {
     const magicLink = await generateMagicLink(email);
-    await sendWelcomeEmail(email, magicLink);
-    console.log('Welcome email sent to:', email);
+    await sendWelcomeEmail(email, magicLink, product);
+    console.log('Welcome email sent to:', email, 'for product:', product);
   } catch (err) {
     console.error('Magic link / email error:', err);
     // Not fatal — grant already written, client can still log in manually

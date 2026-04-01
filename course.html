@@ -1,10 +1,1098 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Course — Cato Vermeulen</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astrology Business Reading — Introduction Course · Cato Vermeulen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="auth.js"></script>
+<script src="db.js"></script>
+<style>
+  :root {
+    --stone: #BAAFA3; --linen: #D8CFB9; --smoke: #242324;
+    --mist: #F2F0E5; --golden: #9F8261; --cream: #EDE9DF;
+    --dark: #1a1918; --mid: #5a5550; --light: #8a8278;
+    --border: rgba(186,175,163,0.3); --border-s: rgba(186,175,163,0.6);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Jost',sans-serif; background:var(--mist); color:var(--dark); min-height:100vh; font-weight:300; }
+
+  /* LAYOUT */
+  .app { display:flex; min-height:100vh; }
+
+  /* SIDEBAR */
+  .sidebar { width:296px; min-height:100vh; background:var(--smoke); display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:100; overflow-y:auto; }
+  .sidebar::-webkit-scrollbar { width:3px; }
+  .sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.06); }
+
+  .sidebar-logo { padding:32px 26px 22px; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .sidebar-logo .name { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; letter-spacing:0.08em; color:var(--mist); line-height:1.2; }
+  .sidebar-logo .name em { font-style:italic; color:var(--golden); }
+  .sidebar-logo .tag { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--stone); margin-top:5px; }
+
+  .progress-wrap { padding:18px 26px; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .progress-label { font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--stone); margin-bottom:9px; }
+  .progress-track { height:1px; background:rgba(255,255,255,0.08); }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--golden),var(--linen)); transition:width 0.5s; }
+  .progress-frac { font-size:10px; color:var(--stone); margin-top:6px; }
+
+  .nav-wrap { flex:1; padding:12px 0 24px; }
+  .mod-group { margin-bottom:2px; }
+  .mod-header { display:flex; align-items:flex-start; gap:10px; padding:12px 26px; cursor:pointer; transition:background 0.2s; user-select:none; }
+  .mod-header:hover { background:rgba(255,255,255,0.02); }
+  .mod-badge { width:22px; height:22px; border-radius:50%; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--stone); flex-shrink:0; margin-top:1px; transition:all 0.2s; }
+  .mod-badge.done { background:var(--golden); border-color:var(--golden); color:#fff; }
+  .mod-badge.active { border-color:var(--golden); color:var(--golden); }
+  .mod-info { flex:1; }
+  .mod-num { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--golden); margin-bottom:3px; font-weight:400; }
+  .mod-title-nav { font-size:11px; letter-spacing:0.08em; color:var(--linen); font-weight:400; line-height:1.3; }
+  .mod-sub-nav { font-size:10px; color:var(--stone); margin-top:2px; line-height:1.3; }
+  .chevron { font-size:10px; color:var(--stone); transition:transform 0.2s; margin-top:4px; flex-shrink:0; }
+  .chevron.open { transform:rotate(90deg); }
+
+  .lesson-list { overflow:hidden; max-height:0; transition:max-height 0.3s ease; }
+  .lesson-list.open { max-height:600px; }
+  .lesson-item { display:flex; align-items:flex-start; gap:9px; padding:8px 26px 8px 42px; cursor:pointer; transition:background 0.15s; border-left:2px solid transparent; }
+  .lesson-item:hover { background:rgba(255,255,255,0.025); }
+  .lesson-item.active { border-left-color:var(--golden); background:rgba(159,130,97,0.07); }
+  .l-dot { width:5px; height:5px; border-radius:50%; border:1px solid rgba(255,255,255,0.18); flex-shrink:0; margin-top:5px; transition:all 0.2s; }
+  .l-dot.done { background:var(--golden); border-color:var(--golden); }
+  .lesson-item.active .l-dot { border-color:var(--golden); }
+  .l-name { font-size:11px; color:var(--stone); line-height:1.4; }
+  .lesson-item.active .l-name { color:var(--linen); }
+
+  /* MAIN */
+  .main { margin-left:296px; flex:1; min-height:100vh; display:flex; flex-direction:column; }
+  .topbar { height:56px; background:rgba(242,240,229,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 52px; position:sticky; top:0; z-index:50; }
+  .breadcrumb { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--light); }
+  .breadcrumb span { color:var(--golden); }
+  .complete-btn { display:flex; align-items:center; gap:7px; background:var(--smoke); color:var(--mist); border:none; padding:7px 18px; font-family:'Jost',sans-serif; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; font-weight:400; }
+  .complete-btn:hover { background:var(--golden); }
+  .complete-btn.done { background:var(--golden); }
+
+  .content-area { flex:1; padding:60px 80px 80px; max-width:840px; }
+
+  /* LESSON CONTENT */
+  .kicker { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--golden); margin-bottom:14px; }
+  .lesson-h1 { font-family:'Cormorant Garamond',serif; font-size:50px; font-weight:300; line-height:1.1; color:var(--dark); margin-bottom:8px; }
+  .lesson-h1 em { font-style:italic; color:var(--golden); }
+  .lesson-meta { display:flex; align-items:center; gap:18px; margin-bottom:44px; padding-bottom:28px; border-bottom:1px solid var(--border); }
+  .meta-item { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--light); }
+  .meta-item strong { color:var(--mid); font-weight:400; }
+  .meta-dot { width:3px; height:3px; border-radius:50%; background:var(--linen); }
+
+  /* VIDEO */
+  .video-wrap { position:relative; background:var(--smoke); aspect-ratio:16/9; margin-bottom:44px; overflow:hidden; }
+  .video-inner { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:linear-gradient(135deg,#1a1918 0%,#2d2825 50%,#1a1918 100%); }
+  .play-btn { width:60px; height:60px; border-radius:50%; border:1px solid rgba(159,130,97,0.45); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; background:rgba(159,130,97,0.08); }
+  .play-btn:hover { background:rgba(159,130,97,0.18); border-color:var(--golden); transform:scale(1.04); }
+  .play-btn svg { margin-left:3px; }
+  .video-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--stone); }
+
+  /* BODY TEXT */
+  .body { max-width:660px; }
+  .body h2 { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin:44px 0 14px; color:var(--dark); }
+  .body h3 { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--golden); margin:28px 0 10px; font-weight:400; }
+  .body p { font-size:15px; line-height:1.9; color:var(--mid); margin-bottom:20px; font-weight:300; }
+  .body p strong { color:var(--dark); font-weight:400; }
+  .body ul { padding-left:20px; margin-bottom:20px; }
+  .body ul li { font-size:15px; line-height:1.8; color:var(--mid); margin-bottom:6px; font-weight:300; }
+
+  .pullquote { border-left:2px solid var(--golden); padding:18px 26px; margin:36px 0; background:rgba(159,130,97,0.04); }
+  .pullquote p { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:300; font-style:italic; line-height:1.5; color:var(--dark); margin:0; }
+
+  .sign-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:28px 0; }
+  .sign-card { border:1px solid var(--border); padding:18px; background:white; transition:border-color 0.2s, transform 0.2s; }
+  .sign-card:hover { border-color:var(--golden); transform:translateY(-1px); }
+  .sign-card .sc-name { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:400; margin-bottom:3px; color:var(--dark); }
+  .sign-card .sc-tag { font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--golden); margin-bottom:8px; }
+  .sign-card .sc-body { font-size:12px; color:var(--mid); line-height:1.6; }
+
+  .sig-table { width:100%; margin:24px 0; border-collapse:collapse; }
+  .sig-table td { padding:9px 14px; font-size:13px; border-bottom:1px solid var(--border); }
+  .sig-table td:first-child { font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--golden); width:120px; font-weight:400; }
+  .sig-table td:last-child { color:var(--mid); font-weight:300; }
+  .sig-table tr:last-child td { border-bottom:none; }
+
+  .exercise { background:var(--smoke); padding:28px 32px; margin:36px 0; position:relative; overflow:hidden; }
+  .exercise::before { content:''; position:absolute; top:0; left:0; width:2px; height:100%; background:var(--golden); }
+  .exercise .ex-label { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--golden); margin-bottom:10px; }
+  .exercise h4 { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:300; color:var(--mist); margin-bottom:12px; }
+  .exercise p { font-size:13px; color:var(--stone); line-height:1.7; margin-bottom:0; }
+
+  .book-ref { display:flex; gap:14px; padding:18px 20px; border:1px solid var(--border); margin:28px 0; background:rgba(159,130,97,0.03); }
+  .book-ref .br-icon { font-size:20px; flex-shrink:0; }
+  .book-ref .br-text { font-size:12px; color:var(--mid); line-height:1.6; }
+  .book-ref .br-text strong { color:var(--dark); font-weight:400; font-size:13px; display:block; margin-bottom:2px; }
+
+  .astro-div { display:flex; align-items:center; gap:14px; margin:36px 0; }
+  .astro-div-line { flex:1; height:1px; background:var(--border); }
+  .astro-div-sym { font-size:16px; color:var(--golden); opacity:0.5; }
+
+  /* NAV */
+  .lesson-nav { display:flex; justify-content:space-between; align-items:center; margin-top:64px; padding-top:36px; border-top:1px solid var(--border); }
+  .nav-btn { display:flex; flex-direction:column; gap:3px; cursor:pointer; padding:14px 0; transition:opacity 0.2s; }
+  .nav-btn:hover { opacity:0.65; }
+  .nav-dir { font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--stone); }
+  .nav-title { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--dark); }
+  .nav-btn.next { text-align:right; }
+
+  /* WELCOME */
+  .screen { display:none; }
+  .screen.active { display:block; }
+  .welcome { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 40px; text-align:center; }
+  .w-kicker { font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:var(--golden); margin-bottom:22px; }
+  .w-title { font-family:'Cormorant Garamond',serif; font-size:66px; font-weight:300; line-height:1.05; color:var(--dark); max-width:680px; margin-bottom:22px; }
+  .w-title em { font-style:italic; color:var(--golden); }
+  .w-sub { font-size:14px; color:var(--mid); max-width:500px; line-height:1.85; margin-bottom:44px; font-weight:300; }
+  .w-cta { display:inline-block; background:var(--smoke); color:var(--mist); padding:14px 38px; font-family:'Jost',sans-serif; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; border:none; transition:background 0.2s; font-weight:400; }
+  .w-cta:hover { background:var(--golden); }
+  .w-div { width:50px; height:1px; background:var(--linen); margin:44px auto; }
+  .mod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; max-width:660px; width:100%; }
+  .mod-card { padding:26px 22px; background:white; text-align:left; border:1px solid var(--border); }
+  .mc-num { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--golden); margin-bottom:8px; }
+  .mc-title { font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:400; color:var(--dark); margin-bottom:6px; line-height:1.3; }
+  .mc-desc { font-size:12px; color:var(--light); line-height:1.6; }
+
+  .toast { position:fixed; bottom:28px; right:28px; background:var(--smoke); color:var(--mist); padding:12px 22px; font-size:11px; letter-spacing:0.08em; opacity:0; transform:translateY(6px); transition:all 0.3s; pointer-events:none; z-index:999; }
+  .toast.show { opacity:1; transform:translateY(0); }
+</style>
 </head>
 <body>
-  <!-- Phase 2 -->
+
+<div class="toast" id="toast"></div>
+
+<!-- WELCOME -->
+<div id="welcome" class="screen active">
+  <div class="welcome">
+    <div class="w-kicker">Cato Vermeulen · Astrology Business Reading · Introduction Course</div>
+    <h1 class="w-title">Read the Chart.<br>Scale the <em>Business.</em></h1>
+    <p class="w-sub">A 6-module introduction for coaches who want to learn astrology business readings — from the 12 archetypes through planets, houses, personal branding, and soul purpose.</p>
+    <button class="w-cta" onclick="enterCourse()">Begin the Introduction Course →</button>
+    <div class="w-div"></div>
+    <div class="mod-grid">
+      <div class="mod-card">
+        <div class="mc-num">Module 01</div>
+        <div class="mc-title">The 12 Business Archetypes</div>
+        <div class="mc-desc">Sun signs as leadership personalities, business styles, and client profiles</div>
+      </div>
+      <div class="mod-card">
+        <div class="mc-num">Module 02</div>
+        <div class="mc-title">The Business Houses</div>
+        <div class="mc-desc">2nd, 6th & 10th — money, work, and career archetypes & planets within</div>
+      </div>
+      <div class="mod-card">
+        <div class="mc-num">Module 03</div>
+        <div class="mc-title">The Planets in Business</div>
+        <div class="mc-desc">What each planet means for your work, fulfilment, and timing</div>
+      </div>
+      <div class="mod-card">
+        <div class="mc-num">Module 04</div>
+        <div class="mc-title">Midheaven & Ascendant</div>
+        <div class="mc-desc">Personal branding & your Instagram first impression</div>
+      </div>
+      <div class="mod-card">
+        <div class="mc-num">Module 05</div>
+        <div class="mc-title">North & South Node</div>
+        <div class="mc-desc">Soul's purpose in business — karmic gifts & growth direction</div>
+      </div>
+      <div class="mod-card">
+        <div class="mc-num">Module 06</div>
+        <div class="mc-title">Case Studies</div>
+        <div class="mc-desc">Famous charts — Disney, Kroc, Sarnoff, Murdoch — theory in real time</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COURSE APP -->
+<div id="course" class="screen">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="name">Cato <em>Vermeulen</em></div>
+        <div class="tag">Astrology Business Reading · Introduction Course</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label">Progress</div>
+        <div class="progress-track"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+        <div class="progress-frac" id="progressFrac">0 of 22 lessons complete</div>
+      </div>
+      <nav class="nav-wrap" id="navWrap"></nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="breadcrumb" id="breadcrumb">Module 01 · <span>The 12 Business Archetypes</span></div>
+        <button class="complete-btn" id="completeBtn" onclick="markComplete()">
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M3.5 6l1.5 1.5L8.5 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Mark Complete
+        </button>
+      </div>
+      <div class="content-area" id="contentArea"></div>
+    </main>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CURRICULUM — based on Signs of Success + Cato's framework
+// ══════════════════════════════════════════
+const MODULES = [
+  {
+    id:'m1', num:'01',
+    title:'The 12 Business Archetypes',
+    sub:'Sun signs as leadership & client profiles',
+    lessons:[
+      { id:'m1l0', title:'Welcome & Course Overview', content:'welcome' },
+      { id:'m1l1', title:'Why Business Astrology Works', content:'intro_biz_astro' },
+      { id:'m1l2', title:'Fire Signs: Aries, Leo, Sagittarius', content:'fire_signs' },
+      { id:'m1l3', title:'Earth Signs: Taurus, Virgo, Capricorn', content:'earth_signs' },
+      { id:'m1l4', title:'Air Signs: Gemini, Libra, Aquarius', content:'air_signs' },
+      { id:'m1l5', title:'Water Signs: Cancer, Scorpio, Pisces', content:'water_signs' },
+    ]
+  },
+  {
+    id:'m2', num:'02',
+    title:'The Business Houses',
+    sub:'2nd, 6th & 10th — money, work, career',
+    lessons:[
+      { id:'m2l1', title:'How the 12 Houses Work', content:'houses_intro' },
+      { id:'m2l2', title:'2nd House: Money, Assets & Talent', content:'house_2nd' },
+      { id:'m2l3', title:'6th House: Work, Team & Daily Operations', content:'house_6th' },
+      { id:'m2l4', title:'10th House: Career, Status & Public Rank', content:'house_10th' },
+    ]
+  },
+  {
+    id:'m3', num:'03',
+    title:'The Planets in Business',
+    sub:'What each planet means for your work & fulfilment',
+    lessons:[
+      { id:'m3l1', title:'Planets as Business Archetypes', content:'planets_intro' },
+      { id:'m3l2', title:'Sun, Moon & Mercury', content:'planets_sun_moon_merc' },
+      { id:'m3l3', title:'Venus, Mars & Jupiter', content:'planets_venus_mars_jup' },
+      { id:'m3l4', title:'Saturn, Uranus, Neptune & Pluto', content:'planets_outer' },
+    ]
+  },
+  {
+    id:'m4', num:'04',
+    title:'Midheaven & Ascendant',
+    sub:'Personal branding & your Instagram first impression',
+    lessons:[
+      { id:'m4l1', title:'The Ascendant: Your First Impression', content:'ascendant' },
+      { id:'m4l2', title:'The Midheaven: Your Public Calling', content:'midheaven' },
+      { id:'m4l3', title:'MC + ASC: Building Your Brand Identity', content:'mc_asc_combined' },
+    ]
+  },
+  {
+    id:'m5', num:'05',
+    title:"North & South Node",
+    sub:"Soul's purpose in business",
+    lessons:[
+      { id:'m5l1', title:"South Node: Your Karmic Gifts", content:'south_node' },
+      { id:'m5l2', title:"North Node: Your Growth Direction", content:'north_node' },
+    ]
+  },
+  {
+    id:'m6', num:'06',
+    title:'Case Studies',
+    sub:'Famous charts — theory in real time',
+    lessons:[
+      { id:'m6l1', title:'Reading a Chart Live: Walt Disney', content:'case_disney' },
+      { id:'m6l2', title:'Ray Kroc & McDonald's: Libra Builds an Empire', content:'case_kroc' },
+      { id:'m6l3', title:'David Sarnoff: North Node as Destiny', content:'case_sarnoff' },
+      { id:'m6l4', title:'Rupert Murdoch & Dorothy Schiff: A Fated Deal', content:'case_murdoch' },
+    ]
+  }
+];
+
+// ══════════════════════════════════════════
+// CONTENT — grounded in Signs of Success by Steve Weiss
+// ══════════════════════════════════════════
+const C = {
+
+welcome: `
+<div class="kicker">Welcome · Course Overview</div>
+<h1 class="lesson-h1">The Astrology<br><em>Business Reading.</em></h1>
+<div class="lesson-meta">
+  <div class="meta-item"><strong>Intro Video</strong></div>
+  <div class="meta-dot"></div>
+  <div class="meta-item">6 Modules · 22 Lessons</div>
+  <div class="meta-dot"></div>
+  <div class="meta-item">Self-Paced</div>
+</div>
+<div class="video-wrap">
+  <div class="video-inner">
+    <div class="play-btn" onclick="showToast('Connect your Vimeo or Wistia embed URL here')">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M6 4l11 6-11 6V4z" fill="#9F8261"/></svg>
+    </div>
+    <div class="video-label">Welcome — Cato Vermeulen</div>
+  </div>
+</div>
+<div class="body">
+  <p>You are here because you already know that the standard business coaching toolkit is not enough. Your clients — the ambitious, high-calibre women who are already successful — are not looking for more of the same. They want a framework that works at the level of identity, timing, and soul.</p>
+  <p>This introduction course gives you exactly that. Over six modules, you will learn to deliver a full astrology business reading: from the 12 sun sign archetypes, to the key business houses, to reading the planets for fulfilment and timing, to personal branding through the Midheaven and Ascendant, and finally to soul purpose through the North and South Nodes.</p>
+  <div class="book-ref">
+    <div class="br-icon">📖</div>
+    <div class="br-text"><strong>Your Core Text: Signs of Success by Steve Weiss</strong>Modules 1–2 draw heavily from this book — the first serious treatment of astrology applied to business leadership. Weiss profiles real CEOs under every sun sign and maps planetary cycles to actual market events. Read it alongside this course.</div>
+  </div>
+  <h2>Your 4-Module Journey</h2>
+  <p><strong>Module 1 — The 12 Business Archetypes.</strong> Every sun sign has a distinct leadership style, business objective, and client profile. Before you can read a chart, you need these 12 archetypes so deeply in your body that you can recognise them mid-sentence. Weiss gives us the framework; Cato gives us the application.</p>
+  <p><strong>Module 2 — The Business Houses.</strong> Once you know who your client is (sun sign), you look at where their energy is operating. The 2nd, 6th, and 10th houses are the money house, the work house, and the career house — the core trinity of any business reading.</p>
+  <p><strong>Module 3 — Midheaven & Ascendant.</strong> These two chart points together tell you everything about a client's personal brand: how they are seen by the world (Ascendant), and what they are here to achieve publicly (Midheaven). Together they form the complete Instagram-first-impression reading.</p>
+  <p><strong>Module 4 — North & South Node.</strong> The soul's GPS. The South Node shows what your client came in already knowing — their karmic gifts. The North Node shows where genuine growth lives. For a business coach, this is the deepest and most transformational part of the reading.</p>
+  <div class="exercise">
+    <div class="ex-label">Before You Begin</div>
+    <h4>Pull Three Charts</h4>
+    <p>Before lesson 2, pull your own birth chart, your business chart (founding date), and one client's chart from astro.com. You will use these as practice throughout every module. Save screenshots.</p>
+  </div>
+</div>`,
+
+intro_biz_astro: `
+<div class="kicker">Module 01 · Lesson 1</div>
+<h1 class="lesson-h1">Why Business<br><em>Astrology Works.</em></h1>
+<div class="lesson-meta">
+  <div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div>
+  <div class="meta-item">Module 01 of 04</div>
+</div>
+<div class="body">
+  <p>In <em>Signs of Success</em>, Steve Weiss identifies three primary business applications of astrology: <strong>timing</strong> (knowing when to act), <strong>trend forecasting</strong> (reading market cycles), and <strong>team building</strong> (understanding personality types). These are not metaphysical claims — they are practical frameworks that more and more business leaders use quietly and with results.</p>
+  <p>Business astrologer Madeline Gerwick, whose subscription newsletter reaches 2,000 clients, describes her work as "talking to businesses about strengths and weaknesses, cycles, and maximising opportunities" — covering finances, customers, vendors, legal issues, sales, contracts, and product launches. Her answer to why serious business people seek out astrology: <em>"Most people get into it because a moment comes when they realise it works. Often in business you don't have the time to assemble all the data necessary to make a decision, and you have to operate on the fly. If you're open to using your intuition, astrology can prove itself to be an exceptionally helpful tool."</em></p>
+  <div class="pullquote"><p>"The only function of economic forecasting is to make astrology look respectable." — John Kenneth Galbraith</p></div>
+  <h2>The Chart as a Business Blueprint</h2>
+  <p>Weiss describes a business chart as a snapshot of the sky at a particular moment from a specific point on Earth. Whether cast for a company's incorporation date, its first sale, or a key product launch, that chart captures the energetic blueprint of the venture. Every element of a business — its cash flow, its team dynamics, its marketing, its leadership — has a corresponding domain in the chart.</p>
+  <p>Weiss frames it as a Clue-like puzzle: <strong>Planets are the personalities (the suspects)</strong>, <strong>Signs are the tactics (the weapons)</strong>, and <strong>Houses are the domains of action (the crime scenes)</strong>. Once you can read all three in combination, you can give a client a genuinely comprehensive business reading.</p>
+  <h3>The Three Business Applications</h3>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Timing</div><div class="sc-tag">When to act</div><div class="sc-body">Using planetary cycles to identify optimal windows for launches, contracts, hiring, and pivots. Every business event — from incorporating to a product launch — has an astrological timing implication.</div></div>
+    <div class="sign-card"><div class="sc-name">Trend Forecasting</div><div class="sc-tag">Reading the market</div><div class="sc-body">Jupiter's 12-year cycle, Saturn's 29.5-year cycle, and others create recurring cultural and economic themes. Weiss traces real shadow periods that repeated with uncanny accuracy across decades.</div></div>
+    <div class="sign-card"><div class="sc-name">Team Building</div><div class="sc-tag">Knowing your people</div><div class="sc-body">Sun sign astrology as a personality and leadership profiling tool — for your client, their team, their competitors, and their customers. More actionable than MBTI, and far more nuanced.</div></div>
+    <div class="sign-card"><div class="sc-name">Identity Reading</div><div class="sc-tag">Cato's layer</div><div class="sc-body">The Ascendant, Midheaven, and Nodes take the reading beyond personality into soul-level purpose — where this person is going, how the world sees them, and what they are truly here to build.</div></div>
+  </div>
+  <h2>Jupiter and Trend Cycles: A Real Example</h2>
+  <p>Weiss demonstrates Jupiter's 12-year market cycle by comparing three shadow periods: August–September 1977, 1989, and 2001. In each instance, Jupiter was transiting the same degrees of Cancer — and in each case, the cultural and business themes were nearly identical: emphasis on safety and security, family, real estate as psychological refuge, stress and vulnerability in the economy, and a pulling-inward of national identity.</p>
+  <p>The implication for business strategy: if you know what themes dominated a shadow period, you can anticipate what will dominate the corresponding future cycle. This is not prediction — it is pattern recognition at a cosmological scale.</p>
+  <div class="exercise">
+    <div class="ex-label">Reflection Exercise</div>
+    <h4>Your Business Astrology Origin Statement</h4>
+    <p>Write 3–5 sentences: Why are you drawn to business astrology? What do you already know intuitively about how the cosmos influences business timing and personality? What do you want your clients to feel after a reading with you? This becomes your positioning language in Module 4.</p>
+  </div>
+</div>`,
+
+fire_signs: `
+<div class="kicker">Module 01 · Lesson 2</div>
+<h1 class="lesson-h1">Fire Signs:<br><em>Aries, Leo, Sagittarius.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 01 of 04</div></div>
+<div class="body">
+  <p>The fire signs share a core quality: they are energised by action, vision, and self-expression. In business, they are the starters, the performers, and the visionaries. Each manifests this fire differently — Aries through force and speed, Leo through charisma and creative authority, Sagittarius through big-picture farsightedness. Together they represent the entrepreneurial ignition energy of any business or team.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♈</div><div class="astro-div-line"></div></div>
+  <h2>Aries — The Value of Force</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Direct</td></tr><tr><td>Objective</td><td>Primacy</td></tr><tr><td>Strength</td><td>Energy</td></tr><tr><td>Weakness</td><td>Impatience</td></tr><tr><td>Tactic</td><td>Force</td></tr><tr><td>Communication</td><td>Forceful</td></tr><tr><td>Belief</td><td>Action</td></tr><tr><td>Reward</td><td>Spoils</td></tr></table>
+  <p>Weiss writes: <em>"With an Aries leader you must allow for personal compulsion. Here is character defined by a raw fiery drive towards self-realisation that must have, in all things great and small, immediate manifestation and gratification."</em> Aries leaders are defined by speed, indomitability, and tireless effort. J.P. Morgan ran both the American railroad and steel industries simultaneously while serving as the nation's de facto central banker. Sam Walton's "management by walking and flying around" was, in the words of an associate, "management by wearing you out."</p>
+  <p>The key Aries business pattern: they are the first. J.P. Morgan created America's first billion-dollar company. Elisabeth Claiborne became the first woman CEO of a Fortune 500. Larry Page made Google the fastest search engine. The issue for an Aries is never whether to act — it is direction and follow-through. They have a genuine difficulty with delegation, preferring to be involved in every aspect of the enterprise. And they can lose interest when something is no longer new.</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Reading an Aries Client</div><div class="sc-tag">Focus areas</div><div class="sc-body">Spend time on launch timing and direction-setting. They will move — the question is when and where. Help them identify their Saturn constraints (where they need structure) and their Mercury cycles (communications and contracts).</div></div>
+    <div class="sign-card"><div class="sc-name">Tips from Weiss</div><div class="sc-tag">Working with Aries</div><div class="sc-body">"The Aries coin of the realm is action. Do not dwell on what you have done or prattle on about what you are going to do. Do it." They hate to come late to a trend. Meet them in the morning — they have best attention pre-lunch.</div></div>
+  </div>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♌</div><div class="astro-div-line"></div></div>
+  <h2>Leo — The Value of Flamboyance</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Radiant</td></tr><tr><td>Objective</td><td>Glory</td></tr><tr><td>Strength</td><td>Charisma</td></tr><tr><td>Weakness</td><td>Details</td></tr><tr><td>Tactic</td><td>Theatrics</td></tr><tr><td>Communication</td><td>Assured</td></tr><tr><td>Belief</td><td>Self-expression</td></tr><tr><td>Reward</td><td>Praise</td></tr></table>
+  <p>Weiss: <em>"In many ways Leo is simultaneously the least complex and most effective of all the leadership signs. Leo's lot in life is to be a contact high and a radiant inspiration, right here right now."</em> Leo leaders believe it is the will of a solitary individual — the charismatic tribal chief — that moves everything forward. When one looks at Henry Ford, Lucille Ball, Martha Stewart, Magic Johnson, Malcolm Forbes, it is impossible to separate enterprise identity from individual identity.</p>
+  <p>The Leo pattern: they prize creative control above salary. Lucille Ball took a pay cut to retain creative control of I Love Lucy — then built Desilu Productions and became the first woman to run a major television production company. The Achilles heel is details and delegation; the greatest strength is the kind of contagious enthusiasm that makes people want to follow.</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Reading a Leo Client</div><div class="sc-tag">Focus areas</div><div class="sc-body">Their brand IS them. The reading should address how their personal identity maps to their business identity, and where they are dimming their own light. The Sun placement and aspects tell you everything about their creative power and where it is being blocked.</div></div>
+    <div class="sign-card"><div class="sc-name">Tips from Weiss</div><div class="sc-tag">Working with Leo</div><div class="sc-body">"If it is important to you to take public credit for your work it is perhaps best to deal with someone other than a Leo." They respond to direct, enthusiastic praise. Do not undermine them in public — ever. They will always believe your accomplishment derives from their inspiration.</div></div>
+  </div>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♐</div><div class="astro-div-line"></div></div>
+  <h2>Sagittarius — The Value of Farsightedness</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Upbeat</td></tr><tr><td>Objective</td><td>Wisdom</td></tr><tr><td>Strength</td><td>Discernment</td></tr><tr><td>Weakness</td><td>Insensitivity</td></tr><tr><td>Tactic</td><td>Epic Epiphanies</td></tr><tr><td>Communication</td><td>Oracular</td></tr><tr><td>Belief</td><td>Freedom</td></tr><tr><td>Reward</td><td>Meaning</td></tr></table>
+  <p>Sagittarius is the sign of the seeker — the one who explores heaven and hell and every piece of the world's geography out of sheer curiosity about human potential. In business, they are the ones who see around corners. Weiss notes that for a Sagittarian leader, "meaning is almost better than money." Their natural métier is philosophy, brand-building, long-distance strategy, and anything that requires breadth of vision over depth of procedure.</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Reading a Sagittarius Client</div><div class="sc-tag">Focus areas</div><div class="sc-body">Address the gap between their enormous vision and the systems needed to execute it. Jupiter's current transit is key — when Jupiter is well-placed, they expand into new territory effortlessly. When poorly placed, they overextend. Help them see timing.</div></div>
+    <div class="sign-card"><div class="sc-name">Tips from Weiss</div><div class="sc-tag">Working with Sagittarius</div><div class="sc-body">"The term 'painfully obvious' was doubtlessly invented by a Sagittarian. Look beyond the immediate, far beyond." They process data from realms far beyond the immediate. Do not mistake their big-picture scanning for inattention — they are always building a larger map.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>Fire Sign Client Brief</h4>
+    <p>Write a 2-paragraph reading brief for a hypothetical Aries coach who keeps launching new offers before finishing the last one, a Leo consultant whose brand feels disconnected from her personality, and a Sagittarius strategist who has brilliant ideas but can never get traction. For each: name their core gift, their main energetic challenge, and one action recommendation.</p>
+  </div>
+</div>`,
+
+earth_signs: `
+<div class="kicker">Module 01 · Lesson 3</div>
+<h1 class="lesson-h1">Earth Signs:<br><em>Taurus, Virgo, Capricorn.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 01 of 04</div></div>
+<div class="body">
+  <p>The earth signs are the builders. Where fire signs ignite and air signs ideate, the earth signs construct — with patience, precision, and an unwavering commitment to tangible results. In business, they are the ones who last. They create institutions, systems, and legacies. Each earth sign builds differently: Taurus through endurance and resource mastery, Virgo through systems and fastidious analysis, Capricorn through framework and strategic social climbing.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♉</div><div class="astro-div-line"></div></div>
+  <h2>Taurus — The Value of Fixedness</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Persistent</td></tr><tr><td>Objective</td><td>Wealth</td></tr><tr><td>Strength</td><td>Patience</td></tr><tr><td>Weakness</td><td>Self-indulgence</td></tr><tr><td>Tactic</td><td>Endurance</td></tr><tr><td>Communication</td><td>Sincere</td></tr><tr><td>Belief</td><td>Abundant Nature</td></tr><tr><td>Reward</td><td>Valuables</td></tr></table>
+  <p>Weiss describes Taurus as replacing dynamic drive with "perspective, stable strength of purpose, and self-possession." The magic in Taurus leadership is a bullish tenacity toward principled behaviour, a conviction that most people would rather be productive and prosperous than lazy. Historically significant Taurus leaders are more frequently described as both "authoritative" and "beloved" than those of any other sign.</p>
+  <p>The Taurus pattern is revealed in William Hewlett of Hewlett-Packard, who in 1959 placed a dollar bill on his desk observing that his employees were so trustworthy that "I could leave it there and it will be there forever." Today that dollar remains in his enshrined office, with a pile of additional money others have left over the years. Taurus builds trust — and then builds empires on top of it.</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Reading a Taurus Client</div><div class="sc-tag">Focus areas</div><div class="sc-body">Address their relationship with value and wealth. The 2nd house is their domain. Check Venus placements — beauty, value, and the literal money relationship. Taurus clients often undersell themselves despite having exceptional enduring quality. The reading should validate their worth and identify timing for wealth expansion.</div></div>
+    <div class="sign-card"><div class="sc-name">Tips from Weiss</div><div class="sc-tag">Working with Taurus</div><div class="sc-body">"Old-fashioned virtues, from loyalty to discretion to manners to good grooming, are essential." Do not discount Taurus stubbornness — they are capable of detonation if you push past a clear boundary. They know the price and value of everything. Price your reading accordingly.</div></div>
+  </div>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♍</div><div class="astro-div-line"></div></div>
+  <h2>Virgo — The Value of Fastidiousness</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Analytical</td></tr><tr><td>Objective</td><td>Perfection</td></tr><tr><td>Strength</td><td>Precision</td></tr><tr><td>Weakness</td><td>Over-analysis</td></tr><tr><td>Tactic</td><td>Systems integrity</td></tr><tr><td>Communication</td><td>Plain-spoken</td></tr><tr><td>Belief</td><td>Competence</td></tr><tr><td>Reward</td><td>Accuracy</td></tr></table>
+  <p>Virgo "has an engineer's soul and is totally devoted to developing products and processes that will optimise business accuracy and efficiency." Warren Buffett is the Oracle of Omaha, not because he is a psychic, but because he follows a Virgo first rule with monastic discipline: "The first rule is not to lose money. The second rule is not to forget the first rule." Carly Fiorina, Intel's Andrew Grove ("the future belongs to the paranoid"), and Colonel Sanders ("like sludge, like wallpaper paste") are all Virgo leaders defined by their refusal to tolerate imprecision.</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Reading a Virgo Client</div><div class="sc-tag">Focus areas</div><div class="sc-body">Their chief challenge is often perfectionism that stalls action, or systems-building that never ships. The reading should identify where Mercury (their ruling planet) sits — it shapes how they communicate, process, and deliver their work. Check if Saturn is creating excessive restriction in their 6th house.</div></div>
+    <div class="sign-card"><div class="sc-name">Tips from Weiss</div><div class="sc-tag">Working with Virgo</div><div class="sc-body">"It is the Virgo nature to tell it like it is, sometimes pretty harshly. They are not worried about your feelings. They are worried about the work." Bring data. Bring precision. Do not waste their time with vague spiritual framings — ground every insight in something they can act on.</div></div>
+  </div>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♑</div><div class="astro-div-line"></div></div>
+  <h2>Capricorn — The Value of Framework</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Conservative</td></tr><tr><td>Objective</td><td>Status</td></tr><tr><td>Strength</td><td>Perseverance</td></tr><tr><td>Weakness</td><td>Snobbery</td></tr><tr><td>Tactic</td><td>Traditional hierarchies</td></tr><tr><td>Communication</td><td>Authoritative</td></tr><tr><td>Belief</td><td>Earned success</td></tr><tr><td>Reward</td><td>Position</td></tr></table>
+  <p>The Capricorn animal icon is the mountain goat — and Capricorn leaders spend their entire lives climbing to the top. Weiss traces this pattern through Horatio Alger, Benjamin Franklin, Howard Hughes, Conrad Hilton, and Helena Rubinstein: what unites them is the absolute conviction that success is earned through hard work, conscientiously developed talent, and worthy social contribution. For Capricorn, the top of the mountain is not a metaphor — it is the entire point.</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Reading a Capricorn Client</div><div class="sc-tag">Focus areas</div><div class="sc-body">Saturn is their ruling planet and tells you everything about where they are carrying the heaviest burden — and where their greatest discipline lives. Check the 10th house carefully. Capricorn clients often need permission to enjoy the success they have already built. Help them see their position clearly.</div></div>
+    <div class="sign-card"><div class="sc-name">Tips from Weiss</div><div class="sc-tag">Working with Capricorn</div><div class="sc-body">"You will be judged by your cover." First impressions are everything. Never waste their time — find something useful to do. They respond to clear deliverables, structured frameworks, and status markers. They want to know that you are worth their investment before they commit.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>Earth Sign Reading Framework</h4>
+    <p>For each earth sign, write one sentence that identifies: their greatest business strength, their most common obstacle to growth, and the one chart placement you would check first in a reading. Then write a 2-sentence pitch for why an earth sign client should book a reading with you specifically.</p>
+  </div>
+</div>`,
+
+air_signs: `
+<div class="kicker">Module 01 · Lesson 4</div>
+<h1 class="lesson-h1">Air Signs:<br><em>Gemini, Libra, Aquarius.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 01 of 04</div></div>
+<div class="body">
+  <p>The air signs are the communicators, connectors, and innovators of the zodiac. In business, they excel at information flow, relationship-building, and cultural invention. They are rarely the ones with the most staying power — but they are almost always the ones with the most interesting ideas and the widest networks. Gemini deals in information and flexibility; Libra in fairness, balance, and aesthetic refinement; Aquarius in friendship, collective vision, and cultural change.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♊</div><div class="astro-div-line"></div></div>
+  <h2>Gemini — The Value of Flexibility</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Alert</td></tr><tr><td>Objective</td><td>Expression</td></tr><tr><td>Strength</td><td>Agility</td></tr><tr><td>Weakness</td><td>Fickleness</td></tr><tr><td>Tactic</td><td>Information flow</td></tr><tr><td>Communication</td><td>Impulsive</td></tr><tr><td>Belief</td><td>Ideas</td></tr><tr><td>Reward</td><td>Novelty</td></tr></table>
+  <p>The Gemini's natural métier in business is consulting, research and development, or any of the marketing functions — PR, advertising, and especially sales — in which idea dissemination and persuasion take precedence over organisational structure. At their best they channel brilliant moments of insight so perfectly in sync with their time that they attain icon status. At their most difficult, they are the ones who start more than they finish and pivot before anything has taken root.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♎</div><div class="astro-div-line"></div></div>
+  <h2>Libra — The Value of Fairness</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Balanced</td></tr><tr><td>Objective</td><td>Harmony</td></tr><tr><td>Strength</td><td>Diplomacy</td></tr><tr><td>Weakness</td><td>Indecision</td></tr><tr><td>Tactic</td><td>Consensus building</td></tr><tr><td>Communication</td><td>Tactful</td></tr><tr><td>Belief</td><td>Justice</td></tr><tr><td>Reward</td><td>Partnership</td></tr></table>
+  <p>Libra occupies the highest plane of achievement in names like Gandhi, Desmond Tutu, Lech Walesa — individuals whose lives were consecrated to the balancing principles of peace, justice, and equality. In business, Libra is the sign of the great partnership and the refined aesthetic. Revlon, DKNY, Ralph Lauren, and Def Jam all carry Libra energy: they are style-setting enterprises built on the principle that beauty and fairness are not luxuries but necessities. The Libra leader is also, characteristically, someone who believes deeply in shared decision-making — and who can sometimes get so lost in consensus-building that decisive action is delayed.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♒</div><div class="astro-div-line"></div></div>
+  <h2>Aquarius — The Value of Friendship</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Idiosyncratic</td></tr><tr><td>Objective</td><td>Invention</td></tr><tr><td>Strength</td><td>Open-mindedness</td></tr><tr><td>Weakness</td><td>Detachment</td></tr><tr><td>Tactic</td><td>Cultural invention</td></tr><tr><td>Communication</td><td>Enthusiastic</td></tr><tr><td>Belief</td><td>Humanity</td></tr><tr><td>Reward</td><td>Impact</td></tr></table>
+  <p>Weiss describes Aquarius as having "the ability to form what is experienced as a personal friendship with every member of a crowd." The great contemporary exemplar is Oprah Winfrey — who has made the word "girlfriend" an essential part of relationship vernacular. The Aquarian gift is that they are as alien as they are accessible; as detached as they are humanistic. The greatest Aquarian business leaders derive their greatness from selflessly rising to the collective needs of community during periods of crisis and cultural change.</p>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>Air Sign Positioning</h4>
+    <p>The air signs often struggle with consistency and grounding. Write a 2-paragraph reading summary that helps a Gemini entrepreneur stop pivoting and commit to her core offer. Use the Mercury retrograde framework: identify two upcoming retrograde windows this year and advise her on what to hold and what to launch in each period.</p>
+  </div>
+</div>`,
+
+water_signs: `
+<div class="kicker">Module 01 · Lesson 5</div>
+<h1 class="lesson-h1">Water Signs:<br><em>Cancer, Scorpio, Pisces.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 01 of 04</div></div>
+<div class="body">
+  <p>The water signs are the feeling signs — deeply emotional, intuitive, and motivated by forces that go beyond logic. In business, this is simultaneously their greatest strength and their most complex challenge. Cancer leads with fierce tribal loyalty and protective instinct; Scorpio with unflinching will, strategic stealth, and a drive for mastery; Pisces with transcendent vision, creative genius, and a sensitivity to human need that can power entire movements.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♋</div><div class="astro-div-line"></div></div>
+  <h2>Cancer — The Value of Foundation</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Security</td></tr><tr><td>Objective</td><td>Protection</td></tr><tr><td>Strength</td><td>Loyalty</td></tr><tr><td>Weakness</td><td>Moodiness / Stubbornness</td></tr><tr><td>Tactic</td><td>Defense</td></tr><tr><td>Communication</td><td>Emotive</td></tr><tr><td>Belief</td><td>Clan</td></tr><tr><td>Reward</td><td>Security</td></tr></table>
+  <p>Weiss: Cancer leaders "live a central paradox of business life with unparalleled emotional intensity. On the one hand Cancer leaders fully accept that business is a matter of black and red numerals, that it is a fiercely competitive blood sport where you are either a winner or a loser and nothing in between. On the other hand most Cancers are sensitive custodians of culture, genuinely concerned about the welfare of those whose lives they touch."</p>
+  <p>Richard Branson exemplifies this: criticised for everything from lack of formal education to daredevil addiction to risk, yet described in a British newspaper poll as — after Mother Teresa, the Pope, and the Archbishop of Canterbury — the most appropriate person to "rewrite the Ten Commandments." Cancers build empires that feel like families.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♏</div><div class="astro-div-line"></div></div>
+  <h2>Scorpio — The Value of Fortitude</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Controlled</td></tr><tr><td>Objective</td><td>Conquest</td></tr><tr><td>Strength</td><td>Will</td></tr><tr><td>Weakness</td><td>Suspicion</td></tr><tr><td>Tactic</td><td>Stealth & Power plays</td></tr><tr><td>Communication</td><td>Targeted</td></tr><tr><td>Belief</td><td>Intensity</td></tr><tr><td>Reward</td><td>Power</td></tr></table>
+  <p>Weiss is direct: "Scorpio leaders experience life as a very serious contest that incessantly puts survival on the line." Jack Welch terminated 100,000 jobs and called his autobiography simply <em>Winning</em>. Peter Drucker, Stephen Covey, and Tom Peters — all Scorpio management gurus — pushed management theory from practical dogma to ethical imperative. The Scorpio leader rarely relies on charisma; instead, the emphasis is on inner self-mastery and the unflinching identification of what it takes to win.</p>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">♓</div><div class="astro-div-line"></div></div>
+  <h2>Pisces — The Value of Fascination</h2>
+  <table class="sig-table"><tr><td>Style</td><td>Art</td></tr><tr><td>Objective</td><td>Transcendence</td></tr><tr><td>Strength</td><td>Vision</td></tr><tr><td>Weakness</td><td>Boundarylessness</td></tr><tr><td>Tactic</td><td>Oceanic consciousness</td></tr><tr><td>Communication</td><td>Emotional vulnerability</td></tr><tr><td>Belief</td><td>Transcendence</td></tr><tr><td>Reward</td><td>Meaning</td></tr></table>
+  <p>Weiss describes the Pisces visionary spirit through Steve Jobs — "as concerned with the design aesthetics of the latest Apple computer or the iPod as with their functions" — and his all-encompassing observation: "I want to put a ding in the universe." Pisces are spiritual and artistic adepts, flowing through a life of transcendent feelings and irresistible emotions. Prompted by heart rather than head. In business, they build movements, not just companies. Southwest Airlines' Herb Kelleher: "A company is stronger if it is bound by love rather than by fear."</p>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>Water Sign Reading: The Emotional Business</h4>
+    <p>Choose one water sign. Write a reading brief that: (1) identifies their core emotional driver in business, (2) names the most common pattern that holds them back, and (3) gives a specific recommendation based on their current Saturn transit. Be direct. Be specific. No hedging.</p>
+  </div>
+</div>`,
+
+houses_intro: `
+<div class="kicker">Module 02 · Lesson 1</div>
+<h1 class="lesson-h1">How Houses Work in<br><em>a Business Chart.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 02 of 04</div></div>
+<div class="body">
+  <p>In Weiss's framing, reading a business chart is like solving a Clue puzzle: <strong>Planets are the personalities (suspects)</strong>, <strong>Signs are the tactics (weapons)</strong>, and <strong>Houses are the domains of action (crime scenes)</strong>. The houses tell you <em>where</em> in the enterprise the planetary energies are operating.</p>
+  <p>Houses speak to the Earth's rotation — the constantly changing orientation of any spot on Earth to the belt of zodiac signs in the sky. The 1st house is calculated from the eastern horizon (the Ascendant) at the exact moment of the chart, and the other eleven follow in counter-clockwise order. Each house governs a specific domain of business activity.</p>
+  <div class="pullquote"><p>"Planets are the energies. Signs are the filters. Houses are the screens on which those energies are projected." — Steve Weiss, Signs of Success</p></div>
+  <h2>The Complete Business House Reference</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">1st House</div><div class="sc-tag">Public face & identity</div><div class="sc-body">Owners, stockholders, the company's public face, name and general reputation. The Ascendant point sets the tone for how the entire business is perceived.</div></div>
+    <div class="sign-card"><div class="sc-name">2nd House</div><div class="sc-tag">Money, assets & talent</div><div class="sc-body">Liquid assets, investments, developable talent. The primary money house — what the business earns, values, and builds material security around.</div></div>
+    <div class="sign-card"><div class="sc-name">3rd House</div><div class="sc-tag">Communication & local</div><div class="sc-body">Communication functions, training materials, office milieu, local transactions. How the business communicates internally and in its immediate market.</div></div>
+    <div class="sign-card"><div class="sc-name">4th House</div><div class="sc-tag">Base of operations</div><div class="sc-body">Real estate, capital facilities, heritage policies. The foundational infrastructure — physical and cultural — that the business is built on.</div></div>
+    <div class="sign-card"><div class="sc-name">5th House</div><div class="sc-tag">Creativity & celebration</div><div class="sc-body">Creative departments, meetings and conventions, celebrations, amusements. Where the business plays — and where its creative identity lives.</div></div>
+    <div class="sign-card"><div class="sc-name">6th House</div><div class="sc-tag">Workforce & daily ops</div><div class="sc-body">General workforce issues and conditions, human resources, the daily grind. The health and functioning of the team and operational systems.</div></div>
+    <div class="sign-card"><div class="sc-name">7th House</div><div class="sc-tag">Partnerships & clients</div><div class="sc-body">All relationship activities — partners, competitors, customers. The 7th is the primary house of contracts and client relationships.</div></div>
+    <div class="sign-card"><div class="sc-name">8th House</div><div class="sc-tag">Debt, investment & strategy</div><div class="sc-body">Situations dependent on the assets of others — loans, credit, competitor strategy, sales. The transformation and resource-sharing house.</div></div>
+    <div class="sign-card"><div class="sc-name">9th House</div><div class="sc-tag">Brand & philosophy</div><div class="sc-body">Philosophy, brand building and marketing, long-distance transactions. Where the business's worldview and public narrative live.</div></div>
+    <div class="sign-card"><div class="sc-name">10th House</div><div class="sc-tag">Career & public rank</div><div class="sc-body">Internal and external leadership activities and conditions, public rank. The Midheaven is here — the highest point of the chart and the peak of public achievement.</div></div>
+    <div class="sign-card"><div class="sc-name">11th House</div><div class="sc-tag">Community & innovation</div><div class="sc-body">Group alliances, role in society, innovative capacity, intangible value. The network and community the business builds around itself.</div></div>
+    <div class="sign-card"><div class="sc-name">12th House</div><div class="sc-tag">Hidden & proprietary</div><div class="sc-body">Proprietary information, trade secrets, unsuspected conditions. What operates behind the scenes — for good (IP) or bad (hidden vulnerabilities).</div></div>
+  </div>
+  <h2>How Planets + Signs + Houses Combine</h2>
+  <p>Weiss gives a clear example: a business chart with Pluto (powerful transformational intent) in Gemini (information flow) in the 7th house (partnerships) will likely be indicative of a business where partners are very confrontational in their communications, with each constantly attempting to argue the other into submission. That's one planet, one sign, one house — one reading insight.</p>
+  <p>A more nuanced example: Uranus (The Wizard, event-driven change) in Capricorn (traditional hierarchies) in the 9th house (marketing) suggests a brilliant marketing strategy that is given considerable organisational prominence — potentially a genius in the marketing department who operates through structured frameworks but consistently disrupts the expected approach.</p>
+  <div class="exercise">
+    <div class="ex-label">Practice Exercise</div>
+    <h4>Map Your Own Business Chart</h4>
+    <p>Pull your business chart (or your client's). Identify which planets fall in the 2nd, 6th, and 10th houses. For each placement, write one sentence describing what that planet's energy means in that specific business domain — using Weiss's planet key (Sun=Identity, Moon=Security, Mercury=Process, Venus=Heart, Mars=Action, Jupiter=Vision, Saturn=Time, Uranus=Change, Neptune=Spirit, Pluto=Will).</p>
+  </div>
+</div>`,
+
+house_2nd: `
+<div class="kicker">Module 02 · Lesson 2</div>
+<h1 class="lesson-h1">The 2nd House:<br><em>Money, Assets & Talent.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 02 of 04</div></div>
+<div class="body">
+  <p>The 2nd house is the primary money house in any business chart. Weiss defines it as covering "liquid assets, investments, developable talent." In a business reading context, this house tells you three things about a client's financial reality: how they earn money (the sign on the cusp), what is blocking or supporting their financial growth (any planets residing there), and what innate talent they have that is not yet fully monetised (the "developable talent" dimension).</p>
+  <h2>What to Look For</h2>
+  <p><strong>The sign on the 2nd house cusp</strong> tells you the flavour of the client's relationship to money and value. Aries on the 2nd: money comes through bold, fast action. Taurus on the 2nd: natural accumulation through patience and quality. Gemini on the 2nd: multiple income streams, money through communication. Cancer on the 2nd: income tied to emotional security and family legacy. Leo on the 2nd: money through creative visibility and personal brand. And so on through all 12 signs.</p>
+  <p><strong>Planets in the 2nd house</strong> add specificity. Jupiter in the 2nd is the classic abundance placement — the client has genuine capacity for financial expansion, and Jupiter transits to the 2nd will mark notable income periods. Saturn in the 2nd is more complex: it brings discipline and structure to money, but often also restriction and a feeling that money requires enormous effort. Pluto in the 2nd indicates transformational wealth — dramatic financial change, sometimes repeatedly through a career.</p>
+  <h3>Key Planet-in-2nd-House Meanings</h3>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Sun in 2nd</div><div class="sc-tag">Identity = income</div><div class="sc-body">The client's core identity is tied to how much they earn. Financial success = personal worth in their self-concept. Powerful for premium pricing once the identity work is done.</div></div>
+    <div class="sign-card"><div class="sc-name">Jupiter in 2nd</div><div class="sc-tag">Natural abundance</div><div class="sc-body">Innate capacity for wealth. Money expands in their presence. The question is always whether they believe it. Jupiter transits here are the great financial opportunity windows.</div></div>
+    <div class="sign-card"><div class="sc-name">Saturn in 2nd</div><div class="sc-tag">Earned abundance</div><div class="sc-body">Financial success requires structure and discipline. Often a pattern of working extremely hard for money. Saturn's lesson: build systems, charge your worth, trust the long game.</div></div>
+    <div class="sign-card"><div class="sc-name">Venus in 2nd</div><div class="sc-tag">Value magnetism</div><div class="sc-body">Natural gift for attracting beautiful, valuable things — including money. The key is aligning their offer with genuine desire. When they love what they sell, money flows.</div></div>
+  </div>
+  <h2>The "Developable Talent" Reading</h2>
+  <p>The 2nd house represents not just existing assets but <em>developable</em> talent — what this person has that is not yet fully monetised. This is often the most powerful part of a 2nd house reading for a coach client. The question to bring to the chart: what does this client have that the market will pay premium rates for, and what is the energetic block preventing them from claiming that value?</p>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>2nd House Reading Brief</h4>
+    <p>For a client with Saturn in Taurus in the 2nd house: write a 3-paragraph reading that identifies (1) their relationship pattern with money, (2) the specific timing window over the next 12 months when Saturn's influence opens rather than restricts, and (3) the one pricing or offer shift that would most powerfully activate their 2nd house potential.</p>
+  </div>
+</div>`,
+
+house_6th: `
+<div class="kicker">Module 02 · Lesson 3</div>
+<h1 class="lesson-h1">The 6th House:<br><em>Work, Team & Daily Ops.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 02 of 04</div></div>
+<div class="body">
+  <p>The 6th house governs what Weiss calls "general workforce issues and conditions, human resources, the daily grind." In a business reading, this is the house of operational reality — how the work actually gets done, how the team functions, and whether the daily structure of the business is sustainable or depleting. It is also the house of health as it relates to work: burnout, overextension, and the physical toll of business activity all show up here.</p>
+  <h2>The 6th House in Practice</h2>
+  <p>For solo or small-team businesses — which describes most coaching clients — the 6th house tells you about the founder's relationship to their own work capacity. Weiss's case study about the restaurant with the Saturn-Pluto conjunction in the 4th house is instructive: the 6th house equivalent would have shown workforce instability as the structural challenge. In a reading, you are asking: how does this client experience their daily work? Where does their energy contract, and where does it expand?</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Mars in 6th</div><div class="sc-tag">High-drive operations</div><div class="sc-body">Enormous work capacity, but risk of burnout. The warrior energy applied to the daily grind. Often a founder who does everything themselves. The reading should address delegation and sustainable pace.</div></div>
+    <div class="sign-card"><div class="sc-name">Mercury in 6th</div><div class="sc-tag">Systems through communication</div><div class="sc-body">This person builds their work systems through information flow and communication processes. Their operations are most efficient when built around writing, teaching, or thinking frameworks.</div></div>
+    <div class="sign-card"><div class="sc-name">Saturn in 6th</div><div class="sc-tag">Disciplined operations</div><div class="sc-body">The most organised, systems-driven placement. Can indicate overwork and perfectionism in operational systems. The gift is genuine structure; the shadow is rigidity that prevents scale.</div></div>
+    <div class="sign-card"><div class="sc-name">Neptune in 6th</div><div class="sc-tag">Inspired but unstructured</div><div class="sc-body">Work is fuelled by vision and inspiration, but daily structure can be elusive. This client often works in flow states — or doesn't work at all. They need structural containers for their intuitive gifts.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>The Operational Reading</h4>
+    <p>Pull your own chart. What is the sign on your 6th house cusp, and are there any planets residing there? Write a honest 2-paragraph assessment of how this has shown up in your actual working life — your capacity for routine, your relationship to your team or collaborators, and where you have experienced the most friction in daily operations.</p>
+  </div>
+</div>`,
+
+house_10th: `
+<div class="kicker">Module 02 · Lesson 4</div>
+<h1 class="lesson-h1">The 10th House:<br><em>Career, Status & Public Rank.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 02 of 04</div></div>
+<div class="body">
+  <p>The 10th house is the house of career, public rank, and what Weiss calls "internal and external leadership activities and conditions." The Midheaven (MC) sits at the cusp of the 10th house and represents the highest point of the chart — literally the noon point, the sun at its peak. This is where a person's most public, most visible, most achieved self lives.</p>
+  <p>For a business reading, the 10th house answers the question: <em>what is this person here to be seen for?</em> It is the house of reputation, authority, and legacy. Every planet in the 10th house tells you something about the forces shaping — and sometimes complicating — that public visibility.</p>
+  <h2>Key 10th House Placements</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Sun in 10th</div><div class="sc-tag">Born for visibility</div><div class="sc-body">The most powerful career placement. This person's core identity (Sun) is expressed through their public role. They are meant to be seen. The question is whether they are claiming that visibility or hiding from it.</div></div>
+    <div class="sign-card"><div class="sc-name">Saturn in 10th</div><div class="sc-tag">Authority through discipline</div><div class="sc-body">Career success comes, but it requires sustained effort and often arrives later in life. Saturn in the 10th is the "slow climb" placement. When it finally lands, though, it is lasting and authoritative.</div></div>
+    <div class="sign-card"><div class="sc-name">Jupiter in 10th</div><div class="sc-tag">Expanded reputation</div><div class="sc-body">Natural public luck and expansion. This person's reputation tends to grow beyond what they consciously build. Jupiter transits to the 10th mark major career breakthroughs and public recognition.</div></div>
+    <div class="sign-card"><div class="sc-name">Pluto in 10th</div><div class="sc-tag">Transformational authority</div><div class="sc-body">Intense, sometimes turbulent public career. Transformations in professional identity — sometimes dramatic. The gift is lasting impact; the shadow is power struggles in the professional arena.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Practice</div>
+    <h4>The Career Authority Reading</h4>
+    <p>For a client with no planets in the 10th house: the sign on the Midheaven and the ruler of that sign tell the career story. If their Midheaven is in Scorpio, Mars and Pluto co-rule it — find Mars and Pluto in the chart and read those placements as the engines of their career. Write a 3-sentence career authority statement for a Scorpio Midheaven client.</p>
+  </div>
+</div>`,
+
+planets_houses: `
+<div class="kicker">Module 02 · Lesson 5</div>
+<h1 class="lesson-h1">Planets in the<br><em>Business Houses.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 02 of 04</div></div>
+<div class="body">
+  <p>Weiss gives us the complete planetary key for business charts. Each planet represents a specific type of energy — a personality archetype that can be embodied by a person in the organisation, or by a function in the business. When you combine that planet with the house it occupies, you get a precise statement about where and how that energy operates.</p>
+  <h2>The Ten Planets as Business Archetypes</h2>
+  <p>From Weiss directly: <strong>Sun</strong> = Anything of primary importance to the business existence (The Monarch, usually the CEO). <strong>Moon</strong> = Anything that's an investment in people, material or emotional (The Caregiver — makes the welfare of others their prime directive). <strong>Mercury</strong> = Anything dependent on interpersonal communications (The Thinker — data processors, technical types, sales talkers). <strong>Venus</strong> = Anything that enhances value and is generally pleasing (The Peacemaker — consensus seeker). <strong>Mars</strong> = Anything driven by inherent force (The Warrior — irritating but indefatigable and invaluable). <strong>Jupiter</strong> = Anything that expands fortune beyond previously assumed boundaries (The Sage — big idea person). <strong>Saturn</strong> = Anything emphasising principle and policy in aid of long-term success (The General — traditional authority). <strong>Uranus</strong> = Anything built on event-driven adaptation for the greater good (The Wizard — genius, change-maker). <strong>Neptune</strong> = Anything intuitive rather than fact-based (The Dreamer — inspired, sometimes all-knowing). <strong>Pluto</strong> = Anything predicated on transformational power (The Executioner — can make anything happen but difficult to supervise).</p>
+  <div class="pullquote"><p>"What one encounters is a useful articulation of roles that, for better or worse, tend to be embraced by players independent of job descriptions." — Steve Weiss</p></div>
+  <h2>Reading Combinations in a Live Chart</h2>
+  <p>Weiss's worked example: a company with Uranus (The Wizard) in Capricorn (traditional hierarchies) in the 9th house (marketing) will likely have a brilliant, unconventional marketing strategy that is given significant organisational prominence. Add Moon (The Caregiver) in Libra (consensus building) in the 6th house (the general workforce) and you have conflict: the marketing department geniuses who have assumed authority and are not inclined to popular vote, versus an operational culture that wants everyone's opinion considered. That tension is the reading.</p>
+  <div class="exercise">
+    <div class="ex-label">Integration Exercise</div>
+    <h4>Full Module 2 Reading Practice</h4>
+    <p>Using a real chart (yours or a client's): identify the planets in the 2nd, 6th, and 10th houses. For each, write: (1) which planetary archetype is operating, (2) what sign modifies it, (3) what domain it affects, and (4) one specific, actionable insight for the client. This is the skeleton of a real business houses reading.</p>
+  </div>
+</div>`,
+
+ascendant: `
+<div class="kicker">Module 03 · Lesson 1</div>
+<h1 class="lesson-h1">The Ascendant:<br><em>How the World Sees You.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 04</div></div>
+<div class="body">
+  <p>The Ascendant — also called the Rising Sign — is the zodiac sign that was rising over the eastern horizon at the exact moment of birth (or in a business chart, the moment of founding). It is the 1st house cusp, and in Weiss's framework it represents the "public face of the company, name and general reputation." For a personal brand reading, it is the mask — not in the negative sense, but as the natural first impression the world receives from this person before they have said a single word.</p>
+  <p>The Ascendant is critical for personal branding because it operates at the level of <em>immediate perception</em>. Your client might be a deep, strategic Scorpio sun — but if they have a Sagittarius Ascendant, the world first receives them as optimistic, expansive, and freedom-loving. Understanding this gap between inner identity and outer presentation is the foundation of the personal branding reading.</p>
+  <h2>Ascendant Signs in Personal Branding</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Aries Rising</div><div class="sc-tag">First impression: bold, direct</div><div class="sc-body">The brand communicates initiative and confidence. Bold colours, direct messaging, no hedging language. The face the world sees is a leader who moves fast and owns the room.</div></div>
+    <div class="sign-card"><div class="sc-name">Taurus Rising</div><div class="sc-tag">First impression: grounded, luxurious</div><div class="sc-body">The brand communicates quality, reliability, and taste. The aesthetic tends toward the beautiful and enduring. Clients trust this brand immediately with their money and their long-term strategy.</div></div>
+    <div class="sign-card"><div class="sc-name">Leo Rising</div><div class="sc-tag">First impression: radiant, magnetic</div><div class="sc-body">The brand is the person. The visual identity should feature the founder prominently. Warm, golden, generous energy. Clients are drawn to the light before they understand why.</div></div>
+    <div class="sign-card"><div class="sc-name">Scorpio Rising</div><div class="sc-tag">First impression: intense, magnetic</div><div class="sc-body">The brand communicates depth, exclusivity, and power. Dark, intentional aesthetics. Premium positioning comes naturally because Scorpio Rising brands feel genuinely inaccessible to those who are not ready.</div></div>
+    <div class="sign-card"><div class="sc-name">Capricorn Rising</div><div class="sc-tag">First impression: authoritative, structured</div><div class="sc-body">The brand communicates mastery, hierarchy, and legitimacy. Professional aesthetics, credentials up front, no-nonsense messaging. Clients trust it immediately as a serious, results-oriented investment.</div></div>
+    <div class="sign-card"><div class="sc-name">Aquarius Rising</div><div class="sc-tag">First impression: unique, visionary</div><div class="sc-body">The brand communicates innovation, independence, and cultural edge. Idiosyncratic aesthetics that do not fit neatly into a category. Attracts early adopters and those who want to be ahead of the curve.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Brand Audit</div>
+    <h4>Ascendant Alignment Check</h4>
+    <p>For yourself or a client: identify the Ascendant sign. Then audit the current brand — website, social media, photography, colour palette, language. Write 3 specific recommendations for how the brand could be brought into fuller alignment with the Ascendant energy. This is the deliverable for a personal branding reading.</p>
+  </div>
+</div>`,
+
+midheaven: `
+<div class="kicker">Module 03 · Lesson 2</div>
+<h1 class="lesson-h1">The Midheaven:<br><em>Career Path & Public Brand.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 04</div></div>
+<div class="body">
+  <p>The Midheaven (MC — Medium Coeli, "middle of the sky") is the highest point in the chart: the exact degree that was at the top of the sky at the moment of birth. It sits at the cusp of the 10th house and represents a person's most public, most ambitious, most visible self. Where the Ascendant is the mask (how the world first sees you), the Midheaven is the destination (what the world ultimately knows you for).</p>
+  <p>For a business reading, the Midheaven answers: <em>What is this person's highest public calling in their career?</em> It is the sign of their legacy, their reputation, and the nature of their authority in the world. Getting clear on a client's Midheaven often resolves years of confusion about positioning and niche.</p>
+  <h2>Midheaven Signs and Their Business Callings</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Aries MC</div><div class="sc-tag">Pioneer & initiator</div><div class="sc-body">Called to be first. The career is built by launching new things, breaking ground, and leading with boldness. The public knows them as someone who starts movements.</div></div>
+    <div class="sign-card"><div class="sc-name">Taurus MC</div><div class="sc-tag">Builder & connoisseur</div><div class="sc-body">Called to create lasting value. The career is built through slow, quality accumulation. Known for expertise, taste, and enduring work. Premium positioning comes naturally.</div></div>
+    <div class="sign-card"><div class="sc-name">Leo MC</div><div class="sc-tag">Creative authority</div><div class="sc-body">Called to lead through personal expression. The career is inseparable from the person's creative identity. Fame or visible recognition is part of the destiny.</div></div>
+    <div class="sign-card"><div class="sc-name">Scorpio MC</div><div class="sc-tag">Transformational power</div><div class="sc-body">Called to transform others through depth, truth, and power. The career often involves working with what others avoid — shadow, money, death, healing, or radical change.</div></div>
+    <div class="sign-card"><div class="sc-name">Aquarius MC</div><div class="sc-tag">Cultural innovator</div><div class="sc-body">Called to serve the collective. The career is built around ideas, movements, and communities. Known as a visionary or revolutionary in their field.</div></div>
+    <div class="sign-card"><div class="sc-name">Pisces MC</div><div class="sc-tag">Spiritual or artistic authority</div><div class="sc-body">Called to inspire transcendence. Career is often in the arts, healing, or spiritual leadership. The public knows them for their ability to make people feel something profound.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Positioning Exercise</div>
+    <h4>MC Positioning Statement</h4>
+    <p>For yourself: identify your Midheaven sign. Write a one-paragraph positioning statement that directly reflects that MC energy — using the language and qualities of the sign as your authority frame. This is not your Instagram bio. It is your internal compass for every positioning decision you make.</p>
+  </div>
+</div>`,
+
+mc_asc_combined: `
+<div class="kicker">Module 03 · Lesson 3</div>
+<h1 class="lesson-h1">MC + Ascendant:<br><em>The Complete Brand Reading.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 04</div></div>
+<div class="body">
+  <p>The Ascendant and Midheaven work as a pair. The Ascendant tells you how the world <em>first encounters</em> this person — their surface presentation, their immediate energy, their natural aesthetic. The Midheaven tells you what the world <em>ultimately knows them for</em> — their career authority, their legacy, their highest public calling. Together they form the complete personal branding blueprint.</p>
+  <p>When Ascendant and Midheaven are in compatible signs, the brand tends to be coherent and consistent — what you see is what you get, and it builds naturally toward the public destiny. When they are in challenging aspect, there is often a gap: the person projects one energy but is called toward another. This is actually one of the most productive tensions to explore in a reading — it explains why a client who looks polished and professional (Capricorn Rising) keeps being called toward esoteric or deeply personal work (Pisces Midheaven).</p>
+  <h2>Reading the Combination</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Leo Rising + Scorpio MC</div><div class="sc-tag">Radiant transformer</div><div class="sc-body">The world first receives warmth, charisma, and creative light. But the deeper calling is to transform — to go into the shadow and come back changed. The brand evolution: from entertainer to authority.</div></div>
+    <div class="sign-card"><div class="sc-name">Scorpio Rising + Capricorn MC</div><div class="sc-tag">Intense authority</div><div class="sc-body">Immediately magnetic and a little intimidating. Called to build lasting institutions and structures of power. The brand: premium, exclusive, unapologetically at the top of the hierarchy.</div></div>
+    <div class="sign-card"><div class="sc-name">Gemini Rising + Aquarius MC</div><div class="sc-tag">Ideas into movements</div><div class="sc-body">First impression: quick, communicative, entertaining. Deeper calling: to catalyse cultural change through networks and collective vision. The brand grows from "interesting" to "influential."</div></div>
+    <div class="sign-card"><div class="sc-name">Taurus Rising + Leo MC</div><div class="sc-tag">Grounded creative icon</div><div class="sc-body">First impression: trustworthy, quality-focused, beautifully presented. Calling: to be creatively iconic. The brand is about making luxury and artistry feel safe and accessible.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Full Brand Reading Practice</div>
+    <h4>The Personal Branding Deliverable</h4>
+    <p>For one client (real or hypothetical): write a complete personal branding reading that addresses: (1) Ascendant — their immediate brand energy and 3 visual/tonal recommendations, (2) Midheaven — their career authority and public calling, (3) the tension or synergy between the two, and (4) the one shift in messaging, positioning, or aesthetic that would most powerfully close the gap between how they are perceived and who they are called to be. This is a deliverable you could charge R8,000–R15,000 for.</p>
+  </div>
+</div>`,
+
+south_node: `
+<div class="kicker">Module 04 · Lesson 1</div>
+<h1 class="lesson-h1">The South Node:<br><em>Karmic Gifts & Where You've Been.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 04 of 04</div></div>
+<div class="body">
+  <p>The South Node (♏︎) represents what your client has already mastered — the accumulated wisdom, skills, and patterns from past experience (or in metaphysical terms, from past lives). It is the place of natural comfort and innate talent. In a business reading, the South Node answers: <em>What has this person always known how to do, almost without trying?</em></p>
+  <p>The South Node is a gift — but it is also a gravitational pull. Clients often over-rely on their South Node qualities because they feel safe and effortless. The challenge in a business reading is to help them recognise where South Node patterns are keeping them in comfort rather than growth — particularly when those patterns show up as undercharging, over-delivering, staying in a role they've outgrown, or building the same type of offer over and over.</p>
+  <h2>South Node Signs in Business</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Aries South Node</div><div class="sc-tag">Karmic gift: independence</div><div class="sc-body">Came in knowing how to act alone, lead by force, and be first. The gift: courage and initiative. The shadow pattern: lone-wolf tendencies, difficulty with partnerships, acting before thinking.</div></div>
+    <div class="sign-card"><div class="sc-name">Scorpio South Node</div><div class="sc-tag">Karmic gift: depth & power</div><div class="sc-body">Came in knowing how to navigate power, crisis, and transformation. The gift: resilience and strategic intensity. The shadow pattern: creating unnecessary intensity, control issues, distrust.</div></div>
+    <div class="sign-card"><div class="sc-name">Capricorn South Node</div><div class="sc-tag">Karmic gift: structure & status</div><div class="sc-body">Came in knowing how to climb hierarchies and build institutions. The gift: discipline and ambition. The shadow pattern: working for external validation, sacrificing personal life for achievement.</div></div>
+    <div class="sign-card"><div class="sc-name">Pisces South Node</div><div class="sc-tag">Karmic gift: intuition & empathy</div><div class="sc-body">Came in deeply intuitive, empathic, spiritually connected. The gift: vision and feeling. The shadow pattern: dissolution of boundaries, martyrdom, sacrificing their needs for others'.</div></div>
+  </div>
+  <div class="exercise">
+    <div class="ex-label">Reading Practice</div>
+    <h4>Identify the South Node Pattern</h4>
+    <p>For your own chart: identify your South Node sign and house. Write honestly about where this energy shows up as an unconscious comfort pattern in your business — specifically in your pricing, your offer design, or your client relationships. Where are you falling back on what you have always known, rather than growing into what you are called toward?</p>
+  </div>
+</div>`,
+
+north_node: `
+<div class="kicker">Module 04 · Lesson 2</div>
+<h1 class="lesson-h1">The North Node:<br><em>Growth Edge & Soul's Direction.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 04 of 04</div></div>
+<div class="body">
+  <p>The North Node (☊) is always directly opposite the South Node — and it represents the soul's growth direction in this lifetime. It is the unfamiliar territory, the qualities that feel slightly uncomfortable to embody, and the direction in which the greatest fulfilment lies. In a business reading, the North Node answers: <em>What is this person being called to grow into — and what would their business look like if they fully claimed it?</em></p>
+  <p>The North Node is rarely immediately comfortable. It requires the client to reach beyond their karmic defaults (South Node) and develop a genuinely new way of operating. In business terms, this often translates to: the premium offer they have been afraid to launch, the authority positioning they keep resisting, the leadership identity they feel "not ready" for, or the client they have been too afraid to target.</p>
+  <div class="pullquote"><p>"The North Node is not a destination you arrive at — it is a direction you orient toward. Every step in that direction generates the deepest satisfaction and the truest success."</p></div>
+  <h2>North Node Signs in Business</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Libra North Node</div><div class="sc-tag">Soul's call: partnership</div><div class="sc-body">Called to build through collaboration, beauty, and mutual exchange. The growth edge is moving from lone-wolf achievement (Aries South) to powerful partnership. In business: collaborative premium offers, client relationships as equal exchanges.</div></div>
+    <div class="sign-card"><div class="sc-name">Taurus North Node</div><div class="sc-tag">Soul's call: embodied abundance</div><div class="sc-body">Called to build tangible, lasting wealth and sensory enjoyment of life. The growth edge is moving from intensity and power (Scorpio South) to simple, sustainable abundance. In business: premium pricing, slow-build wealth, offers that feel luxurious.</div></div>
+    <div class="sign-card"><div class="sc-name">Cancer North Node</div><div class="sc-tag">Soul's call: heart-led leadership</div><div class="sc-body">Called to lead from emotional authenticity and tribal belonging rather than pure ambition. In business: community-based offers, nurturing client relationships, success that feels like home.</div></div>
+    <div class="sign-card"><div class="sc-name">Virgo North Node</div><div class="sc-tag">Soul's call: mastery & service</div><div class="sc-body">Called to develop true craft and offer it in service to others. Growth edge: moving from visionary dreaming (Pisces South) to precise, deliverable excellence. In business: becoming genuinely masterful at one specific methodology.</div></div>
+  </div>
+  <h2>Using the Nodes in a Business Reading</h2>
+  <p>The most powerful use of the North and South Nodes in a business reading is to map the client's current business against both axes. Ask: <em>Where in your business are you operating primarily from South Node energy?</em> (Safe, default, comfortable, undervalued.) <em>Where are you being called by the North Node?</em> (Uncomfortable, growth-oriented, more visible, more powerful.) The reading reveals the specific gap — and gives a soul-level reason for the growth that transcends marketing strategy.</p>
+  <div class="exercise">
+    <div class="ex-label">Synthesis Exercise</div>
+    <h4>The Nodal Business Reading</h4>
+    <p>For a client: identify their North and South Nodes by sign and house. Write a reading that (1) names the karmic gift they came in with and how it shows up in their business currently, (2) names the growth direction the North Node is calling them toward and what specifically it would look like in their business, and (3) identifies one concrete business action that would be a direct step in the North Node direction. Be specific. Be direct. This is the reading that changes lives.</p>
+  </div>
+</div>`,
+
+full_reading: `
+<div class="kicker">Module 04 · Lesson 3</div>
+<h1 class="lesson-h1">Delivering the<br><em>Full Reading.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 04 of 04</div></div>
+<div class="body">
+  <p>You now have the complete framework. The full astrology business reading moves through four layers, each building on the last. Here is the architecture of a premium session — the sequence, the timing, and how to hold the space for a client who is paying for transformation, not information.</p>
+  <h2>The Full Reading Architecture</h2>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Opening: The Archetype</div><div class="sc-tag">10–15 min</div><div class="sc-body">Begin with the sun sign. Name their archetype, their value statement, and their core leadership style as Weiss defines it. This establishes your authority and immediately creates recognition in the client. They feel seen before you have asked them a single question.</div></div>
+    <div class="sign-card"><div class="sc-name">The Business Houses</div><div class="sc-tag">15–20 min</div><div class="sc-body">Move through the 2nd, 6th, and 10th houses. For each: name the sign on the cusp, identify any planets, and deliver one specific insight about money, operations, and career authority. Ground it in their actual business reality.</div></div>
+    <div class="sign-card"><div class="sc-name">The Brand Reading</div><div class="sc-tag">15–20 min</div><div class="sc-body">Ascendant first — how the world sees them and whether their current brand reflects that. Then the Midheaven — their highest calling and whether they are claiming it. Close with the gap: what needs to shift.</div></div>
+    <div class="sign-card"><div class="sc-name">The Soul Level</div><div class="sc-tag">15–20 min</div><div class="sc-body">The Nodes. South Node first — acknowledge what they have already mastered. North Node last — the growth direction, the soul's calling in this lifetime, and what their business looks like when they fully step into it. This is the part they will remember for years.</div></div>
+  </div>
+  <h2>The Closing</h2>
+  <p>Every reading closes with <strong>three actions</strong> — one immediate (this week), one medium-term (this quarter), one identity-level (this year). You are not delivering a forecast — you are delivering a roadmap. The client leaves knowing exactly what to do next, and why it is aligned with who they are at a soul level.</p>
+  <div class="pullquote"><p>"You are not reading a chart. You are reading a person. The chart is just the language that lets them finally hear what they already know."</p></div>
+  <h2>Pricing Your Reading</h2>
+  <p>A full reading of this depth — 60 to 90 minutes, with preparation, delivery, and follow-up summary — is a premium deliverable. The investment should reflect that. Weiss's framework alone took years of research and an entire book to document. Cato's layers of personal branding and soul purpose reading add additional proprietary depth. A starting price of R8,000–R12,000 for a full reading is not aspirational — it is appropriate. As you build your track record and refine your delivery, move it up.</p>
+  <div class="exercise">
+    <div class="ex-label">Your First Full Reading</div>
+    <h4>Conduct Your First Full Reading</h4>
+    <p>Your first real reading is a paying client — not a practice run. Use this framework. Record the session (with permission). Review it afterward. What landed? What fell flat? Where did you go too fast? This is where the real learning happens. Deliver the reading. Then come back and refine.</p>
+  </div>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">✦</div><div class="astro-div-line"></div></div>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--dark);line-height:1.6;text-align:center;">You have completed the Introduction Course. The mastermind is where we go deeper.</p>
+</div>`
+
+,
+
+planets_intro: `
+<div class="kicker">Module 03 · Lesson 1</div>
+<h1 class="lesson-h1">Planets as<br><em>Business Archetypes.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 06</div></div>
+<div class="body">
+  <p>In Weiss's framework, the planets are the personalities of the chart — the energies, or in linguistic terms, the <em>verbs</em>. They are the active forces operating in any business or individual. Where the sun signs (Module 1) tell you the style and archetype, the planets tell you which specific drives, needs, and instincts are operating — and in which area of life (house) they are expressed.</p>
+  <p>The critical insight for a business reading: <strong>every planet represents a need that must be met for a person to feel fulfilled in their work.</strong> The Moon sign is not just a personality trait — it is a requirement. If your Moon is in Cancer, you need to feel emotionally bonded to the people you work with. If it is in Capricorn, you need structured achievement and status markers. Ignore these needs in your business model and you will constantly feel that something is missing, no matter how much money you make.</p>
+  <div class="pullquote"><p>"Planets are the energies. Signs are the filters through which those energies pass. Houses are the domains in which they operate." — Steve Weiss, Signs of Success</p></div>
+  <h2>The Planet Key: Business Principles</h2>
+  <p>From Weiss directly — the business principle each planet governs:</p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">☉ Sun</div><div class="sc-tag">Identity</div><div class="sc-body">Anything of primary importance to the business existence. The core identity — the irreducible "what this is about." In a person's chart, the Sun shows what must be expressed for them to feel alive in their work.</div></div>
+    <div class="sign-card"><div class="sc-name">☽ Moon</div><div class="sc-tag">Security</div><div class="sc-body">Anything that's an investment in people, material or emotional. The Moon sign shows what a person needs from their work environment to feel safe, nurtured, and sustained. This is the fulfilment planet.</div></div>
+    <div class="sign-card"><div class="sc-name">☿ Mercury</div><div class="sc-tag">Process</div><div class="sc-body">Anything dependent on interpersonal communications. How a person thinks, communicates, and processes information — the style and speed of their intellectual engagement.</div></div>
+    <div class="sign-card"><div class="sc-name">♀ Venus</div><div class="sc-tag">Heart</div><div class="sc-body">Anything that is generally pleasing and enhances value. What a person finds beautiful, desirable, and worth building toward. Venus also governs money as an expression of value and worth.</div></div>
+    <div class="sign-card"><div class="sc-name">♂ Mars</div><div class="sc-tag">Action</div><div class="sc-body">Anything there is a great inherent drive to do. The fuel — the instinct that drives action, competition, and forward momentum. Mars in the chart shows how someone fights for what they want.</div></div>
+    <div class="sign-card"><div class="sc-name">♃ Jupiter</div><div class="sc-tag">Vision</div><div class="sc-body">Anything that expands fortune beyond previously assumed boundaries. Where a person's luck lives, and where growth comes naturally. Jupiter transits mark the major expansion windows in any business.</div></div>
+    <div class="sign-card"><div class="sc-name">♄ Saturn</div><div class="sc-tag">Time</div><div class="sc-body">Anything emphasising principle and policy in the aid of long-term success. Structure, discipline, and the lessons that build lasting authority. Saturn also marks where a person feels most tested — and ultimately, most capable.</div></div>
+    <div class="sign-card"><div class="sc-name">♅ Uranus</div><div class="sc-tag">Change</div><div class="sc-body">Anything built on event-driven adaptation for the greater good. Innovation, disruption, and the sudden insight. Uranus shows where a person is called to break from convention.</div></div>
+    <div class="sign-card"><div class="sc-name">♆ Neptune</div><div class="sc-tag">Spirit</div><div class="sc-body">Anything intuitive rather than fact-based. Vision, inspiration, and the dissolution of boundaries. Neptune governs artistic genius, spiritual calling, and — in its shadow — illusion and self-deception.</div></div>
+    <div class="sign-card"><div class="sc-name">♇ Pluto</div><div class="sc-tag">Will</div><div class="sc-body">Anything predicated on the principle of transformational power. Pure intensity — the force that can make anything happen but is difficult to manage. Where Pluto sits, transformation is inevitable.</div></div>
+  </div>
+  <h2>Planets as Business Roles</h2>
+  <p>Weiss makes a powerful observation: in any organisation, these planetary archetypes will be embodied by actual people — regardless of their job titles. The Sun is The Monarch (the CEO, the vision-holder). The Moon is The Caregiver (whoever makes the welfare of others their prime directive). Mercury is The Thinker (the communicator, the data processor, the sales voice). Venus is The Peacemaker. Mars is The Warrior. Jupiter is The Sage. Saturn is The General. Uranus is The Wizard. Neptune is The Dreamer. Pluto is The Executioner — the one who can make anything happen but is difficult to supervise.</p>
+  <p>In a solo or small business context, the founder embodies multiple planetary archetypes. Reading which planets are dominant in their chart tells you which of these roles they are most naturally playing — and which ones they are neglecting or over-relying on.</p>
+  <div class="exercise">
+    <div class="ex-label">Reflection</div>
+    <h4>Identify Your Dominant Planetary Archetype</h4>
+    <p>Look at your birth chart. Which planet is most prominent — either by being in a powerful house (1st, 10th), by making many aspects to other planets, or by being the chart ruler (ruler of your Ascendant sign)? Write a paragraph on how that planetary archetype shows up in how you run your business. Are you leading as The Warrior (Mars dominant)? The Dreamer (Neptune)? The General (Saturn)? Is it working for you?</p>
+  </div>
+</div>`,
+
+planets_sun_moon_merc: `
+<div class="kicker">Module 03 · Lesson 2</div>
+<h1 class="lesson-h1">Sun, Moon<br><em>& Mercury.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 06</div></div>
+<div class="body">
+  <h2>☉ The Sun: Your Work Identity</h2>
+  <p>The Sun sign (what most people know as their "star sign") represents what must be expressed in a person's work for them to feel truly alive. It is not just a personality description — it is a core professional requirement. A Leo Sun who is not allowed to create, perform, and be seen will feel chronically unfulfilled regardless of income. A Virgo Sun who cannot apply precision, analysis, and service will feel purposeless in their work.</p>
+  <p>In a business reading, the Sun tells you: <em>what is this person's non-negotiable creative and professional identity?</em> The offer, the positioning, and the leadership style should all radiate from the Sun sign. If they do not, the business will always feel slightly misaligned — like wearing someone else's clothes.</p>
+  <h3>Sun Sign Business Identity Quick Reference</h3>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Aries Sun</div><div class="sc-tag">Identity: The Initiator</div><div class="sc-body">Must lead, must be first, must move fast. Work that requires someone else's permission or slow consensus will deplete them rapidly. They need an environment where action IS the product.</div></div>
+    <div class="sign-card"><div class="sc-name">Leo Sun</div><div class="sc-tag">Identity: The Creator</div><div class="sc-body">Must express, perform, and be seen. Work that hides them behind the scenes will feel like suffocation. Their personal brand IS the business. Visibility is non-negotiable.</div></div>
+    <div class="sign-card"><div class="sc-name">Scorpio Sun</div><div class="sc-tag">Identity: The Transformer</div><div class="sc-body">Must operate at depth, must have power and autonomy. Superficial work or corporate politics will destroy them. They need to go where others won't — and be known for it.</div></div>
+    <div class="sign-card"><div class="sc-name">Capricorn Sun</div><div class="sc-tag">Identity: The Builder</div><div class="sc-body">Must build something that lasts and earns real-world status. Work without a clear structure or hierarchy will feel meaningless. They need tangible markers of achievement.</div></div>
+  </div>
+  <h2>☽ The Moon: What You Need to Stay Fulfilled</h2>
+  <p>The Moon sign is the most underused and most powerful tool in a business reading. It governs security, emotional nourishment, and the unconscious needs that must be met for a person to sustain their work over the long term. Ignore your Moon and you will burn out, even if the business is succeeding by every external measure.</p>
+  <p>The key question to ask about any client's Moon sign: <em>Does their current business model meet this need? If not, what would need to change?</em></p>
+  <div class="sign-grid">
+    <div class="sign-card"><div class="sc-name">Moon in Cancer</div><div class="sc-tag">Need: Belonging & emotional connection</div><div class="sc-body">Needs to feel genuinely bonded with clients and collaborators. A transactional, purely professional business model will feel hollow. Community, warmth, and care must be woven into the work itself.</div></div>
+    <div class="sign-card"><div class="sc-name">Moon in Capricorn</div><div class="sc-tag">Need: Structure & achievement</div><div class="sc-body">Needs clear milestones, measurable progress, and external markers of success. Without structure, emotional anxiety rises regardless of actual results. KPIs are not just a strategy tool — they are an emotional requirement.</div></div>
+    <div class="sign-card"><div class="sc-name">Moon in Aquarius</div><div class="sc-tag">Need: Intellectual freedom & community</div><div class="sc-body">Needs to feel part of something bigger — a movement, a community, a collective vision. Work that is purely individual or financially motivated will feel isolating and purposeless.</div></div>
+    <div class="sign-card"><div class="sc-name">Moon in Virgo</div><div class="sc-tag">Need: Order & genuine usefulness</div><div class="sc-body">Needs to feel genuinely useful and to operate in a clean, well-organised environment. Chaos, ambiguity, or imprecision creates real emotional distress. The business model must have systems they trust.</div></div>
+    <div class="sign-card"><div class="sc-name">Moon in Leo</div><div class="sc-tag">Need: Recognition & creative expression</div><div class="sc-body">Needs to feel seen and appreciated — not just by clients, but in the day-to-day work. Behind-the-scenes roles deplete them. They must have an audience, even a small one, to thrive.</div></div>
+    <div class="sign-card"><div class="sc-name">Moon in Scorpio</div><div class="sc-tag">Need: Depth & transformational work</div><div class="sc-body">Needs to go deep. Surface-level work, polite professional distance, or shallow client relationships will create chronic dissatisfaction. The work must involve real transformation — theirs and their clients'.</div></div>
+  </div>
+  <h2>☿ Mercury: How You Think & Communicate</h2>
+  <p>Mercury governs the mind — how a person processes information, communicates ideas, and operates in the daily rhythm of their intellectual life. In a business context, Mercury shows the natural communication style of the offer and the founder. Mercury in Gemini communicates fast, conversationally, and in multiple channels. Mercury in Taurus thinks slowly, speaks deliberately, and builds trust through consistency. Mercury in Sagittarius thinks in big concepts and communicates in bold, sweeping statements.</p>
+  <p>Mercury is also the planet most sensitive to retrograde cycles — three times a year, for approximately three weeks each time, Mercury appears to move backward. During retrograde, communication glitches, contracts falter, and launches go sideways. Advising clients on Mercury retrograde windows is one of the most immediately practical things you can offer in a reading.</p>
+  <div class="exercise">
+    <div class="ex-label">Moon Sign Audit</div>
+    <h4>Does Your Business Model Meet Your Moon's Needs?</h4>
+    <p>Identify your Moon sign and its core emotional need. Then honestly assess your current business model: Does it meet that need? Write one specific change you could make to your offer structure, your client experience, or your daily work rhythm that would bring your business into deeper alignment with what your Moon actually requires to stay fulfilled long-term.</p>
+  </div>
+</div>`,
+
+planets_venus_mars_jup: `
+<div class="kicker">Module 03 · Lesson 3</div>
+<h1 class="lesson-h1">Venus, Mars<br><em>& Jupiter.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 06</div></div>
+<div class="body">
+  <h2>♀ Venus: Value, Money & What You Love</h2>
+  <p>Venus governs beauty, value, desire, and — critically for a business reading — money as an expression of what you believe you are worth. Weiss writes: "Venus will identify the people, processes, and products that originate from the desires of the heart." In a chart, Venus shows what a person finds genuinely beautiful and desirable, and where their natural magnetism for clients and income lives.</p>
+  <p>The Venus sign tells you the <em>aesthetic and relational style</em> of the business. Venus in Libra creates elegant, harmonious offers that attract clients through refinement and taste. Venus in Scorpio creates intense, exclusive, transformational offers that attract clients who want depth and real change. Venus in Taurus creates offers built around enduring quality and sensory pleasure — the premium, high-touch, worth-every-cent experience.</p>
+  <p>Venus also governs the client relationship itself — how you attract, retain, and relate to the people you work with. And it governs pricing: a person with Venus in Capricorn will price based on proven results and market position. Venus in Pisces will underprice based on emotional compassion. Identifying this pattern is one of the most useful practical insights in a reading.</p>
+  <h2>♂ Mars: Drive, Energy & How You Pursue</h2>
+  <p>Mars is the fuel. Where Venus attracts, Mars pursues. In a business reading, Mars tells you how someone instinctively takes action, competes, and drives forward. It also shows where they are most energised — and where they tend to burn out or become aggressive when their energy is not channelled constructively.</p>
+  <p>Mars in Aries: fast, direct, competitive — thrives on being first and hates waiting. Mars in Scorpio: strategic, intense, relentless — plays a long game and never forgets a slight. Mars in Libra: action through negotiation and partnership — struggles with direct confrontation but excels at closing deals through charm. Mars in Capricorn: disciplined, ambitious, climbs methodically — one of the most effective placements for sustained business building.</p>
+  <p>Practically, Mars tells you how a client should structure their work day and their sales process. A Mars in Gemini client works in sprints and needs variety. A Mars in Taurus client builds slowly and hates rushing. Forcing the wrong pace is a guaranteed path to burnout.</p>
+  <h2>♃ Jupiter: Where Your Luck & Expansion Live</h2>
+  <p>Jupiter is the planet of expansion, abundance, and what Weiss calls "fortune beyond previously assumed boundaries." It is the most immediately useful planet for timing work in a business reading. Wherever Jupiter sits in a natal chart shows a person's area of natural luck and growth. Jupiter transits — as it moves around the chart over its 12-year cycle — mark the major expansion windows in a client's career and income.</p>
+  <p>Weiss's Jupiter shadow period analysis (the matching of Jupiter's 12-year cycle across 1977, 1989, and 2001) demonstrates that these cycles are not abstract — they create real, recurring cultural and economic themes that businesses can anticipate and prepare for. At the individual level, knowing when Jupiter will transit a client's 2nd house (money), 10th house (career), or natal Sun (identity expansion) gives you a precise roadmap of their most powerful opportunity windows for the next decade.</p>
+  <div class="exercise">
+    <div class="ex-label">Practice: Jupiter Timing</div>
+    <h4>Map Your Expansion Windows</h4>
+    <p>Find where Jupiter currently sits by transit (use astro.com's extended chart selection). Which of your natal houses is it activating? Write one specific business opportunity or action that aligns with that house's domain — and identify the next three houses Jupiter will move through over the coming years, noting what business domain each governs.</p>
+  </div>
+</div>`,
+
+planets_outer: `
+<div class="kicker">Module 03 · Lesson 4</div>
+<h1 class="lesson-h1">Saturn, Uranus,<br><em>Neptune & Pluto.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 06</div></div>
+<div class="body">
+  <p>The outer planets move slowly — Saturn takes 29.5 years to orbit the Sun, Pluto takes 248 years. This means they represent long-term formative forces rather than day-to-day personality traits. In a business reading, they describe the deeper structural themes of a person's professional life: the lessons they are here to master (Saturn), the disruptions they are wired to create (Uranus), the inspiration they channel (Neptune), and the transformational power they carry (Pluto).</p>
+  <h2>♄ Saturn: The Long Game</h2>
+  <p>Saturn is the most important planet for understanding a person's relationship to authority, structure, and earned success. Weiss calls it The General — "traditional authority; often associated with senior executives and anyone with real long-term experience who counsels a vested approach." Saturn governs discipline, principle, and policy in the service of long-term success.</p>
+  <p>In a personal chart, Saturn shows where a person feels most tested, most restricted — and, over time, most capable. Saturn in the 2nd house: the lesson is financial discipline and self-worth. Saturn in the 10th house: the lesson is earning authority through patient, sustained effort. The Saturn return — which occurs around age 28–30 and again at 58–60 — is one of the most significant life transitions in anyone's professional story. Most people don't feel like they have truly arrived in their career until after their first Saturn return.</p>
+  <p>For timing: Saturn transits to key points in a chart mark periods of serious professional testing and consolidation. They are not usually comfortable — but they build what lasts.</p>
+  <h2>♅ Uranus: The Disruptor</h2>
+  <p>Uranus is The Wizard — "the genius, sometimes found in R&D but most always likely to be a surprise; a change maker." Uranus governs innovation, sudden insight, and the break from convention. In a person's chart, Uranus shows where they are hardwired to operate differently from the expected, to disrupt the norm, and to introduce new paradigms.</p>
+  <p>Uranus transits — particularly when Uranus squares or opposes its natal position — coincide with major disruptions and reinventions in a person's life. The "Uranus opposition" around age 40–44 is the astrological engine behind what culture calls the mid-life crisis. In business terms, it is often the point at which a person completely reinvents their offer, their market, or their identity. When you see a client approaching this window, the reading should prepare them for creative disruption rather than treating it as a problem to solve.</p>
+  <h2>♆ Neptune: The Vision & The Dissolution</h2>
+  <p>Neptune is The Dreamer — "inspired, sometimes out of it and sometimes all-knowing; often very useful as a bellwether." Neptune governs spiritual calling, artistic inspiration, and the capacity to channel something beyond the rational mind. It also governs illusion, self-deception, and the blurring of boundaries.</p>
+  <p>In a business reading, Neptune's house placement shows where a person has access to genuine visionary inspiration — and where they are most vulnerable to wishful thinking. Neptune in the 2nd house: beautiful ideas about money that may not be grounded in financial reality. Neptune in the 10th: a career that feels like a calling — and potentially an identity that is more projection than substance. The key is always to identify whether Neptune energy is being channelled through a grounded structure (Saturn) or floating free.</p>
+  <h2>♇ Pluto: Transformational Power</h2>
+  <p>Pluto is The Executioner — "pure passion; can make anything happen but is often difficult to supervise." Pluto governs power, transformation, and the irreversible. Where Pluto sits in a chart, nothing stays the same for long. Pluto transits are the great transformational passages of a life — slow, inevitable, and complete.</p>
+  <p>In a business reading, Pluto's natal position shows a person's relationship to power and to deep change. Pluto in the 1st house: the identity is radically transforming, often multiple times in a lifetime. Pluto in the 8th house: transformation through financial and partnership crises. Pluto conjunct the North Node (as in Sarnoff's chart, which we cover in Module 6) marks a person whose personal destiny is inseparable from a transformational cultural moment.</p>
+  <div class="exercise">
+    <div class="ex-label">Synthesis</div>
+    <h4>Your Saturn & Pluto Story</h4>
+    <p>For your own chart: where is Saturn, and what lesson is it asking you to master in your business? Where is Pluto, and what in your professional life has already undergone irreversible transformation? Write one paragraph on each. This is the depth layer of a business reading that separates a surface reading from a genuinely transformational one.</p>
+  </div>
+</div>`,
+
+case_disney: `
+<div class="kicker">Module 06 · Case Study 1</div>
+<h1 class="lesson-h1">Walt Disney:<br><em>Sagittarius Builds a World.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Case Study</strong></div><div class="meta-dot"></div><div class="meta-item">Module 06 of 06</div></div>
+<div class="body">
+  <p>Walt Disney (born December 5, 1901 — Sagittarius) is one of the most instructive business charts in Weiss's book. Two pivotal events in Disney's career are analysed: the premiere of Steamboat Willie in 1928 (the first synchronised sound cartoon and introduction of Mickey Mouse), and the opening of Disneyland in 1955. Both charts reveal how a single founder's natal chart echoes through the defining moments of an enterprise.</p>
+  <h2>Event 1: Steamboat Willie — November 18, 1928</h2>
+  <p>Weiss identifies a remarkable exact Grand Trine in the event chart — a powerful configuration where three planets all form harmonious 120-degree angles to one another. The three planets: <strong>Venus in Capricorn</strong> (quality, enduring value, earnest authority — Mickey Mouse himself), <strong>Neptune in Virgo</strong> (the engineering magic that produces talking cartoon characters), and <strong>Jupiter in Taurus</strong> (the enormous, long-haul financial accumulation). Three planets. Three chart signatures. One business empire.</p>
+  <p>The aspect to Disney's natal chart is equally precise: event Mars in Cancer is in direct opposition to Disney's natal Mars in Capricorn. Weiss reads this not as conflict but as the birth of an alter ego — the energy of Disney's own ambition (Mars in Capricorn: disciplined, authoritative) encountering its counterpart in creative family energy (Mars in Cancer: protective, emotionally driven). Mickey Mouse was not just a character. He was, as Disney's own reflections suggest, a genuine extension of himself.</p>
+  <h2>Event 2: The Opening of Disneyland — July 17, 1955</h2>
+  <p>The Disneyland chart has Pluto in Leo exactly sextile Neptune in Libra — a creative generation (Pluto in Leo, the baby boomers) in relationship to magical creativity (Neptune in Libra). The midpoint of the event's Sun in Cancer and Jupiter in Leo, as well as its Uranus in Cancer and Mars in Leo, lands at zero degrees Leo — what Weiss calls "a fated degree that connects the baby boomers to the previous generation." Disneyland was not built for any single audience. It was built at the exact astrological moment that made it resonate across generations simultaneously.</p>
+  <div class="pullquote"><p>"The event chart Saturn in Scorpio is sextile Disney's Saturn in Virgo — a stable, long-term business opportunity greatly enhanced by Disney's natal Saturn-Jupiter conjunction." — Steve Weiss</p></div>
+  <h2>What This Teaches You</h2>
+  <p>The Disney case study demonstrates three things for your reading practice. First: a Sagittarius Sun (farsighted, visionary, meaning-seeking) will build something that reaches far beyond its immediate context. Second: the Grand Trine in a launch chart is one of the most powerful indicators of an enterprise that will become culturally iconic — the three energies flow so harmoniously that momentum builds on itself. Third: when a leader's natal Mars is activated by a launch chart (as it was for Disney with Steamboat Willie), it marks a truly defining professional moment — the event and the person are cosmically aligned.</p>
+  <div class="exercise">
+    <div class="ex-label">Apply It</div>
+    <h4>Read the Launch Chart</h4>
+    <p>For a client who is about to launch a new offer: pull the chart for their planned launch date and time. Look for any Grand Trines (especially involving Venus, Jupiter, and Neptune — the beauty-expansion-vision combination). Note any conjunctions between the launch chart and their natal chart. Does the launch chart Saturn form a difficult square to their natal Sun? Is Jupiter activating their 2nd house? This is how you give timing recommendations that are genuinely grounded in the chart.</p>
+  </div>
+</div>`,
+
+case_kroc: `
+<div class="kicker">Module 06 · Case Study 2</div>
+<h1 class="lesson-h1">Ray Kroc & McDonald's:<br><em>Libra Builds an Empire.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Case Study</strong></div><div class="meta-dot"></div><div class="meta-item">Module 06 of 06</div></div>
+<div class="body">
+  <p>Ray Kroc (born October 5, 1902 — Libra) and the formation of McDonald's System, Inc. on March 2, 1955 — the day Kroc bought the concept rights from the McDonald brothers — is one of the most celebrated business astrology examples in Weiss's book. It is also a masterclass in understanding how a Libra archetype builds scale through systems, partnership, and the democratisation of experience.</p>
+  <h2>The Formation Chart: March 2, 1955</h2>
+  <p>The event chart carries <strong>Jupiter in Cancer trine Saturn in Scorpio</strong> — what Weiss describes as "an excellent business aspect." In these particular signs, the symbolism is exact: Jupiter in Cancer (food, family, emotional security, the nurturing of masses) in flowing relationship to Saturn in Scorpio (business profit, long-term financial structure, the strategic discipline of accumulated wealth). This is literally the astrological fingerprint of a business that will feed billions of families while generating generational wealth.</p>
+  <p>There is also an exact square from Venus in Capricorn to Neptune in Libra — an emotional decision (Venus in Capricorn wanting enduring, prestigious value) in difficult aspect to a spiritual calling (Neptune in Libra seeking fairness, aesthetic harmony, and democratic access). Weiss reads this as the tension at the heart of the McDonald's enterprise: the drive for prestige and profit in friction with the populist vision. That tension — never fully resolved — has defined the brand for 70 years.</p>
+  <h2>The Libra Archetype in Action</h2>
+  <p>Recall from Module 1: Libra's business characteristics include consensus building, the democratisation of style, and the creation of systems that make something beautiful or desirable accessible to everyone. Ray Kroc was not building a restaurant. He was building a franchise system — a partnership model that could be replicated precisely across thousands of locations. That is pure Libra: the belief that the right system, fairly applied, creates something greater than any individual could build alone.</p>
+  <p>Weiss notes that Kroc once proclaimed "You're only as good as the people you hire" — classic Libra: success through others, through relationship, through the right partnerships. His willingness to identify and acquire the McDonald brothers' concept (rather than invent his own) also reflects the Libra capacity to recognise and elevate quality that already exists, rather than insisting on being first (Aries) or building from scratch (Taurus).</p>
+  <h2>What This Teaches You</h2>
+  <p>The Kroc case study shows how to read an archetype through the actual business model. Ask of any client: does the structure of their business reflect their sun sign's deepest intelligence? A Libra building a one-to-one, highly personal, non-replicable service business is fighting their own chart. A Taurus building a trend-chasing, pivot-heavy business is doing the same. The business model should be an expression of the archetype.</p>
+  <div class="exercise">
+    <div class="ex-label">Apply It</div>
+    <h4>Archetype-to-Business-Model Audit</h4>
+    <p>For a client (or yourself): does the current business model reflect the sun sign archetype? Write one paragraph identifying the alignment or misalignment — and one specific structural change that would bring the business model into deeper resonance with who the founder actually is.</p>
+  </div>
+</div>`,
+
+case_sarnoff: `
+<div class="kicker">Module 06 · Case Study 3</div>
+<h1 class="lesson-h1">David Sarnoff:<br><em>North Node as Destiny.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Case Study</strong></div><div class="meta-dot"></div><div class="meta-item">Module 06 of 06</div></div>
+<div class="body">
+  <p>David Sarnoff (born February 27, 1891 — Pisces) was arguably electronic media's greatest historical visionary — the man who, as head of RCA, launched both radio and television as mass media. The event Weiss analyses is the RCA broadcast of the Dempsey-Carpentier heavyweight boxing match on July 2, 1921 — the first major entertainment-based national radio broadcast in American history. This event is the moment that created the modern media industry.</p>
+  <h2>The Event Chart: July 2, 1921</h2>
+  <p>Weiss: "Sometimes astrology seems too accurate to be true." The event chart carries a precisely exact trine from <strong>Mars in Cancer to Uranus in Pisces</strong>. Mars in Cancer (a prominent, emotionally charged public battle — this was a heavyweight championship fight) in free-flowing relationship to Uranus in Pisces (the magic of technology, the invisible wave that carries sound across space). That is literally the astrological description of the first major radio broadcast in history.</p>
+  <p>Mars was also conjunct by less than one degree to both the Sun and to Pluto — a prominent battle imbued with transformational power and primary cultural significance. The chart was not describing a boxing match. It was describing the birth of an industry.</p>
+  <h2>The North Node Aspect: Personal Destiny</h2>
+  <p>The most significant aspect in this case study is between the event chart and Sarnoff's natal chart. Weiss notes that within one-tenth of a degree or less, the event Pluto makes: a trine to Sarnoff's Sun, a square to his Jupiter, a square to his Saturn — and <strong>an exact conjunction to Sarnoff's North Node</strong>.</p>
+  <p>This is the case study for Module 5. The North Node represents personal destiny — the direction the soul is travelling toward in this lifetime. When the Pluto of a culturally transformational event lands on the exact degree of your North Node, it does not get more fated than that. Sarnoff was not just present at the birth of radio. The birth of radio was the activation of his soul's purpose.</p>
+  <p>This is why the North Node matters in a business reading. It is not just a growth direction. It is the place where a person's individual trajectory and a larger cultural moment can intersect with extraordinary precision. When you help a client understand their North Node, you are not just giving them a growth framework — you are helping them recognise the events, opportunities, and relationships that are part of their actual destiny.</p>
+  <div class="exercise">
+    <div class="ex-label">Apply It</div>
+    <h4>North Node Activation</h4>
+    <p>For yourself or a client: look at the transiting planets currently activating your North Node. Is there a conjunction, trine, or sextile from a slower-moving planet (Jupiter, Saturn, Uranus, Neptune, or Pluto) to your natal North Node right now or in the next 12 months? If so, this marks a period of potential soul-level activation in your professional life. Write one paragraph on what that activation might look and feel like, based on the planet and the house involved.</p>
+  </div>
+</div>`,
+
+case_murdoch: `
+<div class="kicker">Module 06 · Case Study 4</div>
+<h1 class="lesson-h1">Murdoch & Schiff:<br><em>A Fated Deal.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Case Study</strong></div><div class="meta-dot"></div><div class="meta-item">Module 06 of 06</div></div>
+<div class="body">
+  <p>The sale of the New York Post from Dorothy Schiff to Rupert Murdoch on November 19, 1976 is one of the most astrologically extraordinary business transactions in Weiss's book — and the richest case study for understanding how two people's charts can be cosmically interlinked through a shared professional destiny.</p>
+  <h2>The Connection Between the Two Charts</h2>
+  <p>Begin with the fact that both Dorothy Schiff and Rupert Murdoch were born on the same day: March 11, twenty-eight years apart. Both are Pisces. But the synchronicities go far deeper than sun sign alignment. Their natal charts are linked by multiple exact conjunctions: Murdoch's Saturn to Schiff's Venus in Aquarius; Murdoch's Venus to Schiff's Uranus in Aries; Murdoch's Chiron to Schiff's Saturn in Capricorn; Murdoch's Mars to Schiff's South Node in Libra.</p>
+  <p>Weiss is explicit: "The branch of astrology that dabbles in past lives and reincarnation would have an absolute field day with this particular pairing of personalities." Two people born on the same date, 28 years apart, whose charts are linked by exact conjunctions across multiple planets — this is not coincidence. It is the kind of synchronicity that makes even the most sceptical business mind pause.</p>
+  <h2>The Event Chart: November 19, 1976</h2>
+  <p>The compelling aspect in the event chart is a Sun conjunction to Mars in Scorpio in opposition to Jupiter in Taurus. Weiss reads this immediately: oppositions frequently appear in event charts related to sales, as they represent the two sides of a negotiation. Here: a wilful competitor with a fierce survival instinct (Sun conjunct Mars in Scorpio) facing off against extremely deep pockets (Jupiter in Taurus). The power dynamic is written in the sky.</p>
+  <p>The aspects to the individual charts are equally precise. The event Pluto in Libra is in exact conjunction to Mars in Schiff's chart — Pluto activating her drive and ambition at the moment of the transaction. In Murdoch's chart, event Pluto is conjunct the South Node and in opposition to Uranus conjunct the North Node in Aries. Weiss's reading: "This would seem to be a most fated deal but one that left both participants more than a little spiritually and emotionally bloodied."</p>
+  <h2>What This Teaches You</h2>
+  <p>This case study introduces <strong>synastry</strong> — the comparison of two charts — as a tool in a business reading. When a client is navigating a major partnership, acquisition, or collaboration, comparing the two charts is one of the most powerful things you can do. Look for Saturn-Venus contacts (commitment through structure), Mars-Mars contacts (competitive energy — can be generative or destructive), and any planet-to-Node contacts (karmic or fated connections). The quality and nature of the aspects tells you whether this relationship is one of genuine alignment or of tension that will ultimately exhaust both parties.</p>
+  <div class="exercise">
+    <div class="ex-label">Final Integration Exercise</div>
+    <h4>Your Full Reading Practice</h4>
+    <p>You have now covered all six modules. Pull a complete chart for yourself or a willing client. Work through the full reading sequence: (1) Sun sign archetype — Module 1. (2) 2nd, 6th, 10th houses — Module 2. (3) Moon sign need, dominant planets — Module 3. (4) Ascendant first impression + Midheaven career calling — Module 4. (5) South Node gifts + North Node growth direction — Module 5. (6) Any major transits currently activating the chart — Module 6 timing lens. Write up your findings in a format you could deliver to a paying client. This is your first reading. Deliver it. That is how the learning becomes real.</p>
+  </div>
+  <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">✦</div><div class="astro-div-line"></div></div>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--dark);line-height:1.6;text-align:center;max-width:520px;margin:0 auto;">You have completed the Introduction Course. The mastermind is where we go deeper.</p>
+</div>`
+
+};
+
+// ══════════════════════════════════════════
+// STATE & LOGIC
+// ══════════════════════════════════════════
+window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
+
+let completed = [];
+let currentLesson = null;
+let allLessons = [];
+MODULES.forEach(m => m.lessons.forEach(l => allLessons.push({...l, modId:m.id, modNum:m.num, modTitle:m.title})));
+
+function buildNav() {
+  const nav = document.getElementById('navWrap');
+  nav.innerHTML = '';
+  MODULES.forEach((mod, mi) => {
+    const allDone = mod.lessons.every(l => completed.includes(l.id));
+    const hasActive = currentLesson && mod.lessons.some(l => l.id === currentLesson.id);
+    const isOpen = hasActive || mi === 0;
+
+    const grp = document.createElement('div');
+    grp.className = 'mod-group';
+    grp.innerHTML = `
+      <div class="mod-header" onclick="toggleMod('ml${mi}',this)">
+        <div class="mod-badge ${allDone?'done':hasActive?'active':''}">${mod.num}</div>
+        <div class="mod-info">
+          <div class="mod-num">Module ${mod.num}</div>
+          <div class="mod-title-nav">${mod.title}</div>
+          <div class="mod-sub-nav">${mod.sub}</div>
+        </div>
+        <div class="chevron ${isOpen?'open':''}">›</div>
+      </div>
+      <div class="lesson-list ${isOpen?'open':''}" id="ml${mi}">
+        ${mod.lessons.map(l=>`
+          <div class="lesson-item ${currentLesson&&l.id===currentLesson.id?'active':''}" onclick="loadLesson('${l.id}')">
+            <div class="l-dot ${completed.includes(l.id)?'done':''}"></div>
+            <div class="l-name">${l.title}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    nav.appendChild(grp);
+  });
+}
+
+function toggleMod(id, hdr) {
+  document.getElementById(id).classList.toggle('open');
+  hdr.querySelector('.chevron').classList.toggle('open');
+}
+
+function updateProgress() {
+  const pct = Math.round((completed.length / allLessons.length) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressFrac').textContent = `${completed.length} of ${allLessons.length} lessons complete`;
+}
+
+function loadLesson(id) {
+  const lesson = allLessons.find(l => l.id === id);
+  if (!lesson) return;
+  currentLesson = lesson;
+  const mod = MODULES.find(m => m.id === lesson.modId);
+
+  document.getElementById('breadcrumb').innerHTML = `Module ${lesson.modNum} · <span>${mod.title}</span>`;
+
+  const btn = document.getElementById('completeBtn');
+  const done = completed.includes(id);
+  btn.className = 'complete-btn' + (done ? ' done' : '');
+  btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M3.5 6l1.5 1.5L8.5 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> ${done ? 'Completed' : 'Mark Complete'}`;
+
+  const html = C[lesson.content] || `<div class="kicker">${lesson.title}</div><h1 class="lesson-h1">Content<br><em>Coming Soon.</em></h1><div class="body"><p>This lesson will be added as Cato builds out the full content. Check back soon.</p></div>`;
+  const idx = allLessons.findIndex(l => l.id === id);
+  const prev = idx > 0 ? allLessons[idx-1] : null;
+  const next = idx < allLessons.length-1 ? allLessons[idx+1] : null;
+
+  document.getElementById('contentArea').innerHTML = html + `
+    <div class="lesson-nav">
+      <div>${prev ? `<div class="nav-btn" onclick="loadLesson('${prev.id}')"><div class="nav-dir">← Previous</div><div class="nav-title">${prev.title}</div></div>` : ''}</div>
+      <div>${next ? `<div class="nav-btn next" onclick="loadLesson('${next.id}')"><div class="nav-dir">Next →</div><div class="nav-title">${next.title}</div></div>` : '<div class="nav-btn next"><div class="nav-dir">✦</div><div class="nav-title">Course Complete</div></div>'}</div>
+    </div>`;
+
+  buildNav(); updateProgress(); window.scrollTo(0,0);
+}
+
+async function markComplete() {
+  if (!currentLesson) return;
+  if (!completed.includes(currentLesson.id)) {
+    await markLessonComplete(currentLesson.id);
+    completed.push(currentLesson.id);
+    showToast('Lesson marked complete ✓');
+  }
+  loadLesson(currentLesson.id);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+function enterCourse() {
+  document.getElementById('welcome').classList.remove('active');
+  document.getElementById('course').classList.add('active');
+  loadLesson(allLessons[0].id);
+}
+
+async function init() {
+  const session = await getSession();
+  if (!session) { window.location.href = 'index.html'; return; }
+
+  const grant = await getCourseGrant();
+  if (!grant) { window.location.href = 'index.html'; return; }
+
+  completed = await getCourseProgress();
+  buildNav();
+  updateProgress();
+
+  // Skip welcome screen if they've already started
+  if (completed.length > 0) {
+    enterCourse();
+  }
+}
+
+init();
+</script>
 </body>
 </html>

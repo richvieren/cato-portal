@@ -21,6 +21,16 @@ function blueprintState(grant, profile) {
 const miniReadingState = blueprintState;
 
 /**
+ * Determine course card state.
+ * locked — no grant row
+ * ready  — grant exists (no intake, direct access)
+ */
+function courseState(grant) {
+  if (!grant) return 'locked';
+  return 'ready';
+}
+
+/**
  * Format countdown: "Xh Ym"
  */
 function formatCountdown(available_at) {
@@ -91,6 +101,38 @@ function renderBlueprintCard(state, grant) {
       }
     }, 60000);
   }
+}
+
+/**
+ * Render the Course card into #course-card.
+ */
+function renderCourseCard(state) {
+  const card = document.getElementById('course-card');
+  if (!card) return;
+
+  const configs = {
+    locked: {
+      status: '',
+      ctaText: 'Get the course',
+      ctaHref: 'https://catovermeulen.com',
+    },
+    ready: {
+      status: 'You have access',
+      ctaText: 'Enter course →',
+      ctaHref: 'course.html',
+    },
+  };
+
+  const c = configs[state];
+
+  card.innerHTML = `
+    <div class="card-label">Introduction Course</div>
+    <h2>Astrology Business Reading</h2>
+    <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
+    ${c.ctaText
+      ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
+      : ''}
+  `;
 }
 
 /**

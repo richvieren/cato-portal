@@ -1,4 +1,4 @@
-// db.js — access_grants + profiles data layer
+// db.js — access_grants + profiles + course_progress data layer
 // Depends on window.sb from auth.js
 
 /**
@@ -90,6 +90,46 @@ async function getProfile() {
     .maybeSingle();
   if (error) { console.error('getProfile error:', error); return null; }
   return data;
+}
+
+/**
+ * Fetch Course access grant for current user.
+ * Returns grant row or null.
+ */
+async function getCourseGrant() {
+  const { data, error } = await window.sb
+    .from('access_grants')
+    .select('id, granted_at')
+    .eq('product', 'course')
+    .is('revoked_at', null)
+    .maybeSingle();
+  if (error) { console.error('getCourseGrant error:', error); return null; }
+  return data;
+}
+
+/**
+ * Fetch completed lesson IDs for current user.
+ * Returns array of lesson_id strings.
+ */
+async function getCourseProgress() {
+  const { data, error } = await window.sb
+    .from('course_progress')
+    .select('lesson_id');
+  if (error) { console.error('getCourseProgress error:', error); return []; }
+  return (data || []).map(r => r.lesson_id);
+}
+
+/**
+ * Mark a lesson complete for current user.
+ * Returns { error } or {}.
+ */
+async function markLessonComplete(lessonId) {
+  const { data: { session } } = await window.sb.auth.getSession();
+  const { error } = await window.sb
+    .from('course_progress')
+    .upsert({ user_id: session.user.id, lesson_id: lessonId }, { onConflict: 'user_id,lesson_id' });
+  if (error) { console.error('markLessonComplete error:', error); return { error }; }
+  return {};
 }
 
 /**
