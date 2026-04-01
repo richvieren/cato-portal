@@ -69,8 +69,8 @@ async function submitIntake(userId, fields) {
     return { error: body.error || 'Failed to set available_at' };
   }
 
-  // 3. Trigger PDF pipeline on VPS (fire and forget — don't block the user)
-  fetch('https://api.catovermeulen.com/blueprint-portal', {
+  // 3. Trigger PDF pipeline on VPS — awaited so the request isn't cancelled by page navigation
+  await fetch('https://api.catovermeulen.com/blueprint-portal', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(fields),
