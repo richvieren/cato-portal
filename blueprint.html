@@ -83,9 +83,11 @@
       <div id="ready-view" style="display:none">
         <h1>Your Blueprint</h1>
         <p class="subtitle">Your reading is ready.</p>
-        <p style="color:var(--stone);line-height:1.8;margin-top:2rem">
-          Cato will be in touch shortly with your full Category of One Blueprint.
+        <p style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem">
+          Your Category of One Blueprint is ready to download.
         </p>
+        <a id="download-btn" class="btn btn-primary" style="display:none">Download your Blueprint</a>
+        <p id="download-loading" style="color:var(--stone);font-size:0.85rem">Loading your file...</p>
       </div>
 
     </div>
@@ -121,7 +123,28 @@
         return;
       }
 
+      // Ready — show download button
       document.getElementById('ready-view').style.display = 'block';
+      await loadDownloadButton(session.user.email);
+    }
+
+    async function loadDownloadButton(email) {
+      const { data, error } = await window.sb.storage
+        .from('blueprints')
+        .createSignedUrl(email + '/blueprint.pdf', 3600);
+
+      const loadingEl = document.getElementById('download-loading');
+      const btnEl = document.getElementById('download-btn');
+
+      if (error || !data) {
+        loadingEl.textContent = 'Your reading is being finalised. Check back shortly.';
+        return;
+      }
+
+      loadingEl.style.display = 'none';
+      btnEl.href = data.signedUrl;
+      btnEl.download = 'Category-of-One-Blueprint.pdf';
+      btnEl.style.display = 'inline-block';
     }
 
     function startCountdown(available_at) {
