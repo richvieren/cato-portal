@@ -6,7 +6,7 @@
 - [x] Text size bigger (15px to 17px)
 - [x] Show percentage complete
 - [x] Welcome & Course Overview = separate module (Module 00)
-- [ ] Add 5-10 question quiz after each module (self-assessment with grade)
+- [x] Add 5-10 question quiz after each module (self-assessment with grade)
 - [x] Fix bonus module numbering
 
 ### Voice & Framing
@@ -16,7 +16,7 @@
 - [x] Explain whole house system & how to select it on astro.com
 
 ### Module 1 — Archetypes
-- [ ] Before archetypes: explain Sun, Moon & Rising and what chart dominance means
+- [x] Before archetypes: explain Sun, Moon & Rising and what chart dominance means
 - [x] Remove all transit/timing references (too advanced for intro course)
 - [x] Add elements & modes for each sign and what they mean
 - [x] Add multiple profession examples per sign (across industries)
@@ -24,24 +24,24 @@
 - [x] After all signs: add section on Big Three combinations with examples
 
 ### Module 2 — Houses
-- [ ] 2nd/6th/10th house through each sign: much more extensive, depth, substance, concrete scenarios
+- [x] 2nd/6th/10th house through each sign: much more extensive, depth, substance, concrete scenarios
 
 ### Module 3 — Planets
-- [ ] Double the length — more depth & context throughout
+- [x] Double the length (added planetary cabinet, Mercury 12 signs, Venus 12 signs) — more depth & context throughout
 
 ### Module 4 — ASC & MC
-- [ ] More depth per archetype with various manifestation possibilities
+- [x] More depth per archetype with various manifestation possibilities
 - [x] MC + ASC: add 5 concrete combination examples
 - [x] Add bonus section: working with the ruler of ASC/MC for added depth
 - [x] Add pro tip: ChatGPT prompt to get full picture of online representation
 
 ### Module 5 — Nodes
-- [ ] Much more context per archetype
-- [ ] More examples and various manifestation possibilities in business & leadership
+- [x] Much more context per archetype
+- [x] More examples and various manifestation possibilities in business & leadership
 
 ### Module 6 — Case Studies
 - [x] Replace Walt Disney with Oprah Winfrey (API-verified)
-- [ ] Each case study: comprehensive overview using ALL course concepts (Big Three, ASC, MC, dominance/stellium, Nodes)
+- [x] Each case study: comprehensive overview using ALL course concepts (Big Three, ASC, MC, dominance/stellium, Nodes)
 
 ### Bonus Module
 - [ ] Rename to "Bonuses" as final separate module
