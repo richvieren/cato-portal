@@ -139,7 +139,23 @@
   .nav-title { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--dark); }
   .nav-btn.next { text-align:right; }
 
-  /* WELCOME */
+  /* QUIZZES */
+  .quiz-wrap { margin-top:2rem; padding:2rem; background:rgba(159,130,97,0.06); border:1px solid var(--border); }
+  .quiz-title { font-family:'Cormorant Garamond',serif; font-size:24px; color:var(--dark); margin-bottom:1.2rem; }
+  .quiz-q { margin-bottom:1.5rem; }
+  .quiz-q p { font-size:15px; font-weight:400; color:var(--dark); margin-bottom:0.6rem; }
+  .quiz-q label { display:block; padding:0.5rem 0.8rem; margin:0.25rem 0; font-size:15px; color:var(--mid); cursor:pointer; border:1px solid transparent; transition:all 0.15s; }
+  .quiz-q label:hover { background:rgba(159,130,97,0.05); }
+  .quiz-q input[type="radio"] { margin-right:0.6rem; accent-color:var(--golden); }
+  .quiz-q label.correct { background:rgba(12,148,98,0.08); border-color:rgba(12,148,98,0.3); color:var(--dark); }
+  .quiz-q label.incorrect { background:rgba(200,50,50,0.06); border-color:rgba(200,50,50,0.2); color:var(--light); }
+  .quiz-btn { background:var(--smoke); color:var(--mist); border:none; padding:10px 24px; font-family:'Jost',sans-serif; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; margin-top:0.5rem; }
+  .quiz-btn:hover { background:var(--golden); }
+  .quiz-result { margin-top:1rem; padding:1rem; font-size:15px; color:var(--dark); font-weight:400; }
+  .quiz-result.pass { background:rgba(12,148,98,0.08); border-left:3px solid #0C9462; }
+  .quiz-result.fail { background:rgba(200,50,50,0.06); border-left:3px solid rgba(200,50,50,0.4); }
+
+  /* WELCOME */  /* WELCOME */
   .screen { display:none; }
   .screen.active { display:block; }
   .welcome { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 40px; text-align:center; }
@@ -261,6 +277,7 @@ const MODULES = [
       { id:'m1l4', title:'Air Signs: Gemini, Libra, Aquarius', content:'air_signs' },
       { id:'m1l5', title:'Water Signs: Cancer, Scorpio, Pisces', content:'water_signs' },
       { id:'m1l6', title:'The Big Three: How Combinations Come Together', content:'big_three' },
+      { id:'m1quiz', title:'Module 1 Quiz', content:'quiz_m1' },
     ]
   },
   {
@@ -272,6 +289,7 @@ const MODULES = [
       { id:'m2l2', title:'2nd House: Money, Assets & Talent', content:'house_2nd' },
       { id:'m2l3', title:'6th House: Work, Team & Daily Operations', content:'house_6th' },
       { id:'m2l4', title:'10th House: Career, Status & Public Rank', content:'house_10th' },
+      { id:'m2quiz', title:'Module 2 Quiz', content:'quiz_m2' },
     ]
   },
   {
@@ -283,6 +301,7 @@ const MODULES = [
       { id:'m3l2', title:'Sun, Moon & Mercury', content:'planets_sun_moon_merc' },
       { id:'m3l3', title:'Venus, Mars & Jupiter', content:'planets_venus_mars_jup' },
       { id:'m3l4', title:'Saturn, Uranus, Neptune & Pluto', content:'planets_outer' },
+      { id:'m3quiz', title:'Module 3 Quiz', content:'quiz_m3' },
     ]
   },
   {
@@ -293,6 +312,7 @@ const MODULES = [
       { id:'m4l1', title:'The Ascendant: Your First Impression', content:'ascendant' },
       { id:'m4l2', title:'The Midheaven: Your Public Calling', content:'midheaven' },
       { id:'m4l3', title:'MC + ASC: Building Your Brand Identity', content:'mc_asc_combined' },
+      { id:'m4quiz', title:'Module 4 Quiz', content:'quiz_m4' },
     ]
   },
   {
@@ -302,6 +322,7 @@ const MODULES = [
     lessons:[
       { id:'m5l1', title:"South Node: Your Karmic Gifts", content:'south_node' },
       { id:'m5l2', title:"North Node: Your Growth Direction", content:'north_node' },
+      { id:'m5quiz', title:'Module 5 Quiz', content:'quiz_m5' },
     ]
   },
   {
@@ -313,6 +334,7 @@ const MODULES = [
       { id:'m6l2', title:"Beyonc\u00e9: Virgo Builds an Empire", content:'case_beyonce' },
       { id:'m6l3', title:'Rihanna: Pisces Creates a Billion-Dollar Brand', content:'case_rihanna' },
       { id:'m6l4', title:'Taylor Swift: Sagittarius Rewrites the Rules', content:'case_taylor' },
+      { id:'m6quiz', title:'Module 6 Quiz', content:'quiz_m6' },
     ]
   },
   {
@@ -1639,6 +1661,197 @@ bonus_career_interests: `
   </div>
 </div>`,
 
+quiz_m1: `
+<div class="kicker">Module 01 &middot; Quiz</div>
+<h1 class="lesson-h1">Test Your<br><em>Archetype Knowledge.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+<div class="body">
+  <div class="quiz-wrap" id="quiz-m1">
+    <div class="quiz-title">Module 1 Quiz &#x1F52E;</div>
+    <div class="quiz-q"><p>1. Which element is associated with action, initiative, and starting things?</p>
+      <label><input type="radio" name="m1q1" data-correct="false"> Earth</label>
+      <label><input type="radio" name="m1q1" data-correct="true"> Fire</label>
+      <label><input type="radio" name="m1q1" data-correct="false"> Water</label>
+      <label><input type="radio" name="m1q1" data-correct="false"> Air</label></div>
+    <div class="quiz-q"><p>2. A client who is a perfectionist, detail-obsessed, and struggles to launch because nothing is ever &ldquo;ready&rdquo; most likely has strong energy in which sign?</p>
+      <label><input type="radio" name="m1q2" data-correct="false"> Aries</label>
+      <label><input type="radio" name="m1q2" data-correct="false"> Leo</label>
+      <label><input type="radio" name="m1q2" data-correct="true"> Virgo</label>
+      <label><input type="radio" name="m1q2" data-correct="false"> Libra</label></div>
+    <div class="quiz-q"><p>3. What does &ldquo;Cardinal&rdquo; mean as a mode?</p>
+      <label><input type="radio" name="m1q3" data-correct="true"> Initiates &mdash; starts things</label>
+      <label><input type="radio" name="m1q3" data-correct="false"> Sustains &mdash; maintains things</label>
+      <label><input type="radio" name="m1q3" data-correct="false"> Adapts &mdash; changes things</label></div>
+    <div class="quiz-q"><p>4. What are the Big Three in a birth chart?</p>
+      <label><input type="radio" name="m1q4" data-correct="false"> Mercury, Venus, Mars</label>
+      <label><input type="radio" name="m1q4" data-correct="false"> 2nd house, 6th house, 10th house</label>
+      <label><input type="radio" name="m1q4" data-correct="true"> Sun, Moon, Rising</label>
+      <label><input type="radio" name="m1q4" data-correct="false"> North Node, South Node, Midheaven</label></div>
+    <div class="quiz-q"><p>5. A stellium means:</p>
+      <label><input type="radio" name="m1q5" data-correct="false"> Two planets in the same sign</label>
+      <label><input type="radio" name="m1q5" data-correct="true"> Three or more planets in the same sign</label>
+      <label><input type="radio" name="m1q5" data-correct="false"> A planet at 0 degrees</label>
+      <label><input type="radio" name="m1q5" data-correct="false"> Two planets opposite each other</label></div>
+    <button class="quiz-btn" onclick="gradeQuiz('quiz-m1')">Check Answers</button>
+    <div class="quiz-result"></div>
+  </div>
+</div>`,
+quiz_m2: `
+<div class="kicker">Module 02 &middot; Quiz</div>
+<h1 class="lesson-h1">Test Your<br><em>House Knowledge.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+<div class="body">
+  <div class="quiz-wrap" id="quiz-m2">
+    <div class="quiz-title">Module 2 Quiz &#x1F3E0;</div>
+    <div class="quiz-q"><p>1. The 2nd house represents:</p>
+      <label><input type="radio" name="m2q1" data-correct="false"> Career and public image</label>
+      <label><input type="radio" name="m2q1" data-correct="true"> Personal income, values, and self-worth</label>
+      <label><input type="radio" name="m2q1" data-correct="false"> Shared resources and investments</label></div>
+    <div class="quiz-q"><p>2. The 6th house governs:</p>
+      <label><input type="radio" name="m2q2" data-correct="false"> Creativity and pleasure</label>
+      <label><input type="radio" name="m2q2" data-correct="true"> Daily work, health, and routines</label>
+      <label><input type="radio" name="m2q2" data-correct="false"> Partnerships</label></div>
+    <div class="quiz-q"><p>3. A client with Capricorn on their 2nd house cusp likely earns through:</p>
+      <label><input type="radio" name="m2q3" data-correct="false"> Creative self-expression</label>
+      <label><input type="radio" name="m2q3" data-correct="false"> Intuitive downloads</label>
+      <label><input type="radio" name="m2q3" data-correct="true"> Authority, track record, and long-game strategy</label></div>
+    <div class="quiz-q"><p>4. Saturn in the 2nd house typically means:</p>
+      <label><input type="radio" name="m2q4" data-correct="false"> Instant money luck</label>
+      <label><input type="radio" name="m2q4" data-correct="true"> Delayed earning potential that builds over time</label>
+      <label><input type="radio" name="m2q4" data-correct="false"> Spending without tracking</label></div>
+    <div class="quiz-q"><p>5. The Money-Work-Career Trinity consists of which three houses?</p>
+      <label><input type="radio" name="m2q5" data-correct="false"> 1st, 5th, 9th</label>
+      <label><input type="radio" name="m2q5" data-correct="true"> 2nd, 6th, 10th</label>
+      <label><input type="radio" name="m2q5" data-correct="false"> 4th, 8th, 12th</label></div>
+    <button class="quiz-btn" onclick="gradeQuiz('quiz-m2')">Check Answers</button>
+    <div class="quiz-result"></div>
+  </div>
+</div>`,
+quiz_m3: `
+<div class="kicker">Module 03 &middot; Quiz</div>
+<h1 class="lesson-h1">Test Your<br><em>Planet Knowledge.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+<div class="body">
+  <div class="quiz-wrap" id="quiz-m3">
+    <div class="quiz-title">Module 3 Quiz &#x1F30D;</div>
+    <div class="quiz-q"><p>1. Which planet governs HOW you communicate, write, and sell?</p>
+      <label><input type="radio" name="m3q1" data-correct="false"> Venus</label>
+      <label><input type="radio" name="m3q1" data-correct="true"> Mercury</label>
+      <label><input type="radio" name="m3q1" data-correct="false"> Mars</label></div>
+    <div class="quiz-q"><p>2. Venus in a birth chart primarily shows:</p>
+      <label><input type="radio" name="m3q2" data-correct="false"> How you take action</label>
+      <label><input type="radio" name="m3q2" data-correct="true"> How you attract and what you value</label>
+      <label><input type="radio" name="m3q2" data-correct="false"> Your career destiny</label></div>
+    <div class="quiz-q"><p>3. Mars represents:</p>
+      <label><input type="radio" name="m3q3" data-correct="true"> Drive, action, and how you sell</label>
+      <label><input type="radio" name="m3q3" data-correct="false"> Emotional needs</label>
+      <label><input type="radio" name="m3q3" data-correct="false"> Communication style</label></div>
+    <div class="quiz-q"><p>4. Saturn Return happens around ages:</p>
+      <label><input type="radio" name="m3q4" data-correct="false"> 18-20</label>
+      <label><input type="radio" name="m3q4" data-correct="true"> 27-30</label>
+      <label><input type="radio" name="m3q4" data-correct="false"> 35-40</label></div>
+    <div class="quiz-q"><p>5. If a client says &ldquo;I hate selling,&rdquo; which planet should you look at first?</p>
+      <label><input type="radio" name="m3q5" data-correct="false"> Jupiter</label>
+      <label><input type="radio" name="m3q5" data-correct="false"> Saturn</label>
+      <label><input type="radio" name="m3q5" data-correct="true"> Mars</label></div>
+    <button class="quiz-btn" onclick="gradeQuiz('quiz-m3')">Check Answers</button>
+    <div class="quiz-result"></div>
+  </div>
+</div>`,
+quiz_m4: `
+<div class="kicker">Module 04 &middot; Quiz</div>
+<h1 class="lesson-h1">Test Your<br><em>Brand Identity Knowledge.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+<div class="body">
+  <div class="quiz-wrap" id="quiz-m4">
+    <div class="quiz-title">Module 4 Quiz &#x1F451;</div>
+    <div class="quiz-q"><p>1. The Ascendant (Rising Sign) represents:</p>
+      <label><input type="radio" name="m4q1" data-correct="false"> Your core identity</label>
+      <label><input type="radio" name="m4q1" data-correct="true"> How the world sees you / your first impression</label>
+      <label><input type="radio" name="m4q1" data-correct="false"> Your emotional needs</label></div>
+    <div class="quiz-q"><p>2. The Midheaven represents:</p>
+      <label><input type="radio" name="m4q2" data-correct="false"> Your daily work habits</label>
+      <label><input type="radio" name="m4q2" data-correct="true"> What you are here to be known for publicly</label>
+      <label><input type="radio" name="m4q2" data-correct="false"> Your relationship style</label></div>
+    <div class="quiz-q"><p>3. When a client says &ldquo;my brand feels off,&rdquo; you should check:</p>
+      <label><input type="radio" name="m4q3" data-correct="false"> Their Mars placement</label>
+      <label><input type="radio" name="m4q3" data-correct="true"> Whether their brand matches their Ascendant energy</label>
+      <label><input type="radio" name="m4q3" data-correct="false"> Their North Node</label></div>
+    <div class="quiz-q"><p>4. The ruler of the Ascendant sign gives you:</p>
+      <label><input type="radio" name="m4q4" data-correct="false"> Your career path</label>
+      <label><input type="radio" name="m4q4" data-correct="true"> Additional insight into HOW your first impression works</label>
+      <label><input type="radio" name="m4q4" data-correct="false"> Your money patterns</label></div>
+    <div class="quiz-q"><p>5. In the ASC + MC formula: the Ascendant _____ and the Midheaven _____.</p>
+      <label><input type="radio" name="m4q5" data-correct="true"> Hooks attention / delivers the legacy</label>
+      <label><input type="radio" name="m4q5" data-correct="false"> Earns money / spends money</label>
+      <label><input type="radio" name="m4q5" data-correct="false"> Shows the past / shows the future</label></div>
+    <button class="quiz-btn" onclick="gradeQuiz('quiz-m4')">Check Answers</button>
+    <div class="quiz-result"></div>
+  </div>
+</div>`,
+quiz_m5: `
+<div class="kicker">Module 05 &middot; Quiz</div>
+<h1 class="lesson-h1">Test Your<br><em>Nodal Knowledge.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+<div class="body">
+  <div class="quiz-wrap" id="quiz-m5">
+    <div class="quiz-title">Module 5 Quiz &#x1F52E;</div>
+    <div class="quiz-q"><p>1. The South Node represents:</p>
+      <label><input type="radio" name="m5q1" data-correct="false"> Where you are growing</label>
+      <label><input type="radio" name="m5q1" data-correct="true"> Your karmic gifts and comfort zone</label>
+      <label><input type="radio" name="m5q1" data-correct="false"> Your career calling</label></div>
+    <div class="quiz-q"><p>2. According to the ICA framework, your ideal client avatar is connected to:</p>
+      <label><input type="radio" name="m5q2" data-correct="false"> Your North Node</label>
+      <label><input type="radio" name="m5q2" data-correct="true"> Your South Node &mdash; a younger version of you</label>
+      <label><input type="radio" name="m5q2" data-correct="false"> Your Midheaven</label></div>
+    <div class="quiz-q"><p>3. The North Node always sits in the _____ sign from the South Node.</p>
+      <label><input type="radio" name="m5q3" data-correct="true"> Opposite</label>
+      <label><input type="radio" name="m5q3" data-correct="false"> Same</label>
+      <label><input type="radio" name="m5q3" data-correct="false"> Adjacent</label></div>
+    <div class="quiz-q"><p>4. A client resists their North Node because:</p>
+      <label><input type="radio" name="m5q4" data-correct="false"> It is not important</label>
+      <label><input type="radio" name="m5q4" data-correct="true"> It feels unfamiliar and uncomfortable &mdash; it is the growth edge</label>
+      <label><input type="radio" name="m5q4" data-correct="false"> It conflicts with their Sun sign</label></div>
+    <div class="quiz-q"><p>5. South Node in Libra likely means the ICA is someone who:</p>
+      <label><input type="radio" name="m5q5" data-correct="false"> Takes too many risks</label>
+      <label><input type="radio" name="m5q5" data-correct="true"> Struggles with people-pleasing and setting boundaries</label>
+      <label><input type="radio" name="m5q5" data-correct="false"> Is overly ambitious</label></div>
+    <button class="quiz-btn" onclick="gradeQuiz('quiz-m5')">Check Answers</button>
+    <div class="quiz-result"></div>
+  </div>
+</div>`,
+quiz_m6: `
+<div class="kicker">Module 06 &middot; Quiz</div>
+<h1 class="lesson-h1">Test Your<br><em>Reading Skills.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+<div class="body">
+  <div class="quiz-wrap" id="quiz-m6">
+    <div class="quiz-title">Module 6 Quiz &#x1F3AC;</div>
+    <div class="quiz-q"><p>1. Oprah has an Aquarius stellium (Sun, Mercury, Venus) in which house?</p>
+      <label><input type="radio" name="m6q1" data-correct="false"> 1st</label>
+      <label><input type="radio" name="m6q1" data-correct="true"> 3rd</label>
+      <label><input type="radio" name="m6q1" data-correct="false"> 10th</label></div>
+    <div class="quiz-q"><p>2. Beyonc&eacute;&rsquo;s Virgo Sun combined with her Scorpio Moon means she leads through:</p>
+      <label><input type="radio" name="m6q2" data-correct="true"> Excellence fuelled by deep emotional intensity</label>
+      <label><input type="radio" name="m6q2" data-correct="false"> Charm and partnership</label>
+      <label><input type="radio" name="m6q2" data-correct="false"> Big-picture vision</label></div>
+    <div class="quiz-q"><p>3. Rihanna&rsquo;s chart shows the power of POLARITY between:</p>
+      <label><input type="radio" name="m6q3" data-correct="false"> Earth and Air</label>
+      <label><input type="radio" name="m6q3" data-correct="true"> Pisces intuition and Aries execution</label>
+      <label><input type="radio" name="m6q3" data-correct="false"> Fire and Fire</label></div>
+    <div class="quiz-q"><p>4. Taylor Swift re-recording her catalogue is an example of which placement?</p>
+      <label><input type="radio" name="m6q4" data-correct="false"> Venus in Libra</label>
+      <label><input type="radio" name="m6q4" data-correct="true"> Mars in Scorpio &mdash; relentless determination to reclaim what is hers</label>
+      <label><input type="radio" name="m6q4" data-correct="false"> Jupiter in Cancer</label></div>
+    <div class="quiz-q"><p>5. In a Leadership Blueprint reading, the correct sequence is:</p>
+      <label><input type="radio" name="m6q5" data-correct="false"> Nodes first, then Sun sign</label>
+      <label><input type="radio" name="m6q5" data-correct="true"> Big Three, then Houses, then Planets, then ASC/MC, then Nodes</label>
+      <label><input type="radio" name="m6q5" data-correct="false"> Midheaven first, then everything else</label></div>
+    <button class="quiz-btn" onclick="gradeQuiz('quiz-m6')">Check Answers</button>
+    <div class="quiz-result"></div>
+  </div>
+</div>`,
+
 };
 
 // ══════════════════════════════════════════
@@ -1742,6 +1955,37 @@ function enterCourse() {
   document.getElementById('welcome').classList.remove('active');
   document.getElementById('course').classList.add('active');
   loadLesson(allLessons[0].id);
+}
+
+function gradeQuiz(quizId) {
+  const wrap = document.getElementById(quizId);
+  if (!wrap) return;
+  const questions = wrap.querySelectorAll('.quiz-q');
+  let correct = 0;
+  let total = questions.length;
+  questions.forEach(q => {
+    const labels = q.querySelectorAll('label');
+    const selected = q.querySelector('input:checked');
+    labels.forEach(l => { l.classList.remove('correct','incorrect'); });
+    if (!selected) return;
+    const isCorrect = selected.dataset.correct === 'true';
+    if (isCorrect) {
+      correct++;
+      selected.parentElement.classList.add('correct');
+    } else {
+      selected.parentElement.classList.add('incorrect');
+      // highlight correct answer
+      labels.forEach(l => {
+        if (l.querySelector('input').dataset.correct === 'true') l.classList.add('correct');
+      });
+    }
+  });
+  const pct = Math.round((correct / total) * 100);
+  const resultEl = wrap.querySelector('.quiz-result');
+  resultEl.textContent = correct + ' out of ' + total + ' correct (' + pct + '%)';
+  resultEl.className = 'quiz-result ' + (pct >= 70 ? 'pass' : 'fail');
+  if (pct >= 70) resultEl.textContent += ' \u2014 Great job! \u2728';
+  else resultEl.textContent += ' \u2014 Review the lesson and try again.';
 }
 
 async function init() {
