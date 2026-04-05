@@ -11,7 +11,7 @@
 
 ### Voice & Framing
 - [x] Stop using "she" (3rd person) → use "you" language throughout
-- [ ] Course is for service-based providers who give readings to ANYONE (not just other coaches) — add examples across various industries & niches
+- [x] Course is for service-based providers who give readings to ANYONE (not just other coaches) — add examples across various industries & niches
 - [x] Add step-by-step instructions for pulling up a chart on astro.com
 - [x] Explain whole house system & how to select it on astro.com
 
@@ -44,8 +44,8 @@
 - [x] Each case study: comprehensive overview using ALL course concepts (Big Three, ASC, MC, dominance/stellium, Nodes)
 
 ### Bonus Module
-- [ ] Rename to "Bonuses" as final separate module
-- [ ] Restyle bonus money lesson with unique title (not literal copy)
+- [x] Rename to "Bonuses" as final separate module
+- [x] Restyle bonus money lesson with unique title (not literal copy)
 - [x] Add: "Beyond Career: Different Ways of Interpreting the Midheaven"
 - [x] Add: "How Do Your Career Interests Show Up in Your Birth Chart?"
 - [ ] (Two more bonus sections coming in a future round)
