@@ -3,25 +3,25 @@
 ## Round 2 — Cato's Review (2026-04-05)
 
 ### UI/UX
-- [ ] Text size bigger
-- [ ] Show percentage complete (not just "1 of 23 lessons")
-- [ ] Welcome & Course Overview = separate module (not inside Module 1)
+- [x] Text size bigger (15px to 17px)
+- [x] Show percentage complete
+- [x] Welcome & Course Overview = separate module (Module 00)
 - [ ] Add 5-10 question quiz after each module (self-assessment with grade)
-- [ ] Fix bonus module numbering (not "Module 8")
+- [x] Fix bonus module numbering
 
 ### Voice & Framing
-- [ ] Stop using "she" (3rd person) → use "you" language throughout
+- [x] Stop using "she" (3rd person) → use "you" language throughout
 - [ ] Course is for service-based providers who give readings to ANYONE (not just other coaches) — add examples across various industries & niches
-- [ ] Add step-by-step instructions for pulling up a chart on astro.com
-- [ ] Explain whole house system & how to select it on astro.com
+- [x] Add step-by-step instructions for pulling up a chart on astro.com
+- [x] Explain whole house system & how to select it on astro.com
 
 ### Module 1 — Archetypes
 - [ ] Before archetypes: explain Sun, Moon & Rising and what chart dominance means
-- [ ] Remove all transit/timing references (too advanced for intro course)
-- [ ] Add elements & modes for each sign and what they mean
-- [ ] Add multiple profession examples per sign (across industries, not just coaching)
-- [ ] Add famous people's sun signs per archetype (API-verified)
-- [ ] After all signs: add section on Big Three combinations with examples
+- [x] Remove all transit/timing references (too advanced for intro course)
+- [x] Add elements & modes for each sign and what they mean
+- [x] Add multiple profession examples per sign (across industries)
+- [x] Add famous people's sun signs per archetype (API-verified)
+- [x] After all signs: add section on Big Three combinations with examples
 
 ### Module 2 — Houses
 - [ ] 2nd/6th/10th house through each sign: much more extensive, depth, substance, concrete scenarios
@@ -31,23 +31,23 @@
 
 ### Module 4 — ASC & MC
 - [ ] More depth per archetype with various manifestation possibilities
-- [ ] MC + ASC: add 5 concrete combination examples
-- [ ] Add bonus section: working with the ruler of ASC/MC for added depth
-- [ ] Add pro tip: ChatGPT prompt to get full picture of online representation
+- [x] MC + ASC: add 5 concrete combination examples
+- [x] Add bonus section: working with the ruler of ASC/MC for added depth
+- [x] Add pro tip: ChatGPT prompt to get full picture of online representation
 
 ### Module 5 — Nodes
 - [ ] Much more context per archetype
 - [ ] More examples and various manifestation possibilities in business & leadership
 
 ### Module 6 — Case Studies
-- [ ] Replace Walt Disney with someone relevant (modern, millennial-known)
+- [x] Replace Walt Disney with Oprah Winfrey (API-verified)
 - [ ] Each case study: comprehensive overview using ALL course concepts (Big Three, ASC, MC, dominance/stellium, Nodes)
 
 ### Bonus Module
 - [ ] Rename to "Bonuses" as final separate module
 - [ ] Restyle bonus money lesson with unique title (not literal copy)
-- [ ] Add: "Beyond Career: Different Ways of Interpreting the Midheaven"
-- [ ] Add: "How Do Your Career Interests Show Up in Your Birth Chart?"
+- [x] Add: "Beyond Career: Different Ways of Interpreting the Midheaven"
+- [x] Add: "How Do Your Career Interests Show Up in Your Birth Chart?"
 - [ ] (Two more bonus sections coming in a future round)
 
 ---
