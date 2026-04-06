@@ -1,17 +1,16 @@
 /* styles.css — Cato Vermeulen portal v2 — luxury editorial */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400&display=swap');
 
 :root {
   --stone: #B4A794;
   --linen: #D8CFB9;
-  --smoke: #1a1a1a;
-  --smoke-light: #222222;
-  --smoke-card: #252525;
+  --smoke: #181817;
+  --smoke-card: #1f1f1e;
   --mist: #F2F0E5;
   --golden: #BA916B;
-  --border: rgba(186,175,163,0.12);
-  --border-hover: rgba(186,145,107,0.4);
+  --golden-glow: rgba(186,145,107,0.08);
+  --border: rgba(186,175,163,0.1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +29,7 @@ h1, h2, h3 {
   font-weight: 400;
 }
 
-/* ── Layout ─────────────────────────────────────────── */
+/* ── LOGIN ────────────────────────────────────────────── */
 
 .page-center {
   display: flex;
@@ -39,113 +38,44 @@ h1, h2, h3 {
   justify-content: center;
   min-height: 100vh;
   padding: 2rem;
-  background: radial-gradient(ellipse at 50% 30%, rgba(186,145,107,0.06) 0%, transparent 70%);
+  position: relative;
+  overflow: hidden;
 }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 2.5rem 4rem;
+.page-center::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(186,145,107,0.07) 0%, transparent 70%);
+  pointer-events: none;
 }
-
-/* ── Top bar ─────────────────────────────────────────── */
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 2.5rem;
-  max-width: 1000px;
-  margin: 0 auto 1rem;
-  border-bottom: none;
-}
-
-.dashboard-header h1 {
-  font-size: 1.4rem;
-  color: var(--mist);
-  letter-spacing: 0.06em;
-  font-weight: 300;
-}
-
-.sign-out-btn {
-  background: none;
-  border: none;
-  color: rgba(180,167,148,0.5);
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.sign-out-btn:hover { color: var(--mist); }
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1.8rem;
-}
-
-.user-email {
-  font-size: 0.72rem;
-  color: rgba(180,167,148,0.4);
-  letter-spacing: 0.02em;
-}
-
-/* ── Hero welcome area (above cards) ─────────────────── */
-
-.dashboard-hero {
-  text-align: center;
-  padding: 4rem 2rem 3.5rem;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.dashboard-hero h2 {
-  font-size: 3.2rem;
-  font-weight: 300;
-  color: var(--mist);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 1rem;
-}
-
-.dashboard-hero h2 em {
-  font-style: italic;
-  color: var(--golden);
-}
-
-.dashboard-hero p {
-  color: var(--stone);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  line-height: 1.8;
-}
-
-/* ── Login screen ────────────────────────────────────── */
 
 .login-wrap {
   text-align: center;
-  max-width: 400px;
+  max-width: 380px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .login-wrap h1 {
-  font-size: 3.6rem;
+  font-size: 4.2rem;
   letter-spacing: -0.03em;
   color: var(--mist);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   font-weight: 300;
-  line-height: 1;
+  line-height: 0.95;
 }
 
 .login-wrap p {
   color: var(--stone);
-  font-size: 0.72rem;
-  margin-bottom: 3.5rem;
-  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  margin-bottom: 4rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   font-weight: 300;
 }
@@ -156,7 +86,7 @@ h1, h2, h3 {
   line-height: 1.7;
 }
 
-/* ── Form inputs ─────────────────────────────────────── */
+/* ── FORM INPUTS ─────────────────────────────────────── */
 
 input[type="email"],
 input[type="text"],
@@ -165,42 +95,42 @@ input[type="time"] {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(186,175,163,0.25);
+  border-bottom: 1px solid rgba(186,175,163,0.2);
   color: var(--mist);
   font-family: 'Jost', sans-serif;
   font-weight: 300;
-  font-size: 1rem;
-  padding: 0.8rem 0;
-  margin-bottom: 2rem;
+  font-size: 1.05rem;
+  padding: 0.9rem 0;
+  margin-bottom: 2.2rem;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.4s;
   letter-spacing: 0.02em;
 }
 
-input::placeholder { color: rgba(180,167,148,0.4); }
+input::placeholder { color: rgba(180,167,148,0.35); }
 input:focus { border-bottom-color: var(--golden); }
 
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.6);
+  filter: invert(0.5);
   cursor: pointer;
 }
 
-/* ── Buttons ─────────────────────────────────────────── */
+/* ── BUTTONS ─────────────────────────────────────────── */
 
 .btn {
   display: inline-block;
-  padding: 16px 36px;
-  border: 1px solid rgba(186,175,163,0.3);
+  padding: 16px 40px;
+  border: 1px solid rgba(186,175,163,0.25);
   background: transparent;
   color: var(--mist);
   font-family: 'Jost', sans-serif;
   font-weight: 300;
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.4s;
   text-decoration: none;
 }
 
@@ -211,7 +141,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .btn-primary {
-  background: transparent;
   border-color: var(--golden);
   color: var(--golden);
 }
@@ -223,82 +152,178 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .btn:disabled {
-  opacity: 0.3;
+  opacity: 0.25;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
-/* ── Product cards ───────────────────────────────────── */
+/* ── DASHBOARD SHELL ─────────────────────────────────── */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.8rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-header h1 {
+  font-size: 1.1rem;
+  color: var(--stone);
+  letter-spacing: 0.08em;
+  font-weight: 300;
+  font-family: 'Jost', sans-serif;
+}
+
+.sign-out-btn {
+  background: none;
+  border: none;
+  color: rgba(180,167,148,0.35);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sign-out-btn:hover { color: var(--mist); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.user-email {
+  font-size: 0.7rem;
+  color: rgba(180,167,148,0.3);
+  letter-spacing: 0.02em;
+}
+
+/* ── DASHBOARD HERO ──────────────────────────────────── */
+
+.dashboard-hero {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+
+.dashboard-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(186,145,107,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.dashboard-hero h2 {
+  font-size: 4.5rem;
+  font-weight: 300;
+  color: var(--mist);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.dashboard-hero h2 em {
+  font-style: italic;
+  color: var(--golden);
+}
+
+.dashboard-hero p {
+  color: rgba(180,167,148,0.5);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── PRODUCT CARDS ───────────────────────────────────── */
+
+.container {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 3rem 6rem;
+}
 
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
+  gap: 0;
+  position: relative;
 }
 
 .card {
-  background: var(--smoke);
-  padding: 3rem 2.4rem;
+  background: transparent;
+  padding: 3.2rem 2.8rem;
   position: relative;
-  transition: all 0.4s;
+  transition: background 0.5s;
   display: flex;
   flex-direction: column;
-  min-height: 280px;
+  min-height: 320px;
+  border-right: 1px solid var(--border);
 }
+
+.card:last-child { border-right: none; }
 
 .card:hover {
   background: var(--smoke-card);
 }
 
-.card::after {
+.card-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--golden);
+  margin-bottom: 1.6rem;
+  font-weight: 400;
+  position: relative;
+  padding-bottom: 1.2rem;
+}
+
+.card-label::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 2.4rem;
-  right: 2.4rem;
+  left: 0;
+  width: 28px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--golden), transparent);
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-.card:hover::after {
-  opacity: 0.4;
-}
-
-.card-label {
-  font-size: 0.62rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--golden);
-  margin-bottom: 1.2rem;
-  font-weight: 400;
+  background: var(--golden);
+  opacity: 0.5;
 }
 
 .card h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: var(--mist);
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.02em;
   font-weight: 300;
-  line-height: 1.2;
+  line-height: 1.15;
   flex-grow: 1;
 }
 
 .card-status {
   font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  color: rgba(180,167,148,0.6);
-  margin-bottom: 1.4rem;
+  letter-spacing: 0.03em;
+  color: rgba(180,167,148,0.45);
+  margin-bottom: 1.6rem;
   min-height: 1.2rem;
 }
 
 .card-status.ready { color: var(--golden); }
 
 .card-cta {
-  display: inline-block;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--golden);
   text-decoration: none;
@@ -309,55 +334,46 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   background: none;
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  position: relative;
 }
 
-.card-cta::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--golden);
-  transition: width 0.3s;
+.card-cta:hover {
+  color: var(--mist);
+  gap: 14px;
 }
-
-.card-cta:hover::after { width: 100%; }
-.card-cta:hover { color: var(--mist); }
 
 .card-cta.muted {
-  color: var(--stone);
+  color: rgba(180,167,148,0.3);
   pointer-events: none;
 }
 
-/* ── Blueprint page ──────────────────────────────────── */
+/* ── BLUEPRINT / READING PAGES ───────────────────────── */
 
 .blueprint-wrap {
-  max-width: 560px;
+  max-width: 540px;
   margin: 0 auto;
 }
 
 .blueprint-wrap h1 {
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   color: var(--mist);
   margin-bottom: 0.5rem;
   font-weight: 300;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .blueprint-wrap .subtitle {
-  color: var(--stone);
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
+  color: rgba(180,167,148,0.5);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 4rem;
 }
 
 .field-label {
   display: block;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--golden);
   margin-bottom: 0.3rem;
@@ -369,26 +385,26 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.8rem;
+  gap: 2rem;
 }
 
 .countdown {
-  font-size: 3rem;
+  font-size: 3.4rem;
   font-family: 'Cormorant Garamond', serif;
   color: var(--mist);
-  letter-spacing: -0.02em;
-  margin: 2.5rem 0 0.8rem;
+  letter-spacing: -0.03em;
+  margin: 3rem 0 0.8rem;
   font-weight: 300;
 }
 
 .countdown-label {
-  color: var(--stone);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  color: rgba(180,167,148,0.5);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-/* ── Error message ───────────────────────────────────── */
+/* ── ERROR / BACK ────────────────────────────────────── */
 
 .error-msg {
   color: #c97878;
@@ -397,32 +413,37 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   min-height: 1.2rem;
 }
 
-/* ── Back link ───────────────────────────────────────── */
-
 .back-link {
   display: inline-block;
-  color: rgba(180,167,148,0.5);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  color: rgba(180,167,148,0.35);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
   transition: color 0.3s;
 }
 
 .back-link:hover { color: var(--mist); }
 
-/* ── Responsive ─────────────────────────────────────── */
+/* ── RESPONSIVE ──────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .card { border-right: none; border-bottom: 1px solid var(--border); min-height: auto; padding: 2.4rem 2rem; }
+  .card:last-child { border-bottom: none; }
+}
 
 @media (max-width: 768px) {
-  .container { padding: 0 1.4rem 2.5rem; }
-  .dashboard-header { padding: 1.5rem 1.4rem; flex-direction: column; gap: 0.8rem; align-items: flex-start; }
-  .dashboard-header h1 { font-size: 1.2rem; }
-  .dashboard-hero h2 { font-size: 2.2rem; }
-  .dashboard-hero { padding: 2.5rem 1rem 2rem; }
-  .login-wrap h1 { font-size: 2.6rem; }
-  .cards-grid { grid-template-columns: 1fr; }
-  .card { min-height: auto; padding: 2.2rem 1.8rem; }
+  .container { padding: 0 1.6rem 3rem; }
+  .dashboard-header { padding: 1.4rem 1.6rem; }
+  .dashboard-header h1 { font-size: 0.9rem; }
+  .dashboard-hero { padding: 3.5rem 1.4rem 2.5rem; }
+  .dashboard-hero h2 { font-size: 3rem; }
+  .login-wrap h1 { font-size: 3rem; }
+  .login-wrap p { margin-bottom: 3rem; }
   .two-col { grid-template-columns: 1fr; }
   .header-right { gap: 1rem; }
+  .user-email { display: none; }
+  .blueprint-wrap h1 { font-size: 2.2rem; }
 }
