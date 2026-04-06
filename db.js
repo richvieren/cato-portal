@@ -1,15 +1,24 @@
 // db.js — access_grants + profiles + course_progress data layer
 // Depends on window.sb from auth.js
 
+/** Helper: get current user's email from session */
+async function _getUserEmail() {
+  const { data: { session } } = await window.sb.auth.getSession();
+  return session?.user?.email?.toLowerCase() || '';
+}
+
 /**
  * Fetch Mini Business Reading access grant for current user.
  * Returns grant row or null.
  */
 async function getMiniReadingGrant() {
+  const email = await _getUserEmail();
+  if (!email) return null;
   const { data, error } = await window.sb
     .from('access_grants')
     .select('id, available_at, granted_at')
     .eq('product', 'mini_reading')
+    .eq('email', email)
     .is('revoked_at', null)
     .limit(1)
     .maybeSingle();
@@ -70,10 +79,13 @@ async function submitMiniIntake(userId, fields) {
  * Returns grant row or null.
  */
 async function getBlueprintGrant() {
+  const email = await _getUserEmail();
+  if (!email) return null;
   const { data, error } = await window.sb
     .from('access_grants')
     .select('id, available_at, granted_at')
     .eq('product', 'blueprint')
+    .eq('email', email)
     .is('revoked_at', null)
     .limit(1)
     .maybeSingle();
@@ -99,10 +111,13 @@ async function getProfile() {
  * Returns grant row or null.
  */
 async function getCourseGrant() {
+  const email = await _getUserEmail();
+  if (!email) return null;
   const { data, error } = await window.sb
     .from('access_grants')
     .select('id, granted_at')
     .eq('product', 'course')
+    .eq('email', email)
     .is('revoked_at', null)
     .limit(1)
     .maybeSingle();
