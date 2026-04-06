@@ -50,7 +50,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
   }),
 
   mini_reading: (link) => ({
-    subject: 'Your Mini Business Reading Access',
+    subject: 'Your Business Astrology Roadmap Access',
     html: `
       <p>Your payment went through. Here is what happens next.</p>
 
@@ -62,9 +62,9 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       Your reading is built on your natal chart. Take a moment to fill in your birth date, time, and place accurately.</p>
 
       <p><strong>Step 3 — Your reading is ready</strong><br>
-      Once you've submitted, your Mini Business Reading is generated immediately. You'll find it waiting in your portal as a PDF to download and keep.</p>
+      Once you've submitted, your Business Astrology Roadmap is generated immediately. You'll find it waiting in your portal as a PDF to download and keep.</p>
 
-      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Mini Business Reading, you can ignore this email.</p>
+      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Business Astrology Roadmap, you can ignore this email.</p>
       <p>— Cato</p>
     `,
   }),
@@ -145,8 +145,30 @@ Deno.serve(async (req) => {
     return respond(200);
   }
 
-  // Determine product from session metadata — default to 'blueprint' for backward compatibility
-  const product = (session.metadata?.product as string) || 'blueprint';
+  // Determine product: check metadata first, then match Stripe price ID
+  const PRICE_TO_PRODUCT: Record<string, string> = {
+    'price_1SdnYPPDOFXTchBMnw3MtZgz': 'blueprint',
+    'price_1TGxqyPDOFXTchBMddOzggCy': 'mini_reading',
+    'price_1TGxxePDOFXTchBMSohT0suK': 'course',
+  };
+
+  let product = (session.metadata?.product as string) || '';
+
+  // If no metadata, look up product by Stripe price ID from line items
+  if (!product) {
+    try {
+      const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 1 });
+      const priceId = lineItems.data[0]?.price?.id;
+      if (priceId && PRICE_TO_PRODUCT[priceId]) {
+        product = PRICE_TO_PRODUCT[priceId];
+      }
+    } catch (err) {
+      console.error('Failed to fetch line items:', err);
+    }
+  }
+
+  // Final fallback
+  if (!product) product = 'blueprint';
 
   // available_at: null for blueprint (set on intake submit) and mini_reading (set on intake submit)
   // course has no intake, so we set available_at immediately

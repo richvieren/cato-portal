@@ -136,7 +136,7 @@ function renderCourseCard(state) {
 }
 
 /**
- * Render the Mini Business Reading card into #mini-reading-card.
+ * Render the Your Business Astrology Roadmap card into #mini-reading-card.
  */
 function renderMiniReadingCard(state, grant) {
   const card = document.getElementById('mini-reading-card');
@@ -168,8 +168,8 @@ function renderMiniReadingCard(state, grant) {
   const c = configs[state];
 
   card.innerHTML = `
-    <div class="card-label">Mini Reading</div>
-    <h2>Mini Business Reading</h2>
+    <div class="card-label">Roadmap</div>
+    <h2>Your Business Astrology Roadmap</h2>
     <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
     ${c.ctaText
       ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`

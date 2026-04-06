@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mini Business Reading — Cato Vermeulen</title>
+  <title>Your Business Astrology Roadmap — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="auth.js"></script>
@@ -18,7 +18,7 @@
 
       <!-- Intake view -->
       <div id="intake-view" style="display:none">
-        <h1>Mini Business Reading</h1>
+        <h1>Your Business Astrology Roadmap</h1>
         <p class="subtitle">Enter your birth details so Cato can prepare your reading.</p>
 
         <form id="intake-form" onsubmit="handleIntakeSubmit(event)">
@@ -58,16 +58,16 @@
 
       <!-- Pending view -->
       <div id="pending-view" style="display:none">
-        <h1>Mini Business Reading</h1>
+        <h1>Your Business Astrology Roadmap</h1>
         <p class="subtitle">Your reading is being prepared.</p>
       </div>
 
       <!-- Ready view -->
       <div id="ready-view" style="display:none">
-        <h1>Mini Business Reading</h1>
+        <h1>Your Business Astrology Roadmap</h1>
         <p class="subtitle">Your reading is ready.</p>
         <p style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem">
-          Your Mini Business Reading is ready to download.
+          Your Your Business Astrology Roadmap is ready to download.
         </p>
         <a id="download-btn" class="btn btn-primary" style="display:none">Download your reading</a>
         <p id="download-loading" style="color:var(--stone);font-size:0.85rem">Loading your file...</p>
@@ -126,7 +126,7 @@
 
       loadingEl.style.display = 'none';
       btnEl.href = data.signedUrl;
-      btnEl.download = 'Mini-Business-Reading.pdf';
+      btnEl.download = 'Your-Business-Astrology-Roadmap.pdf';
       btnEl.style.display = 'inline-block';
     }
 
