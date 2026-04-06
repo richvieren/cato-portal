@@ -5,13 +5,13 @@
 :root {
   --stone: #B4A794;
   --linen: #D8CFB9;
-  --smoke: #202020;
-  --smoke-light: #2a2a2a;
+  --smoke: #1a1a1a;
+  --smoke-light: #222222;
+  --smoke-card: #252525;
   --mist: #F2F0E5;
   --golden: #BA916B;
-  --golden-soft: rgba(186,145,107,0.12);
-  --border: rgba(186,175,163,0.15);
-  --border-hover: rgba(186,175,163,0.35);
+  --border: rgba(186,175,163,0.12);
+  --border-hover: rgba(186,145,107,0.4);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,25 +39,102 @@ h1, h2, h3 {
   justify-content: center;
   min-height: 100vh;
   padding: 2rem;
+  background: radial-gradient(ellipse at 50% 30%, rgba(186,145,107,0.06) 0%, transparent 70%);
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 4rem 2.5rem;
+  padding: 0 2.5rem 4rem;
+}
+
+/* ── Top bar ─────────────────────────────────────────── */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2.5rem;
+  max-width: 1000px;
+  margin: 0 auto 1rem;
+  border-bottom: none;
+}
+
+.dashboard-header h1 {
+  font-size: 1.4rem;
+  color: var(--mist);
+  letter-spacing: 0.06em;
+  font-weight: 300;
+}
+
+.sign-out-btn {
+  background: none;
+  border: none;
+  color: rgba(180,167,148,0.5);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sign-out-btn:hover { color: var(--mist); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.user-email {
+  font-size: 0.72rem;
+  color: rgba(180,167,148,0.4);
+  letter-spacing: 0.02em;
+}
+
+/* ── Hero welcome area (above cards) ─────────────────── */
+
+.dashboard-hero {
+  text-align: center;
+  padding: 4rem 2rem 3.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.dashboard-hero h2 {
+  font-size: 3.2rem;
+  font-weight: 300;
+  color: var(--mist);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.dashboard-hero h2 em {
+  font-style: italic;
+  color: var(--golden);
+}
+
+.dashboard-hero p {
+  color: var(--stone);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
 }
 
 /* ── Login screen ────────────────────────────────────── */
 
 .login-wrap {
   text-align: center;
-  max-width: 420px;
+  max-width: 400px;
   width: 100%;
 }
 
 .login-wrap h1 {
-  font-size: 3rem;
-  letter-spacing: -0.02em;
+  font-size: 3.6rem;
+  letter-spacing: -0.03em;
   color: var(--mist);
   margin-bottom: 0.3rem;
   font-weight: 300;
@@ -66,9 +143,9 @@ h1, h2, h3 {
 
 .login-wrap p {
   color: var(--stone);
-  font-size: 0.85rem;
-  margin-bottom: 3rem;
-  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  margin-bottom: 3.5rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 300;
 }
@@ -88,7 +165,7 @@ input[type="time"] {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(186,175,163,0.3);
+  border-bottom: 1px solid rgba(186,175,163,0.25);
   color: var(--mist);
   font-family: 'Jost', sans-serif;
   font-weight: 300;
@@ -100,7 +177,7 @@ input[type="time"] {
   letter-spacing: 0.02em;
 }
 
-input::placeholder { color: rgba(180,167,148,0.5); }
+input::placeholder { color: rgba(180,167,148,0.4); }
 input:focus { border-bottom-color: var(--golden); }
 
 input[type="date"]::-webkit-calendar-picker-indicator,
@@ -113,14 +190,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .btn {
   display: inline-block;
-  padding: 14px 28px;
-  border: 1px solid var(--stone);
+  padding: 16px 36px;
+  border: 1px solid rgba(186,175,163,0.3);
   background: transparent;
   color: var(--mist);
   font-family: 'Jost', sans-serif;
   font-weight: 300;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s;
@@ -134,7 +211,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .btn-primary {
-  background: var(--smoke);
+  background: transparent;
   border-color: var(--golden);
   color: var(--golden);
 }
@@ -150,95 +227,69 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   cursor: not-allowed;
 }
 
-/* ── Dashboard header ────────────────────────────────── */
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 2rem;
-  margin-bottom: 3.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.dashboard-header h1 {
-  font-size: 2.2rem;
-  color: var(--mist);
-  letter-spacing: -0.01em;
-  font-weight: 300;
-}
-
-.sign-out-btn {
-  background: none;
-  border: none;
-  color: var(--stone);
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.sign-out-btn:hover { color: var(--mist); }
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1.6rem;
-}
-
-.user-email {
-  font-size: 0.75rem;
-  color: rgba(180,167,148,0.6);
-  letter-spacing: 0.02em;
-}
-
 /* ── Product cards ───────────────────────────────────── */
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.4rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
 }
 
 .card {
-  background: var(--smoke-light);
-  border: 1px solid var(--border);
-  padding: 2.4rem 2.2rem;
+  background: var(--smoke);
+  padding: 3rem 2.4rem;
   position: relative;
-  transition: all 0.3s;
+  transition: all 0.4s;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
 }
 
 .card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
+  background: var(--smoke-card);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 2.4rem;
+  right: 2.4rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--golden), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.card:hover::after {
+  opacity: 0.4;
 }
 
 .card-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--golden);
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
   font-weight: 400;
 }
 
 .card h2 {
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   color: var(--mist);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   letter-spacing: -0.01em;
   font-weight: 300;
   line-height: 1.2;
+  flex-grow: 1;
 }
 
 .card-status {
   font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  color: var(--stone);
-  margin-bottom: 1.6rem;
+  letter-spacing: 0.04em;
+  color: rgba(180,167,148,0.6);
+  margin-bottom: 1.4rem;
   min-height: 1.2rem;
 }
 
@@ -246,27 +297,34 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .card-cta {
   display: inline-block;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--golden);
   text-decoration: none;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(186,145,107,0.3);
+  padding: 0;
+  border: none;
   transition: all 0.3s;
   cursor: pointer;
   background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
   font-family: 'Jost', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
+  position: relative;
 }
 
-.card-cta:hover {
-  border-bottom-color: var(--golden);
-  color: var(--mist);
+.card-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--golden);
+  transition: width 0.3s;
 }
+
+.card-cta:hover::after { width: 100%; }
+.card-cta:hover { color: var(--mist); }
 
 .card-cta.muted {
   color: var(--stone);
@@ -281,25 +339,25 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .blueprint-wrap h1 {
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   color: var(--mist);
   margin-bottom: 0.5rem;
   font-weight: 300;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .blueprint-wrap .subtitle {
   color: var(--stone);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4rem;
 }
 
 .field-label {
   display: block;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--golden);
   margin-bottom: 0.3rem;
@@ -315,7 +373,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .countdown {
-  font-size: 2.8rem;
+  font-size: 3rem;
   font-family: 'Cormorant Garamond', serif;
   color: var(--mist);
   letter-spacing: -0.02em;
@@ -325,8 +383,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .countdown-label {
   color: var(--stone);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
@@ -343,9 +401,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .back-link {
   display: inline-block;
-  color: var(--stone);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  color: rgba(180,167,148,0.5);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
   margin-bottom: 3.5rem;
@@ -357,12 +415,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 /* ── Responsive ─────────────────────────────────────── */
 
 @media (max-width: 768px) {
-  .container { padding: 2.5rem 1.4rem; }
-  .dashboard-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
-  .dashboard-header h1 { font-size: 1.8rem; }
-  .login-wrap h1 { font-size: 2.2rem; }
+  .container { padding: 0 1.4rem 2.5rem; }
+  .dashboard-header { padding: 1.5rem 1.4rem; flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+  .dashboard-header h1 { font-size: 1.2rem; }
+  .dashboard-hero h2 { font-size: 2.2rem; }
+  .dashboard-hero { padding: 2.5rem 1rem 2rem; }
+  .login-wrap h1 { font-size: 2.6rem; }
   .cards-grid { grid-template-columns: 1fr; }
+  .card { min-height: auto; padding: 2.2rem 1.8rem; }
   .two-col { grid-template-columns: 1fr; }
   .header-right { gap: 1rem; }
-  .user-email { font-size: 0.7rem; }
 }
