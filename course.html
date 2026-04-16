@@ -95,6 +95,7 @@
   .body { max-width:660px; }
   .body h2 { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; margin:44px 0 14px; color:var(--dark); }
   .body h3 { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--golden); margin:28px 0 10px; font-weight:400; }
+  .body a { color:var(--golden); text-decoration:underline; }
   .body p { font-size:17px; line-height:1.9; color:var(--mid); margin-bottom:20px; font-weight:300; }
   .body p strong { color:var(--dark); font-weight:400; }
   .body ul { padding-left:20px; margin-bottom:20px; }
@@ -265,6 +266,7 @@ const MODULES = [
     lessons:[
       { id:'m0l1', title:'Welcome & Course Overview', content:'welcome' },
       { id:'m0l2', title:'Why Business Astrology Works', content:'intro_biz_astro' },
+      { id:'m0l3', title:'How to Pull Up Your Chart', content:'how_to_chart' },
     ]
   },
   {
@@ -334,8 +336,7 @@ const MODULES = [
       { id:'m6l2', title:"Beyonc\u00e9: Virgo Builds an Empire", content:'case_beyonce' },
       { id:'m6l3', title:'Rihanna: Pisces Creates a Billion-Dollar Brand', content:'case_rihanna' },
       { id:'m6l4', title:'Taylor Swift: Sagittarius Rewrites the Rules', content:'case_taylor' },
-      { id:'m6quiz', title:'Module 6 Quiz', content:'quiz_m6' },
-    ]
+      ]
   },
   {
     id:'m7', num:'✦',
@@ -384,74 +385,6 @@ welcome: `
   <p><strong>Module 5 &mdash; North &amp; South Node.</strong> The soul&rsquo;s GPS. The South Node shows what your client came in already knowing &mdash; her karmic gifts. The North Node shows where genuine growth lives. For a business coach, this is the deepest and most transformational part of the reading.</p>
   <p><strong>Module 6 &mdash; Case Studies.</strong> We pull it all together by reading real charts of people you actually know &mdash; Walt Disney, Beyonc&eacute;, Rihanna, Taylor Swift. Theory becomes real when you see it working in a living, breathing chart.</p>
   <p style="margin-top:2rem;padding:1.5rem;border-left:3px solid #9F8261;font-style:italic;color:#8a8278;">This is an introduction course. If you want to go DEEP &mdash; practice readings live, get feedback on your chart interpretations, and join a community of coaches who are integrating astrology into their businesses &mdash; consider joining Cato&rsquo;s <strong>Business Astrology Certification Program</strong>. That is where we turn you from a student into a practitioner. But first? Let&rsquo;s build your foundation. &#x1F31F;</p>
-  <h2>How to Pull Up Your Chart &#x1F4CB;</h2>
-  <p>You NEED a chart in front of you for this course. Here is exactly how to get one &mdash; it takes 2 minutes:</p>
-  <ol>
-    <li>Go to <strong>astro.com</strong></li>
-    <li>Click <strong>&ldquo;Free Horoscopes&rdquo;</strong> in the top menu</li>
-    <li>Select <strong>&ldquo;Chart Drawing, Ascendant&rdquo;</strong></li>
-    <li>Click <strong>&ldquo;click here to go to the data entry page&rdquo;</strong></li>
-    <li>Enter your birth date, EXACT birth time, and birth location</li>
-    <li>Under <strong>&ldquo;House System&rdquo;</strong> &mdash; select <strong>&ldquo;Whole Sign&rdquo;</strong> (this is important!)</li>
-    <li>Click <strong>&ldquo;Show the chart&rdquo;</strong></li>
-    <li>Screenshot it. Save it. You will use it in EVERY module.</li>
-  </ol>
-
-  <h3>Why Whole Sign Houses? &#x1F3E0;</h3>
-  <p>There are many house systems in astrology. We use <strong>Whole Sign Houses</strong> in this course because it is the simplest and most intuitive system &mdash; perfect for business readings.</p>
-  <p>How it works: your Rising Sign (Ascendant) rules your ENTIRE 1st house. The next sign rules the entire 2nd house. The sign after that rules the 3rd house. And so on around the wheel. One sign = one house. Clean, clear, no ambiguity.</p>
-  <p>Other house systems (Placidus, Koch, etc.) split signs across multiple houses, which gets complicated fast. For the purpose of this course and for delivering clear business readings to clients? Whole Sign is the way to go.</p>
-  <p><strong>Important:</strong> If you do not know your exact birth time, you can still get your Sun, Moon (roughly), Mercury, Venus, and Mars signs. But you will NOT get an accurate Rising Sign, Midheaven, or house placements. For a full Leadership Blueprint, birth time is essential. Tell your clients to check their birth certificate or ask their parents. &#x1F52E;</p>
-
-  <div class="exercise">
-    <div class="ex-label">Before You Begin</div>
-    <h4>Pull Three Charts</h4>
-    <p>Before the next lesson, go to <strong>astro.com</strong> and pull: (1) Your OWN birth chart. (2) Your business chart (use the founding date of your business as the &ldquo;birth date&rdquo;). (3) One client&rsquo;s chart (ask for their birth details). Save screenshots of all three. You will use these throughout every module. Learning astrology without a chart in front of you is like learning to cook by reading a menu. Get in the kitchen. &#x1F525;</p>
-  </div>
-</div>`,
-
-intro_biz_astro: `
-<div class="kicker">Module 01 &middot; Lesson 1</div>
-<h1 class="lesson-h1">Why Business Astrology<br><em>Actually Works.</em></h1>
-<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 01 of 06</div></div>
-<div class="body">
-  <p>Let me guess. You are reading this and one of two things is true:</p>
-  <p>A) You already use astrology in your personal life and you are thinking: &ldquo;Can I ACTUALLY use this with paying clients?&rdquo;</p>
-  <p>B) You are a business coach or service provider who keeps seeing astrology pop up everywhere and you are curious but also slightly skeptical. &#x1F440;</p>
-  <p>Either way? You are in the right place.</p>
-  <p>Here is what most people get wrong about business astrology: they think it is about predicting the future. It is NOT. It is about understanding the BLUEPRINT. Your client&rsquo;s natal chart is a map of how you naturally leads, communicates, earns, brands yourself, and makes decisions. It does not tell her what to do. It tells you who you ARE &mdash; so you can stop fighting your nature and start leveraging it.</p>
-  <h2>Your Leadership Blueprint</h2>
-  <p>This entire course is built around one concept: your <strong>Leadership Blueprint</strong>.</p>
-  <p>The Leadership Blueprint is the combination of chart placements that reveals how someone is designed to run a business. Not how they SHOULD run it according to the latest marketing trend. Not how their mentor told them to run it. How THEY are cosmically wired to run it.</p>
-  <p>The blueprint includes:</p>
-  <ul>
-    <li><strong>Sun sign</strong> &mdash; Their leadership archetype (Module 1)</li>
-    <li><strong>2nd, 6th, 10th houses</strong> &mdash; How they earn, work, and build a career (Module 2)</li>
-    <li><strong>Planetary placements</strong> &mdash; The characters driving their story (Module 3)</li>
-    <li><strong>Ascendant + Midheaven</strong> &mdash; How they are perceived and what they are here to be known for (Module 4)</li>
-    <li><strong>North + South Node</strong> &mdash; Their soul purpose and karmic gifts (Module 5)</li>
-  </ul>
-  <p>When you put all five layers together? You have a reading that makes your client feel like you climbed inside her brain, looked around, and said: &ldquo;Yeah, I see everything. And here is what we are going to do about it.&rdquo; &#x1F52E;</p>
-  <h2>Why This Works for Service-Based Businesses</h2>
-  <p>Most business frameworks treat every entrepreneur the same. Same funnel. Same launch strategy. Same content pillars. Same cookie-cutter advice.</p>
-  <p>But you already KNOW that does not work for everyone. Your Aries client needs speed and immediate action. Your Virgo client needs systems and precision. Your Pisces client needs space for creativity and intuition. Telling all three to &ldquo;just batch your content on Sunday&rdquo; is like telling a fish, a bird, and a horse to all take the highway. &#x1F6E3;&#xFE0F;</p>
-  <p>Business astrology gives you a personalised lens. Every recommendation you make is rooted in WHO your client actually is. And when someone feels deeply SEEN in a reading? They do not just hire you once. They become a client for life.</p>
-  <h2>Before You Dive Into the Archetypes: Your Big Three &amp; Chart Dominance</h2>
-  <p>When you start reading the 12 archetypes in the next lesson, you might think: &ldquo;OK so I am just my Sun sign?&rdquo; NO. You are not. You are a combination of MANY placements. But three placements matter most &mdash; and you need to understand them before Module 1 makes full sense. &#x1F4A1;</p>
-  <p><strong>The Sun sign</strong> = your core identity. WHO you are. Your leadership archetype. This is what most people know (&ldquo;I am a Virgo&rdquo;). It is important, but it is only one piece.</p>
-  <p><strong>The Moon sign</strong> = your emotional needs. What you NEED to feel safe, resourced, and ready to perform. Two Virgos with different Moon signs will run their businesses in completely different ways because their emotional fuel is different.</p>
-  <p><strong>The Rising sign (Ascendant)</strong> = how the world SEES you. Your first impression. Your brand energy. This is the sign that was rising on the horizon when you were born, which is why you need your exact birth time to find it.</p>
-  <p>Together, these three form your <strong>Big Three</strong> &mdash; and they are the starting point of every reading you will do.</p>
-
-  <h3>What Is Chart Dominance?</h3>
-  <p>Sometimes a chart has a CLUSTER of planets in one sign or one element. This is called dominance, and it changes how you read the chart:</p>
-  <ul>
-    <li><strong>Stellium</strong> = 3 or more planets in the same sign. That sign&rsquo;s energy DOMINATES the chart. Example: Oprah has Sun, Mercury, AND Venus in Aquarius. She is not just an Aquarius &mdash; she is TRIPLE Aquarius. Her entire life runs on Aquarian themes of communication, innovation, and serving the collective.</li>
-    <li><strong>Element dominance</strong> = most of your planets in one element (fire, earth, air, or water). This tells you your default operating mode. Heavy fire = action-first. Heavy earth = stability-first. Heavy air = ideas-first. Heavy water = feelings-first.</li>
-    <li><strong>No planets in an element</strong> = a blind spot. If you have zero water placements, emotional intelligence in business might be something you have to consciously develop rather than something that comes naturally.</li>
-  </ul>
-  <p>As you go through the 12 archetypes, do not just read your Sun sign. Read your Moon sign. Read your Rising sign. And look at where you have clusters. The archetype that shows up the MOST in your chart is often a better description of you than your Sun sign alone. &#x1F52E;</p>
-
   <h2>How to Use This Course</h2>
   <p>Each lesson builds on the last. Do not skip ahead (I know you want to &mdash; resist). Pull up your own chart alongside every lesson. When I explain a concept, look for it in YOUR chart first. This is how you learn astrology: by seeing it in yourself before you read it for others.</p>
   <p>By the end of this course, you will be able to pull a natal chart and deliver a business reading that covers leadership style, money patterns, work habits, personal branding, and soul purpose. That is your Leadership Blueprint &mdash; the foundation of everything.</p>
@@ -478,7 +411,7 @@ fire_signs: `
   <p><strong>In a service-based business:</strong> Your Aries client is the one who has launched 14 offers in 3 months. You have incredible energy but keeps starting new things before finishing the last one. The genius is in the START &mdash; the launch energy, the bold move, the thing nobody else has the guts to do. The challenge? Follow-through. Staying interested when the initial rush wears off.</p>
   <p><strong>Famous Aries Suns:</strong> Lady Gaga, Mariah Carey &#x2648; (API-verified)</p>
   <p><strong>Professions that thrive under Aries energy:</strong> Startup founders, fitness coaches, personal trainers, emergency room doctors, sales leaders, competitive athletes, real estate agents, military leaders, stunt coordinators, motivational speakers, crisis managers.</p>
-  <p><strong>In a reading:</strong> Focus on direction-setting. An Aries does not need motivation &mdash; she needs a LANE. </p>
+  <p><strong>In a reading:</strong> Focus on direction-setting. An Aries does not need motivation &mdash; you need a LANE. </p>
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x264C;</div><div class="astro-div-line"></div></div>
   <h2>Leo &mdash; The Queen &#x264C;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Creative authority</td></tr><tr><td>Leadership Style</td><td>Charismatic, magnetic, centre-stage</td></tr><tr><td>Superpower</td><td>Making people want to follow</td></tr><tr><td>Shadow</td><td>Needing praise, ignoring details</td></tr></table>
@@ -487,13 +420,13 @@ fire_signs: `
   <p><strong>In a service-based business:</strong> Your Leo client is the coach whose Instagram IS your personality. She lights up a room, you light up a Zoom call, you light up a sales page. When her personal energy is aligned with your offers? Sales flow effortlessly because people are buying HER. When you dim your light (often because someone told her to be &ldquo;more professional&rdquo;)? Everything dries up.</p>
   <p><strong>Famous Leo Suns:</strong> Jennifer Lopez, Meghan Markle &#x264C; (API-verified)</p>
   <p><strong>Professions that thrive under Leo energy:</strong> Creative directors, actors, performers, brand founders, influencers, fashion designers, event planners, photographers, life coaches, entertainment producers, public speakers.</p>
-  <p><strong>In a reading:</strong> Address where she is dimming your light. The Sun placement and its aspects tell you everything about her creative power and what is blocking it. A Leo who is not shining is a Leo who is not selling. Period.</p>
+  <p><strong>In a reading:</strong> Address where she is dimming your light. The Sun placement and its aspects tell you everything about your creative power and what is blocking it. A Leo who is not shining is a Leo who is not selling. Period.</p>
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x2650;</div><div class="astro-div-line"></div></div>
   <h2>Sagittarius &mdash; The Visionary &#x2650;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Expansion</td></tr><tr><td>Leadership Style</td><td>Optimistic, philosophical, freedom-driven</td></tr><tr><td>Superpower</td><td>Seeing the big picture before anyone else</td></tr><tr><td>Shadow</td><td>Overextending, lack of follow-through on details</td></tr></table>
   <p>Sagittarius is the sign that sees around corners. Where Aries is fast and Leo is magnetic, Sagittarius is the one building a map of where the entire industry is going in 5 years. Meaning matters more than money &mdash; and yet, ironically, when they follow meaning? The money follows.</p>
   <p>Think Taylor Swift (Sagittarius Sun). The woman does not just make albums &mdash; you build ERAS. She sees the arc of her career in decades, not quarters. Re-recording her entire catalogue was not petty. It was Sagittarian long-game genius. &#x1F3AF;</p>
-  <p><strong>In a service-based business:</strong> Your Sagittarius client is the one with a VISION so big it scares her a little. She wants to teach, travel, write the book, build the course, start the podcast, launch the retreat &mdash; all of it. The genius is in the breadth of the vision. The challenge is narrowing down and executing one thing at a time instead of chasing every shiny idea across 4 continents.</p>
+  <p><strong>In a service-based business:</strong> Your Sagittarius client is the one with a VISION so big it scares her a little. You want to teach, travel, write the book, build the course, start the podcast, launch the retreat &mdash; all of it. The genius is in the breadth of the vision. The challenge is narrowing down and executing one thing at a time instead of chasing every shiny idea across 4 continents.</p>
   <p><strong>In a reading:</strong> Focus on Jupiter (Sagittarius&rsquo;s ruling planet) and its current transit. When Jupiter is well-placed, she expands effortlessly into new territory. When it is poorly placed, you overextend. The key insight is the TIMING of her expansion so you do not try to build Rome in a week.</p>
   <div class="exercise">
     <div class="ex-label">Practice</div>
@@ -534,12 +467,12 @@ earth_signs: `
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x2651;</div><div class="astro-div-line"></div></div>
   <h2>Capricorn &mdash; The CEO &#x2651;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Authority</td></tr><tr><td>Leadership Style</td><td>Strategic, disciplined, reputation-focused</td></tr><tr><td>Superpower</td><td>Playing the long game better than anyone</td></tr><tr><td>Shadow</td><td>Overworking, coldness, status obsession</td></tr></table>
-  <p>Capricorn is the sign that is ALWAYS playing chess while everyone else is playing checkers. She is not interested in going viral. She is interested in building an empire that her grandchildren will inherit.</p>
+  <p>Capricorn is the sign that is ALWAYS playing chess while everyone else is playing checkers. You are not interested in going viral. She is interested in building an empire that her grandchildren will inherit.</p>
   <p>Think Michelle Obama (Capricorn Sun). Strategic. Disciplined. Every public appearance is calculated for maximum impact. She built one of the most powerful personal brands on the planet without ever posting a thirst trap. THAT is Capricorn energy. &#x1F3C6;</p>
-  <p><strong>In a service-based business:</strong> Your Capricorn client takes business SERIOUSLY. You have a 5-year plan. She cares about reputation, authority, and being seen as the best in her field. The genius is patience and strategy &mdash; she will outwork and outlast everyone. The challenge? You can become so focused on achievement that you forget to enjoy the process. You can also come across as intimidating or unapproachable, which blocks connection with potential clients who need warmth before they buy.</p>
+  <p><strong>In a service-based business:</strong> Your Capricorn client takes business SERIOUSLY. You have a 5-year plan. She cares about reputation, authority, and being seen as the best in her field. The genius is patience and strategy &mdash; you will outwork and outlast everyone. The challenge? You can become so focused on achievement that you forget to enjoy the process. You can also come across as intimidating or unapproachable, which blocks connection with potential clients who need warmth before they buy.</p>
   <p><strong>Famous Capricorn Suns:</strong> Michelle Obama &#x2651; (API-verified)</p>
   <p><strong>Professions that thrive under Capricorn energy:</strong> CEOs, executive coaches, corporate consultants, lawyers, architects, financial planners, political strategists, university administrators, real estate developers, investment bankers, leadership coaches.</p>
-  <p><strong>In a reading:</strong> Look at Saturn (Capricorn&rsquo;s ruler) and the 10th house. Saturn shows where she needs to do the HARD work and where your biggest rewards will come &mdash; but only after you earn them. Success is coming, but the timeline is Saturn&rsquo;s, not Instagram&rsquo;s.</p>
+  <p><strong>In a reading:</strong> Look at Saturn (Capricorn&rsquo;s ruler) and the 10th house. Saturn shows where you need to do the HARD work and where your biggest rewards will come &mdash; but only after you earn them. Success is coming, but the timeline is Saturn&rsquo;s, not Instagram&rsquo;s.</p>
   <div class="exercise">
     <div class="ex-label">Practice</div>
     <h4>Earth Sign Client Brief</h4>
@@ -561,18 +494,18 @@ air_signs: `
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x264A;</div><div class="astro-div-line"></div></div>
   <h2>Gemini &mdash; The Communicator &#x264A;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Connection</td></tr><tr><td>Leadership Style</td><td>Versatile, curious, multi-channel</td></tr><tr><td>Superpower</td><td>Saying the right thing to the right person at the right time</td></tr><tr><td>Shadow</td><td>Scattered energy, too many projects, surface-level</td></tr></table>
-  <p>Gemini is the sign of the eternal student and the natural-born communicator. She can talk to ANYONE about ANYTHING and make it interesting.</p>
+  <p>Gemini is the sign of the eternal student and the natural-born communicator. You can talk to ANYONE about ANYTHING and make it interesting.</p>
   <p>Think Kanye West (Gemini Sun). Love him or hate him, the man is a communication MACHINE &mdash; music, fashion, architecture, politics, and somehow all of it is connected in his head. Or think Angelina Jolie (Gemini Sun): humanitarian, actress, director, mother, brand &mdash; all at once. That is Gemini&rsquo;s ability to hold multiple worlds simultaneously. &#x1F3AD;</p>
   <p><strong>In a service-based business:</strong> Your Gemini client is the one running a podcast, a newsletter, two Instagram accounts, a YouTube channel, and a TikTok &mdash; and she genuinely enjoys all of them. The genius is content creation and communication. The challenge? Going deep. You can get stuck at surface level because there is always something MORE interesting to explore. You also struggles with niching because picking ONE thing feels like amputating a limb.</p>
   <p><strong>Famous Gemini Suns:</strong> Angelina Jolie, Kanye West &#x264A; (API-verified)</p>
   <p><strong>Professions that thrive under Gemini energy:</strong> Podcasters, journalists, social media managers, copywriters, translators, PR specialists, sales consultants, teachers, tour guides, communications directors, marketing strategists, multi-platform content creators.</p>
-  <p><strong>In a reading:</strong> Look at Mercury (Gemini&rsquo;s ruler). Mercury shows HOW she communicates and what topics she is wired to teach. The key insight: you do not need to niche down to ONE thing &mdash; she needs a CONTAINER that holds your multiplicity. A personal brand, not a niche.</p>
+  <p><strong>In a reading:</strong> Look at Mercury (Gemini&rsquo;s ruler). Mercury shows HOW she communicates and what topics she is wired to teach. The key insight: you do not need to niche down to ONE thing &mdash; you need a CONTAINER that holds your multiplicity. A personal brand, not a niche.</p>
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x264E;</div><div class="astro-div-line"></div></div>
   <h2>Libra &mdash; The Partner &#x264E;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Harmony</td></tr><tr><td>Leadership Style</td><td>Diplomatic, aesthetic, partnership-driven</td></tr><tr><td>Superpower</td><td>Making everyone feel seen and creating beautiful experiences</td></tr><tr><td>Shadow</td><td>People-pleasing, indecisiveness, avoiding confrontation</td></tr></table>
   <p>Libra is the sign of beauty, balance, and the art of relationship. In business, Libra energy builds through PARTNERSHIPS and aesthetic excellence.</p>
   <p>Think Kim Kardashian (Libra Sun). Say what you want about her &mdash; the woman built a billion-dollar empire through the art of the partnership, the collaboration, the aesthetic brand moment. Every deal, every product, every public appearance is a negotiation executed to perfection. &#x1F48E;</p>
-  <p><strong>In a service-based business:</strong> Your Libra client thrives in collaborative environments. You are the coach who co-creates retreats, the designer who builds through referral partnerships, the strategist whose best ideas come from conversation. Her genius is in seeing what other people need and creating beautiful experiences around it. The challenge? Making decisions alone. You can get paralysed by wanting to keep everyone happy. And you HATE confrontation, which means difficult conversations with clients get avoided until they become crises.</p>
+  <p><strong>In a service-based business:</strong> Your Libra client thrives in collaborative environments. You are the coach who co-creates retreats, the designer who builds through referral partnerships, the strategist whose best ideas come from conversation. Your genius is in seeing what other people need and creating beautiful experiences around it. The challenge? Making decisions alone. You can get paralysed by wanting to keep everyone happy. And you HATE confrontation, which means difficult conversations with clients get avoided until they become crises.</p>
   <p><strong>Famous Libra Suns:</strong> Kim Kardashian, Cardi B &#x264E; (API-verified)</p>
   <p><strong>Professions that thrive under Libra energy:</strong> Brand designers, wedding planners, mediators, relationship coaches, art directors, diplomats, stylists, gallery owners, HR directors, partnership managers, beauty entrepreneurs.</p>
   <p><strong>In a reading:</strong> Look at Venus (Libra&rsquo;s ruler) and the 7th house (partnerships). This tells you about your relationship patterns in business. The key insight: saying no to misaligned partnerships is not rude &mdash; it is strategic.</p>
@@ -581,10 +514,10 @@ air_signs: `
   <table class="sig-table"><tr><td>Keyword</td><td>Revolution</td></tr><tr><td>Leadership Style</td><td>Unconventional, community-driven, future-focused</td></tr><tr><td>Superpower</td><td>Seeing what nobody else sees yet</td></tr><tr><td>Shadow</td><td>Emotional detachment, contrarianism for its own sake</td></tr></table>
   <p>Aquarius is the sign that looks at the way everyone else is doing business and says: &ldquo;What if we did the complete opposite?&rdquo;</p>
   <p>Think Oprah (Aquarius Sun). She did not just build a talk show. She built a MOVEMENT. A community. A world where &ldquo;you get a car&rdquo; became cultural shorthand for abundance. Oprah sees what humanity needs and builds the platform to deliver it. That is Aquarius at its highest. &#x1F30D;</p>
-  <p><strong>In a service-based business:</strong> Your Aquarius client is the one doing something nobody else in your industry is doing. She is ahead of the curve, sometimes frustratingly so. You build communities and movements, not just businesses. The genius is innovation and her ability to connect to a collective need. The challenge? You can be so focused on the future that she forgets to connect emotionally with the person in front of her right now. You also resists structure because it feels like conformity.</p>
+  <p><strong>In a service-based business:</strong> Your Aquarius client is the one doing something nobody else in your industry is doing. You are ahead of the curve, sometimes frustratingly so. You build communities and movements, not just businesses. The genius is innovation and her ability to connect to a collective need. The challenge? You can be so focused on the future that she forgets to connect emotionally with the person in front of her right now. You also resists structure because it feels like conformity.</p>
   <p><strong>Famous Aquarius Suns:</strong> Oprah Winfrey, Harry Styles &#x2652; (API-verified)</p>
   <p><strong>Professions that thrive under Aquarius energy:</strong> Tech founders, community builders, social activists, futurists, app developers, nonprofit directors, science communicators, unconventional educators, platform builders, movement leaders, AI strategists.</p>
-  <p><strong>In a reading:</strong> Look at Uranus (Aquarius&rsquo;s modern ruler) and Saturn (traditional ruler). The tension between innovation (Uranus) and structure (Saturn) is the core Aquarius story. The key insight: she needs BOTH &mdash; the wild vision AND the system to deliver it.</p>
+  <p><strong>In a reading:</strong> Look at Uranus (Aquarius&rsquo;s modern ruler) and Saturn (traditional ruler). The tension between innovation (Uranus) and structure (Saturn) is the core Aquarius story. The key insight: you need BOTH &mdash; the wild vision AND the system to deliver it.</p>
   <div class="exercise">
     <div class="ex-label">Practice</div>
     <h4>Air Sign Client Brief</h4>
@@ -611,16 +544,16 @@ water_signs: `
   <p><strong>In a service-based business:</strong> Your Cancer client creates the COSIEST client experience you have ever seen. Her onboarding feels like a warm hug. Her community feels like family. People stay in her world FOREVER because leaving would feel like losing a best friend. The challenge? Boundaries. She gives and gives until she is depleted. You also takes criticism incredibly personally, which makes putting herself out there on social media feel like emotional surgery.</p>
   <p><strong>Famous Cancer Suns:</strong> Selena Gomez, Ariana Grande &#x264B; (API-verified)</p>
   <p><strong>Professions that thrive under Cancer energy:</strong> Therapists, doulas, family coaches, hospitality owners, food bloggers, childcare providers, interior decorators, real estate agents (homes!), community managers, nurses, social workers, family lawyers.</p>
-  <p><strong>In a reading:</strong> Look at the Moon (Cancer&rsquo;s ruler) and the 4th house. The Moon reveals her emotional needs and what makes her feel safe. Often a Cancer entrepreneur needs to feel emotionally secure BEFORE she can sell boldly. Help create that security &mdash; financial, emotional, structural &mdash; so she can show up without the protective shell.</p>
+  <p><strong>In a reading:</strong> Look at the Moon (Cancer&rsquo;s ruler) and the 4th house. The Moon reveals your emotional needs and what makes her feel safe. Often a Cancer entrepreneur needs to feel emotionally secure BEFORE you can sell boldly. Help create that security &mdash; financial, emotional, structural &mdash; so you can show up without the protective shell.</p>
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x264F;</div><div class="astro-div-line"></div></div>
   <h2>Scorpio &mdash; The Transformer &#x264F;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Power</td></tr><tr><td>Leadership Style</td><td>Intense, strategic, transformational</td></tr><tr><td>Superpower</td><td>Seeing what everyone else is hiding</td></tr><tr><td>Shadow</td><td>Control, secrecy, all-or-nothing thinking</td></tr></table>
   <p>Scorpio does not do surface level. Scorpio goes DEEP. Into the wound. Into the shadow. Into the thing you have been avoiding for 3 years. And then she transforms it into gold.</p>
   <p>Think Drake (Scorpio Sun). Everything is emotional intensity, depth, vulnerability mixed with power. Or think Kris Jenner (Scorpio Sun) &mdash; the woman who quietly built the most powerful family brand in entertainment history through sheer strategic genius, seeing angles nobody else saw, and being willing to play the long game with unwavering intensity. &#x1F3AF;</p>
-  <p><strong>In a service-based business:</strong> Your Scorpio client is the healer, the therapist, the shadow work coach, the trauma-informed practitioner. You work in the DEEP end. Her clients have life-changing breakthroughs because she is not afraid to go where other coaches will not. The challenge? You can become obsessive about control. You also struggles with visibility because Scorpio naturally prefers to operate behind the scenes. Putting herself out there feels vulnerable &mdash; and Scorpio HATES feeling vulnerable.</p>
+  <p><strong>In a service-based business:</strong> Your Scorpio client is the healer, the therapist, the shadow work coach, the trauma-informed practitioner. You work in the DEEP end. Her clients have life-changing breakthroughs because you are not afraid to go where other coaches will not. The challenge? You can become obsessive about control. You also struggles with visibility because Scorpio naturally prefers to operate behind the scenes. Putting herself out there feels vulnerable &mdash; and Scorpio HATES feeling vulnerable.</p>
   <p><strong>Famous Scorpio Suns:</strong> Drake, Kris Jenner &#x264F; (API-verified)</p>
   <p><strong>Professions that thrive under Scorpio energy:</strong> Therapists, trauma coaches, investigators, surgeons, forensic accountants, crisis counsellors, sex therapists, depth psychologists, financial auditors, estate planners, shadow work facilitators, transformation coaches.</p>
-  <p><strong>In a reading:</strong> Look at Pluto (Scorpio&rsquo;s ruler) and the 8th house. Pluto shows where transformation is happening in her life and business. The 8th house reveals her relationship with power, shared resources, and other people&rsquo;s money. The key insight: visibility is not vulnerability &mdash; it is POWER.</p>
+  <p><strong>In a reading:</strong> Look at Pluto (Scorpio&rsquo;s ruler) and the 8th house. Pluto shows where transformation is happening in her life and business. The 8th house reveals your relationship with power, shared resources, and other people&rsquo;s money. The key insight: visibility is not vulnerability &mdash; it is POWER.</p>
   <div class="astro-div"><div class="astro-div-line"></div><div class="astro-div-sym">&#x2653;</div><div class="astro-div-line"></div></div>
   <h2>Pisces &mdash; The Channel &#x2653;</h2>
   <table class="sig-table"><tr><td>Keyword</td><td>Intuition</td></tr><tr><td>Leadership Style</td><td>Creative, empathic, spiritually guided</td></tr><tr><td>Superpower</td><td>Downloading ideas from the ether that turn into million-dollar offers</td></tr><tr><td>Shadow</td><td>Boundaries, escapism, struggling with structure</td></tr></table>
@@ -629,7 +562,7 @@ water_signs: `
   <p><strong>In a service-based business:</strong> Your Pisces client is the one whose best work happens when she is in flow state. You create offers that feel like art. Her clients cry on calls because they feel SO deeply seen. The challenge? Structure. Pisces would rather float in the creative ocean all day than deal with invoices, timelines, and project management. You also absorbs other people&rsquo;s energy like a sponge, which can leave her exhausted after client days.</p>
   <p><strong>Famous Pisces Suns:</strong> Rihanna, Justin Bieber &#x2653; (API-verified)</p>
   <p><strong>Professions that thrive under Pisces energy:</strong> Artists, musicians, energy healers, astrologers, poets, photographers, spiritual coaches, substance abuse counsellors, film directors, intuitive readers, meditation teachers, creative directors, dance therapists.</p>
-  <p><strong>In a reading:</strong> Look at Neptune (Pisces&rsquo;s ruler) and the 12th house. Neptune shows where you have visionary genius and where you are prone to delusion. The 12th house reveals hidden patterns, self-sabotage, and spiritual gifts. Help create structure AROUND her creative flow &mdash; not structure that replaces it.</p>
+  <p><strong>In a reading:</strong> Look at Neptune (Pisces&rsquo;s ruler) and the 12th house. Neptune shows where you have visionary genius and where you are prone to delusion. The 12th house reveals hidden patterns, self-sabotage, and spiritual gifts. Help create structure AROUND your creative flow &mdash; not structure that replaces it.</p>
   <div class="exercise">
     <div class="ex-label">Practice</div>
     <h4>Water Sign Client Brief</h4>
@@ -652,7 +585,7 @@ houses_intro: `
     <li><strong>2nd House &mdash; Money &amp; Value.</strong> What you earn, how you earn it, your relationship with self-worth. &#x1F4B0; (Deep dive next lesson.)</li>
     <li><strong>3rd House &mdash; Communication.</strong> How you speak, write, teach. Content creation style. Social media voice.</li>
     <li><strong>4th House &mdash; Roots &amp; Foundation.</strong> Home base. What you need to feel secure. Work-from-home energy.</li>
-    <li><strong>5th House &mdash; Creativity &amp; Pleasure.</strong> Creative expression. Joy in work. How you play. The &ldquo;fun&rdquo; factor in her brand.</li>
+    <li><strong>5th House &mdash; Creativity &amp; Pleasure.</strong> Creative expression. Joy in work. How you play. The &ldquo;fun&rdquo; factor in your brand.</li>
     <li><strong>6th House &mdash; Work &amp; Service.</strong> Daily habits. Team. Health. How you actually DO the work. (Deep dive in Lesson 3.)</li>
     <li><strong>7th House &mdash; Partnerships.</strong> Business partnerships. Client relationships. How you collaborate.</li>
     <li><strong>8th House &mdash; Transformation &amp; Shared Resources.</strong> Investments. Other people&rsquo;s money. Deep change. The &ldquo;power plays&rdquo; house.</li>
@@ -705,7 +638,7 @@ house_2nd: `
   <p>Let&rsquo;s make this REAL. Here is what different 2nd house setups look like in actual businesses: &#x1F4BC;</p>
   <p><strong>Leo on the 2nd:</strong> A life coach who earns the most when you are on stage, on camera, or performing. Income drops when you hide behind written content. The fix? More live launches, more video, more HER. She IS the product.</p>
   <p><strong>Capricorn on the 2nd:</strong> A consultant who undercharges for the first 3 years because of not feeling &ldquo;established enough.&rdquo; After the Saturn Return, prices go up and immediately books out. She was always worth it &mdash; she just needed time to believe it.</p>
-  <p><strong>Gemini on the 2nd:</strong> A copywriter who has 4 income streams: client work, a course, a template shop, and a newsletter with paid subscribers. She cannot stick to one revenue model and THAT IS OK. Multiple streams IS her model. &#x1F4AC;</p>
+  <p><strong>Gemini on the 2nd:</strong> A copywriter who has 4 income streams: client work, a course, a template shop, and a newsletter with paid subscribers. You cannot stick to one revenue model and THAT IS OK. Multiple streams IS her model. &#x1F4AC;</p>
   <p><strong>Scorpio on the 2nd:</strong> A therapist who cycles between feast and famine. Big months followed by dry spells. The relationship with money is INTENSE &mdash; you either obsess over it or avoid looking at your bank account entirely. The growth edge: creating financial stability through systems, not willpower.</p>
   <p><strong>Pisces on the 2nd:</strong> A healer who downloads her best offer ideas in the shower. You create programmes that feel like art. But you have no invoicing system and &ldquo;forgets&rdquo; to follow up on unpaid invoices. Her gift is intuitive creation. Her growth edge is practical money management. &#x1F30A;</p>
 
@@ -713,7 +646,7 @@ house_2nd: `
   <p>If your client has planets IN the 2nd house, those planets add specific energy to her money story:</p>
   <p><strong>Sun in 2nd:</strong> Your identity IS your income. You need to feel proud of how you earn.<br>
   <strong>Moon in 2nd:</strong> Emotional relationship with money. Income fluctuates with your emotional state.<br>
-  <strong>Venus in 2nd:</strong> Natural talent for attracting money. Luxury and beauty play a role in her earning.<br>
+  <strong>Venus in 2nd:</strong> Natural talent for attracting money. Luxury and beauty play a role in your earning.<br>
   <strong>Mars in 2nd:</strong> Aggressive earner. Fights for what you want financially. Can be impulsive with spending.<br>
   <strong>Jupiter in 2nd:</strong> Lucky with money. Tends toward abundance. Can also overspend because &ldquo;more is coming.&rdquo;<br>
   <strong>Saturn in 2nd:</strong> HARD lessons around money, usually early in life. Eventually becomes the most financially disciplined person in the room.</p>
@@ -741,15 +674,15 @@ house_6th: `
   </ul>
   <h2>The 6th House Through Each Sign</h2>
   <p><strong>Aries on 6th:</strong> You need autonomy in your daily work. Micromanagement is your kryptonite. You work in BURSTS &mdash; 4 hours of intense focus, then done. Forcing yourself into a 9-to-5 structure kills your productivity. Your best work happens when nobody is telling you what to do or when to do it. Example: a consultant who blocks &ldquo;deep work sprints&rdquo; of 90 minutes and then takes a full break. No meetings before 11am. &#x1F525;</p>
-  <p><strong>Taurus on 6th:</strong> You are a slow, steady worker who thrives with routine and predictability. You need a BEAUTIFUL workspace &mdash; the candle, the coffee, the aesthetics matter. Rushing through tasks makes you anxious. You do your best work when you can take your time and do it RIGHT. Example: a bookkeeper who has the same morning routine every day, works from a beautifully designed home office, and never takes on more clients than she can serve with excellence.</p>
+  <p><strong>Taurus on 6th:</strong> You are a slow, steady worker who thrives with routine and predictability. You need a BEAUTIFUL workspace &mdash; the candle, the coffee, the aesthetics matter. Rushing through tasks makes you anxious. You do your best work when you can take your time and do it RIGHT. Example: a bookkeeper who has the same morning routine every day, works from a beautifully designed home office, and never takes on more clients than you can serve with excellence.</p>
   <p><strong>Gemini on 6th:</strong> You need VARIETY in your workday. Doing the same task for 8 hours straight? Torture. You multitask naturally and actually perform better when you are juggling several projects. Your ideal workday has meetings, creative work, admin, and social media all mixed together. Example: a social media manager who runs 4 client accounts across different industries and loves the switching between them. &#x1F4AC;</p>
   <p><strong>Cancer on 6th:</strong> You work best from HOME. Your most productive days are the ones where you are in your cozy clothes, at your own desk, with your own coffee. You create nurturing work environments &mdash; your Slack channels have birthday celebrations and &ldquo;how are you REALLY doing?&rdquo; messages. Example: a virtual assistant who turned her spare bedroom into a work sanctuary and has your team call it &ldquo;the nest.&rdquo;</p>
   <p><strong>Leo on 6th:</strong> You need creative expression woven into your daily work. Even mundane tasks need a touch of drama. You are excellent at team morale &mdash; you make people WANT to work with you because every project feels like a production. Example: a marketing director who turns weekly team meetings into creative brainstorms with music, snacks, and a &ldquo;best idea of the week&rdquo; award. &#x1F3AD;</p>
   <p><strong>Virgo on 6th:</strong> You are the ultimate systems queen. Your Notion has colour-coded databases. Your SOPs have SOPs. You are the most efficient person in any room. The risk? Perfectionism that turns into workaholism. You will redo your VA&rsquo;s work instead of delegating properly because &ldquo;it is faster to do it myself.&rdquo; Example: an operations consultant whose own business runs like a Swiss watch but who struggles to take a day off.</p>
-  <p><strong>Libra on 6th:</strong> You work best in PARTNERSHIP. Solo work feels isolating. You need a co-founder, a business bestie, or at minimum a coworking buddy. Your processes are aesthetically pleasing &mdash; your client portals are beautiful, your proposals look like design portfolios. Example: a brand strategist who does her best work on Zoom with her business partner, bouncing ideas back and forth in real time. &#x1F91D;</p>
+  <p><strong>Libra on 6th:</strong> You work best in PARTNERSHIP. Solo work feels isolating. You need a co-founder, a business bestie, or at minimum a coworking buddy. Your processes are aesthetically pleasing &mdash; your client portals are beautiful, your proposals look like design portfolios. Example: a brand strategist who does her best work on Zoom with your business partner, bouncing ideas back and forth in real time. &#x1F91D;</p>
   <p><strong>Scorpio on 6th:</strong> All-or-nothing work intensity. When you are ON a project, you go DEEP &mdash; 12 hours without looking up. When you are between projects, you might not work for days. You need control over your workflow and you can become obsessive about details. Example: a UX researcher who disappears into a project for two weeks, produces something extraordinary, then needs 3 days of complete silence to recover.</p>
   <p><strong>Sagittarius on 6th:</strong> You need freedom and MEANING in your daily work. Being desk-bound makes you restless. You work well with international teams and across time zones. Your ideal workday includes travel, variety, and at least 2 hours of &ldquo;big picture thinking&rdquo; where you zoom out and see the larger strategy. Example: a brand consultant who takes client calls from Bali, Lisbon, and Mexico City depending on the month. &#x2708;&#xFE0F;</p>
-  <p><strong>Capricorn on 6th:</strong> You are disciplined and structured. You set ambitious daily targets and you HIT them. Your work ethic is impressive but the risk is real: burnout from overworking because you tie your self-worth to productivity. &ldquo;Rest&rdquo; feels like laziness to you. Example: an executive coach who works 12-hour days, has a 5-year plan for her business, and had to learn the hard way that rest is not optional.</p>
+  <p><strong>Capricorn on 6th:</strong> You are disciplined and structured. You set ambitious daily targets and you HIT them. Your work ethic is impressive but the risk is real: burnout from overworking because you tie your self-worth to productivity. &ldquo;Rest&rdquo; feels like laziness to you. Example: an executive coach who works 12-hour days, has a 5-year plan for your business, and had to learn the hard way that rest is not optional.</p>
   <p><strong>Aquarius on 6th:</strong> You have the most unconventional work style in your industry. You work at weird hours. You automate everything you possibly can. You probably use tools and systems nobody else in your niche has heard of. Your team communicates via async voice notes and you have zero meetings on Mondays. Example: a tech consultant who built a bot to handle 70% of your client onboarding. &#x1F916;</p>
   <p><strong>Pisces on 6th:</strong> You work in FLOW STATE. Your best output happens when you have zero structure and complete creative freedom. The problem? Boundaries between work and rest basically do not exist. You might answer a client message at midnight because you &ldquo;felt called to.&rdquo; You need someone else to manage your calendar, invoices, and deadlines. Example: a photographer who does her best shoots when she has no shot list and just follows the light. &#x2728;</p>
   <h2>Concrete Scenarios: The 6th House in Action</h2>
@@ -774,7 +707,7 @@ house_10th: `
 <div class="body">
   <p>The 10th house is the BIG one. This is the CEO house. The &ldquo;what am I building that will outlast me?&rdquo; house. The &ldquo;how does the WORLD see my career?&rdquo; house. &#x1F451;</p>
   <p>If the 2nd house is personal value and the 6th house is daily work, the 10th house is PUBLIC ACHIEVEMENT. It is your reputation. Your legacy. The thing people say about you when you are not in the room.</p>
-  <p>The cusp of the 10th house is also called the <strong>Midheaven (MC)</strong> &mdash; which we will deep dive in Module 4. For now, understand that the 10th house sign tells you HOW your client is meant to build her public career.</p>
+  <p>The cusp of the 10th house is also called the <strong>Midheaven (MC)</strong> &mdash; which we will deep dive in Module 4. For now, understand that the 10th house sign tells you HOW your client is meant to build your public career.</p>
   <h2>What the 10th House Reveals</h2>
   <ul>
     <li><strong>Career path</strong> &mdash; Not just what you do, but what you are here to be KNOWN for</li>
@@ -800,7 +733,7 @@ house_10th: `
   <p>Here is what different 10th house setups look like for public career and reputation: &#x1F3C6;</p>
   <p><strong>Aries on the 10th:</strong> A startup founder who launched 3 companies before age 30. Known as a trailblazer. Does not follow trends &mdash; she SETS them. Risk: burning bridges with her directness.</p>
   <p><strong>Cancer on the 10th:</strong> A family therapist who became the go-to expert through word of mouth. Never ran ads. Clients come because their friends said: &ldquo;She changed our family.&rdquo; Her reputation is built on CARE, not marketing.</p>
-  <p><strong>Leo on the 10th:</strong> A personal brand coach whose Instagram IS the resume. The most visible person in the industry. When walking into a conference, people already know her face. Her career IS your identity and she would not have it any other way. &#x1F31F;</p>
+  <p><strong>Leo on the 10th:</strong> A personal brand coach whose Instagram IS the resume. The most visible person in the industry. When walking into a conference, people already know her face. Her career IS your identity and you would not have it any other way. &#x1F31F;</p>
   <p><strong>Scorpio on the 10th:</strong> A leadership coach who works with executives going through massive transitions &mdash; divorce, burnout, career crisis. She is known for going where other coaches will not. Not everyone likes her. Everyone respects her.</p>
   <p><strong>Aquarius on the 10th:</strong> A tech educator who built a community of 50k before ever launching a paid product. Known as the innovator &mdash; the one who sees what the industry will look like in 5 years. Her career does not follow a traditional path because she IS the path.</p>
 
@@ -849,7 +782,7 @@ planets_sun_moon_merc: `
 <div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 06</div></div>
 <div class="body">
   <h2>The Sun &mdash; Identity &amp; Purpose &#x2600;&#xFE0F;</h2>
-  <p>The Sun is WHO your client is at her core. Your identity. Her ego. Her creative essence. In a business reading, the Sun tells you what kind of leader you are naturally wired to be. (This is what we covered in Module 1 &mdash; the 12 archetypes ARE the 12 Sun signs.)</p>
+  <p>The Sun is WHO your client is at your core. Your identity. Her ego. Her creative essence. In a business reading, the Sun tells you what kind of leader you are naturally wired to be. (This is what we covered in Module 1 &mdash; the 12 archetypes ARE the 12 Sun signs.)</p>
   <p>Key business questions the Sun answers:</p>
   <ul>
     <li>What do you need to feel FULFILLED in your work?</li>
@@ -857,16 +790,16 @@ planets_sun_moon_merc: `
     <li>What kind of impact do you want to make?</li>
     <li>What happens when you dim your light?</li>
   </ul>
-  <p>When the Sun is well-placed and well-aspected in a chart? Your client radiates confidence and her business reflects your TRUE self. When it is challenged? You might be building someone else&rsquo;s dream instead of her own. &#x1F31F;</p>
+  <p>When the Sun is well-placed and well-aspected in a chart? Your client radiates confidence and your business reflects your TRUE self. When it is challenged? You might be building someone else&rsquo;s dream instead of her own. &#x1F31F;</p>
   <h2>The Moon &mdash; Emotional Needs &amp; Intuition &#x1F319;</h2>
   <p>The Moon is what you NEED to feel safe, nurtured, and emotionally resourced. This is HUGE for business because &mdash; and this is the part most strategists miss &mdash; if your emotional needs are not met, you cannot sell. You cannot create. You cannot show up consistently.</p>
   <p>The Moon sign tells you:</p>
   <ul>
     <li><strong>What you need before you can perform.</strong> A Moon in Cancer needs to feel safe and at home. A Moon in Aries needs excitement and new challenges. A Moon in Capricorn needs to feel productive and in control.</li>
     <li><strong>How you handle stress.</strong> A Moon in earth needs grounding. A Moon in fire needs movement. A Moon in water needs to process feelings. A Moon in air needs to talk it out.</li>
-    <li><strong>What her audience FEELS from her.</strong> The Moon governs emotional transmission. It is why some coaches make you feel CALM (Moon in Taurus) and others make you feel FIRED UP (Moon in Aries). Your client&rsquo;s Moon sign IS her emotional brand.</li>
+    <li><strong>What her audience FEELS from her.</strong> The Moon governs emotional transmission. It is why some coaches make you feel CALM (Moon in Taurus) and others make you feel FIRED UP (Moon in Aries). Your client&rsquo;s Moon sign IS your emotional brand.</li>
   </ul>
-  <p><strong>Pro tip:</strong> If your client is burnt out, struggling with consistency, or feeling emotionally flat about her business? Look at the Moon FIRST. Nine times out of ten, her emotional needs are not being met &mdash; and no amount of strategy will fix that until they are. &#x1F4A1;</p>
+  <p><strong>Pro tip:</strong> If your client is burnt out, struggling with consistency, or feeling emotionally flat about your business? Look at the Moon FIRST. Nine times out of ten, your emotional needs are not being met &mdash; and no amount of strategy will fix that until they are. &#x1F4A1;</p>
   <h2>Mercury &mdash; Communication &amp; Content &#x1F4AC;</h2>
   <p>Mercury is HOW your client thinks, speaks, writes, teaches, and sells. In an online business? Mercury might be the most PRACTICAL planet in the chart because so much of business is communication.</p>
   <p>Mercury tells you:</p>
@@ -913,7 +846,7 @@ planets_venus_mars_jup: `
   </ul>
   <p>Think of it as: Venus is the energy your client puts out that makes people want to be around her. Some Venuses are warm and nurturing (Cancer). Some are dazzling and performative (Leo). Some are intellectual and detached (Aquarius). All of them ATTRACT &mdash; just differently. &#x2728;</p>
   <h2>Mars &mdash; Action &amp; Sales Drive &#x1F525;</h2>
-  <p>Mars is HOW your client takes action. Your drive. Your competitive edge. Your willingness to go after what you want. In business? Mars is the sales planet. It is the energy behind every DM she sends, every pitch she makes, every bold move she takes.</p>
+  <p>Mars is HOW you take action. Your drive. Your competitive edge. Your willingness to go after what you want. In business? Mars is the sales planet. It is the energy behind every DM she sends, every pitch you make, every bold move she takes.</p>
   <p>Mars tells you:</p>
   <ul>
     <li><strong>How you sell.</strong> Mars in Aries sells aggressively and quickly &mdash; you close fast or move on. Mars in Cancer sells through nurturing and relationship-building &mdash; you warm people up over time.</li>
@@ -937,7 +870,7 @@ planets_venus_mars_jup: `
 
   <p><strong>Hot tip:</strong> If your client says &ldquo;I hate selling,&rdquo; look at Mars. It is probably in a sign that does not align with the way you have been TAUGHT to sell. A Mars in Pisces was never going to thrive with high-pressure bro-marketing tactics. Help her find a sales style that matches Mars and watch the resistance evaporate. &#x1F4A5;</p>
   <h2>Jupiter &mdash; Growth &amp; Abundance &#x1F31F;</h2>
-  <p>Jupiter is the planet of expansion, luck, and abundance. Where Jupiter sits in the chart shows where your client has natural GROWTH potential. Where things come easier. Where she tends to overdo it (because Jupiter does not know when to stop).</p>
+  <p>Jupiter is the planet of expansion, luck, and abundance. Where Jupiter sits in the chart shows where you have natural GROWTH potential. Where things come easier. Where she tends to overdo it (because Jupiter does not know when to stop).</p>
   <p>Jupiter tells you:</p>
   <ul>
     <li><strong>Where your biggest opportunities live.</strong> Jupiter in the 2nd house? Natural money luck. Jupiter in the 10th house? Career opportunities fall into her lap.</li>
@@ -986,9 +919,9 @@ ascendant: `
 <h1 class="lesson-h1">The Ascendant:<br><em>Your First Impression.</em></h1>
 <div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 04 of 06</div></div>
 <div class="body">
-  <p>The Ascendant (also called the Rising Sign) is the sign that was rising on the eastern horizon at the exact moment your client was born. And it determines ONE thing: how the world sees her BEFORE she opens her mouth. &#x1F440;</p>
+  <p>The Ascendant (also called the Rising Sign) is the sign that was rising on the eastern horizon at the exact moment you were born. And it determines ONE thing: how the world sees her BEFORE she opens her mouth. &#x1F440;</p>
   <p>Think of it as her energetic entrance. Her Instagram bio energy. The vibe people get within the first 3 seconds of meeting her, landing on her website, or seeing her Reel.</p>
-  <p>If the Sun sign is WHO she is, the Ascendant is who you APPEAR to be. They are not always the same &mdash; and that gap? That is where a lot of branding problems live.</p>
+  <p>If the Sun sign is WHO you are, the Ascendant is who you APPEAR to be. They are not always the same &mdash; and that gap? That is where a lot of branding problems live.</p>
   <h2>Why This Matters for Business</h2>
   <p>You might be a deep, intense Scorpio Sun. But if the Ascendant is Sagittarius? The world sees her as fun, optimistic, and adventurous. If your brand is dark and moody (matching the Scorpio Sun) but your energy in person is bubbly and expansive (the Sagittarius Ascendant), there is a DISCONNECT. And that disconnect confuses potential clients.</p>
   <p>The fix is not to fake it. The fix is to lean into the Ascendant for first impressions and let the Sun sign energy deepen as people get to know her. The Ascendant is the DOOR. The Sun is the ROOM behind the door. &#x1F6AA;</p>
@@ -997,11 +930,11 @@ ascendant: `
   <strong>Taurus Rising:</strong> First impression is calm, beautiful, grounded. Brands herself through aesthetics and quality. Looks expensive. &#x1F48E;<br>
   <strong>Gemini Rising:</strong> First impression is chatty, curious, versatile. Brands herself through wit and communication. Looks approachable.<br>
   <strong>Cancer Rising:</strong> First impression is warm, nurturing, soft. Brands herself through care and emotional safety. Looks like someone you could cry to.<br>
-  <strong>Leo Rising:</strong> First impression is magnetic, dramatic, radiant. Brands herself through presence and star power. Looks like she should be famous.<br>
+  <strong>Leo Rising:</strong> First impression is magnetic, dramatic, radiant. Brands through presence and star power. Looks like you should be famous.<br>
   <strong>Virgo Rising:</strong> First impression is polished, precise, put-together. Brands herself through competence. Looks like you have her sh*t together.<br>
   <strong>Libra Rising:</strong> First impression is charming, beautiful, balanced. Brands herself through elegance. Looks like a walking Pinterest board.<br>
-  <strong>Scorpio Rising:</strong> First impression is intense, mysterious, magnetic. Brands herself through depth and intrigue. Looks like she knows something you do not.<br>
-  <strong>Sagittarius Rising:</strong> First impression is fun, optimistic, adventurous. Brands herself through enthusiasm. Looks like she just got back from Bali. &#x2708;&#xFE0F;<br>
+  <strong>Scorpio Rising:</strong> First impression is intense, mysterious, magnetic. Brands through depth and intrigue. Looks like you know something others do not.<br>
+  <strong>Sagittarius Rising:</strong> First impression is fun, optimistic, adventurous. Brands through enthusiasm. Looks like you just got back from Bali. &#x2708;&#xFE0F;<br>
   <strong>Capricorn Rising:</strong> First impression is serious, professional, authoritative. Brands herself through credibility. Looks like the boss.<br>
   <strong>Aquarius Rising:</strong> First impression is unique, unconventional, cool. Brands herself through originality. Looks like nobody else in her industry.<br>
   <strong>Pisces Rising:</strong> First impression is dreamy, ethereal, spiritual. Brands herself through mystique. Looks like you might be psychic (you probably is).</p>
@@ -1036,7 +969,7 @@ midheaven: `
   <p>The Midheaven answers the question: &ldquo;What is her life&rsquo;s work?&rdquo; Not her job title. Her LIFE&rsquo;S WORK.</p>
   <h2>Why This Is Gold for Business Readings</h2>
   <p>So many entrepreneurs are doing work that does not match their Midheaven. They picked a niche because someone told them to, or they followed the money, or they just fell into it. And it works... but it does not FULFIL them. There is always this nagging feeling of &ldquo;I am supposed to be doing something else.&rdquo;</p>
-  <p>That &ldquo;something else&rdquo;? It is usually written in the Midheaven sign. When you can show a client that the Midheaven has been pointing toward her true calling all along? That is the moment she cries on the call. (In a good way.) &#x1F62D;&#x2728;</p>
+  <p>That &ldquo;something else&rdquo;? It is usually written in the Midheaven sign. When you can show that the Midheaven has been pointing toward her true calling all along? That is the moment she cries on the call. (In a good way.) &#x1F62D;&#x2728;</p>
   <h2>The Midheaven Through Each Sign</h2>
   <p><strong>MC in Aries:</strong> Here to pioneer. First to market. Known for bold action and courage.<br>
   <strong>MC in Taurus:</strong> Here to build lasting value. Known for quality, beauty, and steady growth.<br>
@@ -1078,17 +1011,17 @@ mc_asc_combined: `
 <div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 04 of 06</div></div>
 <div class="body">
   <p>NOW we put the two together. The Ascendant (first impression) + the Midheaven (public calling) = your client&rsquo;s complete brand identity. &#x1F48E;</p>
-  <p>This is one of the most powerful parts of a business reading. When you can show a client that the Ascendant is her brand ENTRANCE and the Midheaven is her brand DESTINATION? She instantly understands why certain things work and certain things do not.</p>
+  <p>This is one of the most powerful parts of a business reading. When you can show that the Ascendant is your brand ENTRANCE and the Midheaven is your brand DESTINATION? She instantly understands why certain things work and certain things do not.</p>
   <h2>How They Work Together</h2>
   <p>The Ascendant attracts people IN. The Midheaven keeps them THERE. Here is the formula:</p>
-  <p><strong>Ascendant = How she hooks attention</strong> (visual brand, first impression, vibe)<br>
+  <p><strong>Ascendant = How you hook attention</strong> (visual brand, first impression, vibe)<br>
   <strong>Midheaven = What you deliver once you have their attention</strong> (expertise, legacy, public mission)</p>
-  <p>Example: A client with Leo Rising and Taurus Midheaven? Her brand entrance is DRAMATIC &mdash; big personality, star power, magnetic content. But what she actually delivers? Is grounded, beautiful, lasting value. She hooks them with the show and keeps them with the substance. &#x1F31F;</p>
-  <p>Another example: Virgo Rising and Sagittarius Midheaven? She enters looking polished and competent. But your real gift is BIG PICTURE teaching &mdash; expanding minds, opening possibilities. She hooks them with her credibility and transforms them with her vision.</p>
+  <p>Example: A client with Leo Rising and Taurus Midheaven? The brand entrance is DRAMATIC &mdash; big personality, star power, magnetic content. But what she actually delivers? Is grounded, beautiful, lasting value. She hooks them with the show and keeps them with the substance. &#x1F31F;</p>
+  <p>Another example: Virgo Rising and Sagittarius Midheaven? You enter looking polished and competent. But your real gift is BIG PICTURE teaching &mdash; expanding minds, opening possibilities. She hooks them with her credibility and transforms them with her vision.</p>
   <h2>Common Misalignments</h2>
   <p>When clients come to you saying &ldquo;my brand feels off&rdquo; or &ldquo;I am attracting the wrong people,&rdquo; check for these misalignments:</p>
   <ul>
-    <li><strong>Brand matches Sun but ignores Ascendant.</strong> She is being authentic but the ENTRANCE energy is wrong. Fix: align visual brand with the Ascendant.</li>
+    <li><strong>Brand matches Sun but ignores Ascendant.</strong> You are being authentic but the ENTRANCE energy is wrong. Fix: align visual brand with the Ascendant.</li>
     <li><strong>Ascendant and MC in tension.</strong> Some combinations are naturally in tension (e.g., Scorpio Rising with Leo MC). This is not a problem &mdash; it is a FEATURE. The tension creates intrigue. Help her own it.</li>
     <li><strong>Hiding the MC.</strong> You have been playing small because the Midheaven calling feels too big, too bold, or too different from what she is currently doing. Give her permission to step into it.</li>
   </ul>
@@ -1130,7 +1063,7 @@ south_node: `
 <div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 05 of 06</div></div>
 <div class="body">
   <p>The South Node is your past. Your comfort zone. The skills, patterns, and expertise you came into this life ALREADY knowing. It is the thing that feels so natural you do not even realise it is a superpower. &#x1F52E;</p>
-  <p>In business, the South Node shows what your client is naturally GIFTED at. Her default setting. The thing she can do in her sleep. It is also the thing she tends to hide behind &mdash; because it is comfortable. And comfort, when it becomes a cage, stops growth.</p>
+  <p>In business, the South Node shows what you are naturally GIFTED at. Your default setting. The thing you can do in your sleep. It is also the thing she tends to hide behind &mdash; because it is comfortable. And comfort, when it becomes a cage, stops growth.</p>
   <h2>The South Node Is Your Ideal Client &#x1F4A1;</h2>
   <p>Here is one of the most powerful frameworks in business astrology &mdash; and this is key, so pay attention:</p>
   <p><strong>Your South Node represents a younger version of you.</strong> The version who was stuck in the patterns, wounds, and struggles that the South Node describes. And that younger version of you? She is EXACTLY the person who keeps showing up in your DMs asking for help.</p>
@@ -1138,11 +1071,11 @@ south_node: `
   <p>Think about it. The coach who struggled with people-pleasing (South Node in Libra) now teaches boundaries. The healer who went through a dark night of the soul (South Node in Scorpio) now guides others through transformation. The strategist who was scattered across 100 projects (South Node in Gemini) now teaches focus and clarity.</p>
   <p>Your past pain is not just a story. It is a BUSINESS MODEL. The clients you are meant to serve are the people who are where you USED to be. And because you have been there? You can guide them with a depth of understanding that no certification could ever teach.</p>
   <h2>The South Node Through Each Sign</h2>
-  <p><strong>South Node in Aries:</strong> Gifted at independence and bold action. Your ICA is the person who is forcing everything alone and burning out. &#x1F525;<br>
+  <p><strong>South Node in Aries:</strong> Gifted at independence and bold action. Your ICA (Ideal Client Avatar) is the person who is forcing everything alone and burning out. &#x1F525;<br>
   <strong>South Node in Taurus:</strong> Gifted at stability and building. Your ICA is the person stuck in comfort, afraid to change what is &ldquo;working.&rdquo;<br>
   <strong>South Node in Gemini:</strong> Gifted at communication and ideas. Your ICA is the scattered creative who has too many projects and zero focus.<br>
   <strong>South Node in Cancer:</strong> Gifted at nurturing and emotional intelligence. Your ICA is the person who gives everything to others and has nothing left for herself.<br>
-  <strong>South Node in Leo:</strong> Gifted at self-expression and leadership. Your ICA is the person whose identity is too wrapped up in her business.<br>
+  <strong>South Node in Leo:</strong> Gifted at self-expression and leadership. Your ICA is the person whose identity is too wrapped up in your business.<br>
   <strong>South Node in Virgo:</strong> Gifted at service and systems. Her ICA is the perfectionist who is stuck in the details and afraid to be seen.<br>
   <strong>South Node in Libra:</strong> Gifted at relationships and harmony. Her ICA is the people-pleaser who cannot set a boundary to save her life.<br>
   <strong>South Node in Scorpio:</strong> Gifted at depth and transformation. Your ICA is the person going through the darkness and does not know how to come out the other side.<br>
@@ -1152,11 +1085,11 @@ south_node: `
   <strong>South Node in Pisces:</strong> Gifted at intuition and creativity. Her ICA is the empath who absorbs everyone&rsquo;s energy and has no boundaries.</p>
   <h2>How This Plays Out in Real Business Scenarios</h2>
   <p>Let&rsquo;s get concrete. Here is how the South Node shows up when you are actually WORKING with clients: &#x1F4BC;</p>
-  <p><strong>South Node in Aries:</strong> Your client has been the lone wolf forever. She launched businesses solo, handled every crisis alone, and burned out from doing it all herself. Your ICA is the person who thinks asking for help means weakness. In a reading, you would say: &ldquo;You came in already knowing how to fight. Your growth is in learning how to RECEIVE.&rdquo;</p>
-  <p><strong>South Node in Taurus:</strong> She built something comfortable and it WORKS. But it stopped growing years ago. Your ICA is the person stuck in &ldquo;this is fine&rdquo; when fine is actually suffocating. In a reading: &ldquo;You came in knowing how to build stability. Your growth is in letting go of what is no longer working &mdash; even if it still pays the bills.&rdquo;</p>
-  <p><strong>South Node in Cancer:</strong> She over-gives. Every client gets 200% of her. She answers DMs at midnight because someone &ldquo;really needed her.&rdquo; Your ICA is the person who confuses love with over-functioning. In a reading: &ldquo;You came in knowing how to nurture. Your growth is in building structures and boundaries that protect your energy.&rdquo; &#x1F49C;</p>
-  <p><strong>South Node in Libra:</strong> She cannot make a decision without polling 7 friends. Her pricing is based on what everyone else charges. Your ICA is the person who would rather be liked than paid. In a reading: &ldquo;You came in knowing how to create harmony. Your growth is in standing alone when necessary &mdash; even if it makes people uncomfortable.&rdquo;</p>
-  <p><strong>South Node in Capricorn:</strong> She measures everything by external metrics. Revenue, followers, accolades. But she is exhausted and the achievement feels hollow. Your ICA is the person who climbed the ladder and realised it was leaning against the wrong wall. In a reading: &ldquo;You came in knowing how to achieve. Your growth is in softening &mdash; leading with vulnerability instead of authority.&rdquo; &#x1F3AF;</p>
+  <p><strong>South Node in Aries:</strong> You have been the lone wolf forever. Launched businesses solo, handled every crisis alone, and burned out from doing it all herself. Your ICA is the person who thinks asking for help means weakness. In a reading, you would say: &ldquo;You came in already knowing how to fight. Your growth is in learning how to RECEIVE.&rdquo;</p>
+  <p><strong>South Node in Taurus:</strong> You built something comfortable and it WORKS. But it stopped growing years ago. Your ICA is the person stuck in &ldquo;this is fine&rdquo; when fine is actually suffocating. In a reading: &ldquo;You came in knowing how to build stability. Your growth is in letting go of what is no longer working &mdash; even if it still pays the bills.&rdquo;</p>
+  <p><strong>South Node in Cancer:</strong> You over-give. Every client gets 200% of you. You answer DMs at midnight because someone &ldquo;really needed her.&rdquo; Your ICA is the person who confuses love with over-functioning. In a reading: &ldquo;You came in knowing how to nurture. Your growth is in building structures and boundaries that protect your energy.&rdquo; &#x1F49C;</p>
+  <p><strong>South Node in Libra:</strong> You cannot make a decision without polling 7 friends. Her pricing is based on what everyone else charges. Your ICA is the person who would rather be liked than paid. In a reading: &ldquo;You came in knowing how to create harmony. Your growth is in standing alone when necessary &mdash; even if it makes people uncomfortable.&rdquo;</p>
+  <p><strong>South Node in Capricorn:</strong> You measure everything by external metrics. Revenue, followers, accolades. But you are exhausted and the achievement feels hollow. Your ICA is the person who climbed the ladder and realised it was leaning against the wrong wall. In a reading: &ldquo;You came in knowing how to achieve. Your growth is in softening &mdash; leading with vulnerability instead of authority.&rdquo; &#x1F3AF;</p>
 
   <div class="exercise">
     <div class="ex-label">Practice</div>
@@ -1172,7 +1105,7 @@ north_node: `
 <div class="body">
   <p>If the South Node is your past, the North Node is your FUTURE. The direction of growth. The uncomfortable, stretchy, slightly terrifying thing your soul came here to learn. &#x1F680;</p>
   <p>The North Node is always in the opposite sign from the South Node. If your South Node is in Leo (gifted at self-expression), your North Node is in Aquarius (learning to serve the collective). If your South Node is in Capricorn (gifted at structure), your North Node is in Cancer (learning to lead with vulnerability).</p>
-  <p>In business, the North Node shows WHERE YOUR CLIENT IS MEANT TO GROW. Not where she is comfortable. Where she is GROWING. And growth, by definition, is uncomfortable.</p>
+  <p>In business, the North Node shows WHERE YOU ARE MEANT TO GROW. Not where you are comfortable. Where you are GROWING. And growth, by definition, is uncomfortable.</p>
   <h2>Why Clients Resist the North Node</h2>
   <p>Here is the thing: the North Node feels WRONG at first. It is unfamiliar. It requires skills you have not developed yet. You will resist it. You will say: &ldquo;That does not feel like me.&rdquo; And you are right &mdash; it does not feel like the OLD you. It feels like the NEXT you. &#x1F31F;</p>
   <p>Your job in a reading is to gently show her that the discomfort is the SIGNAL. The things that scare her in business? They are usually North Node territory. And they are exactly where the biggest breakthroughs live.</p>
@@ -1190,16 +1123,16 @@ north_node: `
   <strong>North Node in Aquarius:</strong> Learning to serve the collective. Stop making it about her. Build the movement. Be the visionary.<br>
   <strong>North Node in Pisces:</strong> Learning to trust intuition. Stop controlling everything. Surrender. Create from flow.</p>
   <h2>South Node + North Node = The Full Story</h2>
-  <p>When you combine the South Node (what she is leaving behind) with the North Node (what she is growing toward), you get the most powerful narrative in the chart. It is her hero&rsquo;s journey. Her before-and-after. The transformation she is living through RIGHT NOW.</p>
+  <p>When you combine the South Node (what you are leaving behind) with the North Node (what you are growing toward), you get the most powerful narrative in the chart. It is her hero&rsquo;s journey. Her before-and-after. The transformation she is living through RIGHT NOW.</p>
   <p>And when you can articulate that journey in a reading? Your client feels like you just read her diary. &#x1F4D6;</p>
   <h2>How the North Node Shows Up as Business Growth Edges</h2>
-  <p>The North Node is not just a nice idea. It shows up as the SPECIFIC thing your client keeps avoiding in her business. And it is always the thing that would change everything if she did it. &#x1F525;</p>
-  <p><strong>North Node in Aries:</strong> She needs to stop waiting for consensus and just LAUNCH. The growth edge is bold, independent action. A client with this North Node might be paralysed by perfectionism or waiting for the &ldquo;right time.&rdquo; The message: the right time was yesterday. Go.</p>
-  <p><strong>North Node in Taurus:</strong> She needs to stop chasing the next shiny offer and commit to building ONE thing that lasts. The growth edge is patience, consistency, and quality over quantity. You probably has 12 half-finished funnels. Help her pick one and finish it.</p>
-  <p><strong>North Node in Cancer:</strong> She needs to let people SEE her vulnerability. The growth edge is leading with heart instead of credentials. She might have a wall up that makes your brand feel impressive but unapproachable. Help her soften without collapsing.</p>
-  <p><strong>North Node in Leo:</strong> She needs to step OUT of the group and claim the spotlight. The growth edge is saying &ldquo;this is MY work, MY voice, MY brand.&rdquo; She might be hiding behind collaborations, group programmes, or your team. The message: YOU are the product. Shine. &#x2728;</p>
-  <p><strong>North Node in Scorpio:</strong> She needs to go DEEPER with fewer clients rather than wider with more. The growth edge is intimacy, intensity, and transformation. She might be spreading herself thin with low-ticket offers when your real gift is high-touch, deep-dive work.</p>
-  <p><strong>North Node in Capricorn:</strong> She needs to stop floating and build STRUCTURE. The growth edge is goals, timelines, accountability, and saying no. She might have incredible creative vision but zero systems. Help her become the CEO, not just the creative.</p>
+  <p>The North Node is not just a nice idea. It shows up as the SPECIFIC thing you keep avoiding in your business. And it is always the thing that would change everything if she did it. &#x1F525;</p>
+  <p><strong>North Node in Aries:</strong> You need to stop waiting for consensus and just LAUNCH. The growth edge is bold, independent action. A client with this North Node might be paralysed by perfectionism or waiting for the &ldquo;right time.&rdquo; The message: the right time was yesterday. Go.</p>
+  <p><strong>North Node in Taurus:</strong> You need to stop chasing the next shiny offer and commit to building ONE thing that lasts. The growth edge is patience, consistency, and quality over quantity. You probably has 12 half-finished funnels. Help her pick one and finish it.</p>
+  <p><strong>North Node in Cancer:</strong> You need to let people SEE her vulnerability. The growth edge is leading with heart instead of credentials. You might have a wall up that makes your brand feel impressive but unapproachable. Help her soften without collapsing.</p>
+  <p><strong>North Node in Leo:</strong> You need to step OUT of the group and claim the spotlight. The growth edge is saying &ldquo;this is MY work, MY voice, MY brand.&rdquo; You might be hiding behind collaborations, group programmes, or your team. The message: YOU are the product. Shine. &#x2728;</p>
+  <p><strong>North Node in Scorpio:</strong> You need to go DEEPER with fewer clients rather than wider with more. The growth edge is intimacy, intensity, and transformation. You might be spreading herself thin with low-ticket offers when your real gift is high-touch, deep-dive work.</p>
+  <p><strong>North Node in Capricorn:</strong> You need to stop floating and build STRUCTURE. The growth edge is goals, timelines, accountability, and saying no. You might have incredible creative vision but zero systems. Help her become the CEO, not just the creative.</p>
 
   <div class="exercise">
     <div class="ex-label">Practice</div>
@@ -1215,11 +1148,11 @@ full_reading: `
 <div class="body">
   <p>You now have all five layers of the Leadership Blueprint: Sun sign archetype, business houses, planets, Ascendant + Midheaven, and the Nodes. Here is the reading sequence you will follow for every client: &#x1F52E;</p>
   <ol>
-    <li><strong>Sun Sign</strong> &mdash; Who is she? What is her leadership archetype?</li>
-    <li><strong>2nd, 6th, 10th Houses</strong> &mdash; How does she earn, work, and build her public career?</li>
-    <li><strong>Moon + Mercury</strong> &mdash; What does she need emotionally and how does she communicate?</li>
-    <li><strong>Venus + Mars</strong> &mdash; How does she attract and how does she take action?</li>
-    <li><strong>Ascendant + Midheaven</strong> &mdash; What is her brand identity?</li>
+    <li><strong>Sun Sign</strong> &mdash; Who are you? What is your leadership archetype?</li>
+    <li><strong>2nd, 6th, 10th Houses</strong> &mdash; How do you earn, work, and build your public career?</li>
+    <li><strong>Moon + Mercury</strong> &mdash; What do you need emotionally and how do you communicate?</li>
+    <li><strong>Venus + Mars</strong> &mdash; How do you attract and how do you take action?</li>
+    <li><strong>Ascendant + Midheaven</strong> &mdash; What is your brand identity?</li>
     <li><strong>South Node + North Node</strong> &mdash; What is her karmic story and who is her ideal client?</li>
     <li><strong>Key transits</strong> &mdash; What major planets are activating the chart right now?</li>
   </ol>
@@ -1231,7 +1164,7 @@ planets_houses: `
 <h1 class="lesson-h1">Planets in<br><em>Houses.</em></h1>
 <div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 03 of 06</div></div>
 <div class="body">
-  <p>When a planet sits in a specific house, it brings its energy to that area of life. This is how you get the DETAIL in a reading &mdash; not just &ldquo;she is a Virgo&rdquo; but &ldquo;you have Mars in her 2nd house, so she fights hard for your income and has a competitive relationship with money.&rdquo; &#x1F4A1;</p>
+  <p>When a planet sits in a specific house, it brings its energy to that area of life. This is how you get the DETAIL in a reading &mdash; not just &ldquo;you are a Virgo&rdquo; but &ldquo;you have Mars in her 2nd house, so she fights hard for your income and has a competitive relationship with money.&rdquo; &#x1F4A1;</p>
   <p>As you develop your reading practice, start noting where each planet lands by house. This is where the chart stops being a list of traits and starts becoming a STORY.</p>
 </div>`,
 
@@ -1245,7 +1178,7 @@ case_oprah: `
 
   <h2>The Big Three</h2>
   <p><strong>Sun in Aquarius (3rd House).</strong> The visionary communicator. Oprah does not just talk &mdash; she starts MOVEMENTS through conversation. Aquarius Sun in the 3rd house of communication is about as literal as astrology gets. She built the biggest media empire on the planet through one thing: the power of her words. &#x1F30D;</p>
-  <p><strong>Moon in Sagittarius (1st House).</strong> Her emotional core is EXPANSION. Freedom. Big-picture purpose. The Moon in the 1st house means your emotional state is visible to everyone &mdash; when Oprah feels something, you FEEL it too. That Sagittarius Moon is why she can make you cry, laugh, and buy a book in the same 5 minutes. She emotionally needs meaning and growth. A mundane life would kill her spirit.</p>
+  <p><strong>Moon in Sagittarius (1st House).</strong> Her emotional core is EXPANSION. Freedom. Big-picture purpose. The Moon in the 1st house means your emotional state is visible to everyone &mdash; when Oprah feels something, you FEEL it too. That Sagittarius Moon is why you can make you cry, laugh, and buy a book in the same 5 minutes. She emotionally needs meaning and growth. A mundane life would kill her spirit.</p>
   <p><strong>Rising Sign: Sagittarius.</strong> Her first impression is warmth, optimism, and bigness. Before she says a word, you feel EXPANDED in her presence. Sagittarius Rising people walk into a room and the room gets bigger. That is Oprah&rsquo;s entrance energy every single time.</p>
 
   <h2>The Aquarius Stellium &#x2652;</h2>
@@ -1261,7 +1194,7 @@ case_oprah: `
   <h2>Ascendant &amp; Midheaven</h2>
   <p><strong>Sagittarius Rising:</strong> The world sees her as the eternal optimist. The teacher. The philosopher. Her brand entrance is warmth, wisdom, and the feeling that anything is possible if you just believe (and do the work).</p>
   <p><strong>Virgo Midheaven:</strong> What she is here to be KNOWN for &mdash; service. Practical help. Making complicated things simple. Oprah&rsquo;s public legacy is not about entertainment. It is about SERVING people with information that actually improves their lives. Book Club. Favourite Things. Dr. Phil. Dr. Oz. All of it is Virgo Midheaven energy: curating, organising, and delivering practical value to the masses. &#x2728;</p>
-  <p>The combination: Sagittarius Rising (hooks you with big-picture inspiration) + Virgo Midheaven (delivers with practical, detailed, service-oriented content). Inspiration meets application. THAT is why her brand works.</p>
+  <p>The combination: Sagittarius Rising (hooks you with big-picture inspiration) + Virgo Midheaven (delivers with practical, detailed, service-oriented content). Inspiration meets application. THAT is why your brand works.</p>
 
   <h2>The Nodes</h2>
   <p><strong>North Node in Capricorn (2nd House):</strong> Her soul growth direction is toward building lasting VALUE and financial structures. The 2nd house North Node says her life lesson is learning to earn, build wealth, and own her worth. And she did &mdash; becoming the first Black female billionaire. That is not luck. That is a 2nd house Capricorn North Node being lived at the highest level.</p>
@@ -1289,8 +1222,8 @@ case_beyonce: `
   <p><strong>Pull up the chart at astro.com to follow along.</strong></p>
 
   <h2>The Big Three</h2>
-  <p><strong>Sun in Virgo (12th House).</strong> Precision. Service. Obsessive attention to detail. Beyonc&eacute; does not just perform &mdash; she PERFECTS. Every note, every step, every visual is rehearsed and refined to a level that makes other artists look like they are winging it. The 12th house placement adds a layer of mystery &mdash; much of your creative process happens behind closed doors. She does not share the work-in-progress. She shares the finished masterpiece. &#x2728;</p>
-  <p><strong>Moon in Scorpio (2nd House).</strong> Emotional depth and intensity fuelling her EARNING. Lemonade was Scorpio Moon energy channelled into art &mdash; the willingness to publicly process betrayal, rage, and healing. The 2nd house placement means her emotional intensity is directly connected to how you make money. The deeper she goes emotionally? The more the world pays attention. And pays.</p>
+  <p><strong>Sun in Virgo (12th House).</strong> Precision. Service. Obsessive attention to detail. Beyonc&eacute; does not just perform &mdash; she PERFECTS. Every note, every step, every visual is rehearsed and refined to a level that makes other artists look like they are winging it. The 12th house placement adds a layer of mystery &mdash; much of your creative process happens behind closed doors. You do not share the work-in-progress. She shares the finished masterpiece. &#x2728;</p>
+  <p><strong>Moon in Scorpio (2nd House).</strong> Emotional depth and intensity fuelling her EARNING. Lemonade was Scorpio Moon energy channelled into art &mdash; the willingness to publicly process betrayal, rage, and healing. The 2nd house placement means your emotional intensity is directly connected to how you make money. The deeper you go emotionally? The more the world pays attention. And pays.</p>
   <p><strong>Rising Sign: Libra.</strong> The world sees beauty, grace, and elegance FIRST. Before you hear a single note, you see the perfect visual. The immaculate styling. The balanced aesthetic. Libra Rising is why everything Beyonc&eacute; puts out looks like a work of art &mdash; because the first impression IS art.</p>
 
   <h2>Ascendant &amp; Midheaven</h2>
@@ -1299,7 +1232,7 @@ case_beyonce: `
 
   <h2>Dominant Patterns</h2>
   <p><strong>Stellium alert:</strong> She has Saturn AND Jupiter in Libra in the 1st house &mdash; plus Mercury and Venus also in Libra. That is a MAJOR Libra cluster. Partnerships, beauty, and balance are not just themes in her life. They are the ENGINE.</p>
-  <p><strong>North Node in Leo (9th House).</strong> Her soul growth direction is toward SHINING. Creative self-expression. Being the star. The 9th house adds a teaching and global expansion element &mdash; she is not just performing. She is educating the world about Black culture, feminism, and creative excellence on a GLOBAL stage. That is North Node in Leo 9th lived at the highest level. &#x1F451;</p>
+  <p><strong>North Node in Leo (9th House).</strong> Her soul growth direction is toward SHINING. Creative self-expression. Being the star. The 9th house adds a teaching and global expansion element &mdash; you are not just performing. She is educating the world about Black culture, feminism, and creative excellence on a GLOBAL stage. That is North Node in Leo 9th lived at the highest level. &#x1F451;</p>
 
   <h2>The Business Genius</h2>
   <ul>
@@ -1328,17 +1261,17 @@ case_rihanna: `
   <p><strong>Pull up the chart at astro.com to follow along.</strong></p>
 
   <h2>The Big Three</h2>
-  <p><strong>Sun in Pisces (12th House).</strong> Creative. Intuitive. Empathic. Pisces does not follow the market &mdash; Pisces FEELS the market. She did not need a focus group to tell her the beauty industry was leaving out darker skin tones. She KNEW. The 12th house Sun means much of her genius operates behind the scenes &mdash; you download ideas from the ether and the world only sees the finished product.</p>
-  <p><strong>Moon in Aries (1st House).</strong> Underneath the dreamy Pisces exterior is a FIERCE competitor. Moon in Aries in the 1st house means her emotional need is to be FIRST. To take action. To not wait around for permission. That Aries Moon is the engine behind every bold business move &mdash; launching Fenty with 40 shades on day one while every other brand was still &ldquo;considering inclusivity.&rdquo; &#x1F525;</p>
+  <p><strong>Sun in Pisces (12th House).</strong> Creative. Intuitive. Empathic. Pisces does not follow the market &mdash; Pisces FEELS the market. She did not need a focus group to tell her the beauty industry was leaving out darker skin tones. She KNEW. The 12th house Sun means much of your genius operates behind the scenes &mdash; you download ideas from the ether and the world only sees the finished product.</p>
+  <p><strong>Moon in Aries (1st House).</strong> Underneath the dreamy Pisces exterior is a FIERCE competitor. Moon in Aries in the 1st house means your emotional need is to be FIRST. To take action. To not wait around for permission. That Aries Moon is the engine behind every bold business move &mdash; launching Fenty with 40 shades on day one while every otyour brand was still &ldquo;considering inclusivity.&rdquo; &#x1F525;</p>
   <p><strong>Rising Sign: Aries.</strong> Double Aries energy (Moon AND Rising). The world sees her as bold, direct, and unapologetic. Her brand entrance is FORCE. There is nothing tentative about Rihanna&rsquo;s presence. She walks in and the room rearranges itself around her.</p>
 
   <h2>Ascendant &amp; Midheaven</h2>
-  <p><strong>Aries Rising:</strong> First impression is power. Independence. &ldquo;I do what I want.&rdquo; energy. This is why she can go years without releasing an album and nobody questions her relevance &mdash; because the Aries entrance energy is so strong it does not need constant reinforcement.</p>
-  <p><strong>Capricorn Midheaven:</strong> What she is KNOWN for &mdash; building empires that LAST. &#x1F3D7;&#xFE0F; Capricorn MC is long-game legacy. LVMH partnership. Fenty Beauty. Savage X Fenty. She is not building trendy brands. She is building institutions. Saturn (Capricorn&rsquo;s ruler) is also in Capricorn in her 10th house &mdash; Saturn in its own sign in the career house. That is a woman who was BORN to build something monumental. It just takes time. And she has all the time in the world.</p>
+  <p><strong>Aries Rising:</strong> First impression is power. Independence. &ldquo;I do what I want.&rdquo; energy. This is why you can go years without releasing an album and nobody questions her relevance &mdash; because the Aries entrance energy is so strong it does not need constant reinforcement.</p>
+  <p><strong>Capricorn Midheaven:</strong> What she is KNOWN for &mdash; building empires that LAST. &#x1F3D7;&#xFE0F; Capricorn MC is long-game legacy. LVMH partnership. Fenty Beauty. Savage X Fenty. You are not building trendy brands. She is building institutions. Saturn (Capricorn&rsquo;s ruler) is also in Capricorn in her 10th house &mdash; Saturn in its own sign in the career house. That is a woman who was BORN to build something monumental. It just takes time. And you have all the time in the world.</p>
 
   <h2>Dominant Patterns</h2>
-  <p><strong>Aries cluster:</strong> Moon, Venus, AND Jupiter all in Aries in the 1st house. That is a TRIPLE Aries 1st house situation. Your identity, her attraction, and her luck are all channelled through fierce, independent, first-mover energy. She does not follow trends. She sets them. &#x1F3AF;</p>
-  <p><strong>North Node in Pisces (12th House).</strong> Her North Node is conjunct the Sun &mdash; meaning her soul growth direction is perfectly aligned with her core identity. She is already on her path. Her destiny IS her creative, intuitive, behind-the-scenes genius. The 12th house North Node says her greatest growth comes from trusting what cannot be seen, measured, or explained. Intuition over data. Every time.</p>
+  <p><strong>Aries cluster:</strong> Moon, Venus, AND Jupiter all in Aries in the 1st house. That is a TRIPLE Aries 1st house situation. Your identity, her attraction, and her luck are all channelled through fierce, independent, first-mover energy. You do not follow trends. She sets them. &#x1F3AF;</p>
+  <p><strong>North Node in Pisces (12th House).</strong> Her North Node is conjunct the Sun &mdash; meaning her soul growth direction is perfectly aligned with your core identity. You are already on her path. Her destiny IS your creative, intuitive, behind-the-scenes genius. The 12th house North Node says her greatest growth comes from trusting what cannot be seen, measured, or explained. Intuition over data. Every time.</p>
 
   <h2>The Business Genius</h2>
   <ul>
@@ -1349,12 +1282,12 @@ case_rihanna: `
   </ul>
 
   <h2>What This Teaches You</h2>
-  <p>Rihanna&rsquo;s chart shows the power of POLARITY. Pisces dreams + Aries executes. Intuition + force. Softness + aggression. When you see this kind of polarity in a reading, do NOT try to resolve it. The tension IS the superpower. The client who feels torn between being gentle and being fierce? She might be both. Like Rihanna. And that combination is worth a billion dollars.</p>
+  <p>Rihanna&rsquo;s chart shows the power of POLARITY. Pisces dreams + Aries executes. Intuition + force. Softness + aggression. When you see this kind of polarity in a reading, do NOT try to resolve it. The tension IS the superpower. The client who feels torn between being gentle and being fierce? You might be both. Like Rihanna. And that combination is worth a billion dollars.</p>
 
   <div class="exercise">
     <div class="ex-label">Practice</div>
     <h4>Rihanna Full Reading</h4>
-    <p>With the chart pulled up: (1) Identify the Aries stellium in the 1st house. How does triple Aries show up in her brand? (2) How does Capricorn MC + Saturn in 10th explain her business longevity? (3) What does North Node conjunct Sun in Pisces 12th mean for your creative process? (4) Write a full Leadership Blueprint for Rihanna in 5 sentences.</p>
+    <p>With the chart pulled up: (1) Identify the Aries stellium in the 1st house. How does triple Aries show up in your brand? (2) How does Capricorn MC + Saturn in 10th explain your business longevity? (3) What does North Node conjunct Sun in Pisces 12th mean for your creative process? (4) Write a full Leadership Blueprint for Rihanna in 5 sentences.</p>
   </div>
 </div>`,
 
@@ -1367,19 +1300,19 @@ case_taylor: `
   <p><strong>Pull up the chart at astro.com to follow along.</strong></p>
 
   <h2>The Big Three</h2>
-  <p><strong>Sun in Sagittarius (2nd House).</strong> The storyteller. The big-picture thinker. The one who sees in ERAS, not albums. Sagittarius energy is about turning personal experience into universal story. The 2nd house placement is key &mdash; her IDENTITY is directly linked to her EARNING. She does not just make music. She makes music that makes money. And the way she earns (2nd house) IS her creative expression (Sagittarius). &#x1F3AF;</p>
-  <p><strong>Moon in Cancer (9th House).</strong> Her emotional core is HOME, family, nostalgia, and fierce loyalty. Every fan feels like she knows them personally. Every song feels like it was written just for you. Cancer Moon in the 9th house means her emotional world expands through teaching, publishing, and reaching a GLOBAL audience. You process her feelings by turning them into art that travels the world.</p>
+  <p><strong>Sun in Sagittarius (2nd House).</strong> The storyteller. The big-picture thinker. The one who sees in ERAS, not albums. Sagittarius energy is about turning personal experience into universal story. The 2nd house placement is key &mdash; her IDENTITY is directly linked to her EARNING. You do not just make music. You make music that makes money. And the way she earns (2nd house) IS your creative expression (Sagittarius). &#x1F3AF;</p>
+  <p><strong>Moon in Cancer (9th House).</strong> Her emotional core is HOME, family, nostalgia, and fierce loyalty. Every fan feels like she knows them personally. Every song feels like it was written just for you. Cancer Moon in the 9th house means your emotional world expands through teaching, publishing, and reaching a GLOBAL audience. You process her feelings by turning them into art that travels the world.</p>
   <p><strong>Rising Sign: Scorpio.</strong> The world sees intensity, magnetism, and a woman who does NOT forget. Scorpio Rising explains the entire reputation era &mdash; she was publicly betrayed, went silent, then came back with VENOM. That is textbook Scorpio Rising: death, silence, transformation, rebirth. &#x1F40D;</p>
 
   <h2>Ascendant &amp; Midheaven</h2>
   <p><strong>Scorpio Rising:</strong> Brand entrance is intensity and intrigue. You do not casually scroll past Taylor Swift content. She pulls you IN. The mystery, the Easter eggs, the hidden messages in lyrics &mdash; all Scorpio Rising. She turns every album release into an investigation.</p>
-  <p><strong>Leo Midheaven:</strong> What she is KNOWN for &mdash; being the STAR. &#x1F451; Leo MC is creative royalty. She is not building from the shadows. She is building from the STAGE. Her career legacy is personal creative expression at the absolute highest level. The Eras Tour was not just a concert. It was a Leo Midheaven coronation ceremony &mdash; $2 billion+ in revenue.</p>
+  <p><strong>Leo Midheaven:</strong> What she is KNOWN for &mdash; being the STAR. &#x1F451; Leo MC is creative royalty. You are not building from the shadows. She is building from the STAGE. Her career legacy is personal creative expression at the absolute highest level. The Eras Tour was not just a concert. It was a Leo Midheaven coronation ceremony &mdash; $2 billion+ in revenue.</p>
 
   <h2>Dominant Patterns</h2>
   <p><strong>Mars in Scorpio (1st House).</strong> Her drive and ambition are INTENSE and deeply personal. Mars in Scorpio in the 1st house means she fights for what is hers with a quiet, relentless, scorched-earth determination. Re-recording her entire catalogue was Mars in Scorpio energy: &ldquo;You took what is mine. I will rebuild it from scratch. And my version will be better.&rdquo;</p>
   <p><strong>Saturn in Capricorn (3rd House).</strong> Discipline in communication. Every word, every lyric, every social media post is deliberate. Saturn here says she takes her WORDS seriously. Nothing is casual. Everything is crafted.</p>
-  <p><strong>Jupiter in Cancer (9th House) conjunct Moon.</strong> Luck and expansion through emotional storytelling on a global scale. Jupiter amplifies the Cancer Moon &mdash; making her emotional authenticity the thing that grows her audience exponentially. The bigger she gets, the more personal you feel. That is Jupiter-Moon magic.</p>
-  <p><strong>North Node in Aquarius (4th House).</strong> Her soul growth direction is toward serving the COLLECTIVE from a place of home and roots. The 4th house North Node says her deepest growth comes from creating HOME &mdash; for herself and for her fans. The Aquarius sign adds innovation and community. She is not just building a fan base. She is building a HOME for millions of people who feel like outsiders. &#x1F30D;</p>
+  <p><strong>Jupiter in Cancer (9th House) conjunct Moon.</strong> Luck and expansion through emotional storytelling on a global scale. Jupiter amplifies the Cancer Moon &mdash; making your emotional authenticity the thing that grows her audience exponentially. The bigger she gets, the more personal you feel. That is Jupiter-Moon magic.</p>
+  <p><strong>North Node in Aquarius (4th House).</strong> Her soul growth direction is toward serving the COLLECTIVE from a place of home and roots. The 4th house North Node says her deepest growth comes from creating HOME &mdash; for herself and for her fans. The Aquarius sign adds innovation and community. You are not just building a fan base. She is building a HOME for millions of people who feel like outsiders. &#x1F30D;</p>
 
   <h2>The Business Genius</h2>
   <ul>
@@ -1407,7 +1340,7 @@ bonus_money: `
 <div class="lesson-meta"><div class="meta-item"><strong>Bonus Lesson</strong></div><div class="meta-dot"></div><div class="meta-item">Deep Dive</div></div>
 <div class="body">
   <p>Let&rsquo;s talk about money, babe. &#x1F4B0;</p>
-  <p>Because here is a question that most business coaches NEVER ask: how is your client cosmically WIRED to earn, spend, and build wealth? Not what she learned from her parents about money. Not what her business bestie told her to charge. How the chart says you naturally relates to finances.</p>
+  <p>Because here is a question that most business coaches NEVER ask: how is you cosmically WIRED to earn, spend, and build wealth? Not what she learned from her parents about money. Not what your business bestie told her to charge. How the chart says you naturally relates to finances.</p>
   <p>This bonus lesson goes deep on the astrology of money. We are looking at the 2nd and 8th houses, the planets that show up there, and how Venus ties it all together. By the end of this, you will be able to add a money reading to any Leadership Blueprint &mdash; and trust me, THIS is the part that makes clients go: &ldquo;Take my money. Literally. Take it.&rdquo; &#x1F52E;</p>
 
   <h2>Step 1: The 2nd House vs. The 8th House &mdash; Know the Difference</h2>
@@ -1475,7 +1408,7 @@ bonus_money: `
   <p><strong>Her 2nd house is ruled by Capricorn.</strong> That tells you EVERYTHING. You earn through strategy, authority, and playing the LONG game. SKIMS was not an overnight viral hit &mdash; it was a calculated, methodical build. Capricorn on the 2nd says: &ldquo;I earn through structure, patience, and being the CEO.&rdquo; You do not wing it. She BUILDS it.</p>
   <p><strong>Her 8th house is ruled by Cancer.</strong> Shared resources through FAMILY. The Kardashian-Jenner empire is the ultimate 8th house Cancer story &mdash; wealth built through family bonds, shared ventures, and a matriarch (Kris Jenner) managing the whole thing. Cancer in the 8th says the big financial moves happen through people who feel like family.</p>
   <p><strong>No planets in her 2nd or 8th houses.</strong> So the money story plays out through the ruling planets. Saturn rules her Capricorn 2nd house, and Saturn is in Libra in her 11th house &mdash; meaning she earns through her AUDIENCE and her massive community (11th house). Her social media following IS her financial engine. The Moon rules her Cancer 8th house, and the Moon is in Pisces in her 4th house &mdash; shared finances are tied to home and family (4th house). The family home, the family brand, the family legacy.</p>
-  <p><strong>Where is Venus?</strong> In Virgo, in her 10th house. &#x1F451; She makes money through precision and aesthetics in the PUBLIC eye. Her entire career is built on looking flawless (Virgo attention to detail) on the biggest stage possible (10th house). Venus here says: &ldquo;My beauty, my taste, my eye for detail IS my career.&rdquo; And Jupiter is right there with Venus in the 10th &mdash; amplifying it. Lucky in career. Lucky in public image. Lucky in turning aesthetics into empire.</p>
+  <p><strong>Where is Venus?</strong> In Virgo, in her 10th house. &#x1F451; You make money through precision and aesthetics in the PUBLIC eye. Her entire career is built on looking flawless (Virgo attention to detail) on the biggest stage possible (10th house). Venus here says: &ldquo;My beauty, my taste, my eye for detail IS my career.&rdquo; And Jupiter is right there with Venus in the 10th &mdash; amplifying it. Lucky in career. Lucky in public image. Lucky in turning aesthetics into empire.</p>
 
   <h2>Step 5: Where Is YOUR Venus?</h2>
   <p>Venus is the planet most associated with money and attraction. As a final layer, look at where Venus sits in your chart &mdash; by sign AND house.</p>
@@ -1514,7 +1447,7 @@ big_three: `
   <p><strong>In business:</strong> A client with this Big Three delivers flawless work (Virgo) fuelled by deep emotion (Scorpio) wrapped in a brand that looks effortlessly beautiful (Libra). If you encounter this combo, their biggest struggle is probably that people see the polish but underestimate the intensity underneath.</p>
 
   <h2>2. Oprah &mdash; Aquarius Sun, Sagittarius Moon, Sagittarius Rising</h2>
-  <p>She LEADS through innovation and serving the collective (Aquarius Sun). She NEEDS freedom, meaning, and big-picture purpose (Sagittarius Moon). And the world SEES her as optimistic, expansive, and wise (Sagittarius Rising). Double Sagittarius energy means her emotional needs and her brand are perfectly aligned &mdash; what you see IS what you feel. &#x1F30D;</p>
+  <p>She LEADS through innovation and serving the collective (Aquarius Sun). She NEEDS freedom, meaning, and big-picture purpose (Sagittarius Moon). And the world SEES her as optimistic, expansive, and wise (Sagittarius Rising). Double Sagittarius energy means your emotional needs and your brand are perfectly aligned &mdash; what you see IS what you feel. &#x1F30D;</p>
   <p><strong>In business:</strong> When Moon and Rising are in the same sign, there is zero gap between how someone feels and how they present. That creates TRUST. Oprah&rsquo;s audience trusts her because there is no mask. What you see is genuinely what you get.</p>
 
   <h2>3. Taylor Swift &mdash; Sagittarius Sun, Cancer Moon, Scorpio Rising</h2>
@@ -1527,7 +1460,7 @@ big_three: `
 
   <h2>5. Kim Kardashian &mdash; Libra Sun, Pisces Moon, Sagittarius Rising</h2>
   <p>She LEADS through beauty, partnerships, and negotiation (Libra Sun). She NEEDS emotional depth, empathy, and creative flow (Pisces Moon &mdash; more sensitive than people assume). And the world SEES her as adventurous, bold, and larger than life (Sagittarius Rising). &#x1F48E;</p>
-  <p><strong>In business:</strong> Libra Sun creates through collaboration and aesthetic perfection. Pisces Moon means she absorbs the cultural moment and responds to what people FEEL, not what they say. Sagittarius Rising makes the brand feel bigger than any single product. If a client has air Sun + water Moon, they are both strategic AND deeply intuitive. Help them trust both.</p>
+  <p><strong>In business:</strong> Libra Sun creates through collaboration and aesthetic perfection. Pisces Moon means you absorbs the cultural moment and responds to what people FEEL, not what they say. Sagittarius Rising makes the brand feel bigger than any single product. If a client has air Sun + water Moon, they are both strategic AND deeply intuitive. Help them trust both.</p>
 
   <h2>Reading the Big Three: Your Template</h2>
   <p>For every client, start with this sentence:</p>
@@ -1535,7 +1468,7 @@ big_three: `
   <p>Then look at the ELEMENT balance:</p>
   <ul>
     <li><strong>All three in the same element?</strong> Very focused energy. Powerful but can lack perspective. (Example: triple fire = all action, no reflection.)</li>
-    <li><strong>Mix of elements?</strong> More versatile but can create internal tension. (Example: earth Sun + fire Moon = she wants stability but craves excitement.)</li>
+    <li><strong>Mix of elements?</strong> More versatile but can create internal tension. (Example: earth Sun + fire Moon = you want stability but craves excitement.)</li>
     <li><strong>Moon and Rising in the same sign?</strong> No mask. What you see is what you get. Builds enormous trust.</li>
     <li><strong>Sun and Rising in tension?</strong> Internal identity does not match external brand. Common cause of &ldquo;my brand feels off.&rdquo;</li>
   </ul>
@@ -1820,38 +1753,82 @@ quiz_m5: `
     <div class="quiz-result"></div>
   </div>
 </div>`,
-quiz_m6: `
-<div class="kicker">Module 06 &middot; Quiz</div>
-<h1 class="lesson-h1">Test Your<br><em>Reading Skills.</em></h1>
-<div class="lesson-meta"><div class="meta-item"><strong>Self-Assessment</strong></div><div class="meta-dot"></div><div class="meta-item">5 Questions</div></div>
+
+how_to_chart: `
+<div class="kicker">Module 00 &middot; Lesson 3</div>
+<h1 class="lesson-h1">How to Pull Up<br><em>Your Chart.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Setup</strong></div><div class="meta-dot"></div><div class="meta-item">Module 00</div></div>
 <div class="body">
-  <div class="quiz-wrap" id="quiz-m6">
-    <div class="quiz-title">Module 6 Quiz &#x1F3AC;</div>
-    <div class="quiz-q"><p>1. Oprah has an Aquarius stellium (Sun, Mercury, Venus) in which house?</p>
-      <label><input type="radio" name="m6q1" data-correct="false"> 1st</label>
-      <label><input type="radio" name="m6q1" data-correct="true"> 3rd</label>
-      <label><input type="radio" name="m6q1" data-correct="false"> 10th</label></div>
-    <div class="quiz-q"><p>2. Beyonc&eacute;&rsquo;s Virgo Sun combined with her Scorpio Moon means you lead through:</p>
-      <label><input type="radio" name="m6q2" data-correct="true"> Excellence fuelled by deep emotional intensity</label>
-      <label><input type="radio" name="m6q2" data-correct="false"> Charm and partnership</label>
-      <label><input type="radio" name="m6q2" data-correct="false"> Big-picture vision</label></div>
-    <div class="quiz-q"><p>3. Rihanna&rsquo;s chart shows the power of POLARITY between:</p>
-      <label><input type="radio" name="m6q3" data-correct="false"> Earth and Air</label>
-      <label><input type="radio" name="m6q3" data-correct="true"> Pisces intuition and Aries execution</label>
-      <label><input type="radio" name="m6q3" data-correct="false"> Fire and Fire</label></div>
-    <div class="quiz-q"><p>4. Taylor Swift re-recording her catalogue is an example of which placement?</p>
-      <label><input type="radio" name="m6q4" data-correct="false"> Venus in Libra</label>
-      <label><input type="radio" name="m6q4" data-correct="true"> Mars in Scorpio &mdash; relentless determination to reclaim what is hers</label>
-      <label><input type="radio" name="m6q4" data-correct="false"> Jupiter in Cancer</label></div>
-    <div class="quiz-q"><p>5. In a Leadership Blueprint reading, the correct sequence is:</p>
-      <label><input type="radio" name="m6q5" data-correct="false"> Nodes first, then Sun sign</label>
-      <label><input type="radio" name="m6q5" data-correct="true"> Big Three, then Houses, then Planets, then ASC/MC, then Nodes</label>
-      <label><input type="radio" name="m6q5" data-correct="false"> Midheaven first, then everything else</label></div>
-    <button class="quiz-btn" onclick="gradeQuiz('quiz-m6')">Check Answers</button>
-    <div class="quiz-result"></div>
+  <h2>How to Pull Up Your Chart &#x1F4CB;</h2>
+  <p>You NEED a chart in front of you for this course. Here is exactly how to get one &mdash; it takes 2 minutes:</p>
+  <ol>
+    <li>Go to <strong>astro.com</strong></li>
+    <li>Click <strong>&ldquo;Free Horoscopes&rdquo;</strong> in the top menu</li>
+    <li>Select <strong>&ldquo;Chart Drawing, Ascendant&rdquo;</strong></li>
+    <li>Click <strong>&ldquo;click here to go to the data entry page&rdquo;</strong></li>
+    <li>Enter your birth date, EXACT birth time, and birth location</li>
+    <li>Under <strong>&ldquo;House System&rdquo;</strong> &mdash; select <strong>&ldquo;Whole Sign&rdquo;</strong> (this is important!)</li>
+    <li>Click <strong>&ldquo;Show the chart&rdquo;</strong></li>
+    <li>Screenshot it. Save it. You will use it in EVERY module.</li>
+  </ol>
+
+  <h3>Why Whole Sign Houses? &#x1F3E0;</h3>
+  <p>There are many house systems in astrology. We use <strong>Whole Sign Houses</strong> in this course because it is the simplest and most intuitive system &mdash; perfect for business readings.</p>
+  <p>How it works: your Rising Sign (Ascendant) rules your ENTIRE 1st house. The next sign rules the entire 2nd house. The sign after that rules the 3rd house. And so on around the wheel. One sign = one house. Clean, clear, no ambiguity.</p>
+  <p>Other house systems (Placidus, Koch, etc.) split signs across multiple houses, which gets complicated fast. For the purpose of this course and for delivering clear business readings to clients? Whole Sign is the way to go.</p>
+  <p><strong>Important:</strong> If you do not know your exact birth time, you can still get your Sun, Moon (roughly), Mercury, Venus, and Mars signs. But you will NOT get an accurate Rising Sign, Midheaven, or house placements. For a full Leadership Blueprint, birth time is essential. Tell your clients to check their birth certificate or ask their parents. &#x1F52E;</p>
+
+  <div class="exercise">
+    <div class="ex-label">Before You Begin</div>
+    <h4>Pull Three Charts</h4>
+    <p>Before the next lesson, go to <strong>astro.com</strong> and pull: (1) Your OWN birth chart. (2) Your business chart (use the founding date of your business as the &ldquo;birth date&rdquo;). (3) One client&rsquo;s chart (ask for their birth details). Save screenshots of all three. You will use these throughout every module. Learning astrology without a chart in front of you is like learning to cook by reading a menu. Get in the kitchen. &#x1F525;</p>
   </div>
 </div>`,
 
+intro_biz_astro: `
+<div class="kicker">Module 01 &middot; Lesson 1</div>
+<h1 class="lesson-h1">Why Business Astrology<br><em>Actually Works.</em></h1>
+<div class="lesson-meta"><div class="meta-item"><strong>Reading</strong></div><div class="meta-dot"></div><div class="meta-item">Module 01 of 06</div></div>
+<div class="body">
+  <p>Let me guess. You are reading this and one of two things is true:</p>
+  <p>A) You already use astrology in your personal life and you are thinking: &ldquo;Can I ACTUALLY use this with paying clients?&rdquo;</p>
+  <p>B) You are a business coach or service provider who keeps seeing astrology pop up everywhere and you are curious but also slightly skeptical. &#x1F440;</p>
+  <p>Either way? You are in the right place.</p>
+  <p>Here is what most people get wrong about business astrology: they think it is about predicting the future. It is NOT. It is about understanding the BLUEPRINT. Your client&rsquo;s natal chart is a map of how you naturally leads, communicates, earns, brands yourself, and makes decisions. It does not tell her what to do. It tells you who you ARE &mdash; so you can stop fighting your nature and start leveraging it.</p>
+  <h2>Your Leadership Blueprint</h2>
+  <p>This entire course is built around one concept: your <strong>Leadership Blueprint</strong>.</p>
+  <p>The Leadership Blueprint is the combination of chart placements that reveals how someone is designed to run a business. Not how they SHOULD run it according to the latest marketing trend. Not how their mentor told them to run it. How THEY are cosmically wired to run it.</p>
+  <p>The blueprint includes:</p>
+  <ul>
+    <li><strong>Sun sign</strong> &mdash; Their leadership archetype (Module 1)</li>
+    <li><strong>2nd, 6th, 10th houses</strong> &mdash; How they earn, work, and build a career (Module 2)</li>
+    <li><strong>Planetary placements</strong> &mdash; The characters driving their story (Module 3)</li>
+    <li><strong>Ascendant + Midheaven</strong> &mdash; How they are perceived and what they are here to be known for (Module 4)</li>
+    <li><strong>North + South Node</strong> &mdash; Their soul purpose and karmic gifts (Module 5)</li>
+  </ul>
+  <p>When you put all five layers together? You have a reading that makes your client feel like you climbed inside her brain, looked around, and said: &ldquo;Yeah, I see everything. And here is what we are going to do about it.&rdquo; &#x1F52E;</p>
+  <h2>Why This Works for Service-Based Businesses</h2>
+  <p>Most business frameworks treat every entrepreneur the same. Same funnel. Same launch strategy. Same content pillars. Same cookie-cutter advice.</p>
+  <p>But you already KNOW that does not work for everyone. Your Aries client needs speed and immediate action. Your Virgo client needs systems and precision. Your Pisces client needs space for creativity and intuition. Telling all three to &ldquo;just batch your content on Sunday&rdquo; is like telling a fish, a bird, and a horse to all take the highway. &#x1F6E3;&#xFE0F;</p>
+  <p>Business astrology gives you a personalised lens. Every recommendation you make is rooted in WHO your client actually is. And when someone feels deeply SEEN in a reading? They do not just hire you once. They become a client for life.</p>
+  <h2>Before You Dive Into the Archetypes: Your Big Three &amp; Chart Dominance</h2>
+  <p>When you start reading the 12 archetypes in the next lesson, you might think: &ldquo;OK so I am just my Sun sign?&rdquo; NO. You are not. You are a combination of MANY placements. But three placements matter most &mdash; and you need to understand them before Module 1 makes full sense. &#x1F4A1;</p>
+  <p><strong>The Sun sign</strong> = your core identity. WHO you are. Your leadership archetype. This is what most people know (&ldquo;I am a Virgo&rdquo;). It is important, but it is only one piece.</p>
+  <p><strong>The Moon sign</strong> = your emotional needs. What you NEED to feel safe, resourced, and ready to perform. Two Virgos with different Moon signs will run their businesses in completely different ways because their emotional fuel is different.</p>
+  <p><strong>The Rising sign (Ascendant)</strong> = how the world SEES you. Your first impression. Your brand energy. This is the sign that was rising on the horizon when you were born, which is why you need your exact birth time to find it.</p>
+  <p>Together, these three form your <strong>Big Three</strong> &mdash; and they are the starting point of every reading you will do.</p>
+
+  <h3>What Is Chart Dominance?</h3>
+  <p>Sometimes a chart has a CLUSTER of planets in one sign or one element. This is called dominance, and it changes how you read the chart:</p>
+  <ul>
+    <li><strong>Stellium</strong> = 3 or more planets in the same sign. That sign&rsquo;s energy DOMINATES the chart. Example: Oprah has Sun, Mercury, AND Venus in Aquarius. You are not just an Aquarius &mdash; she is TRIPLE Aquarius. Her entire life runs on Aquarian themes of communication, innovation, and serving the collective.</li>
+    <li><strong>Element dominance</strong> = most of your planets in one element (fire, earth, air, or water). This tells you your default operating mode. Heavy fire = action-first. Heavy earth = stability-first. Heavy air = ideas-first. Heavy water = feelings-first.</li>
+    <li><strong>No planets in an element</strong> = a blind spot. If you have zero water placements, emotional intelligence in business might be something you have to consciously develop rather than something that comes naturally.</li>
+  </ul>
+  <p>As you go through the 12 archetypes, do not just read your Sun sign. Read your Moon sign. Read your Rising sign. And look at where you have clusters. The archetype that shows up the MOST in your chart is often a better description of you than your Sun sign alone. &#x1F52E;</p>
+
+  
+</div>`,
 };
 
 // ══════════════════════════════════════════
