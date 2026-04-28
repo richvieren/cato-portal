@@ -169,7 +169,7 @@ function renderMiniReadingCard(state, grant) {
 
   card.innerHTML = `
     <div class="card-label">Mini Reading</div>
-    <h2>Your Business Astrology Roadmap</h2>
+    <h2>Your Mini Reading</h2>
     <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
     ${c.ctaText
       ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
