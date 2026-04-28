@@ -6,16 +6,22 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const { createClient } = supabase;
 window.sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// If URL has a magic link token, sign out current session first so the new user gets logged in
-(async function handleMagicLinkSwitch() {
-  const hash = window.location.hash;
-  const params = new URLSearchParams(window.location.search);
-  if (hash.includes('access_token') || hash.includes('type=magiclink') || params.get('token_hash')) {
-    await window.sb.auth.signOut();
-  }
-})();
-
 async function getSession() {
+  // If the URL has auth params (magic link redirect), exchange the token first
+  const hash = window.location.hash;
+  if (hash && (hash.includes('access_token') || hash.includes('type='))) {
+    const params = new URLSearchParams(hash.substring(1));
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    if (accessToken && refreshToken) {
+      // Sign out any existing session first
+      await window.sb.auth.signOut();
+      // Set the new session from the magic link
+      await window.sb.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+      // Clean the URL
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }
   const { data: { session } } = await window.sb.auth.getSession();
   return session;
 }
