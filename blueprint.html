@@ -92,12 +92,10 @@
       <!-- Ready view -->
       <div id="ready-view" style="display:none">
         <h1>Your Blueprint</h1>
-        <p class="subtitle">Your reading is ready.</p>
-        <p style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem">
-          Your Category of One Blueprint is ready to download.
-        </p>
+        <p class="subtitle" id="ready-subtitle">Checking your reading...</p>
+        <p id="ready-text" style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem"></p>
         <a id="download-btn" class="btn btn-primary" style="display:none">Download your Blueprint</a>
-        <p id="download-loading" style="color:var(--stone);font-size:0.85rem">Loading your file...</p>
+        <p id="download-loading" style="color:var(--stone);font-size:0.85rem"></p>
       </div>
 
     </div>
@@ -150,13 +148,17 @@
 
       const loadingEl = document.getElementById('download-loading');
       const btnEl = document.getElementById('download-btn');
+      const subtitleEl = document.getElementById('ready-subtitle');
+      const textEl = document.getElementById('ready-text');
 
       if (error || !data) {
-        loadingEl.textContent = 'Your reading is being finalised. Check back shortly.';
+        subtitleEl.textContent = 'Your reading is being prepared.';
+        textEl.textContent = 'I\'m going deep on your chart. This can take a little while. Come back soon.';
         return;
       }
 
-      loadingEl.style.display = 'none';
+      subtitleEl.textContent = 'Your reading is ready.';
+      textEl.textContent = 'Your Category of One Blueprint is ready to download.';
       btnEl.href = data.signedUrl;
       btnEl.download = 'Category-of-One-Blueprint.pdf';
       btnEl.style.display = 'inline-block';

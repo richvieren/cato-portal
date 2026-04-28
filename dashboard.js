@@ -65,8 +65,8 @@ function renderBlueprintCard(state, grant) {
       ctaHref: null,
     },
     ready: {
-      status: 'Your reading is ready',
-      ctaText: 'View reading →',
+      status: 'Your reading is being prepared',
+      ctaText: 'Check status →',
       ctaHref: 'blueprint.html',
     },
   };
