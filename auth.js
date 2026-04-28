@@ -6,6 +6,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const { createClient } = supabase;
 window.sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// If URL has a magic link token, sign out current session first so the new user gets logged in
+(async function handleMagicLinkSwitch() {
+  const hash = window.location.hash;
+  const params = new URLSearchParams(window.location.search);
+  if (hash.includes('access_token') || hash.includes('type=magiclink') || params.get('token_hash')) {
+    await window.sb.auth.signOut();
+  }
+})();
+
 async function getSession() {
   const { data: { session } } = await window.sb.auth.getSession();
   return session;
