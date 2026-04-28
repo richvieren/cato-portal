@@ -7,21 +7,6 @@ const { createClient } = supabase;
 window.sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function getSession() {
-  // If the URL has auth params (magic link redirect), exchange the token first
-  const hash = window.location.hash;
-  if (hash && (hash.includes('access_token') || hash.includes('type='))) {
-    const params = new URLSearchParams(hash.substring(1));
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
-    if (accessToken && refreshToken) {
-      // Sign out any existing session first
-      await window.sb.auth.signOut();
-      // Set the new session from the magic link
-      await window.sb.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
-      // Clean the URL
-      window.history.replaceState(null, '', window.location.pathname);
-    }
-  }
   const { data: { session } } = await window.sb.auth.getSession();
   return session;
 }
