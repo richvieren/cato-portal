@@ -168,7 +168,7 @@ function renderMiniReadingCard(state, grant) {
   const c = configs[state];
 
   card.innerHTML = `
-    <div class="card-label">Roadmap</div>
+    <div class="card-label">Mini Reading</div>
     <h2>Your Business Astrology Roadmap</h2>
     <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
     ${c.ctaText

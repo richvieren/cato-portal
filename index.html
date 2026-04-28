@@ -15,7 +15,7 @@
   <!-- ── Login screen ──────────────────────────────────── -->
   <div id="login-screen" class="page-center" style="display:none">
     <div class="login-wrap">
-      <h1>Cato Vermeulen</h1>
+      <img src="img/logo.png" alt="Cato Vermeulen" style="max-width:280px;margin-bottom:1.5rem;">
       <p>Client Portal</p>
 
       <div id="login-form">
@@ -36,7 +36,7 @@
   <!-- ── Dashboard ─────────────────────────────────────── -->
   <div id="dashboard-screen" style="display:none">
     <div class="dashboard-header">
-      <h1>Cato Vermeulen</h1>
+      <img src="img/logo.png" alt="Cato Vermeulen" style="height:40px;">
       <div class="header-right">
         <span class="user-email" id="user-email"></span>
         <button class="sign-out-btn" onclick="signOut()">Sign out</button>
@@ -50,8 +50,8 @@
 
     <div class="container">
     <div class="cards-grid">
-      <div class="card" id="mini-reading-card">
-        <div class="card-label">Roadmap</div>
+      <div class="card" id="mini-reading-card" style="display:none">
+        <div class="card-label">Mini Reading</div>
         <h2>Your Business Astrology Roadmap</h2>
         <div class="card-status">Loading...</div>
       </div>
@@ -93,7 +93,10 @@
         getProfile(),
       ]);
       renderBlueprintCard(blueprintState(grant, profile), grant);
-      renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant);
+      if (miniGrant) {
+        document.getElementById('mini-reading-card').style.display = '';
+        renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant);
+      }
       renderCourseCard(courseState(courseGrant));
     }
 
