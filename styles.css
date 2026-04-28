@@ -178,7 +178,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .sign-out-btn {
   background: none;
   border: none;
-  color: rgba(180,167,148,0.35);
+  color: rgba(255,255,255,0.6);
   font-family: 'Jost', sans-serif;
   font-weight: 300;
   font-size: 0.65rem;
@@ -198,7 +198,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .user-email {
   font-size: 0.7rem;
-  color: rgba(180,167,148,0.3);
+  color: #FFFFFF;
   letter-spacing: 0.02em;
 }
 
