@@ -56,9 +56,19 @@
         </form>
       </div>
 
+      <!-- Success view -->
+      <div id="success-view" style="display:none">
+        <h1>You're all set, babe ✨</h1>
+        <p class="subtitle" style="line-height:1.8;max-width:480px;margin:2rem auto;">
+          Your details are in and I'm pulling up your chart right now. Your Mini Reading will be ready in minutes.
+        </p>
+        <p style="color:var(--golden);font-size:1.1rem;margin-bottom:2rem;">You'll get an email the moment it's ready.</p>
+        <a href="index.html" class="btn btn-primary">Back to your portal</a>
+      </div>
+
       <!-- Pending view -->
       <div id="pending-view" style="display:none">
-        <h1>Your Business Astrology Roadmap</h1>
+        <h1>Your Mini Reading</h1>
         <p class="subtitle">Your reading is being prepared.</p>
       </div>
 
@@ -154,7 +164,8 @@
         btn.disabled = false;
         btn.textContent = 'Submit details';
       } else {
-        window.location.href = 'index.html';
+        document.getElementById('intake-view').style.display = 'none';
+        document.getElementById('success-view').style.display = 'block';
       }
     }
 
