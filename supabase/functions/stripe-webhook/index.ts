@@ -29,23 +29,27 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
   blueprint: (link) => ({
     subject: 'Your Blueprint Portal Access',
     html: `
-      <p>Your payment went through. Here is what happens next.</p>
+      <p>Your payment went through 🔥</p>
 
-      <p><strong>Step 1 — Enter your portal</strong><br>
+      <p>Here's what happens next.</p>
+
+      <p><strong>Step 1: Enter your portal</strong><br>
       Click the link below. It takes you straight in.<br>
       <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
 
-      <p><strong>Step 2 — Fill in your details</strong><br>
-      Your reading is built on your birth data and your business context. Take 5 minutes to fill in the form accurately. The quality of the reading depends on it.</p>
+      <p><strong>Step 2: Fill in your details</strong><br>
+      Your reading is built on your birth data and your business context. Take 5 minutes and be ACCURATE. The more specific you are, the deeper I can go. This is your cosmic business blueprint... don't half-ass the intake, babe.</p>
 
-      <p><strong>Step 3 — Your reading is prepared</strong><br>
-      Once you've submitted, Cato gets to work. Your Blueprint will be ready within 24 hours.</p>
+      <p><strong>Step 3: Your reading is prepared</strong><br>
+      Once you've submitted, I get to work. Your Blueprint will be ready within 24 hours.</p>
 
-      <p><strong>Step 4 — Download your Blueprint</strong><br>
-      You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+      <p><strong>Step 4: Download your Blueprint</strong><br>
+      You'll find it waiting in your portal. A full PDF, yours to keep forever.</p>
+
+      <p>See you on the other side ✨</p>
+      <p>Cato</p>
 
       <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Blueprint, you can ignore this email.</p>
-      <p>— Cato</p>
     `,
   }),
 
@@ -66,6 +70,33 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
 
       <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Business Astrology Roadmap, you can ignore this email.</p>
       <p>— Cato</p>
+    `,
+  }),
+
+  transit_reading: (link) => ({
+    subject: 'Your Transits Reading Portal Access',
+    html: `
+      <p>Your payment went through 🔥</p>
+
+      <p>Here's what happens next.</p>
+
+      <p><strong>Step 1: Enter your portal</strong><br>
+      Click the link below. It takes you straight in.<br>
+      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+
+      <p><strong>Step 2: Fill in your details</strong><br>
+      Your reading is built on your birth data and what you're building right now. Take 5 minutes and be specific. The more detail you give me on your launches and offers, the more precise your timing guidance will be.</p>
+
+      <p><strong>Step 3: Your reading is prepared</strong><br>
+      Once you've submitted, I get to work. Your Transits Reading will be ready within 12 hours.</p>
+
+      <p><strong>Step 4: Download your reading</strong><br>
+      You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+
+      <p>See you on the other side ✨</p>
+      <p>Cato</p>
+
+      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Transits Reading, you can ignore this email.</p>
     `,
   }),
 
@@ -150,6 +181,7 @@ Deno.serve(async (req) => {
     'price_1SdnYPPDOFXTchBMnw3MtZgz': 'blueprint',
     'price_1TGxqyPDOFXTchBMddOzggCy': 'mini_reading',
     'price_1TGxxePDOFXTchBMSohT0suK': 'course',
+    'price_1SlAcFPDOFXTchBMxKJwlS00': 'transit_reading',
   };
 
   let product = (session.metadata?.product as string) || '';

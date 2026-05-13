@@ -63,6 +63,12 @@
         <div class="card-status">Loading...</div>
       </div>
 
+      <div class="card" id="transit-card" style="display:none">
+        <div class="card-label">Transits Reading</div>
+        <h2>Your Transits Reading</h2>
+        <div class="card-status">Loading...</div>
+      </div>
+
       <div class="card" id="course-card">
         <div class="card-label">Introduction Course</div>
         <h2>Introduction Course</h2>
@@ -87,16 +93,21 @@
     async function loadDashboard(session) {
       document.getElementById('dashboard-screen').style.display = 'block';
       document.getElementById('user-email').textContent = session.user.email;
-      const [grant, miniGrant, courseGrant, profile] = await Promise.all([
+      const [grant, miniGrant, courseGrant, transitGrant, profile] = await Promise.all([
         getBlueprintGrant(),
         getMiniReadingGrant(),
         getCourseGrant(),
+        getTransitGrant(),
         getProfile(),
       ]);
       renderBlueprintCard(blueprintState(grant, profile), grant);
       if (miniGrant) {
         document.getElementById('mini-reading-card').style.display = '';
         renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant);
+      }
+      if (transitGrant) {
+        document.getElementById('transit-card').style.display = '';
+        renderTransitCard(transitState(transitGrant, profile), transitGrant);
       }
       renderCourseCard(courseState(courseGrant));
     }

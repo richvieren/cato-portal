@@ -94,6 +94,76 @@ async function getBlueprintGrant() {
 }
 
 /**
+ * Fetch Transit Reading access grant for current user.
+ * Returns grant row or null.
+ */
+async function getTransitGrant() {
+  const email = await _getUserEmail();
+  if (!email) return null;
+  const { data, error } = await window.sb
+    .from('access_grants')
+    .select('id, available_at, granted_at')
+    .eq('product', 'transit_reading')
+    .eq('email', email)
+    .is('revoked_at', null)
+    .limit(1)
+    .maybeSingle();
+  if (error) { console.error('getTransitGrant error:', error); return null; }
+  return data;
+}
+
+/**
+ * Submit transit intake: upsert profile + set available_at (12h) + trigger transit pipeline.
+ * Returns { error } or {}.
+ */
+async function submitTransitIntake(userId, fields) {
+  // 1. Upsert profile
+  const { error: profileErr } = await window.sb
+    .from('profiles')
+    .upsert({
+      id: userId,
+      email: fields.email,
+      full_name: fields.full_name,
+      dob: fields.dob,
+      tob: fields.tob || null,
+      city: fields.city,
+      country: fields.country,
+      business_context: fields.business_niche,
+      niche: fields.planned_launches,
+      clarity: fields.clarity,
+      submitted_at: new Date().toISOString(),
+    }, { onConflict: 'id' });
+  if (profileErr) return { error: profileErr };
+
+  // 2. Set available_at via Edge Function (12h delay for transit_reading)
+  const { data: { session } } = await window.sb.auth.getSession();
+  const res = await fetch(
+    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({ product: 'transit_reading' }),
+    }
+  );
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    return { error: body.error || 'Failed to set available_at' };
+  }
+
+  // 3. Trigger transit pipeline on VPS
+  await fetch('https://api.catovermeulen.com/transit-portal', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  }).catch(err => console.error('Transit pipeline trigger failed:', err));
+
+  return {};
+}
+
+/**
  * Fetch profiles row for current user.
  * Returns profile or null.
  */

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transits Reading — Cato Vermeulen</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js"></script>
+  <script src="db.js"></script>
+  <script src="dashboard.js"></script>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to portal</a>
+
+    <div class="blueprint-wrap">
+
+      <!-- Intake view -->
+      <div id="intake-view" style="display:none">
+        <h1>Your Transits Reading</h1>
+        <p class="subtitle">Enter your details so Cato can prepare your reading.</p>
+
+        <form id="intake-form" onsubmit="handleTransitIntakeSubmit(event)">
+          <div class="field-group">
+            <label class="field-label" for="full-name">Full name</label>
+            <input type="text" id="full-name" placeholder="Your full name" required>
+          </div>
+
+          <div class="two-col">
+            <div class="field-group">
+              <label class="field-label" for="dob">Date of birth</label>
+              <input type="date" id="dob" required>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="tob">Exact birth time</label>
+              <input type="time" id="tob">
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field-group">
+              <label class="field-label" for="city">City of birth</label>
+              <input type="text" id="city" placeholder="e.g. Paris" required>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="country">Country</label>
+              <input type="text" id="country" placeholder="e.g. France" required>
+            </div>
+          </div>
+
+          <p class="field-hint" style="color:var(--stone);font-size:0.85rem;margin-top:0.5rem;margin-bottom:1.5rem">
+            The more accurate your birth time is, the more accurate and aligned your reading will be.
+          </p>
+
+          <div class="field-group" style="margin-top:0.8rem">
+            <label class="field-label" for="business-niche">What is your niche or industry?</label>
+            <textarea id="business-niche" placeholder="e.g. Health coaching, tech startup, consulting..." rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="planned-launches">What programs, products, offers or launches are you focusing on right now?</label>
+            <textarea id="planned-launches" placeholder="Please be as specific as possible. The more detail you provide, the more tailored and dialled-in your reading will be." rows="4" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="clarity">If you're not planning to launch anything within the next 3 months, what is your intention for this reading?</label>
+            <textarea id="clarity" placeholder="Please be specific" rows="3" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+          </div>
+
+          <div class="error-msg" id="intake-error"></div>
+          <button type="submit" class="btn btn-primary" id="submit-btn" style="margin-top:1rem">
+            Submit details
+          </button>
+        </form>
+      </div>
+
+      <!-- Success view -->
+      <div id="success-view" style="display:none">
+        <h1>You're all set, babe ✨</h1>
+        <p class="subtitle" style="line-height:1.8;max-width:480px;margin:2rem auto;">
+          Your details are in and I'm already pulling up your transits. Give me 12 hours to map out the next 3 months of your cosmic business timing.
+        </p>
+        <p style="color:var(--golden);font-size:1.1rem;margin-bottom:2rem;">You'll get an email the moment it's ready.</p>
+        <a href="index.html" class="btn btn-primary">Back to your portal</a>
+      </div>
+
+      <!-- Pending view -->
+      <div id="pending-view" style="display:none">
+        <h1>Your Transits Reading</h1>
+        <p class="subtitle">Your reading is being prepared.</p>
+        <div class="countdown" id="countdown-display">—</div>
+        <div class="countdown-label">until your reading is ready</div>
+      </div>
+
+      <!-- Ready view -->
+      <div id="ready-view" style="display:none">
+        <h1>Your Transits Reading</h1>
+        <p class="subtitle" id="ready-subtitle">Checking your reading...</p>
+        <p id="ready-text" style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem"></p>
+        <a id="download-btn" class="btn btn-primary" style="display:none">Download your Transits Reading</a>
+        <p id="download-loading" style="color:var(--stone);font-size:0.85rem"></p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
+
+    async function init() {
+      const session = await getSession();
+      if (!session) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const grant = await getTransitGrant();
+      const profile = await getProfile();
+
+      if (!grant) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // No profile or no submitted_at means intake needed
+      // But also check if they already have a blueprint profile — reuse birth data
+      if (!profile || !profile.submitted_at) {
+        document.getElementById('intake-view').style.display = 'block';
+        return;
+      }
+
+      // Profile exists but need to check if transit-specific fields were submitted
+      // If available_at is null, they submitted blueprint intake but not transit
+      if (!grant.available_at) {
+        document.getElementById('intake-view').style.display = 'block';
+        // Pre-fill birth data from existing profile
+        if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
+        if (profile.dob) document.getElementById('dob').value = profile.dob;
+        if (profile.tob) document.getElementById('tob').value = profile.tob;
+        if (profile.city) document.getElementById('city').value = profile.city;
+        if (profile.country) document.getElementById('country').value = profile.country;
+        return;
+      }
+
+      // Check if ready
+      const now = new Date();
+      const availableAt = new Date(grant.available_at);
+      if (now < availableAt) {
+        document.getElementById('pending-view').style.display = 'block';
+        startCountdown(grant.available_at);
+        return;
+      }
+
+      // Ready — show download
+      document.getElementById('ready-view').style.display = 'block';
+      await loadDownloadButton(session.user.email);
+    }
+
+    async function loadDownloadButton(email) {
+      const encodedEmail = email.replace('@', '%40');
+      const { data, error } = await window.sb.storage
+        .from('blueprints')
+        .createSignedUrl(encodedEmail + '/transit_reading.pdf', 3600);
+
+      const btnEl = document.getElementById('download-btn');
+      const subtitleEl = document.getElementById('ready-subtitle');
+      const textEl = document.getElementById('ready-text');
+
+      if (error || !data) {
+        subtitleEl.textContent = 'Your reading is being prepared.';
+        textEl.textContent = "I'm mapping out your transits. This can take a little while. Come back soon.";
+        return;
+      }
+
+      subtitleEl.textContent = 'Your reading is ready.';
+      textEl.textContent = 'Your Transits Reading is ready to download.';
+      btnEl.href = data.signedUrl;
+      btnEl.download = 'Transits-Reading.pdf';
+      btnEl.style.display = 'inline-block';
+    }
+
+    function startCountdown(available_at) {
+      function tick() {
+        const el = document.getElementById('countdown-display');
+        const msLeft = new Date(available_at).getTime() - Date.now();
+        if (msLeft <= 0) { el.textContent = 'Ready'; location.reload(); return; }
+        const h = Math.floor(msLeft / 3600000);
+        const m = Math.floor((msLeft % 3600000) / 60000);
+        el.textContent = h + 'h ' + m + 'm';
+      }
+      tick();
+      setInterval(tick, 60000);
+    }
+
+    async function handleTransitIntakeSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const errEl = document.getElementById('intake-error');
+      errEl.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const { data: { session } } = await window.sb.auth.getSession();
+
+      const { error } = await submitTransitIntake(session.user.id, {
+        email: session.user.email,
+        full_name: document.getElementById('full-name').value.trim(),
+        dob: document.getElementById('dob').value,
+        tob: document.getElementById('tob').value || null,
+        city: document.getElementById('city').value.trim(),
+        country: document.getElementById('country').value.trim(),
+        business_niche: document.getElementById('business-niche').value.trim(),
+        planned_launches: document.getElementById('planned-launches').value.trim(),
+        clarity: document.getElementById('clarity').value.trim(),
+      });
+
+      if (error) {
+        errEl.textContent = typeof error === 'string' ? error : 'Something went wrong. Try again.';
+        btn.disabled = false;
+        btn.textContent = 'Submit details';
+      } else {
+        document.getElementById('intake-view').style.display = 'none';
+        document.getElementById('success-view').style.display = 'block';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
