@@ -117,22 +117,27 @@ async function getTransitGrant() {
  * Returns { error } or {}.
  */
 async function submitTransitIntake(userId, fields) {
-  // 1. Upsert profile
+  // 1. Upsert profile — only birth data, don't overwrite blueprint-specific fields
+  const profile = await getProfile();
+  const upsertData = {
+    id: userId,
+    email: fields.email,
+    full_name: fields.full_name,
+    dob: fields.dob,
+    tob: fields.tob || null,
+    city: fields.city,
+    country: fields.country,
+    submitted_at: new Date().toISOString(),
+  };
+  // Only set business fields if they don't already exist from a blueprint intake
+  if (!profile || !profile.submitted_at) {
+    upsertData.business_context = fields.business_niche;
+    upsertData.niche = fields.planned_launches;
+    upsertData.clarity = fields.clarity;
+  }
   const { error: profileErr } = await window.sb
     .from('profiles')
-    .upsert({
-      id: userId,
-      email: fields.email,
-      full_name: fields.full_name,
-      dob: fields.dob,
-      tob: fields.tob || null,
-      city: fields.city,
-      country: fields.country,
-      business_context: fields.business_niche,
-      niche: fields.planned_launches,
-      clarity: fields.clarity,
-      submitted_at: new Date().toISOString(),
-    }, { onConflict: 'id' });
+    .upsert(upsertData, { onConflict: 'id' });
   if (profileErr) return { error: profileErr };
 
   // 2. Set available_at via Edge Function (12h delay for transit_reading)

@@ -123,23 +123,17 @@
         return;
       }
 
-      // No profile or no submitted_at means intake needed
-      // But also check if they already have a blueprint profile — reuse birth data
-      if (!profile || !profile.submitted_at) {
-        document.getElementById('intake-view').style.display = 'block';
-        return;
-      }
-
-      // Profile exists but need to check if transit-specific fields were submitted
-      // If available_at is null, they submitted blueprint intake but not transit
+      // If available_at is null, transit intake hasn't been submitted yet
+      // Show the form, pre-fill birth data if they have a profile from blueprint
       if (!grant.available_at) {
         document.getElementById('intake-view').style.display = 'block';
-        // Pre-fill birth data from existing profile
-        if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
-        if (profile.dob) document.getElementById('dob').value = profile.dob;
-        if (profile.tob) document.getElementById('tob').value = profile.tob;
-        if (profile.city) document.getElementById('city').value = profile.city;
-        if (profile.country) document.getElementById('country').value = profile.country;
+        if (profile) {
+          if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
+          if (profile.dob) document.getElementById('dob').value = profile.dob;
+          if (profile.tob) document.getElementById('tob').value = profile.tob;
+          if (profile.city) document.getElementById('city').value = profile.city;
+          if (profile.country) document.getElementById('country').value = profile.country;
+        }
         return;
       }
 
