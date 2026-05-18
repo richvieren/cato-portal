@@ -122,6 +122,13 @@
 
       if (state === 'intake') {
         document.getElementById('intake-view').style.display = 'block';
+        if (profile) {
+          if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
+          if (profile.dob) document.getElementById('dob').value = profile.dob;
+          if (profile.tob) document.getElementById('tob').value = profile.tob;
+          if (profile.city) document.getElementById('city').value = profile.city;
+          if (profile.country) document.getElementById('country').value = profile.country;
+        }
         return;
       }
 

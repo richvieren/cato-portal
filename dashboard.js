@@ -10,8 +10,7 @@
  */
 function blueprintState(grant, profile) {
   if (!grant) return 'locked';
-  if (!profile || !profile.submitted_at) return 'intake';
-  if (!grant.available_at) return 'pending';
+  if (!grant.available_at) return 'intake';
   const available = new Date(grant.available_at);
   if (Date.now() < available.getTime()) return 'pending';
   return 'ready';
