@@ -9,6 +9,7 @@
   <script src="auth.js"></script>
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
+  <script src="autocomplete.js"></script>
 </head>
 <body>
   <div class="container">
@@ -122,6 +123,7 @@
 
       if (state === 'intake') {
         document.getElementById('intake-view').style.display = 'block';
+        initCityAutocomplete('city', 'country');
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;

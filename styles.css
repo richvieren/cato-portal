@@ -426,6 +426,41 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .back-link:hover { color: var(--mist); }
 
+/* ── CITY AUTOCOMPLETE ───────────────────────────────── */
+
+.city-autocomplete-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: var(--smoke-card);
+  border: 1px solid rgba(180,167,148,0.15);
+  border-radius: 4px;
+  z-index: 9999;
+  max-height: 240px;
+  overflow-y: auto;
+  margin-top: -1.6rem;
+}
+
+.city-autocomplete-item {
+  padding: 0.7rem 0.9rem;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.92rem;
+  color: var(--mist);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border-bottom: 1px solid rgba(180,167,148,0.06);
+}
+
+.city-autocomplete-item:last-child { border-bottom: none; }
+
+.city-autocomplete-item:hover,
+.city-autocomplete-item.active {
+  background: var(--golden-glow);
+  color: var(--golden);
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────── */
 
 @media (max-width: 900px) {
