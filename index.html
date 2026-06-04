@@ -50,37 +50,17 @@
     </div>
 
     <div class="container">
-    <div class="cards-grid">
-      <div class="card" id="mini-reading-card" style="display:none">
-        <div class="card-label">Mini Reading</div>
-        <h2>Your Mini Reading</h2>
-        <div class="card-status">Loading...</div>
+      <!-- Purchased readings -->
+      <div id="purchased-section" style="display:none">
+        <p class="section-label" style="color:var(--golden);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;">Your Readings</p>
+        <div class="cards-grid" id="purchased-grid"></div>
       </div>
 
-      <div class="card" id="blueprint-card">
-        <div class="card-label">Blueprint Reading</div>
-        <h2>Category of One</h2>
-        <div class="card-status">Loading...</div>
+      <!-- Also available -->
+      <div id="available-section" style="display:none;margin-top:3rem;">
+        <p class="section-label" style="color:var(--stone);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;">Also Available</p>
+        <div class="cards-grid" id="available-grid"></div>
       </div>
-
-      <div class="card" id="transit-card" style="display:none">
-        <div class="card-label">Transits Reading</div>
-        <h2>Your Transits Reading</h2>
-        <div class="card-status">Loading...</div>
-      </div>
-
-      <div class="card" id="astrocartography-card" style="display:none">
-        <div class="card-label">Astrocartography</div>
-        <h2>Astrocartography Reading</h2>
-        <div class="card-status">Loading...</div>
-      </div>
-
-      <div class="card" id="course-card">
-        <div class="card-label">Introduction Course</div>
-        <h2>Introduction Course</h2>
-        <div class="card-status">Loading...</div>
-      </div>
-    </div>
     </div>
   </div>
 
@@ -107,20 +87,43 @@
         getAstrocartographyGrant(),
         getProfile(),
       ]);
-      renderBlueprintCard(blueprintState(grant, profile), grant);
-      if (miniGrant) {
-        document.getElementById('mini-reading-card').style.display = '';
-        renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant);
-      }
-      if (transitGrant) {
-        document.getElementById('transit-card').style.display = '';
-        renderTransitCard(transitState(transitGrant, profile), transitGrant);
-      }
-      if (astroGrant) {
-        document.getElementById('astrocartography-card').style.display = '';
-        renderAstrocartographyCard(astrocartographyState(astroGrant, profile), astroGrant);
-      }
-      renderCourseCard(courseState(courseGrant));
+
+      const purchasedGrid = document.getElementById('purchased-grid');
+      const availableGrid = document.getElementById('available-grid');
+
+      // All products with their grant status
+      const products = [
+        { id: 'blueprint', grant, render: () => { renderBlueprintCard(blueprintState(grant, profile), grant); } },
+        { id: 'mini-reading', grant: miniGrant, render: () => { renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant); } },
+        { id: 'transit', grant: transitGrant, render: () => { renderTransitCard(transitState(transitGrant, profile), transitGrant); } },
+        { id: 'astrocartography', grant: astroGrant, render: () => { renderAstrocartographyCard(astrocartographyState(astroGrant, profile), astroGrant); } },
+        { id: 'course', grant: courseGrant, render: () => { renderCourseCard(courseState(courseGrant)); } },
+      ];
+
+      let hasPurchased = false;
+      let hasAvailable = false;
+
+      products.forEach(({ id, grant: g, render }) => {
+        // Create the card element
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.id = id + '-card';
+
+        if (g) {
+          // Purchased — goes in top section
+          purchasedGrid.appendChild(card);
+          hasPurchased = true;
+        } else {
+          // Not purchased — goes in bottom section
+          availableGrid.appendChild(card);
+          hasAvailable = true;
+        }
+
+        render();
+      });
+
+      if (hasPurchased) document.getElementById('purchased-section').style.display = 'block';
+      if (hasAvailable) document.getElementById('available-section').style.display = 'block';
     }
 
     async function handleSendLink() {

@@ -272,6 +272,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .card:last-child { border-right: none; }
 
+#available-grid .card {
+  opacity: 0.5;
+  min-height: 240px;
+  padding: 2.4rem 2.2rem;
+}
+#available-grid .card:hover {
+  opacity: 0.8;
+}
+#available-grid .card-label {
+  color: var(--stone);
+}
+
 .card:hover {
   background: var(--smoke-card);
 }
