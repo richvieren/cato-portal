@@ -94,7 +94,7 @@
       // All products with their grant status
       const products = [
         { id: 'blueprint', grant, render: () => { renderBlueprintCard(blueprintState(grant, profile), grant); } },
-        { id: 'mini-reading', grant: miniGrant, render: () => { renderMiniReadingCard(miniReadingState(miniGrant, profile), miniGrant); } },
+        // mini-reading hidden — no longer offered
         { id: 'transit', grant: transitGrant, render: () => { renderTransitCard(transitState(transitGrant, profile), transitGrant); } },
         { id: 'astrocartography', grant: astroGrant, render: () => { renderAstrocartographyCard(astrocartographyState(astroGrant, profile), astroGrant); } },
         { id: 'course', grant: courseGrant, render: () => { renderCourseCard(courseState(courseGrant)); } },
