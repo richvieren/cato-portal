@@ -169,6 +169,79 @@ async function submitTransitIntake(userId, fields) {
 }
 
 /**
+ * Fetch Astrocartography access grant for current user.
+ * Returns grant row or null.
+ */
+async function getAstrocartographyGrant() {
+  const email = await _getUserEmail();
+  if (!email) return null;
+  const { data, error } = await window.sb
+    .from('access_grants')
+    .select('id, available_at, granted_at')
+    .eq('product', 'astrocartography')
+    .eq('email', email)
+    .is('revoked_at', null)
+    .limit(1)
+    .maybeSingle();
+  if (error) { console.error('getAstrocartographyGrant error:', error); return null; }
+  return data;
+}
+
+/**
+ * Submit astrocartography intake: upsert profile + set available_at (12h) + trigger pipeline.
+ * Returns { error } or {}.
+ */
+async function submitAstrocartographyIntake(userId, fields) {
+  // 1. Upsert profile — only birth data, don't overwrite blueprint-specific fields
+  const profile = await getProfile();
+  const upsertData = {
+    id: userId,
+    email: fields.email,
+    full_name: fields.full_name,
+    dob: fields.dob,
+    tob: fields.tob || null,
+    city: fields.city,
+    country: fields.country,
+    submitted_at: new Date().toISOString(),
+  };
+  // Only set business fields if they don't already exist from a blueprint intake
+  if (!profile || !profile.submitted_at) {
+    upsertData.business_context = fields.life_focus;
+  }
+  const { error: profileErr } = await window.sb
+    .from('profiles')
+    .upsert(upsertData, { onConflict: 'id' });
+  if (profileErr) return { error: profileErr };
+
+  // 2. Set available_at via Edge Function (12h delay for astrocartography)
+  const { data: { session } } = await window.sb.auth.getSession();
+  const res = await fetch(
+    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({ product: 'astrocartography' }),
+    }
+  );
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    return { error: body.error || 'Failed to set available_at' };
+  }
+
+  // 3. Trigger astrocartography pipeline on VPS
+  await fetch('https://api.catovermeulen.com/astrocartography-portal', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  }).catch(err => console.error('Astrocartography pipeline trigger failed:', err));
+
+  return {};
+}
+
+/**
  * Fetch profiles row for current user.
  * Returns profile or null.
  */

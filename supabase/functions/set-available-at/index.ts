@@ -50,7 +50,7 @@ Deno.serve(async (req) => {
   } catch (_) {}
 
   // set_reading_available_at handles delay per product:
-  // blueprint = NOW() + 24h, everything else = NOW()
+  // blueprint = NOW() + 12h, transit_reading = NOW() + 12h, everything else = NOW()
   const { error } = await supabase.rpc('set_reading_available_at', { p_email: email, p_product: product });
 
   if (error) {

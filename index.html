@@ -69,6 +69,12 @@
         <div class="card-status">Loading...</div>
       </div>
 
+      <div class="card" id="astrocartography-card" style="display:none">
+        <div class="card-label">Astrocartography</div>
+        <h2>Astrocartography Reading</h2>
+        <div class="card-status">Loading...</div>
+      </div>
+
       <div class="card" id="course-card">
         <div class="card-label">Introduction Course</div>
         <h2>Introduction Course</h2>
@@ -93,11 +99,12 @@
     async function loadDashboard(session) {
       document.getElementById('dashboard-screen').style.display = 'block';
       document.getElementById('user-email').textContent = session.user.email;
-      const [grant, miniGrant, courseGrant, transitGrant, profile] = await Promise.all([
+      const [grant, miniGrant, courseGrant, transitGrant, astroGrant, profile] = await Promise.all([
         getBlueprintGrant(),
         getMiniReadingGrant(),
         getCourseGrant(),
         getTransitGrant(),
+        getAstrocartographyGrant(),
         getProfile(),
       ]);
       renderBlueprintCard(blueprintState(grant, profile), grant);
@@ -108,6 +115,10 @@
       if (transitGrant) {
         document.getElementById('transit-card').style.display = '';
         renderTransitCard(transitState(transitGrant, profile), transitGrant);
+      }
+      if (astroGrant) {
+        document.getElementById('astrocartography-card').style.display = '';
+        renderAstrocartographyCard(astrocartographyState(astroGrant, profile), astroGrant);
       }
       renderCourseCard(courseState(courseGrant));
     }

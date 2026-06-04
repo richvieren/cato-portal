@@ -100,6 +100,33 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
     `,
   }),
 
+  astrocartography: (link) => ({
+    subject: 'Your Astrocartography Reading Portal Access',
+    html: `
+      <p>Your payment went through 🔥</p>
+
+      <p>Here's what happens next.</p>
+
+      <p><strong>Step 1: Enter your portal</strong><br>
+      Click the link below. It takes you straight in.<br>
+      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+
+      <p><strong>Step 2: Fill in your details</strong><br>
+      Your reading is built on your birth data and the cities you want analyzed. Take 5 minutes and be specific. Include the country for each city so I can map your chart accurately.</p>
+
+      <p><strong>Step 3: Your reading is prepared</strong><br>
+      Once you've submitted, I get to work. Your Astrocartography Reading will be ready within 12 hours.</p>
+
+      <p><strong>Step 4: Download your reading</strong><br>
+      You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+
+      <p>See you on the other side ✨</p>
+      <p>Cato</p>
+
+      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase an Astrocartography Reading, you can ignore this email.</p>
+    `,
+  }),
+
   course: (link) => ({
     subject: 'Your Introduction Course Access',
     html: `
@@ -199,8 +226,11 @@ Deno.serve(async (req) => {
     }
   }
 
-  // Final fallback
-  if (!product) product = 'blueprint';
+  // No fallback — if product is unknown, ignore this event
+  if (!product) {
+    console.log('Unknown product for session:', sessionId, '— skipping');
+    return respond(200);
+  }
 
   // available_at: null for blueprint (set on intake submit) and mini_reading (set on intake submit)
   // course has no intake, so we set available_at immediately
@@ -222,6 +252,36 @@ Deno.serve(async (req) => {
   }
 
   console.log('Access granted:', email, product, sessionId);
+
+  // Notify Telegram with payment details
+  try {
+    const amountPaid = ((session.amount_total ?? 0) / 100).toFixed(2);
+    const currency = (session.currency ?? 'usd').toUpperCase();
+    const discount = ((session.total_details?.amount_discount ?? 0) / 100).toFixed(2);
+    const customerName = session.customer_details?.name ?? email;
+    const coupon = session.discounts?.[0]?.coupon?.name ?? '';
+
+    let msg = `💰 New purchase: ${customerName}\nProduct: ${product}\nPaid: ${currency} ${amountPaid}`;
+    if (parseFloat(discount) > 0) {
+      msg += `\nDiscount: ${currency} ${discount}`;
+      if (coupon) msg += ` (${coupon})`;
+    }
+    if (parseFloat(amountPaid) === 0) {
+      msg += `\n⚠️ 100% discount — free`;
+    }
+
+    const TELEGRAM_BOT_TOKEN = '8612517573:AAEuEgVAr6hjsA0nldPU7mdH1iq3JE9aGIE';
+    const chatIds = ['1168464793', '1479373068'];
+    for (const chatId of chatIds) {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: msg }),
+      });
+    }
+  } catch (err) {
+    console.error('Telegram notification error:', err);
+  }
 
   // Generate magic link + send welcome email
   try {
