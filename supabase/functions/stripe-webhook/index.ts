@@ -41,7 +41,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       Your reading is built on your birth data and your business context. Take 5 minutes and be ACCURATE. The more specific you are, the deeper I can go. This is your cosmic business blueprint... don't half-ass the intake, babe.</p>
 
       <p><strong>Step 3: Your reading is prepared</strong><br>
-      Once you've submitted, I get to work. Your Blueprint will be ready within 24 hours.</p>
+      Once you've submitted, I get to work. Your Blueprint will be ready within 48 hours.</p>
 
       <p><strong>Step 4: Download your Blueprint</strong><br>
       You'll find it waiting in your portal. A full PDF, yours to keep forever.</p>
