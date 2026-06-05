@@ -114,7 +114,7 @@ function renderCourseCard(state) {
 
   const configs = {
     locked: {
-      status: 'Not yet unlocked',
+      status: 'Coming soon',
       ctaText: null,
       ctaHref: null,
     },
@@ -130,7 +130,7 @@ function renderCourseCard(state) {
   card.innerHTML = `
     <img src="img/04-course.webp" alt="Course" class="card-img">
     <div class="card-label">Introduction Course</div>
-    <h2>Introduction Course</h2>
+    <h2>Business Astrology Introduction Course</h2>
     <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
     ${c.ctaText
       ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
@@ -215,7 +215,7 @@ function renderTransitCard(state, grant) {
   card.innerHTML = `
     <img src="img/02-transites.webp" alt="Transits" class="card-img">
     <div class="card-label">Transits Reading</div>
-    <h2>Your Transits Reading</h2>
+    <h2>Transits Reading</h2>
     <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
     ${c.ctaText
       ? `<a href="${c.ctaHref}" class="card-cta ${state === 'pending' ? 'muted' : ''}">${c.ctaText}</a>`
