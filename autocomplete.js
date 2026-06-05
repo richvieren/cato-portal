@@ -67,9 +67,7 @@ function initCityAutocomplete(cityInputId, countryInputId) {
       var url = 'https://nominatim.openstreetmap.org/search?q=' +
         encodeURIComponent(query) +
         '&format=json&addressdetails=1&limit=5&featuretype=city';
-      var resp = await fetch(url, {
-        headers: { 'User-Agent': 'CatoVermeulenPortal/1.0' }
-      });
+      var resp = await fetch(url);
       var data = await resp.json();
       results = data.map(parseResult).filter(function (r) { return r.city; });
       activeIndex = -1;
