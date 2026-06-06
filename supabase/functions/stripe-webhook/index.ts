@@ -115,7 +115,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       Your reading is built on your birth data and the cities you want analyzed. Take 5 minutes and be specific. Include the country for each city so I can map your chart accurately.</p>
 
       <p><strong>Step 3: Your reading is prepared</strong><br>
-      Once you've submitted, I get to work. Your Astrocartography Reading will be ready within 12 hours.</p>
+      Once you've submitted, I get to work. Your Astrocartography Reading will be ready within 48 hours.</p>
 
       <p><strong>Step 4: Download your reading</strong><br>
       You'll find it waiting in your portal. A full PDF, yours to keep.</p>
