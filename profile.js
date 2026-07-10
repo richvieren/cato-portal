@@ -29,6 +29,9 @@ async function loadProfile(session) {
     return;
   }
 
+  // Show name for all logged-in users
+  document.getElementById('profile-name').textContent = profile && profile.full_name ? profile.full_name : session.user.email;
+
   if (state === 'locked') {
     document.getElementById('profile-locked').style.display = 'block';
     document.getElementById('profile-widgets').style.display = 'none';
