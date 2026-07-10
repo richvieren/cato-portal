@@ -1,4 +1,4 @@
-// profile.js — Profile page orchestrator (v2 with text sections + new widgets)
+// profile.js — Profile page orchestrator (Gilded Observatory redesign)
 
 var _snippets = null;
 
@@ -35,8 +35,46 @@ function findSnippet(section, key1, key2) {
   return '';
 }
 
+// ── Entrance animation observer ──────────────────────
+
+function setupEntranceObserver() {
+  if (!('IntersectionObserver' in window)) {
+    // Fallback: show everything immediately
+    document.querySelectorAll('.anim-fade-up, .anim-blur-in, .anim-grow, .badge-card__halo-ring, .badge-card__type, .bar-item__fill, .rank-row__bar-fill, .gauge-fill').forEach(function(el) {
+      el.classList.add('in');
+    });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+
+        // Also trigger child animations within this section
+        entry.target.querySelectorAll('.anim-fade-up, .anim-blur-in, .badge-card__halo-ring, .badge-card__type').forEach(function(child) {
+          child.classList.add('in');
+        });
+
+        // Trigger bar fills within view
+        entry.target.querySelectorAll('.bar-item__fill, .rank-row__bar-fill').forEach(function(bar) {
+          bar.classList.add('in');
+        });
+
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  // Observe all animatable sections
+  document.querySelectorAll('.anim-fade-up, .anim-blur-in, .frost-card, .profile-section, .profile-section--text, .profile-section--tight, .upsell-banner, .stellium-card').forEach(function(el) {
+    observer.observe(el);
+  });
+}
+
+// ── Main profile loader ──────────────────────────────
+
 async function loadProfile(session) {
-  // Load snippets in parallel with data
   var snippetsPromise = loadSnippets();
 
   document.getElementById('profile-screen').style.display = 'block';
@@ -56,8 +94,9 @@ async function loadProfile(session) {
   var astroGrant = results[3], courseGrant = results[4], chart = results[5], profile = results[6];
 
   var state = cosmicProfileState(cosmicGrant, chart);
+  var fullName = profile && profile.full_name ? profile.full_name : session.user.email;
 
-  document.getElementById('profile-name').textContent = profile && profile.full_name ? profile.full_name : session.user.email;
+  document.getElementById('profile-name').textContent = fullName;
 
   if (state === 'intake') { window.location.href = 'profile-intake.html'; return; }
 
@@ -75,123 +114,120 @@ async function loadProfile(session) {
   var cd = new ChartData(chart);
   var big3 = cd.getBig3();
 
+  // ── Hero big-3 line ──
   if (big3.sun && big3.moon && big3.rising) {
-    document.getElementById('profile-subtitle').textContent =
-      big3.sun.sign + ' Sun \u00B7 ' + big3.moon.sign + ' Moon \u00B7 ' + big3.rising.sign + ' Rising';
+    var lineEl = document.getElementById('profile-big3-line');
+    if (lineEl) {
+      lineEl.innerHTML =
+        '<span>' + big3.sun.sign.toUpperCase() + '&nbsp;SUN</span>' +
+        '<span class="profile-hero__dot">\u00B7</span>' +
+        '<span>' + big3.moon.sign.toUpperCase() + '&nbsp;MOON</span>' +
+        '<span class="profile-hero__dot">\u00B7</span>' +
+        '<span>' + big3.rising.sign.toUpperCase() + '&nbsp;RISING</span>';
+    }
   }
 
-  // ── SECTION 1: Big 3 + Welcome text ──
+  // ── Big 3 cards ──
   renderBig3('w-big3', cd);
+
+  // ── Chart Ruler ──
   renderChartRuler('w-chart-ruler', cd);
+
+  // ── Welcome text ──
   if (big3.sun && big3.rising) {
-    renderTextSection('t-welcome', findSnippet('welcome', big3.sun.sign, big3.rising.sign));
+    renderTextSection('t-welcome', findSnippet('welcome', big3.sun.sign, big3.rising.sign), { label: 'WELCOME' });
   }
 
-  // ── SECTION 2: Chart Wheel ──
+  // ── Chart Wheel ──
   renderChartWheel('w-chart-wheel', cd);
+  // Set client name in wheel center
+  var wheelContainer = document.getElementById('w-chart-wheel');
+  if (wheelContainer && wheelContainer._setCenterName) {
+    wheelContainer._setCenterName(fullName);
+  }
 
-  // ── SECTION 3: Snapshot (elements + modality + archetype) ──
+  // ── Chart Snapshot ──
   renderElementBalance('w-elements', cd);
   renderModalitySplit('w-modality', cd);
   renderArchetype('w-archetype', cd);
   renderHemisphereBalance('w-hemispheres', cd);
-  renderTextSection('t-at-a-glance', findSnippet('at_a_glance', cd.getDominantElement(), cd.getDominantModality()));
 
-  // ── SECTION 4: Business Lens ──
+  // ── At a Glance text ──
+  renderTextSection('t-at-a-glance', findSnippet('at_a_glance', cd.getDominantElement(), cd.getDominantModality()), { label: 'AT A GLANCE' });
+
+  // ── Business Lens ──
   var biz = cd.getBusinessLens();
-  renderMoneyStyle('w-money-style', cd);
-  var secondSign = biz.money.second.house ? biz.money.second.house.sign : '';
-  renderTextSection('t-money', findSnippet('money', secondSign));
 
+  renderMoneyStyle('w-money-style', cd);
   renderVisibilityMeter('w-visibility', cd);
+
+  // Biz text blocks with left-border treatment
+  var secondSign = biz.money.second.house ? biz.money.second.house.sign : '';
+  renderBizText('t-money', 'ON MONEY', findSnippet('money', secondSign));
+
   var mcSign = biz.visibility.mc ? biz.visibility.mc.sign : '';
-  renderTextSection('t-visibility', findSnippet('visibility', mcSign));
+  renderBizText('t-visibility', 'ON VISIBILITY', findSnippet('visibility', mcSign));
 
   renderSalesStyle('w-sales-style', cd);
-  var mercSign = biz.communication.mercury ? biz.communication.mercury.sign : '';
-  renderTextSection('t-sales', findSnippet('how_you_sell', mercSign));
-
   renderLeadershipStyle('w-leadership-style', cd);
-  var sunSign = biz.leadership.sun ? biz.leadership.sun.sign : '';
-  renderTextSection('t-leadership', findSnippet('how_you_lead', sunSign));
 
-  // ── UPSELL BANNER 1: Blueprint ──
+  var mercSign = biz.communication.mercury ? biz.communication.mercury.sign : '';
+  renderBizText('t-sales', 'ON SELLING', findSnippet('how_you_sell', mercSign));
+
+  var sunSign = biz.leadership.sun ? biz.leadership.sun.sign : '';
+  renderBizText('t-leadership', 'ON LEADING', findSnippet('how_you_lead', sunSign));
+
+  // ── Upsell: Blueprint ──
   renderUpsellBanner('upsell-blueprint', {
-    label: 'Go Deeper',
-    hook: 'Your full Category of One Blueprint maps your wealth codes, leadership style, soulmate clients, and million-dollar messaging.',
+    label: 'GO DEEPER',
+    hook: 'Your chart in full \u2014 income houses, offer design, and the year ahead, read by Cato.',
     url: 'https://catovermeulen.com/category-of-one',
-    cta: 'Get your Blueprint',
+    cta: 'BOOK THE BLUEPRINT \u00B7 $297',
   });
 
-  // ── SECTION 5: Planet Ranking + Retrogrades ──
+  // ── Planet Ranking + Retrogrades ──
   renderPlanetRanking('w-planet-ranking', cd);
   renderRetrogrades('w-retrogrades', cd);
 
-  // ── SECTION 6: Stellium (if any) ──
+  // ── Stellium ──
   renderStelliums('w-stelliums', cd, _snippets);
 
-  // ── SECTION 7: The Question ──
+  // ── The Question text ──
   var ruler = cd.getChartRuler();
   if (ruler) {
-    renderTextSection('t-question', findSnippet('question', ruler.planet, ruler.house));
+    renderTextSection('t-question', findSnippet('question', ruler.planet, ruler.house), { label: 'THE QUESTION', italic: true });
   }
 
-  // ── UPSELL BANNER 2: Transits ──
+  // ── Upsell: Transits ──
   renderUpsellBanner('upsell-transits', {
-    label: 'What\'s Coming',
-    hook: 'Your Transits Reading maps the next 3 months of business timing. Launch windows, income shifts, visibility peaks.',
+    label: 'TIMING',
+    hook: 'What is activating your chart this quarter \u2014 and when to launch, raise, and rest.',
     url: 'https://catovermeulen.com/transits-reading',
-    cta: 'Get your Transits Reading',
+    cta: 'BOOK THE TRANSITS READING \u00B7 $197',
   });
 
   // ── Product sections ──
   renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
-}
 
-function renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile) {
-  var container = document.getElementById('product-sections');
+  // ── Footer ──
+  var footerEl = document.getElementById('profile-footer');
+  if (footerEl && profile) {
+    var birthLine = '';
+    if (profile.birth_date) {
+      var d = new Date(profile.birth_date);
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      birthLine = 'Cast for ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+      if (profile.birth_time) birthLine += ' \u00B7 ' + profile.birth_time;
+      if (profile.birth_city) birthLine += ' \u00B7 ' + profile.birth_city;
+    }
+    footerEl.innerHTML =
+      '<span>' + birthLine + '</span>' +
+      '<span>\u00A9 Cato Vermeulen \u2014 Business Astrology</span>';
+  }
 
-  var products = [
-    { id: 'blueprint', name: 'Category of One Blueprint', grant: blueprintGrant, profile: profile,
-      hook: 'Your chart holds a full business strategy. This is the deep dive.',
-      cta: 'Get your Blueprint', url: 'https://catovermeulen.com/category-of-one',
-      readyUrl: 'blueprint.html', intakeUrl: 'blueprint.html' },
-    { id: 'transit', name: 'Transits Reading', grant: transitGrant, profile: profile,
-      hook: 'What\'s coming for your business. Dates, moves, windows.',
-      cta: 'Get your Transits Reading', url: 'https://catovermeulen.com/transits-reading',
-      readyUrl: 'transit-reading.html', intakeUrl: 'transit-reading.html' },
-    { id: 'astrocartography', name: 'Astrocartography Reading', grant: astroGrant, profile: profile,
-      hook: 'Where in the world your business thrives.',
-      cta: 'Get your Astrocartography Reading', url: 'https://catovermeulen.com/astrocartography',
-      readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html' },
-    { id: 'course', name: 'Business Astrology Course', grant: courseGrant, profile: null,
-      hook: 'Learn to read your own chart for business.',
-      cta: 'Get the Course', url: 'https://catovermeulen.com',
-      readyUrl: 'course.html', intakeUrl: null },
-  ];
-
-  container.innerHTML = products.map(function(p) {
-    var state = p.id === 'course' ? courseState(p.grant) : blueprintState(p.grant, p.profile);
-    if (state === 'locked') {
-      return '<div class="product-card product-locked">' +
-        '<div class="product-card-label">' + p.name + '</div>' +
-        '<div class="product-card-hook">' + p.hook + '</div>' +
-        '<a href="' + p.url + '" class="card-cta">' + p.cta + ' \u2192</a></div>';
-    }
-    if (state === 'intake') {
-      return '<div class="product-card product-intake">' +
-        '<div class="product-card-label">' + p.name + '</div>' +
-        '<div class="product-card-status">Complete your details to begin</div>' +
-        '<a href="' + p.intakeUrl + '" class="card-cta">Complete your details \u2192</a></div>';
-    }
-    if (state === 'pending') {
-      return '<div class="product-card product-pending">' +
-        '<div class="product-card-label">' + p.name + '</div>' +
-        '<div class="product-card-status">Ready in ' + (p.grant ? formatCountdown(p.grant.available_at) : '...') + '</div></div>';
-    }
-    return '<div class="product-card product-ready">' +
-      '<div class="product-card-label">' + p.name + '</div>' +
-      '<div class="product-card-status" style="color:var(--golden)">Your reading is ready</div>' +
-      '<a href="' + p.readyUrl + '" class="card-cta">View reading \u2192</a></div>';
-  }).join('');
+  // ── Entrance animations ──
+  // Small delay to let DOM paint
+  requestAnimationFrame(function() {
+    setupEntranceObserver();
+  });
 }

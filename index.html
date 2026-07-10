@@ -11,8 +11,8 @@
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
   <script src="chart-engine.js"></script>
-  <script src="chart-wheel.js"></script>
   <script src="widgets.js"></script>
+  <script src="chart-wheel.js"></script>
   <script src="profile.js"></script>
 </head>
 <body>
@@ -36,106 +36,134 @@
 
   <!-- Profile -->
   <div id="profile-screen" style="display:none">
-    <div class="dashboard-header">
-      <img src="img/logo.png" alt="Cato Vermeulen" style="height:60px;">
-      <div class="header-right">
-        <span class="user-email" id="user-email"></span>
-        <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+
+    <!-- Ambient glow blobs -->
+    <div class="ambient-blob ambient-blob--1"></div>
+    <div class="ambient-blob ambient-blob--2"></div>
+    <div class="ambient-blob ambient-blob--3"></div>
+
+    <div class="profile-container">
+
+      <!-- Header -->
+      <header class="profile-header">
+        <div class="profile-header__brand">CATO&nbsp;VERMEULEN</div>
+        <div class="profile-header__right">
+          <span class="profile-header__email" id="user-email"></span>
+          <button class="profile-header__signout" onclick="signOut()">SIGN&nbsp;OUT</button>
+        </div>
+      </header>
+
+      <!-- Locked state -->
+      <div id="profile-locked" style="display:none; margin-top:96px;">
+        <div class="locked-banner">
+          <h3>Your Cosmic Profile</h3>
+          <p>Your natal chart, element balance, business lens, and more. Computed from your exact birth data.</p>
+          <a href="https://catovermeulen.com" class="btn btn-primary" style="margin-top:1.5rem">Get your Cosmic Profile</a>
+        </div>
       </div>
-    </div>
 
-    <div class="profile-hero">
-      <h2 id="profile-name"></h2>
-      <p id="profile-subtitle" class="profile-subtitle"></p>
-    </div>
+      <!-- Widget sections -->
+      <div id="profile-widgets" style="display:none">
 
-    <!-- Locked state -->
-    <div id="profile-locked" class="container" style="display:none">
-      <div class="locked-banner">
-        <h3>Your Cosmic Profile</h3>
-        <p>Your natal chart, element balance, business lens, and more. Computed from your exact birth data.</p>
-        <a href="https://catovermeulen.com" class="btn btn-primary" style="margin-top:1.5rem">Get your Cosmic Profile</a>
-      </div>
-    </div>
+        <!-- Hero -->
+        <section class="profile-hero anim-fade-up" id="profile-hero">
+          <div class="profile-hero__overline">COSMIC BUSINESS PROFILE</div>
+          <h1 class="profile-hero__name anim-blur-in" id="profile-name"></h1>
+          <div class="profile-hero__big3-line" id="profile-big3-line"></div>
+        </section>
 
-    <!-- Widget sections -->
-    <div id="profile-widgets" class="container" style="display:none">
+        <!-- Big 3 -->
+        <div id="w-big3" class="big3-grid anim-fade-up"></div>
 
-      <!-- Identity -->
-      <div id="w-big3" class="big3-row"></div>
-      <div id="w-chart-ruler"></div>
-      <div id="t-welcome"></div>
+        <!-- Chart Ruler -->
+        <div id="w-chart-ruler" class="ruler-pill-wrap anim-fade-up"></div>
 
-      <!-- Chart Wheel -->
-      <section class="profile-section">
-        <p class="section-label">Your Natal Chart</p>
-        <div id="w-chart-wheel" class="chart-wheel-container"></div>
-      </section>
+        <!-- Welcome text -->
+        <section id="t-welcome" class="profile-section--text anim-fade-up"></section>
 
-      <!-- Snapshot -->
-      <section class="profile-section">
-        <p class="section-label">Chart Snapshot</p>
-        <div class="widget-grid">
-          <div id="w-elements"></div>
-          <div id="w-modality"></div>
-          <div id="w-archetype"></div>
-          <div id="w-hemispheres"></div>
-        </div>
-        <div id="t-at-a-glance"></div>
-      </section>
+        <!-- Chart Wheel -->
+        <section class="profile-section" id="section-wheel">
+          <div id="w-chart-wheel" class="chart-wheel-wrap"></div>
+        </section>
 
-      <!-- Business Lens -->
-      <section class="profile-section">
-        <p class="section-label">Business Lens</p>
+        <!-- Chart Snapshot -->
+        <section class="profile-section" id="section-snapshot">
+          <div class="section-header">
+            <span class="section-header__label">CHART&nbsp;SNAPSHOT</span>
+            <div class="section-header__line"></div>
+            <span class="section-header__number">01</span>
+          </div>
+          <div class="snapshot-grid">
+            <div id="w-elements"></div>
+            <div id="w-modality"></div>
+            <div id="w-archetype"></div>
+            <div id="w-hemispheres"></div>
+          </div>
+        </section>
 
-        <div class="widget-grid">
-          <div id="w-money-style"></div>
-          <div id="w-visibility"></div>
-        </div>
-        <div class="biz-text-grid">
-          <div id="t-money"></div>
-          <div id="t-visibility"></div>
-        </div>
+        <!-- At a Glance text -->
+        <section id="t-at-a-glance" class="profile-section--text"></section>
 
-        <div class="widget-grid" style="margin-top:1px">
-          <div id="w-sales-style"></div>
-          <div id="w-leadership-style"></div>
-        </div>
-        <div class="biz-text-grid">
-          <div id="t-sales"></div>
-          <div id="t-leadership"></div>
-        </div>
-      </section>
+        <!-- Business Lens -->
+        <section class="profile-section" id="section-biz">
+          <div class="section-header">
+            <span class="section-header__label">BUSINESS&nbsp;LENS</span>
+            <div class="section-header__line"></div>
+            <span class="section-header__number">02</span>
+          </div>
+          <div class="biz-grid" id="biz-grid">
+            <div id="w-money-style"></div>
+            <div id="w-visibility"></div>
+            <div id="t-money"></div>
+            <div id="t-visibility"></div>
+            <div id="w-sales-style"></div>
+            <div id="w-leadership-style"></div>
+            <div id="t-sales"></div>
+            <div id="t-leadership"></div>
+          </div>
+        </section>
 
-      <!-- Upsell: Blueprint -->
-      <div id="upsell-blueprint"></div>
+        <!-- Upsell: Blueprint -->
+        <section class="profile-section" id="upsell-blueprint"></section>
 
-      <!-- Strength + Retrogrades -->
-      <section class="profile-section">
-        <p class="section-label">Your Planets</p>
-        <div class="widget-grid">
-          <div id="w-planet-ranking"></div>
-          <div id="w-retrogrades"></div>
-        </div>
-      </section>
+        <!-- Your Planets -->
+        <section class="profile-section" id="section-planets">
+          <div class="section-header">
+            <span class="section-header__label">YOUR&nbsp;PLANETS</span>
+            <div class="section-header__line"></div>
+            <span class="section-header__number">03</span>
+          </div>
+          <div class="planets-grid">
+            <div id="w-planet-ranking"></div>
+            <div id="w-retrogrades"></div>
+          </div>
+        </section>
 
-      <!-- Stellium -->
-      <div id="w-stelliums"></div>
+        <!-- Stellium -->
+        <div id="w-stelliums" class="profile-section--tight"></div>
 
-      <!-- The Question -->
-      <section class="profile-section">
-        <div id="t-question"></div>
-      </section>
+        <!-- The Question -->
+        <section id="t-question" class="profile-section--text"></section>
 
-      <!-- Upsell: Transits -->
-      <div id="upsell-transits"></div>
-    </div>
+        <!-- Upsell: Transits -->
+        <section class="profile-section" id="upsell-transits"></section>
 
-    <!-- Product sections -->
-    <div class="container" style="margin-top:3rem">
-      <p class="section-label" style="color:var(--golden)">Your Readings</p>
-      <div id="product-sections" class="product-grid"></div>
-    </div>
+        <!-- Your Readings -->
+        <section class="profile-section" id="section-readings">
+          <div class="section-header">
+            <span class="section-header__label">YOUR&nbsp;READINGS</span>
+            <div class="section-header__line"></div>
+            <span class="section-header__number">04</span>
+          </div>
+          <div id="product-sections" class="readings-grid"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="profile-footer" id="profile-footer"></footer>
+
+      </div><!-- /profile-widgets -->
+
+    </div><!-- /profile-container -->
   </div>
 
   <script>
