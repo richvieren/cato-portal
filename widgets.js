@@ -1,10 +1,12 @@
-// widgets.js — All profile widget components
+// widgets.js — All profile widget components (v2)
 
 function ordinal(n) {
-  var s = ['th', 'st', 'nd', 'rd'];
+  var s = ['th','st','nd','rd'];
   var v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
+
+// ── BIG 3 BADGES ──────────────────────────────────────
 
 function renderBig3(containerId, chartData) {
   var el = document.getElementById(containerId);
@@ -25,30 +27,32 @@ function renderBig3(containerId, chartData) {
   }).join('');
 }
 
+// ── CHART RULER (compact) ─────────────────────────────
+
 function renderChartRuler(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
   var ruler = chartData.getChartRuler();
   if (!ruler) { el.style.display = 'none'; return; }
-  el.innerHTML = '<div class="widget-card">' +
-    '<div class="widget-card-label">Chart Ruler</div>' +
-    '<div class="widget-card-value">' + (PLANET_GLYPHS[ruler.planet] || '') + ' ' + ruler.planet + '</div>' +
-    '<div class="widget-card-detail">' + ruler.sign + ' in the ' + ordinal(ruler.house) + ' house</div>' +
-    '<div class="widget-card-sub">Rules your ' + ruler.ascendant_sign + ' Ascendant</div>' +
-  '</div>';
+  el.innerHTML =
+    '<div class="ruler-compact">' +
+      '<span class="ruler-glyph">' + (PLANET_GLYPHS[ruler.planet] || '') + '</span>' +
+      '<span class="ruler-text">Chart ruler <strong>' + ruler.planet + '</strong> in ' + ruler.sign + ' ' + ordinal(ruler.house) + ' house</span>' +
+    '</div>';
 }
+
+// ── ELEMENT BALANCE (bars) ────────────────────────────
 
 function renderElementBalance(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
   var elements = chartData.getElements();
   var total = 0;
-  ['fire', 'earth', 'air', 'water'].forEach(function(k) { total += elements[k].count; });
+  ['fire','earth','air','water'].forEach(function(k) { total += elements[k].count; });
   if (total === 0) total = 1;
-  var order = ['fire', 'earth', 'air', 'water'];
   el.innerHTML = '<div class="widget-card">' +
     '<div class="widget-card-label">Elements</div>' +
-    order.map(function(key) {
+    ['fire','earth','air','water'].map(function(key) {
       var e = elements[key];
       var pct = Math.round((e.count / total) * 100);
       return '<div class="bar-row">' +
@@ -60,17 +64,19 @@ function renderElementBalance(containerId, chartData) {
   '</div>';
 }
 
+// ── MODALITY SPLIT (bars) ─────────────────────────────
+
 function renderModalitySplit(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
   var mods = chartData.getModalities();
   var total = 0;
-  ['cardinal', 'fixed', 'mutable'].forEach(function(k) { total += mods[k].count; });
+  ['cardinal','fixed','mutable'].forEach(function(k) { total += mods[k].count; });
   if (total === 0) total = 1;
   var colors = { cardinal: '#BA916B', fixed: '#8B7D5E', mutable: '#A3B5C4' };
   el.innerHTML = '<div class="widget-card">' +
     '<div class="widget-card-label">Modality</div>' +
-    ['cardinal', 'fixed', 'mutable'].map(function(key) {
+    ['cardinal','fixed','mutable'].map(function(key) {
       var m = mods[key];
       var pct = Math.round((m.count / total) * 100);
       return '<div class="bar-row">' +
@@ -82,173 +88,240 @@ function renderModalitySplit(containerId, chartData) {
   '</div>';
 }
 
-function renderHemisphereBalance(containerId, chartData) {
+// ── BUSINESS ARCHETYPE (3 spectrums) ──────────────────
+
+function renderArchetype(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
-  var h = chartData.getHemispheres();
+  var a = chartData.getArchetype();
+
+  function spectrum(left, right, value, color) {
+    return '<div class="spectrum-row">' +
+      '<span class="spectrum-label-left">' + left + '</span>' +
+      '<div class="spectrum-track">' +
+        '<div class="spectrum-dot" style="left:' + value + '%;background:' + color + '"></div>' +
+      '</div>' +
+      '<span class="spectrum-label-right">' + right + '</span>' +
+    '</div>';
+  }
+
   el.innerHTML = '<div class="widget-card">' +
-    '<div class="widget-card-label">Hemisphere Balance</div>' +
-    '<div class="hemisphere-grid">' +
-      '<div class="hemisphere-cell"><div class="hemisphere-count">' + h.above.count + '</div><div class="hemisphere-label">above horizon</div><div class="hemisphere-sub">public life</div></div>' +
-      '<div class="hemisphere-cell"><div class="hemisphere-count">' + h.below.count + '</div><div class="hemisphere-label">below horizon</div><div class="hemisphere-sub">inner world</div></div>' +
-      '<div class="hemisphere-cell"><div class="hemisphere-count">' + h.east.count + '</div><div class="hemisphere-label">eastern</div><div class="hemisphere-sub">self-driven</div></div>' +
-      '<div class="hemisphere-cell"><div class="hemisphere-count">' + h.west.count + '</div><div class="hemisphere-label">western</div><div class="hemisphere-sub">others-oriented</div></div>' +
-    '</div>' +
+    '<div class="widget-card-label">Business Archetype</div>' +
+    spectrum('Operator', 'Visionary', a.visionary, '#BA916B') +
+    spectrum('Finisher', 'Starter', a.starter, '#A3B5C4') +
+    spectrum('Committed', 'Adaptable', a.adaptable, '#5B7B7A') +
   '</div>';
 }
 
-function renderStelliums(containerId, chartData) {
+// ── MONEY STYLE (spectrums) ───────────────────────────
+
+function renderMoneyStyle(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
-  var stelliums = chartData.getStelliums();
-  if (!stelliums.length) { el.style.display = 'none'; return; }
-  el.innerHTML = stelliums.map(function(s) {
-    return '<div class="widget-card widget-card-glow">' +
-      '<div class="widget-card-label">Stellium</div>' +
-      '<div class="widget-card-value">' + s.key + '</div>' +
-      '<div class="widget-card-detail">' + s.planets.join(', ') + ' clustered in ' + (s.type === 'sign' ? 'the sign of ' + s.key : s.key) + '</div>' +
+  var m = chartData.getMoneyStyle();
+
+  function spectrum(left, right, value) {
+    return '<div class="spectrum-row">' +
+      '<span class="spectrum-label-left">' + left + '</span>' +
+      '<div class="spectrum-track">' +
+        '<div class="spectrum-dot" style="left:' + value + '%;background:#BA916B"></div>' +
+      '</div>' +
+      '<span class="spectrum-label-right">' + right + '</span>' +
     '</div>';
-  }).join('');
+  }
+
+  el.innerHTML = '<div class="widget-card">' +
+    '<div class="widget-card-label">Money Style</div>' +
+    spectrum('Volatile', 'Steady', m.stability) +
+    spectrum('Conservative', 'Risk-taker', m.risk) +
+    spectrum('Joint ventures', 'Self-earned', m.ownVsOther) +
+  '</div>';
 }
 
-function renderPlanetCards(containerId, chartData) {
+// ── VISIBILITY METER (radial gauge) ───────────────────
+
+function renderVisibilityMeter(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
-  var planets = chartData.getPlanetCards();
-  el.innerHTML = '<div class="planet-cards-scroll">' +
-    planets.map(function(p) {
-      return '<div class="planet-card">' +
-        '<div class="planet-card-glyph">' + (PLANET_GLYPHS[p.name] || '') + '</div>' +
-        '<div class="planet-card-name">' + p.name.replace('_', ' ') + '</div>' +
-        '<div class="planet-card-sign">' + (SIGN_GLYPHS[p.sign] || '') + ' ' + p.sign + '</div>' +
-        '<div class="planet-card-house">' + ordinal(p.house) + ' house</div>' +
-        (p.retrograde ? '<div class="planet-card-rx">\u212E retrograde</div>' : '') +
+  var score = chartData.getVisibilityScore();
+  var mc = chartData.planets.find(function(p) { return p.name === 'Medium_Coeli'; });
+  var mcSign = mc ? mc.sign : '';
+
+  // Semi-circle gauge using SVG
+  var radius = 60;
+  var circumference = Math.PI * radius;
+  var filled = (score / 100) * circumference;
+
+  el.innerHTML = '<div class="widget-card" style="text-align:center">' +
+    '<div class="widget-card-label">Visibility</div>' +
+    '<svg viewBox="0 0 150 90" width="150" height="90" style="margin:0.5rem auto;display:block">' +
+      '<path d="M 15 80 A 60 60 0 0 1 135 80" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8" stroke-linecap="round"/>' +
+      '<path d="M 15 80 A 60 60 0 0 1 135 80" fill="none" stroke="#BA916B" stroke-width="8" stroke-linecap="round" stroke-dasharray="' + filled + ' ' + circumference + '"/>' +
+    '</svg>' +
+    '<div class="vis-score">' + score + '%</div>' +
+    '<div class="vis-label">public-facing chart</div>' +
+    (mcSign ? '<div class="vis-mc">MC in ' + mcSign + '</div>' : '') +
+  '</div>';
+}
+
+// ── SALES STYLE BADGE ─────────────────────────────────
+
+function renderSalesStyle(containerId, chartData) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var s = chartData.getSalesStyle();
+  if (!s) { el.style.display = 'none'; return; }
+  el.innerHTML = '<div class="widget-card style-badge-card">' +
+    '<div class="widget-card-label">How You Sell</div>' +
+    '<div class="style-badge-glyph">' + (PLANET_GLYPHS.Mercury || '') + '</div>' +
+    '<div class="style-badge-type">' + s.type + '</div>' +
+    '<div class="style-badge-desc">' + s.desc + '</div>' +
+    '<div class="style-badge-detail">Mercury in ' + s.planet.sign + ' ' + ordinal(s.planet.house) + '</div>' +
+  '</div>';
+}
+
+// ── LEADERSHIP STYLE BADGE ────────────────────────────
+
+function renderLeadershipStyle(containerId, chartData) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var l = chartData.getLeadershipStyle();
+  if (!l) { el.style.display = 'none'; return; }
+  el.innerHTML = '<div class="widget-card style-badge-card">' +
+    '<div class="widget-card-label">How You Lead</div>' +
+    '<div class="style-badge-glyph">' + (PLANET_GLYPHS.Sun || '') + '</div>' +
+    '<div class="style-badge-type">' + l.type + '</div>' +
+    '<div class="style-badge-desc">' + l.desc + '</div>' +
+    '<div class="style-badge-detail">Sun in ' + l.planet.sign + ' ' + ordinal(l.planet.house) + '</div>' +
+  '</div>';
+}
+
+// ── PLANET POWER RANKING ──────────────────────────────
+
+function renderPlanetRanking(containerId, chartData) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var ranked = chartData.getPlanetRanking();
+  var maxScore = ranked.length > 0 ? ranked[0].score : 1;
+
+  el.innerHTML = '<div class="widget-card">' +
+    '<div class="widget-card-label">Planet Strength</div>' +
+    ranked.map(function(p, i) {
+      var pct = Math.round((p.score / maxScore) * 100);
+      var isTop = i === 0;
+      return '<div class="rank-row' + (isTop ? ' rank-top' : '') + '">' +
+        '<span class="rank-glyph">' + (PLANET_GLYPHS[p.name] || '') + '</span>' +
+        '<span class="rank-name">' + p.name + (p.retrograde ? ' \u212E' : '') + '</span>' +
+        '<div class="rank-bar-track"><div class="rank-bar-fill" style="width:' + pct + '%"></div></div>' +
+        '<span class="rank-sign">' + (SIGN_GLYPHS[p.sign] || '') + ' ' + ordinal(p.house) + '</span>' +
       '</div>';
     }).join('') +
   '</div>';
 }
 
-function renderBusinessLens(containerId, chartData) {
+// ── HEMISPHERE (quadrant visual) ──────────────────────
+
+function renderHemisphereBalance(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
-  var biz = chartData.getBusinessLens();
+  var h = chartData.getHemispheres();
+  var total = (h.above ? h.above.count : 0) + (h.below ? h.below.count : 0);
+  if (total === 0) total = 1;
+  var abovePct = Math.round(((h.above ? h.above.count : 0) / total) * 100);
+  var eastPct = Math.round(((h.east ? h.east.count : 0) / total) * 100);
 
-  function houseSummary(houseData) {
-    var sign = houseData.house ? houseData.house.sign : '\u2014';
-    var planets = houseData.planets.map(function(p) { return p.name; }).join(', ') || 'no planets';
-    return sign + ' \u2014 ' + planets;
-  }
-
-  el.innerHTML = '<div class="biz-grid">' +
-    '<div class="widget-card">' +
-      '<div class="widget-card-label">Your Money</div>' +
-      '<div class="biz-row"><span class="biz-house">2nd house</span><span class="biz-detail">' + houseSummary(biz.money.second) + '</span></div>' +
-      '<div class="biz-sub">earned income</div>' +
-      '<div class="biz-row" style="margin-top:0.8rem"><span class="biz-house">8th house</span><span class="biz-detail">' + houseSummary(biz.money.eighth) + '</span></div>' +
-      '<div class="biz-sub">other people\'s money</div>' +
-    '</div>' +
-    '<div class="widget-card">' +
-      '<div class="widget-card-label">Your Visibility</div>' +
-      '<div class="biz-row"><span class="biz-house">MC</span><span class="biz-detail">' + (biz.visibility.mc ? biz.visibility.mc.sign : '\u2014') + '</span></div>' +
-      '<div class="biz-sub">how the world sees your brand</div>' +
-    '</div>' +
-    '<div class="widget-card">' +
-      '<div class="widget-card-label">How You Sell</div>' +
-      '<div class="biz-row"><span class="biz-house">Mercury</span><span class="biz-detail">' + (biz.communication.mercury ? biz.communication.mercury.sign + ' in ' + ordinal(biz.communication.mercury.house) : '\u2014') + '</span></div>' +
-    '</div>' +
-    '<div class="widget-card">' +
-      '<div class="widget-card-label">How You Lead</div>' +
-      '<div class="biz-row"><span class="biz-house">Sun</span><span class="biz-detail">' + (biz.leadership.sun ? biz.leadership.sun.sign + ' in ' + ordinal(biz.leadership.sun.house) : '\u2014') + '</span></div>' +
-      '<div class="biz-row" style="margin-top:0.4rem"><span class="biz-house">Mars</span><span class="biz-detail">' + (biz.leadership.mars ? biz.leadership.mars.sign + ' in ' + ordinal(biz.leadership.mars.house) : '\u2014') + '</span></div>' +
-    '</div>' +
-  '</div>';
-}
-
-function renderAspectWeb(containerId, chartData) {
-  var el = document.getElementById(containerId);
-  if (!el) return;
-  var aspects = chartData.getAspects();
-  var planets = chartData.getPlanetCards();
-  if (!aspects.length) { el.style.display = 'none'; return; }
-
-  var size = Math.min(el.clientWidth || 400, 400);
-  var cx = size / 2;
-  var r = size / 2 - 30;
-
-  var positions = {};
-  planets.forEach(function(p, i) {
-    var angle = (i / planets.length) * Math.PI * 2 - Math.PI / 2;
-    positions[p.name] = {
-      x: cx + Math.cos(angle) * r,
-      y: cx + Math.sin(angle) * r,
-    };
-  });
-
-  var svg = d3.select('#' + containerId)
-    .append('svg')
-    .attr('viewBox', '0 0 ' + size + ' ' + size)
-    .attr('width', '100%')
-    .style('max-width', size + 'px');
-
-  aspects.forEach(function(a) {
-    var p1 = positions[a.planet1];
-    var p2 = positions[a.planet2];
-    if (!p1 || !p2) return;
-    svg.append('line')
-      .attr('x1', p1.x).attr('y1', p1.y)
-      .attr('x2', p2.x).attr('y2', p2.y)
-      .attr('stroke', ASPECT_COLORS[a.type] || 'rgba(255,255,255,0.15)')
-      .attr('stroke-width', Math.max(0.5, 2 - a.orb / 3))
-      .attr('opacity', 0.5);
-  });
-
-  planets.forEach(function(p) {
-    var pos = positions[p.name];
-    if (!pos) return;
-    var g = svg.append('g').attr('transform', 'translate(' + pos.x + ',' + pos.y + ')');
-    g.append('circle').attr('r', 5).attr('fill', 'var(--mist)').attr('stroke', 'var(--smoke)').attr('stroke-width', 2);
-    g.append('text').attr('y', -10).attr('text-anchor', 'middle').attr('fill', 'var(--stone)').attr('font-size', '10px')
-      .text(PLANET_GLYPHS[p.name] || p.name.slice(0, 2));
-  });
-}
-
-function renderCosmicDNA(containerId, chartData) {
-  var el = document.getElementById(containerId);
-  if (!el) return;
-  var planets = chartData.getPlanetCards();
   el.innerHTML = '<div class="widget-card">' +
-    '<div class="widget-card-label">Cosmic DNA</div>' +
-    '<div class="dna-strip">' +
-      planets.map(function(p) {
-        var meta = SIGN_META_SIMPLE[p.sign];
-        return '<div class="dna-segment" style="background:' + (meta ? meta.color : '#666') + '" title="' + p.name + ' in ' + p.sign + '"></div>';
-      }).join('') +
+    '<div class="widget-card-label">Chart Focus</div>' +
+    '<div class="quad-grid">' +
+      '<div class="quad-cell" style="opacity:' + (eastPct > 50 && abovePct > 50 ? '1' : '0.3') + '">' +
+        '<div class="quad-label">Public Self</div><div class="quad-sub">visible leadership</div></div>' +
+      '<div class="quad-cell" style="opacity:' + (eastPct <= 50 && abovePct > 50 ? '1' : '0.3') + '">' +
+        '<div class="quad-label">Public Others</div><div class="quad-sub">partnerships &amp; clients</div></div>' +
+      '<div class="quad-cell" style="opacity:' + (eastPct > 50 && abovePct <= 50 ? '1' : '0.3') + '">' +
+        '<div class="quad-label">Private Self</div><div class="quad-sub">inner development</div></div>' +
+      '<div class="quad-cell" style="opacity:' + (eastPct <= 50 && abovePct <= 50 ? '1' : '0.3') + '">' +
+        '<div class="quad-label">Private Others</div><div class="quad-sub">family &amp; foundation</div></div>' +
     '</div>' +
-    '<div class="dna-labels">' +
-      planets.map(function(p) {
-        return '<span class="dna-label">' + (PLANET_GLYPHS[p.name] || p.name[0]) + '</span>';
-      }).join('') +
-    '</div>' +
+    '<div class="quad-summary">' + abovePct + '% public-facing \u00B7 ' + eastPct + '% self-driven</div>' +
   '</div>';
 }
+
+// ── RETROGRADES (improved) ────────────────────────────
 
 function renderRetrogrades(containerId, chartData) {
   var el = document.getElementById(containerId);
   if (!el) return;
   var retros = chartData.getRetrogrades();
+
+  var RETRO_MEANINGS = {
+    Mercury: 'Communication style is internal-first. You process before you speak.',
+    Venus: 'Your relationship to value and pricing runs deeper than surface level.',
+    Mars: 'Your drive operates behind the scenes. Action happens internally before externally.',
+    Jupiter: 'Growth and expansion develop privately before going public.',
+    Saturn: 'Your relationship to structure and authority is self-taught, not inherited.',
+  };
+
   if (!retros.length) {
     el.innerHTML = '<div class="widget-card">' +
       '<div class="widget-card-label">Natal Retrogrades</div>' +
-      '<div class="widget-card-detail" style="opacity:0.4">None</div>' +
+      '<div class="retro-none">No natal retrogrades. Your planets all operate in direct motion.</div>' +
     '</div>';
     return;
   }
+
   el.innerHTML = '<div class="widget-card">' +
     '<div class="widget-card-label">Natal Retrogrades</div>' +
-    '<div class="retro-badges">' +
-      retros.map(function(p) {
-        return '<span class="retro-badge">' + (PLANET_GLYPHS[p.name] || '') + ' ' + p.name + ' \u212E</span>';
-      }).join('') +
-    '</div>' +
+    retros.map(function(p) {
+      var meaning = RETRO_MEANINGS[p.name] || '';
+      return '<div class="retro-item">' +
+        '<div class="retro-planet">' + (PLANET_GLYPHS[p.name] || '') + ' ' + p.name + ' \u212E</div>' +
+        (meaning ? '<div class="retro-meaning">' + meaning + '</div>' : '') +
+      '</div>';
+    }).join('') +
+  '</div>';
+}
+
+// ── STELLIUM CALLOUT ──────────────────────────────────
+
+function renderStelliums(containerId, chartData, snippets) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var stelliums = chartData.getStelliums();
+  if (!stelliums.length) { el.style.display = 'none'; return; }
+
+  el.innerHTML = stelliums.map(function(s) {
+    var snippetText = '';
+    if (snippets && snippets.stellium) {
+      var match = snippets.stellium.find(function(sn) {
+        return sn.type === s.type && sn.key === (s.type === 'house' ? s.key.replace('House ', '') : s.key);
+      });
+      if (match) snippetText = '<div class="snippet-text">' + match.text + '</div>';
+    }
+    return '<div class="widget-card widget-card-glow">' +
+      '<div class="widget-card-label">Stellium</div>' +
+      '<div class="widget-card-value">' + s.key + '</div>' +
+      '<div class="widget-card-detail">' + s.planets.join(', ') + '</div>' +
+      snippetText +
+    '</div>';
+  }).join('');
+}
+
+// ── TEXT SECTION RENDERER ─────────────────────────────
+
+function renderTextSection(containerId, text) {
+  var el = document.getElementById(containerId);
+  if (!el || !text) { if (el) el.style.display = 'none'; return; }
+  el.innerHTML = '<div class="text-section">' + text + '</div>';
+}
+
+// ── UPSELL BANNER ─────────────────────────────────────
+
+function renderUpsellBanner(containerId, config) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = '<div class="upsell-banner">' +
+    '<div class="upsell-label">' + config.label + '</div>' +
+    '<div class="upsell-hook">' + config.hook + '</div>' +
+    '<a href="' + config.url + '" class="upsell-cta">' + config.cta + '</a>' +
   '</div>';
 }

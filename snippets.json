@@ -1,0 +1,908 @@
+{
+  "welcome": {
+    "Aries": {
+      "Aries": "With your Aries Sun & Aries Rising, you operate with a relentless initiation pattern that sees you launching multiple ventures before the first one's fully structured. You build businesses at top speed, often leaving operations in the dust while you chase the next big market gap. This double-fire signature means you're constantly starting from scratch.",
+      "Taurus": "Your Aries Sun combined with Taurus Rising creates a friction pattern between impulsive drive & fixed resistance. You launch new offers with incredible speed, yet you slow down execution to a crawl when faced with shifting market variables. You're holding onto early business models long after the data tells you to pivot.",
+      "Gemini": "An Aries Sun with Gemini Rising produces a scattered momentum pattern where you chase every shiny business idea simultaneously. You start networking campaigns, & you abandon them when the initial novelty wears off. Your professional presence is dynamic, but your project completion rates suffer.",
+      "Cancer": "With an Aries Sun & Cancer Rising, you exhibit an aggressive ambition masking deep defensive caution. You make bold public moves to acquire clients, then immediately retreat into your shell when you perceive operational friction. Your business development looks fearless from the outside, but your internal strategy's ruled by security seeking.",
+      "Leo": "Your Aries Sun paired with Leo Rising creates a unilateral dominance pattern where you must be the central figure of your brand. You lead your team with absolute authority, & you expect public recognition for every company win. This double-ego signature means you struggle to delegate the spotlight to capable team members.",
+      "Virgo": "An Aries Sun with Virgo Rising sets up a pattern of rushed execution meeting perfectionist paralysis. You spearhead new revenue streams aggressively, & then you get bogged down in minute operational details before launch. You're constantly delaying your own go-to-market dates to tweak formatting that your clients will never notice.",
+      "Libra": "With your Aries Sun & Libra Rising, you experience a pattern of forcing momentum while trying to maintain external harmony. You push your team for rapid sales targets, yet you constantly soften your boundaries to keep clients happy. Your business trajectory slows down every time you prioritize politeness over necessary conflict.",
+      "Scorpio": "Your Aries Sun combined with Scorpio Rising produces a combative expansion pattern tied to strategic secrecy. You aggressively pursue market dominance, but you hide your exact methods from even your closest advisors. You're running your business like a covert operation while demanding total transparency from your competitors.",
+      "Sagittarius": "An Aries Sun with Sagittarius Rising creates an overpromising vision pattern in your business communications. You sell your clients on massive future scale before your current operational foundation's even stable. You're constantly pitching the next expansion while the current product line lacks basic support.",
+      "Capricorn": "With an Aries Sun & Capricorn Rising, you demonstrate a velocity clashing with tradition pattern. You want to disrupt your industry overnight, but you structure your business with rigid hierarchies that slow down your progress. You're building a corporate machine that constantly frustrates your entrepreneurial speed.",
+      "Aquarius": "Your Aries Sun paired with Aquarius Rising sets up a maverick disruption pattern where you rebel against standard business practices just to prove a point. You refuse proven marketing frameworks, & you insist on inventing entirely new systems for your clients. You're alienating potential buyers who simply want a reliable solution.",
+      "Pisces": "An Aries Sun with Pisces Rising creates a pattern of forceful drive dissolving into operational ambiguity. You initiate business deals with intense pressure, & then you lose focus when it's time to define clear deliverables. You're leaving money on the table because your client agreements lack concrete boundaries."
+    },
+    "Taurus": {
+      "Aries": "You build your offers with deliberate patience, but you'll sell them with sudden, undeniable force. Your brand feels like a steady oak tree that occasionally catches fire, pulling in clients who want both grounded reliability, & swift momentum.",
+      "Taurus": "You build your client roster like a curated vault, letting only those who match your exact standard of value cross the threshold, & you're absolutely refusing to compromise on quality in your pricing strategy. People invest with you because they know exactly what they're paying for.",
+      "Gemini": "You anchor your brilliant ideas into physical products, solid revenue streams, & actual profit, & your audience sees you as the voice of steady reason in a noisy feed where you're always leading back to tangible results. You give your concepts roots so they can actually grow into income.",
+      "Cancer": "You build your business like a beautiful, secure home where your clients feel entirely safe handing over their money, & your brand loyalty comes from how deeply you're caring for the people who buy from you. Your audience feels completely protected by your steady presence.",
+      "Leo": "You command attention with a quiet luxury that makes your audience stop scrolling, wanting exactly what you've got, & your launches feel like exclusive events where the price tag is just proof of your undeniable value. You make steady wealth look entirely glamorous.",
+      "Virgo": "You refine your offers until every single detail of the client experience feels like pure gold, & your business operates on systems that look effortless from the outside, generating income through a quiet perfectionism you're known for. Clients gladly pay a premium for your exacting standards.",
+      "Libra": "You attract clients through a brand aesthetic that looks like absolute abundance, & your sales process feels like a graceful dance where you're never chasing. You simply hold the space for the right buyers to step into partnership with you.",
+      "Scorpio": "You build wealth by holding tight to your resources, charging exactly what your most private work is worth, & your clients come to you for profound results they know they're getting. They stay for the unwavering stability you provide behind closed doors.",
+      "Sagittarius": "You bring a grounded, practical weight to your big visions, ensuring your expansive ideas actually turn into profitable launches, & your audience follows your lead because you talk about grand possibilities while standing firmly on a foundation of real results they can't ignore. You make visionary thinking pay the bills.",
+      "Capricorn": "You construct your business like an empire built to survive any economic weather, pricing your expertise at the absolute top of the market, & your clients invest with you because they see you as the ultimate authority who's guaranteeing a solid return. You build your income with undeniable permanence.",
+      "Aquarius": "You structure your futuristic, unconventional methods into reliable income streams that completely defy the typical industry rules, & your audience loves you for your quirky brilliance, buying from you because your offers are wrapped in the undeniable stability you're providing. You make the avant-garde feel completely safe to purchase.",
+      "Pisces": "You turn your deeply intuitive, artistic visions into physical products, structured programs, & actual sales, & your clients experience your work as a grounding force that brings their own messy dreams into beautiful, tangible reality they're craving. You sell magic by giving it a solid, tangible price tag."
+    },
+    "Gemini": {
+      "Aries": "You launch offers with the speed of a spark catching dry kindling, building your business through rapid visibility & instant client engagement. Your Gemini Sun feeds you endless ideas while your Aries Rising demands you execute them before the excitement fades. You don't price your services on predictability, you capture revenue in fast bursts & quick launches.",
+      "Taurus": "You build your client roster like a gardener tending a plot, preferring steady income & reliable long term retainers over a constant churn of quick sales. Your Gemini Sun generates a dozen brilliant pivots a week, yet your Taurus Rising anchors your brand in a sensory, tangible experience that keeps people buying. You don't chase fleeting trends, you grow your revenue by making your services feel grounded, solid, & completely worth the investment.",
+      "Gemini": "You run your business like a lively broadcast, turning your thoughts into content & your conversations into conversions. With your Gemini Sun & Rising perfectly aligned, your brand relies on visibility, constant communication, & an endless stream of fresh offers. You don't wait for the perfect moment, you capture clients through sheer intellectual agility & quick sales.",
+      "Cancer": "You sell your expertise by creating an immediate sense of belonging, making your clients feel personally cared for before they ever see the price tag. Your Gemini Sun gives you the quick wit to market your work effortlessly, but your Cancer Rising ensures your business actually runs on emotional safety & deeply nurtured client relationships. You don't build a distant audience, you build a loyal community wrapped in a distinctly protective brand voice.",
+      "Leo": "You position yourself as the undeniable face of your brand, capturing client attention with a warm, magnetic presence that makes your offerings impossible to ignore. Your Gemini Sun keeps your marketing fresh & endlessly entertaining, while your Leo Rising ensures your pricing reflects the premium value of your personal spotlight. You don't hide behind your offers, you generate income by turning your personality into your most valuable business asset.",
+      "Virgo": "You build your business through meticulous organization, turning the chaotic rush of your Gemini Sun's ideas into a structured, highly functional client experience. Your Virgo Rising refines your communication into exact systems, ensuring your deliverables match the sharp clarity of your marketing. You don't leave details to chance, you price your services based on the flawless execution of your concepts.",
+      "Libra": "You attract clients through a beautifully curated brand, making your business look effortless & entirely aesthetically pleasing. Your Gemini Sun gives you the conversational ease to network your way into premium collaborations, while your Libra Rising ensures every client interaction feels balanced & fair. You don't rely on hard selling, you build your income by making the decision to buy feel like the most graceful choice.",
+      "Scorpio": "You draw in high ticket clients with an intense, quiet focus, selling your expertise through absolute authority & a brand presence that feels almost secretive. Your Gemini Sun gives you the words to articulate complex strategies, but your Scorpio Rising makes people pay for the depth & exclusivity behind those words. You don't cast a wide net, you structure your income around deeply impactful client work reserved for those who meet your exacting standards.",
+      "Sagittarius": "You build your brand by casting a wide net, selling your vision of what's possible to an audience that buys into your enthusiasm. Your Gemini Sun & Sagittarius Rising create a restless, expansive drive that keeps your offers evolving & your visibility constantly growing. You don't stick to a rigid niche, you generate revenue through your ability to teach, share, & inspire clients to invest in your big picture ideas.",
+      "Capricorn": "You approach your business like a serious enterprise, structuring your Gemini Sun's brilliant ideas into a ladder of ascending offers & clear revenue targets. Your Capricorn Rising makes you the boss, ensuring your pricing reflects your authority & your client roster is built on professional respect. You don't chase every shiny idea, you generate income by turning your adaptable mind into a reliable, scalable business model.",
+      "Aquarius": "You position your business slightly outside the normal market, attracting clients who want your highly original, almost futuristic take on their problems. Your Gemini Sun gives you the rapid communication skills to explain your unique methods, while your Aquarius Rising builds your brand around a distinct, unconventional community. You don't compete on price, you base your rates on your intellectual rarity & earn income by being the only one doing exactly what you do.",
+      "Pisces": "You sell your services through a blend of intuitive knowing & articulate communication, making your offers feel like a deeply empathetic solution to your clients' struggles. Your Gemini Sun gives you the words to market your work clearly, but your Pisces Rising ensures your brand carries a soft, compassionate energy that invites people in. You don't rely on hard metrics, you build your income by turning your vast understanding of human emotion into a client experience that feels like pure relief."
+    },
+    "Cancer": {
+      "Aries": "You launch with a fierce speed but fiercely guard your early clients like a mother bear. You rush into the market with a bold offer, & then you hoard your first customers, slowing down your scaling by clinging to their individual progress.",
+      "Taurus": "You build a business that feels like a warm, well-furnished living room where you charge premium prices for the comfort. You refuse to rush your revenue streams, letting your offers mature slowly & securely, which means your launches feel less like explosions & more like a slow rising tide.",
+      "Gemini": "You broadcast a chatty, approachable brand voice that hides how deeply you feel every single client interaction. You juggle three different marketing strategies at once, & when the engagement spikes, you retreat into your shell to process the emotional weight of your sudden visibility.",
+      "Cancer": "You run your company entirely by how the energy feels in the room, building a fiercely loyal team & client roster that feels more like family. You guard your business boundaries like a gated fortress, often underpricing your nurturing offers to keep the exchange feeling soft & safe.",
+      "Leo": "You step onto your brand's stage with a radiant, commanding presence that completely masks your underlying fear of rejection. You pour your heart into your public launches, creating a spotlight that draws clients in, & then you privately stress over whether they truly appreciate the depth of your care.",
+      "Virgo": "You wrap your deep entrepreneurial empathy in spreadsheets, detailed client onboarding flows, & perfectly organized systems. You care so much about getting the service exactly right that you accidentally bottleneck your own delivery, constantly tweaking the backend instead of raising your prices.",
+      "Libra": "You curate a beautiful, harmonious brand experience that makes your clients feel instantly safe & perfectly catered to. You spend so much energy ensuring every customer interaction is pleasant & aesthetically pleasing that you swallow your own boundaries to avoid disrupting the peace.",
+      "Scorpio": "You run your business like a private sanctuary, drawing in high-trust clients through an intense, almost magnetic brand presence. You keep your actual revenue numbers & business strategies fiercely guarded, sharing your deep industry insights only with those who have proven their absolute loyalty.",
+      "Sagittarius": "You cast a wide, optimistic vision for your company's future while secretly needing a secure home base to process the emotional weight of your ambitions. You enthusiastically pitch bold, expansive ideas to your audience, & then you pull back to cautiously assess if this new direction truly protects your core values.",
+      "Capricorn": "You present a stoic, highly competent executive face to the market that completely hides your deeply nurturing approach to leadership. You build structured, profitable business models, & your team follows you not just for your strategic direction but because they know you genuinely care about their wellbeing behind closed doors.",
+      "Aquarius": "You project a detached, future-focused brand identity while quietly managing the emotional pulse of your entire community. You build networks & audiences with a cool, collective vision, & then you personally feel every single direct message & client interaction in your core.",
+      "Pisces": "You run your business on pure intuition, creating offers that feel like an emotional balm to your clients' deepest struggles. You blend so completely into your customers' needs that your pricing often reflects their financial comfort rather than the true value of your profound, empathetic work."
+    },
+    "Leo": {
+      "Aries": "You lead with pure momentum & your Leo Sun wants the applause, so you launch fast & iterate in public. Your brand carries a bright, undeniable heat that pulls in clients who want immediate results. You set your prices based on the sheer velocity of the outcomes you deliver.",
+      "Taurus": "Your Leo Sun wants the spotlight & your Taurus Rising insists on getting paid well for standing in it. You build a brand that feels like solid luxury, pulling in high ticket clients who value tangible quality over flashy promises. Income grows steadily because you refuse to compromise your standards for a quick sale.",
+      "Gemini": "You are the founder who holds court everywhere, your Leo Sun shining through a quicksilver Gemini voice. You attract clients through constant visibility & brilliant storytelling, weaving your offers into conversations that feel entirely natural. Your business thrives on multiplicity, juggling launches & ideas with a charismatic ease.",
+      "Cancer": "Your Leo Sun craves the stage & your Cancer Rising builds a fiercely protective container around your clients. You create a brand that feels like a warm, exclusive living room where people pay a premium to be seen & held. You lead with your heart in your marketing, drawing in a loyal audience that buys based on deep emotional trust.",
+      "Leo": "Your Leo Sun meets Leo Rising in a double dose of pure golden radiance. You build a personal brand that is absolutely unmistakable, drawing clients who want to bask in your confidence & absorb your natural leadership. You price your time as a premium asset because you know your presence alone is the value.",
+      "Virgo": "Your Leo Sun wants to shine & your Virgo Rising demands that the backend of your business is impeccably organized. You attract clients by combining undeniable charisma with a reputation for delivering flawless, structured results. You build systems that support your grand vision, ensuring your launches actually land exactly as promised.",
+      "Libra": "Your Leo Sun loves the applause & your Libra Rising curates a brand that is aesthetically irresistible. You attract high paying clients by creating an experience that looks & feels perfectly balanced. You negotiate partnerships & pricing with a charming grace that makes people want to agree with you instantly.",
+      "Scorpio": "Your Leo Sun shines brightly & your Scorpio Rising pulls the real power behind the scenes. You draw in clients who are magnetized by your intense presence & your ability to keep their deepest business secrets safe. Your pricing reflects the profound depth of your work, commanding high fees for access to your piercing insight.",
+      "Sagittarius": "Your Leo Sun loves the stage & your Sagittarius Rising makes sure the stage is vast. You build a business that operates on a global scale, attracting clients who want to expand their own horizons alongside you. You sell big visions & bold ideas, pricing your offers based on the massive potential you help them see.",
+      "Capricorn": "Your Leo Sun wants the glory & your Capricorn Rising builds an empire to sustain it. You command premium rates because your brand projects absolute authority & a track record of real success. You approach your visibility with a CEO mindset, turning your personal magnetism into a structured, profitable asset.",
+      "Aquarius": "Your Leo Sun wants to lead & your Aquarius Rising wants to do it completely differently. You attract a fiercely loyal community by blending your personal warmth with a brilliantly unconventional approach to your niche. You launch offers that disrupt the usual market expectations, pricing your unique perspective as your ultimate currency.",
+      "Pisces": "Your Leo Sun wants to be seen & your Pisces Rising wraps your brand in a dreamy, magnetic mystique. You attract clients through a deeply intuitive presence that makes them feel like you understand their vision before they even speak. You price your work based on the profound creative magic you bring to the table."
+    },
+    "Virgo": {
+      "Aries": "You launch with a boldness that surprises everyone, & behind the scenes you're meticulously refining the backend systems until your eyes blur. Your business moves at lightning speed because your Aries rising pushes you out the door, & your Virgo sun quietly panic-checks the deliverables. You charge premium prices for things that look effortless to the client, yet they take you hours of invisible precision.",
+      "Taurus": "You build your business like a well-appointed boutique, focusing on high quality materials, & luxury pricing that reflects your exacting standards. Clients come to you because your Taurus rising demands a slow, steady approach to growth, & your Virgo sun ensures every single contract is flawless. You make your income through deliberate, grounded service rather than flashy marketing tactics.",
+      "Gemini": "Your brand voice is quick, clever, & endlessly adaptable, pulling in a wide variety of clients who love your quick wit. Yet your Virgo sun keeps a tight grip on the actual service delivery, ensuring that your Gemini rising\u2019s chatter is always backed by solid data, & flawless execution. You juggle multiple offers & audiences while quietly obsessing over the formatting of your emails.",
+      "Cancer": "You run your business like a highly organized family, creating deeply protective containers for your clients, & your Virgo sun tracks every metric of their progress. Your Cancer rising brings a softness to your brand that draws people in, but they quickly discover the rigorous, structured framework you've got waiting for them. You price your care generously, & hold your boundaries with quiet, undeniable firmness.",
+      "Leo": "You crave the spotlight, & step into visibility with a natural command, but your Virgo sun is backstage stress-testing the lighting, & the script. Your audience sees a charismatic leader who makes entrepreneurship look glamorous, not realizing the meticulous spreadsheets driving the show. You price your authority highly, & refuse to let a single detail slip during a major launch.",
+      "Virgo": "You're the ultimate craftsman of the business world, presenting a brand so clean, & precise that clients immediately trust your expertise. Your double Virgo energy means you're constantly auditing your own operations, refining your offers, & raising your prices to match the undeniable quality of your work. You build a reputation for flawless service delivery that quietly intimidates your competition.",
+      "Libra": "You attract clients with a brand aesthetic so beautiful it looks effortless, balancing colors, & copy with your Libra rising\u2019s natural grace. Behind that polished front, your Virgo sun is running the numbers, refining the client onboarding, & ensuring every touchpoint serves a specific purpose. You charge for the harmony you create, blending visual appeal, & undeniable operational efficiency.",
+      "Scorpio": "Your brand carries an intense, magnetic gravity that pulls in high-level clients who want deep, private access to your expertise. Your Scorpio rising guards your business boundaries fiercely, & your Virgo sun dissects their problems with surgical precision. You prefer fewer clients at a premium rate, delivering work that feels both profoundly intimate, & meticulously structured.",
+      "Sagittarius": "You cast a massive vision for your clients, & paint a picture of expansive freedom with your Sagittarius rising\u2019s natural optimism. Yet when it's time to build the roadmap, your Virgo sun takes over, breaking that grand vision into meticulous, actionable modules. You sell the adventure but you deliver the itinerary, pricing your ability to make big dreams structurally sound.",
+      "Capricorn": "You operate like a seasoned CEO from day one, building an empire with an authoritative presence, & commanding high-ticket sales. Your Capricorn rising sets the long-term strategy, & your Virgo sun manages the daily operations with unyielding discipline. You respect the hierarchy of your industry, & quietly outwork everyone by refusing to cut corners on quality or timing.",
+      "Aquarius": "You present a brand that feels entirely unique, drawing in clients with your Aquarius rising\u2019s unconventional perspective, & futuristic ideas. But underneath that rebellious exterior, your Virgo sun is running rigorous tests on your systems, & organizing your data. You make your money by fixing the future, offering radical concepts backed by absolute practical logic.",
+      "Pisces": "You meet your clients with a profound, empathetic presence that makes them feel instantly seen, & understood through your Pisces rising. Once they're inside your world, your Virgo sun provides the structured, detail-oriented framework they actually need to get results. You sell the healing, & deliver the protocol, balancing a soft heart with a sharp, discerning mind."
+    },
+    "Libra": {
+      "Aries": "You're a master at initiating partnerships yet you often stall when it's time to make the final call. You delay signing clients & launching your offers while waiting for perfect consensus. This hesitation stalls your revenue generation & bottlenecks your sales pipeline.",
+      "Taurus": "You build beautiful brands but you tend to over invest in aesthetic assets before validating your offer. You'll spend heavily on premium website design & luxury course platforms without testing if your audience will actually buy. This attachment to physical perfection delays your cash flow & inflates your overhead costs.",
+      "Gemini": "You thrive in social environments & you constantly scatter your focus across multiple collaborative ventures. You say yes to too many joint projects & dilute your core offer. This scattering prevents you from establishing a distinct market position & leaves your audience confused about what you actually sell.",
+      "Cancer": "You bring incredible warmth to your client relationships but you frequently over nurture your leads at the expense of your boundaries. You provide endless free support & avoid firm pricing structures to keep the peace. This emotional labor drains your energy & attracts clients who expect premium services at budget rates.",
+      "Leo": "You crave visibility for your business yet you need constant external applause to validate your strategic decisions. You might delay a profitable launch until you have enough visible cheerleaders rather than trusting your own metrics. This reliance on audience feedback stalls your growth & keeps you stuck in the planning phase.",
+      "Virgo": "You aim for flawless operations & you get caught in endless cycles of tweaking your backend systems. You delay your revenue generating activities because your client onboarding documents aren't perfectly formatted. This perfectionism masks your fear of visibility & keeps your valuable expertise hidden behind closed doors.",
+      "Libra": "You naturally excel at client relations but you often mask your indecision as polite consideration. You avoid direct sales conversations because you fear disrupting the buyer's comfort level. This avoidance creates ambiguity in your offers & significantly weakens your closing rate.",
+      "Scorpio": "You keep your business strategies incredibly private & you frequently withhold your true pricing to test client loyalty. You create complex gatekeeping processes in your sales funnel instead of offering clear buying options. This intense vetting alienates warm leads & slows down your overall sales velocity.",
+      "Sagittarius": "You cast a wide net with your marketing but you routinely overpromise deliverables just to keep your clients engaged. You inflate your service scope during sales calls & then struggle to fulfill the actual contract. This overextension compromises your deliverable quality & leads to rapid operational burnout.",
+      "Capricorn": "You build highly structured businesses yet you measure your self worth solely by client acquisition milestones. You push through exhaustion to maintain a flawless public reputation & ignore your actual capacity. This relentless drive creates brittle business models that crack under the pressure of your own unrealistic standards.",
+      "Aquarius": "You approach your market with brilliant originality but you detach from your audience's actual needs to maintain your intellectual distance. You build complex referral systems that alienate your warm leads because they require too much explanation. This detachment limits your conversion rates & keeps your community at arm's length.",
+      "Pisces": "You connect deeply with your audience's desires but you blur your professional identity to match whoever is in front of you. You constantly rebrand your business based on your latest inspiring conversation rather than committing to a specific niche. This fluidity confuses your prospective buyers & prevents you from building consistent brand recognition."
+    },
+    "Scorpio": {
+      "Aries": "You meet the market with a Scorpio's intensity wrapped in an Aries frontline charge, moving fast to secure the deal before anyone else even sees the opportunity. You price your offers based on the sheer force of will you bring to the table, & your clients feel that immediate heat the second they land on your brand. You're the founder who closes the sale in the first five minutes of the call.",
+      "Taurus": "You hold your intellectual property & revenue models with a Scorpio's secrecy grounded by a Taurus need for tangible, bankable security. You refuse to launch until the pricing structure feels completely solid in your hands, & your clients pay a premium for the unshakable stillness you bring to chaotic markets. Your business builds wealth slowly & permanently, brick by hidden brick.",
+      "Gemini": "You communicate your deep Scorpio strategies with a Gemini's quicksilver charm, masking your true profit motives behind a rapid-fire, conversational brand. You attract clients who think they're just having a casual chat, & you're actually closing them on a high-ticket package. You pivot your messaging on a dime, & you keep your competitors guessing about where your real focus lies.",
+      "Cancer": "You protect your client relationships & proprietary methods with a Scorpio's guard dog instinct softened by a Cancer's protective shell. Your business feels like a private, high-trust sanctuary, & you only extend offers to people who pass your quiet emotional vetting. Your income relies on that fierce, unseen loyalty you cultivate with a select few.",
+      "Leo": "You build your brand presence with a Scorpio's strategic secrecy dressed up in a Leo's undeniable need for the spotlight. You command the stage, & you dictate premium pricing, drawing in clients who want to be associated with your undeniable star power. Behind the radiant marketing, you're calculating exactly how much market share this visibility will capture.",
+      "Virgo": "You analyze your client data & operational systems with a Scorpio's piercing gaze filtered through a Virgo's meticulous attention to detail. You refine your delivery methods until your profit margins are perfectly efficient, & your team operates with quiet, exact precision. Your clients pay for the flawlessly managed experience you construct behind closed doors.",
+      "Libra": "You negotiate contracts & client relationships with a Scorpio's absolute control masked by a Libra's graceful, diplomatic smile. You design your brand aesthetics to disarm your competitors, & you make your high-ticket pricing look like an absolute bargain. You secure the deal by making the other side feel completely catered to, & you hold every structural card.",
+      "Scorpio": "You run your business with a double dose of Scorpio, keeping your financial goals & long-term launch plans entirely hidden from the public eye. You attract clients who want total discretion, & you price your offers for people who value profound, unseen work. Your brand operates like an exclusive, high-roller private club with no signage on the door.",
+      "Sagittarius": "You take your Scorpio-driven market research & package it with a Sagittarius need to broadcast your findings to the entire industry. You price your expertise based on the sheer volume of ground you cover, & you attract clients who want bold, expansive results. You sell the big picture vision, & you quietly secure the exact assets you need to dominate the space.",
+      "Capricorn": "You approach your market position with a Scorpio's psychological insight backed by a Capricorn's absolute demand for authority & revenue. You build a team & a pricing structure designed to outlast every competitor, & your clients pay top tier rates for your unyielding competence. You're the founder who owns the building everyone else is just renting office space in.",
+      "Aquarius": "You execute your Scorpio profit strategies through an Aquarian, highly unconventional brand framework that disrupts the standard market rules. You attract clients who want radical results, & you price your offers based on the unique, irreplicable system you've engineered. You appear completely detached, & you quietly consolidate control over your specific industry niche.",
+      "Pisces": "You attract your ideal clients with a Scorpio's magnetic pull softened by a Pisces' fluid, approachable brand identity. You sell high-ticket intuition & deep emotional resonance, & you draw in buyers who feel a profound, almost psychic connection to your work. You operate your business like a quiet, lucrative tide that brings in wealth without making a single loud splash."
+    },
+    "Sagittarius": {
+      "Aries": "You're selling the vision before the product's even built, pitching the future with such infectious fire that clients commit on the spot. Your pricing often reflects the massive potential of what you're building rather than the current deliverables, leaving you to sprint to catch up with the promises you've already sold.",
+      "Taurus": "You're anchoring your big Sagittarius ideas in premium pricing & luxurious brand experiences, refusing to launch until the aesthetic matches your high standards. Clients come for the expansive philosophy, but they're staying for the undeniable quality of the container you've built around your wisdom.",
+      "Gemini": "You're running your business through a constant stream of diverse offers, pivoting your messaging weekly to match whatever new philosophy has captured your restless mind. Your audience stays engaged because they never know which iteration of your expertise you'll bring to the table next, though your backend operations scramble to keep pace with your rapid ideation.",
+      "Cancer": "You're bringing a fiercely protective energy to your client relationships, building intimate, family-style teams that carry out your grand Sagittarius visions. Your sales often close because people feel emotionally held by your expansive worldview, trusting that your big ideas come with a deeply caring safety net.",
+      "Leo": "You're commanding the spotlight with a boldness that turns your philosophical teachings into absolute brand events, pricing your expertise like the premium entertainment it is. You expect your team & your clients to treat your business like a stage, showing up with the same radiant enthusiasm you're bringing to every single launch.",
+      "Virgo": "You're packaging your boundless Sagittarius philosophy into meticulous, organized systems, turning wild inspiration into structured curriculum that clients can actually follow. You find yourself constantly refining the details of your offers to ensure the delivery's flawless, even when your heart wants to be out selling the next grand expansion.",
+      "Libra": "You're attracting high-end clients through sheer charm & a beautifully curated brand that makes your big ideas look absolutely effortless. Your partnerships are the lifeblood of your revenue, but you're often delaying important launches until every aesthetic detail feels perfectly balanced.",
+      "Scorpio": "You're blending your Sagittarius expansiveness with an intense, magnetic focus that makes your audience feel like you're reading their deepest business secrets. You tend to guard your actual strategies while freely sharing your overarching philosophy, drawing in clients who're willing to invest heavily just to get past the veil.",
+      "Sagittarius": "You're operating at a breakneck pace, building your brand on pure conviction & a refusal to be contained by industry norms. Your business thrives on your constant pursuit of the next big frontier, pricing your time at a premium while your team's scrambling to structure the relentless flow of your ideas.",
+      "Capricorn": "You're structuring your grand visions into tangible, profitable assets, treating your philosophical insights as valuable commodities that demand serious compensation. You respect founders who build legacies, so you're holding your own business to strict standards of longevity, ensuring your expansive teachings actually translate into sustained income.",
+      "Aquarius": "You're building your brand around radical ideas & community-driven models, pricing your offers in ways that disrupt the traditional market. Your audience follows you for the sheer uniqueness of your perspective, even when your delivery feels more detached & visionary than personally nurturing.",
+      "Pisces": "You're selling your big ideas through pure vibe & intuitive connection, drawing in clients who feel like your work's a spiritual calling they simply must answer. Your income often fluctuates with your creative energy, leaving you to build backend support that can catch the massive influx of clients when your inspiration finally peaks."
+    },
+    "Capricorn": {
+      "Aries": "You build your empire with the patience of a mountain goat & the speed of a wildfire. You hold your pricing firm while sprinting to close the deal, knowing exactly when to wait out a hesitant client, & when to push the launch live. It's a pattern of calculated momentum where your ambition drives the vehicle & your authority steers it.",
+      "Taurus": "Your business moves at the steady pace of a luxury freight train, carrying heavy cargo of premium offers & long term client commitments. You plant your brand in rich soil, & refuse to uproot it for a quick cash injection, watching your income compound over seasons rather than weeks. It's a pattern of deliberate accumulation where your financial structure & your personal values are built from the exact same stone.",
+      "Gemini": "You present a sharp, versatile brand to the world while operating a deeply serious financial engine behind the scenes. You might pivot your marketing copy three times before lunch, yet your core business model & your pricing tiers remain completely immovable. It's a pattern of structural duality where your intellect scouts the perimeter, & your authority guards the vault.",
+      "Cancer": "You wrap your rigid business structures in a protective shell that makes your premium clients feel completely held. You build a team that operates like a family, guarding your company culture as fiercely as you guard your profit margins. It's a pattern of guarded nurturing where your emotional intelligence secures the loyalty of your highest paying customers.",
+      "Leo": "You command the room with an undeniable authority that feels both regal & absolutely grounded in industry standards. You want your brand to be recognized & celebrated, yet you refuse to sacrifice your solid profit margins for mere applause. It's a pattern of prestigious ambition where your visibility is engineered to attract an exclusive clientele.",
+      "Virgo": "You run your business operations with a precision that leaves zero room for unpaid scope creep or messy client onboarding. Every system you build is designed to protect your time, & guarantee the steady accumulation of wealth. It's a pattern of meticulous authority where your exacting standards ensure your deliverables always justify your premium pricing.",
+      "Libra": "You present a beautifully curated business aesthetic that masks an incredibly tough negotiation strategy. You attract high end clients with grace, & charm, then hold the line on your contracts with absolute immovable authority. It's a pattern of structural elegance where your brand looks effortless, but your income goals are ruthlessly enforced.",
+      "Scorpio": "You keep your actual revenue numbers & your highest performing offers hidden from the public eye while building an undeniable powerhouse of an empire. You vet your clients & your team members for absolute loyalty, cutting access the moment a boundary is crossed. It's a pattern of strategic concealment where your public silence is directly proportional to your private wealth.",
+      "Sagittarius": "You cast a massive visionary net over your industry while keeping your financial foundation anchored in concrete. You might sell the dream of ultimate freedom, but you run your launch calendars & your backend operations with absolute discipline. It's a pattern of boundless pragmatism where your expansive marketing reaches the masses, but your revenue stays strictly controlled.",
+      "Capricorn": "You operate as the undeniable executive of your own industry, building your legacy with such heavy structural integrity that nothing shakes your foundation. You price your expertise for the long term, & demand a level of professionalism from your team that borders on the elite. It's a pattern of pure authority where your entire business is a monument to your unyielding standards.",
+      "Aquarius": "You build wildly unconventional offers & serve a highly niche audience, yet you structure their delivery with the rigor of a corporate institution. You might disrupt the market with a completely new pricing model, but your backend revenue streams are completely locked into place. It's a pattern of structured rebellion where your forward thinking serves your bottom line rather than distracting from it.",
+      "Pisces": "You present a deeply intuitive & fluid brand presence that draws in clients seeking profound outcomes, yet you run the actual business with an iron fist. You hold space for your clients' vulnerabilities while keeping a close eye on your cash flow, & your launch deadlines. It's a pattern of spiritual pragmatism where your empathetic delivery never compromises your financial authority."
+    },
+    "Aquarius": {
+      "Aries": "You launch your offers with the force of a lightning strike, convinced that your futuristic vision needs to hit the market right now. Your pricing often jumps ahead of your delivery, creating a gap between the brilliant ideas in your mind & the current capacity of your team. There's a relentless push to be first in your niche, even if it means rebuilding your backend systems three times in a quarter.",
+      "Taurus": "You build your brand with a slow, deliberate luxury while constantly trying to inject disruptive concepts into your client experience. Your income streams often feel like a tug of war between the desire for predictable monthly retainers & the urge to launch a completely unconventional high ticket offer. You hold onto your established client roster with quiet ferocity, even as you experiment with radical pricing structures that confuse your market.",
+      "Gemini": "Your brand voice shifts across a dozen platforms, mirroring the various expert identities you adopt to communicate your visionary ideas. You capture clients through sheer intellectual stimulation, constantly testing new lead magnets before the previous launch has even closed. Your schedule looks like a circuit board, routing conversations, partnerships, & offers through endless pivots that keep your audience engaged but your team dizzy.",
+      "Cancer": "You present a highly progressive, slightly detached brand to the public while privately gating your client relationships behind intense loyalty & trust. Your business model requires a secure emotional foundation before you'll scale your income or expand your visibility. You often delay major launches simply because your private space doesn't feel safe enough to hold the public weight of your progressive work.",
+      "Leo": "You command the room with a theatrical brilliance that completely contradicts the collective, future focused mission you preach. Your visibility strategy relies on being seen as a unique iconoclast, demanding premium pricing for your perspective while remaining aloof from the standard industry cliques. You build a team to support your personal spotlight, yet you treat them like an egalitarian collective where everyone's ideas are weighed equally.",
+      "Virgo": "You organize your most radical, out of the box concepts into pristine, perfectly labeled spreadsheets & client onboarding workflows. Your pricing is a careful calculation of value mixed with a strong desire to fix the inefficiencies of your industry through sheer methodology. You refine your offers with an obsessive attention to detail, constantly tweaking the delivery mechanisms until your progressive vision feels entirely safe to sell.",
+      "Libra": "You package your most unconventional, industry shattering ideas in a beautifully curated, aesthetically pleasing brand that disarms your clients. Your partnerships & collaborations are built on a desire for intellectual equality, yet you constantly manage the social dynamics to keep the peace. You price your services to reflect a refined sense of fairness, & you're often over delivering on value to maintain a harmonious relationship with your market.",
+      "Scorpio": "You conceal your truly radical business methods beneath a quiet, intense exterior that carefully screens every potential client for loyalty. Your income strategy relies on deep, private overhauls rather than mass market visibility, creating a fiercely devoted client base that feels initiated into your vision. You hold the reins of your launches with absolute control, ensuring that no detail of your futuristic empire's ever left to chance.",
+      "Sagittarius": "You preach your industry's future with the fervor of a traveling philosopher, expanding your visibility through grand, sweeping statements about collective evolution. Your offers are broad, visionary containers that promise complete freedom, often outpacing the actual structured delivery your team can manage. You chase the next big market shift with an arrow aimed at the horizon, pricing your knowledge based on its potential to change the world.",
+      "Capricorn": "You build your disruptive concepts into a structured, authoritative institution that demands respect from the very industry you're trying to subvert. Your pricing is steep & unyielding, treating your futuristic vision as a premium commodity rather than an open source idea. You slowly climb the ladder of your niche, carrying an unconventional blueprint for your business that you intend to impose from the top down.",
+      "Aquarius": "Your brand feels entirely divorced from personal ego, operating as a pure transmission of future systems & collective progress. You price your offers based on their objective value to the community, often ignoring the emotional sales tactics your competitors use to close deals. Your team functions as an egalitarian network, where your role is simply to introduce the vision & let the system run itself without your constant oversight.",
+      "Pisces": "You blend your visionary, forward thinking concepts & a dreamy, boundaryless brand that draws clients in through a feeling of collective resonance. Your business structure often dissolves just as it reaches peak success, forcing you to rebuild your income streams from a completely different angle. You communicate your most radical ideas through a soft, intuitive veil, making your unconventional methods feel like a natural spiritual evolution to your buyers."
+    },
+    "Pisces": {
+      "Aries": "You're carrying a vast oceanic vision for your clients, & you're launching your offers like a firecracker. You're pricing your packages on pure instinct, & you're hitting publish before the sales page's even fully written. Your business is moving at the speed of your sudden bursts of inspiration, leaving your clients swept up in the momentum.",
+      "Taurus": "You're building your business like a slow brewing luxury tea, infusing your intuitive magic into every single client touchpoint, & you're holding your pricing firm. You know the tangible weight of the energy you're offering, & your launches're taking their sweet time. The clients who're finally buying are deeply rooted in your world.",
+      "Gemini": "You're a mystic in a marketplace, packaging your deep intuitive knowing into bite sized conversations across every social media platform, & you're pivoting your messaging daily. Your audience's getting whiplash trying to keep up with your next brilliant idea, & you're attracting clients through sheer verbal charm. Your income streams're remaining as scattered as your attention.",
+      "Cancer": "You're running your business like a cozy sanctuary where your clients're coming to be deeply held, & you're overdelivering on your coaching containers. You're absorbing their stress until your own energy reserves're completely dry, & your brand's feeling incredibly safe. You're struggling to raise your rates because you're feeling the weight of their financial situations.",
+      "Leo": "You're stepping onto the business stage like a glamorous psychic, demanding the spotlight for your deeply compassionate work, & you're building a brand that's both magical & magnetic. You're drawing in clients who want to be in your radiant orbit, & you're wanting your revenue to match your level of fame. You're shying away from the hard selling that's actually getting you there.",
+      "Virgo": "You're organizing the vast waters of your intuition into meticulous spreadsheets, & you're building perfectly structured coaching modules. You're refining your service offerings until they're flawless, & you're delaying your launch dates over minor formatting details. Your clients're getting incredible results but you're exhausting yourself trying to systemize a magic that's inherently fluid.",
+      "Libra": "You're curating a business that's looking like a beautiful dream, obsessing over the aesthetics of your website before you're writing a single line of copy. You're pricing your services to reflect the elegance of your brand, & you're attracting clients who're appreciating refined experiences. You're hesitating to push your visibility too hard because you're wanting your marketing to feel harmonious.",
+      "Scorpio": "You're running your brand like a secret society, offering profound transformations only to the clients who're proving they're ready for the deep end, & you're charging premium rates. You're fiercely protecting your privacy, & your marketing's quiet. It's carrying an undeniable gravitational pull that's drawing in a highly dedicated audience.",
+      "Sagittarius": "You're preaching your spiritual business model from a virtual mountaintop, selling the grand vision of what's possible for your clients, & you're hating being boxed into a single niche. You're constantly expanding your offers to include your latest philosophical discoveries, & your audience's loving your expansive energy. Your revenue's fluctuating as wildly as your shifting focus.",
+      "Capricorn": "You're building an empire on intuitive foresight, treating your spiritual gifts with the rigorous discipline of a seasoned CEO, & you're structuring your pricing tiers for long term wealth. You're expecting tangible proof that your methods're working, & you're carrying the heavy burden of your business on your shoulders. You're refusing to hand over control of your vision.",
+      "Aquarius": "You're broadcasting your psychic insights through a highly futuristic brand lens, attracting an audience of unique thinkers & outcasts, & you're building your community first. You're figuring out the monetization strategy later, & you're pricing your offers in unconventional ways. You're wanting your business to feel like a social experiment rather than a corporate machine.",
+      "Pisces": "You're completely dissolving the boundaries between your personal energy & your business brand, letting your clients experience your pure unfiltered empathy, & you're struggling to put a fixed price on your services. You're feeling that the healing you're providing should be accessible to everyone, & your business's becoming whatever your current clients need it to be. Your own income's remaining completely undefined."
+    }
+  },
+  "at_a_glance": [
+    {
+      "element": "fire",
+      "modality": "cardinal",
+      "text": "You launch with a spark that instantly draws eyes to your brand, & your clients feel that immediate rush of momentum. You price your offers based on the sheer energy of the result you know you can deliver. Your edge to watch is the sudden drop in interest once the initial thrill of a new project fades into the daily operations."
+    },
+    {
+      "element": "fire",
+      "modality": "fixed",
+      "text": "You build a business that feels like a stage where your clients get to shine, & your pricing reflects the premium nature of your distinct presence. Your visibility strategy relies on pure magnetism that pulls ideal clients into your orbit. Your edge to watch is tying your income so closely to your personal vitality that burnout feels like a professional hazard."
+    },
+    {
+      "element": "fire",
+      "modality": "mutable",
+      "text": "You infuse your marketing with an undeniable sense of vision, & your clients invest in your ability to see the biggest possible picture for their growth. Your offers constantly evolve as you chase the next philosophical or business frontier. Your edge to watch is leaving half-built launch funnels behind because a more exciting concept caught your eye before the revenue hit your bank account."
+    },
+    {
+      "element": "earth",
+      "modality": "cardinal",
+      "text": "You construct your business like a concrete high rise, & your clients pay premium rates for the structural integrity you bring to their chaos. Your income scales because you respect the physical reality of time & resources in your pricing models. Your edge to watch is building such rigid timelines for your team that you squeeze the creative life right out of the work."
+    },
+    {
+      "element": "earth",
+      "modality": "fixed",
+      "text": "You establish a business rhythm that feels deeply rooted, & your clients appreciate the tangible luxury you bake into your delivery. Your pricing stays steady because you refuse to devalue your time for a quick cash injection. Your edge to watch is holding onto outdated service models long after the market has moved because the comfort of familiarity outweighs the need for new income."
+    },
+    {
+      "element": "earth",
+      "modality": "mutable",
+      "text": "You organize your client delivery with an almost obsessive precision, & your audience pays for the exact systems you build to manage their details. Your brand speaks through the flawless execution of your backend operations. Your edge to watch is over-editing your offers until the launch window closes & the perfect pricing page still sits in your drafts."
+    },
+    {
+      "element": "air",
+      "modality": "cardinal",
+      "text": "You design a brand aesthetic that instantly communicates high value, & your clients pay for the sense of harmony you bring to their messy strategies. Your partnerships form quickly because you know exactly how to position two businesses for mutual gain. Your edge to watch is delaying your pricing decisions until everyone on your team agrees, & the moment to close the sale passes."
+    },
+    {
+      "element": "air",
+      "modality": "fixed",
+      "text": "You architect business models that operate entirely outside the standard market rules, & your clients invest in the pure intellectual brilliance of your frameworks. Your visibility relies on the distinct conceptual differences between you & everyone else in your industry. Your edge to watch is isolating your brand so far into the future that your ideal clients cannot figure out how to buy from you."
+    },
+    {
+      "element": "air",
+      "modality": "mutable",
+      "text": "You communicate your offers with a rapid fire brilliance that fills your client roster through sheer conversational magnetism. Your marketing pivots on a dime as you translate complex ideas into digestible brand messages, & your income reflects your ability to hold multiple perspectives at once. Your edge to watch is splitting your focus across so many revenue streams that your team cannot keep up with the constant changes to your service agreements."
+    },
+    {
+      "element": "water",
+      "modality": "cardinal",
+      "text": "You build a client base that feels more like a deeply loyal family, & your income relies on the emotional security you provide during their transitions. Your brand pulls people in because they sense you actually care about their business survival. Your edge to watch is retreating from a highly visible launch the moment a critical client gives you negative feedback."
+    },
+    {
+      "element": "water",
+      "modality": "fixed",
+      "text": "You command premium pricing because your clients sense the profound depth of your strategic intuition, & they trust you with their most sensitive business secrets. Your marketing feels intense & magnetic without you having to say much at all. Your edge to watch is holding onto a toxic high paying client because the emotional bond feels too complex to sever."
+    },
+    {
+      "element": "water",
+      "modality": "mutable",
+      "text": "You absorb the exact needs of your market, & your clients pay for the fluid adaptability you bring to their brand messaging. Your income flows when you let your intuition guide your launch timing. Your edge to watch is blurring your pricing boundaries so completely that you give away your expertise for free just to ease a prospect's financial anxiety."
+    }
+  ],
+  "money": [
+    {
+      "sign": "Aries",
+      "text": "You'll price based on the thrill of the fast close, often launching first & figuring out the backend details while the money's already flowing in. Your income spikes with sudden bursts of momentum, but you tend to burn out on projects that require steady, long-term cash management."
+    },
+    {
+      "sign": "Taurus",
+      "text": "You build your income through slow, deliberate accumulation, setting premium prices & holding firm until a client meets your exact financial standard. Your money flows in steadily as long as you feel physically comfortable with the offer, but you'll stubbornly resist pivoting your pricing even when the market shifts."
+    },
+    {
+      "sign": "Gemini",
+      "text": "You create multiple streams of income by talking about your offers in rapid, fascinating detail, keeping your pricing varied & accessible across different tiers. Your cash flow follows your curiosity, peaking when you've got three new ideas running at once & dipping when you get bored with the administration of collecting on them."
+    },
+    {
+      "sign": "Cancer",
+      "text": "You base your pricing on the emotional safety of the client relationship, often giving unrecorded bonuses & discounting your rates when you feel a deep personal connection to someone's story. Your income has a cyclical rhythm that swells when you feel secure in your private space & shrinks when you're overexposed to the public eye."
+    },
+    {
+      "sign": "Leo",
+      "text": "You command top dollar by making your offers feel like an exclusive event, pricing your expertise as a premium experience that clients feel lucky to access. You'll see your income directly correlate with how much creative pride you take in the work, dropping sharply if you feel like just another service provider blending into the background."
+    },
+    {
+      "sign": "Virgo",
+      "text": "You calculate your prices down to the minute, justifying your rate by over-delivering on detailed systems & offering endless revisions to prove your worth. Your income stays consistent through sheer organizational discipline, but you'll stall new launches because you're constantly refining the backend spreadsheets instead of making the sale."
+    },
+    {
+      "sign": "Libra",
+      "text": "You set your prices based on what feels fair & balanced, often looking at your peers' rate cards to ensure your offers sit beautifully in the middle of the market. Your income flows best when your branding is visually impeccable, yet you'll hesitate to raise your rates because you don't want to disrupt the harmony of your current client roster."
+    },
+    {
+      "sign": "Scorpio",
+      "text": "You keep your exact income figures private, pricing your services high enough to filter out the curious onlookers & only closing deals in intimate, behind-the-scenes conversations. Your money comes in through intense, deep client work where you hold all the financial control, but you'll fold a profitable offer overnight if you sense a drop in trust."
+    },
+    {
+      "sign": "Sagittarius",
+      "text": "You set your prices with wild optimism, often bundling massive amounts of value into a single high-ticket offer & selling it with a grand vision of future freedom. Your income arrives in lucky, opportunistic surges, but the cash slips through your fingers because you're already planning the next international expansion instead of sending the final invoice."
+    },
+    {
+      "sign": "Capricorn",
+      "text": "You structure your pricing like a corporate ladder, starting low to build a client portfolio & steadily raising your rates as you achieve recognized industry authority. You'll find your income is built for the long haul, growing steadily through strict financial boundaries & compounding client retainers that you manage with absolute professional control."
+    },
+    {
+      "sign": "Aquarius",
+      "text": "You price your offers based on unconventional models & community access, often experimenting with sliding scales or group rates that disrupt the traditional market standard. Your income flows when you're building an audience around a big idea, but you detach completely from the daily cash management, hoping the system runs itself while you focus on the future."
+    },
+    {
+      "sign": "Pisces",
+      "text": "You leave your pricing open to intuition, often letting clients pay what they can & weaving your financial worth into a deep, spiritual calling rather than a hard business metric. Your income has a fluid, unpredictable quality, coming in abundantly when you're inspired & leaking out quietly through forgotten subscriptions & generous refunds."
+    }
+  ],
+  "visibility": [
+    {
+      "sign": "Aries",
+      "text": "Your public brand moves fast & strikes first, often launching new offers before the competition even sees the market opening. You build your reputation on being the bold pioneer who isn't afraid to claim the spotlight with a spontaneous, high-velocity presence."
+    },
+    {
+      "sign": "Taurus",
+      "text": "Your visibility grows at a deliberate, grounded pace that prioritizes undeniable quality & sensory richness in every client interaction. You build a reputation as the steady, premium presence whose brand feels like an exclusive, well-appointed room that commands higher pricing without a second thought."
+    },
+    {
+      "sign": "Gemini",
+      "text": "Your public reputation thrives on constant communication, quick pivots, & an ability to speak directly to multiple client avatars at once. You are known as the versatile voice in your industry who can turn a complex launch strategy into a rapid, engaging conversation that keeps your audience endlessly curious."
+    },
+    {
+      "sign": "Cancer",
+      "text": "Your brand presence pulls clients in through genuine warmth & an intuitive understanding of what your audience needs to feel safe enough to buy. You build your reputation as the deeply caring expert whose business feels less like a corporate entity & more like a trusted, protective family structure."
+    },
+    {
+      "sign": "Leo",
+      "text": "Your visibility operates through radiant personal presence & a magnetic ability to command a room, a stage, or a feed with total creative authority. You build your reputation as the charismatic leader whose launches feel like highly anticipated events that clients line up to be part of."
+    },
+    {
+      "sign": "Virgo",
+      "text": "Your public brand is built on meticulous detail, precise client results, & an organized methodology that makes your expertise look effortless to implement. You are known as the discerning professional whose reputation for flawless execution makes your high ticket pricing a logical, unquestionable investment for your market."
+    },
+    {
+      "sign": "Libra",
+      "text": "Your visibility thrives on aesthetic harmony, strategic partnerships, & a brand presence that feels effortlessly refined & socially connected. You build your reputation as the trusted connector whose public image naturally attracts high caliber clients who appreciate the art of doing business beautifully."
+    },
+    {
+      "sign": "Scorpio",
+      "text": "Your public presence draws people in with its intense magnetism & an aura of knowing exactly where the money is hidden in your industry. You build a reputation as the deeply strategic authority whose quiet confidence & piercing insight make clients trust you with their most vulnerable business goals."
+    },
+    {
+      "sign": "Sagittarius",
+      "text": "Your visibility expands through big-picture vision, bold declarations, & a public brand that constantly challenges the status quo of your industry. You are known as the visionary mentor whose reputation is built on leading your clients toward a more expansive, profitable future with unwavering conviction."
+    },
+    {
+      "sign": "Capricorn",
+      "text": "Your public reputation is constructed with intentional longevity & an unshakeable authority that commands respect from peers & premium rates from clients. You build your brand as the ultimate industry cornerstone whose structured, disciplined visibility makes your business look like it has been successfully running for decades."
+    },
+    {
+      "sign": "Aquarius",
+      "text": "Your visibility operates through unconventional positioning, future-forward concepts, & a public brand that instantly identifies you as the outsider doing business differently. You build a reputation as the visionary rebel whose unique frameworks & distinct community culture naturally attract the most progressive, forward-thinking clients."
+    },
+    {
+      "sign": "Pisces",
+      "text": "Your public presence relies on emotional resonance, artistic intuition, & a brand energy that feels deeply healing & profoundly inspiring to your audience. You build your reputation as the empathic oracle whose business feels less like a service & more like a deeply moving experience that clients are willing to invest in entirely."
+    }
+  ],
+  "how_you_sell": [
+    {
+      "sign": "Aries",
+      "text": "Mercury in Aries means you sell by striking first & closing on pure momentum. Your sales calls feel like a sudden spark of inspiration where you confidently declare the outcome before they've even finished describing their problem."
+    },
+    {
+      "sign": "Taurus",
+      "text": "Mercury in Taurus means you sell by letting the value speak for itself & closing through slow undeniable certainty. Your sales conversations move at a grounded pace where you simply present the price & wait in complete silence until they've agreed."
+    },
+    {
+      "sign": "Gemini",
+      "text": "Mercury in Gemini means you sell by talking through every angle & closing by matching the exact words they're using. Your sales calls feel like rapid ping pong matches where you verbally build the solution right in front of them."
+    },
+    {
+      "sign": "Cancer",
+      "text": "Mercury in Cancer means you sell by feeling out the room & closing through a deep sense of shared safety. Your sales conversations start with personal questions that uncover their underlying need before you intuitively offer the exact package that feels like home."
+    },
+    {
+      "sign": "Leo",
+      "text": "Mercury in Leo means you sell by commanding the room & closing with a dramatic flair that makes the investment feel like an exclusive opportunity. Your sales calls are performances where your natural warmth & enthusiasm make the client want to be part of your inner circle."
+    },
+    {
+      "sign": "Virgo",
+      "text": "Mercury in Virgo means you sell by organizing the details & closing through a perfectly logical assessment of their current gaps. Your sales conversations are meticulous audits where you'll present a clear step by step framework that leaves no room for doubt."
+    },
+    {
+      "sign": "Libra",
+      "text": "Mercury in Libra means you sell by creating harmony & closing through a beautiful sense of balanced partnership. Your sales calls feel like a charming consultation where you gently weigh the options with them until the decision becomes the obvious elegant choice."
+    },
+    {
+      "sign": "Scorpio",
+      "text": "Mercury in Scorpio means you sell by asking piercing questions & closing by exposing the exact truth of their situation. Your sales conversations strip away the pleasantries as you quietly pinpoint the pain that's been unspoken & offer the precise remedy."
+    },
+    {
+      "sign": "Sagittarius",
+      "text": "Mercury in Sagittarius means you sell by casting a grand vision & closing on the promise of future growth. Your sales calls feel like an invigorating adventure where you're selling the destination so effectively that the actual itinerary becomes irrelevant."
+    },
+    {
+      "sign": "Capricorn",
+      "text": "Mercury in Capricorn means you sell by establishing authority & closing through a serious discussion of return on investment. Your sales conversations are direct & professional where you frame your offer as the practical structure that'll secure their success."
+    },
+    {
+      "sign": "Aquarius",
+      "text": "Mercury in Aquarius means you sell by presenting an unconventional approach & closing by appealing to their desire to stand out. Your sales calls feel like a fascinating briefing where you'll logically deconstruct their industry norms & offer a totally unique system."
+    },
+    {
+      "sign": "Pisces",
+      "text": "Mercury in Pisces means you sell by blurring the lines & closing through an emotional resonance that defies logic. Your sales conversations feel like a gentle drift where you absorb their feelings & articulate a dream solution that they'll instinctively sign up for."
+    }
+  ],
+  "how_you_lead": [
+    {
+      "sign": "Aries",
+      "text": "Sun in Aries means you're leading through pioneering momentum. You launch initiatives, pioneer new markets, & push your team to move first in the industry."
+    },
+    {
+      "sign": "Taurus",
+      "text": "Sun in Taurus means you're leading through steady resource building. You establish reliable frameworks, cultivate sustainable growth, & ensure your business generates consistent revenue over time."
+    },
+    {
+      "sign": "Gemini",
+      "text": "Sun in Gemini means you're leading through rapid adaptation. You pivot your business model quickly, gather market intelligence, & connect with diverse audiences across multiple platforms."
+    },
+    {
+      "sign": "Cancer",
+      "text": "Sun in Cancer means you're leading through empathetic cultivation. You build fiercely loyal teams, foster emotional safety, & nurture your client relationships into long term partnerships."
+    },
+    {
+      "sign": "Leo",
+      "text": "Sun in Leo means you're leading through magnetic visibility. You become the face of your brand, radiate confidence, & inspire your audience to follow your creative vision."
+    },
+    {
+      "sign": "Virgo",
+      "text": "Sun in Virgo means you're leading through systematic refinement. You optimize daily operations, refine your delivery methods, & elevate your market reputation through exceptional quality."
+    },
+    {
+      "sign": "Libra",
+      "text": "Sun in Libra means you're leading through strategic partnership. You design aesthetically pleasing brands, cultivate high level connections, & negotiate collaborations that expand your professional reach."
+    },
+    {
+      "sign": "Scorpio",
+      "text": "Sun in Scorpio means you're leading through strategic consolidation. You transform your business models, consolidate your assets, & secure exclusive market positioning through intense focus."
+    },
+    {
+      "sign": "Sagittarius",
+      "text": "Sun in Sagittarius means you're leading through visionary expansion. You scale your operations globally, gather diverse insights, & market your offerings as pathways to greater freedom."
+    },
+    {
+      "sign": "Capricorn",
+      "text": "Sun in Capricorn means you're leading through structural mastery. You build enduring organizations, establish clear hierarchies, & command respect in your industry."
+    },
+    {
+      "sign": "Aquarius",
+      "text": "Sun in Aquarius means you're leading through disruptive innovation. You implement cutting edge technologies, disrupt traditional systems, & build communities around your futuristic business concepts."
+    },
+    {
+      "sign": "Pisces",
+      "text": "Sun in Pisces means you're leading through intuitive alignment. You design offerings that resonate deeply, trust your market instincts, & guide your company through shifting currents with ease."
+    }
+  ],
+  "question": {
+    "Sun": [
+      {
+        "house": 1,
+        "text": "You build your business by putting yourself front and center, letting your personal magnetism drive the brand's visibility. You price your offers based on your own perceived value, often raising rates the moment you personally feel you've grown. How does your brand's visibility depend on your daily willingness to be seen?"
+      },
+      {
+        "house": 2,
+        "text": "You treat your revenue like a reflection of your personal brilliance, tying your financial inflow directly to how much you shine in your work. Your pricing models reflect your desire to tangibly hold your own worth in the market. What happens to your client roster when you decide your base rates are simply non-negotiable?"
+      },
+      {
+        "house": 3,
+        "text": "Your business thrives on the written and spoken word, where your daily content acts as the engine for client acquisition. You sell through conversation, turning your newsletters, & social posts into direct pipelines for new leads. Are you letting your daily communications carry the full weight of your sales strategy?"
+      },
+      {
+        "house": 4,
+        "text": "You build your client base through deep trust and private connections, often running your entire operation from a space that feels like a sanctuary. Your brand feels safe, drawing in clients who want a deeply rooted, long-term partnership. How much of your revenue relies on clients feeling like they are coming home to your business?"
+      },
+      {
+        "house": 5,
+        "text": "You launch your products like theatrical events, pouring your creative fire into every campaign until your audience feels the heat. Your clients buy the experience of your creative genius, paying premium prices just to be part of the show. When was the last time your launch calendar allowed you to just play with your audience?"
+      },
+      {
+        "house": 6,
+        "text": "You run your company through meticulous daily rituals, ensuring your team delivers your service with the exact precision you demand. Your income relies on the flawless execution of your client schedules, booking calendars, & operational frameworks. Where is your need for operational perfection keeping your business from scaling beyond your own daily oversight?"
+      },
+      {
+        "house": 7,
+        "text": "You scale your revenue through high tier partnerships, treating every client contract as a deeply personal collaboration. Your business model thrives when you have a mirrored counterpart in the room, making joint ventures your most profitable asset. Who are the partners that actually make your client load feel like a shared victory?"
+      },
+      {
+        "house": 8,
+        "text": "You structure your income through shared resources, finding your most lucrative deals in joint finances, investments, or high tier intimacy. Your clients pay you for the profound shifts you facilitate, trusting you with their deepest vulnerabilities. What pricing threshold must you cross to feel like you are truly sharing the financial power with your clients?"
+      },
+      {
+        "house": 9,
+        "text": "You market your business by standing on a virtual soapbox, teaching your philosophy, & selling your vision for the industry. Your clients invest in your expertise to expand their own horizons, buying your high tier masterminds and thought leadership. How much of your annual income is directly tied to your willingness to broadcast your big picture views?"
+      },
+      {
+        "house": 10,
+        "text": "You build your brand to be an institution, commanding industry attention, & leading your market with undeniable authority. Your visibility strategy relies on taking the top spot, securing the highest profile clients and the most prestigious stages. What happens to your client retention when you decide to stop chasing the spotlight and just own the room?"
+      },
+      {
+        "house": 11,
+        "text": "You generate income through collective momentum, turning your audience into a movement that naturally funnels ideal clients your way. Your team & networks act as your greatest distribution channel, bringing in opportunities through associations, & friendships. How are you pricing the unique community you've built around your brand?"
+      },
+      {
+        "house": 12,
+        "text": "You run your business from behind the scenes, drawing in clients through an almost psychic magnetism rather than loud daily marketing. Your offers often cater to the private, unseen corners of your clients' lives, commanding high prices for exclusive, quiet access. What would shift in your revenue if you let your most private, unseen ideas become your flagship offer?"
+      }
+    ],
+    "Moon": [
+      {
+        "house": 1,
+        "text": "With the Moon guiding your chart from the first house, your business is a direct extension of your current mood, & your visibility fluctuates with your internal weather. When you feel secure, your brand shines brightly, & when you're off center, you pull back from the market entirely. How does your daily emotional state dictate your willingness to be seen by your ideal clients?"
+      },
+      {
+        "house": 2,
+        "text": "With the Moon anchoring your chart in the second house, your income flows directly from your sense of personal security, & you're pricing your offers based on emotional comfort rather than market standards. You might undercharge to keep the energy light, & you might overcharge to build a protective wall around your time. What happens to your bank account when you're tying your earning potential to your fluctuating sense of self worth?"
+      },
+      {
+        "house": 3,
+        "text": "With the Moon ruling your chart from the third house, your marketing changes with your daily thoughts, & you're writing your copy straight from the heart without a filter. Your audience connects with your authentic voice, & your messaging shifts like the tide depending on your mood. Are you building a recognizable brand, & are you simply publishing your internal weather report?"
+      },
+      {
+        "house": 4,
+        "text": "With the Moon sitting in the fourth house, you're running your company like a household, & your team members quickly feel like family. You protect your inner circle fiercely, & you're blurring the lines between personal space & professional delivery. How much of your business structure is built on making yourself feel safe, & how does that impact your ability to scale your impact?"
+      },
+      {
+        "house": 5,
+        "text": "With the Moon placed in the fifth house, your launches depend entirely on your creative spark, & you're building offers when you feel deeply inspired. You pour your heart into your creations, & the momentum fades as soon as the initial excitement wanes. What would your business revenue look like, & could you sustain enthusiasm for your offers long after the honeymoon phase?"
+      },
+      {
+        "house": 6,
+        "text": "With the Moon positioned in the sixth house, your daily operations hinge entirely on your physical & emotional well being. When your routine feels off, your client delivery suffers, & your systems grind to a halt. How much revenue are you losing, & are you letting your mood dictate your operational consistency?"
+      },
+      {
+        "house": 7,
+        "text": "With the Moon residing in the seventh house, you're attracting clients who need emotional mirroring, & your business partnerships feel like marriages. You mold your schedule to accommodate their needs, & you're prioritizing the relationship over your own boundaries. Where does your role as a supportive partner end, & where does your identity as a business owner begin?"
+      },
+      {
+        "house": 8,
+        "text": "With the Moon in the eighth house, your approach to investments & joint finances is tied to emotional risk. You hold back on selling premium offers, & you're waiting to feel a deep, unspoken trust with the buyer. What if your hesitation to charge high ticket rates is actually blocking the profound intimacy you crave with your clients?"
+      },
+      {
+        "house": 9,
+        "text": "With the Moon guiding the ninth house, your brand philosophy shifts as you absorb new information, & you're teaching exactly what you're currently feeling your way through. Your content is highly relatable, & your long term vision evolves with your personal beliefs. Does your audience know what you stand for today, & are they chasing a moving target?"
+      },
+      {
+        "house": 10,
+        "text": "With the Moon in the tenth house, your public reputation is built on your personal vibe, & your visibility peaks when you're letting your audience see your genuine emotional state. You lead with empathy, & you're drawing clients who want a founder who truly cares. How much of your professional authority are you willing to trade, & are you doing it just to be universally liked?"
+      },
+      {
+        "house": 11,
+        "text": "With the Moon in the eleventh house, your audience feels like a collective of friends, & you're building your network through shared feelings rather than calculated outreach. You prioritize community engagement over cold connections, & you're relying on a warm grid of supporters. Are you cultivating a profitable network, & are you managing a social club that drains your energy?"
+      },
+      {
+        "house": 12,
+        "text": "With the Moon hidden in the twelfth house, you're often hiding your true feelings about your business, & you're absorbing the stress of your clients while working behind the scenes. You sacrifice your own visibility to keep everyone else afloat, & you're operating from a quiet, unseen space. What would happen to your capacity to serve, & would your energy change if you stopped making your own needs invisible?"
+      }
+    ],
+    "Mercury": [
+      {
+        "house": 1,
+        "text": "You're building your business at the exact speed of your personal identity shifts. You rebrand, rename, & restructure your offers every time you evolve as a founder, leaving clients struggling to keep up with your moving target. How can your business become a stable container for a mind that constantly reinvents itself?"
+      },
+      {
+        "house": 2,
+        "text": "You're tying your intellectual worth directly to your bank account. You recalibrate your pricing every time you learn a new skill, meaning your income fluctuates with your perceived personal value rather than the market value of your results. What happens to your revenue when you stop charging for your knowledge & start charging for your outcomes?"
+      },
+      {
+        "house": 3,
+        "text": "You're scattering your brilliance across a dozen platforms, chatting with your audience like a lively neighbor over the fence. Your content cadence spikes when you feel connected & flatlines the second you feel uninspired by your own messaging. How does your business sustain itself when your visibility relies completely on your daily mood to communicate?"
+      },
+      {
+        "house": 4,
+        "text": "You're building your business model around creating a deeply rooted home base for your clients. You turn your office into your living room & make your private foundation the absolute prerequisite for your professional success. What would it look like to build a commercial structure that doesn't require your personal life to be perfectly peaceful?"
+      },
+      {
+        "house": 5,
+        "text": "You're approaching your business like a series of creative experiments. You launch new ideas the moment they strike & drop them the second they feel stale, leaving your team scrambling to keep up with your next shiny creation. Where is the line between a brilliant creative launch & a chaotic lack of follow through?"
+      },
+      {
+        "house": 6,
+        "text": "You're obsessing over the daily operations of your business. You rewrite your procedures every Tuesday & tweak your client onboarding until it's perfectly efficient, keeping your team waiting in the wings while you micromanage the exact font in their welcome packets. How much potential income is trapped in your need to personally refine every single operational detail?"
+      },
+      {
+        "house": 7,
+        "text": "You're building your business entirely through one on one conversations. You mirror your clients' desires so perfectly that you sometimes forget your own strategy, turning your business partnerships into intense negotiations where you absorb their goals as your own. What's the cost to your bottom line when you let your clients dictate the terms of your engagement?"
+      },
+      {
+        "house": 8,
+        "text": "You're keeping your pricing hidden & your financial strategies secretive. You attract clients who want intense psychological depth from you, trading your energy for their money in complex deals that feel more like corporate mergers. What would shift in your business if you brought your financial terms completely out into the open?"
+      },
+      {
+        "house": 9,
+        "text": "You're building your brand on a constantly shifting philosophy. You chase the next expert certification to validate your expertise & confuse your audience with your complex theories about how the market works. When will you let your lived business experience be the only credential you need to charge what you're worth?"
+      },
+      {
+        "house": 10,
+        "text": "You're talking your way to the top of your industry. You secure speaking gigs & high tier clients through sheer conversational brilliance, but your public brand constantly changes shape because you're always refining your professional narrative based on who's in the room. How does your business scale when your reputation relies entirely on you being present to pitch it?"
+      },
+      {
+        "house": 11,
+        "text": "You're collecting clients & colleagues like friends at a massive dinner party. You build a network so wide that everyone knows your name but no one knows your actual pricing, leaving your business vision entirely dependent on whatever fascinating conversation you had yesterday in your industry group chat. How do you monetize a community when you're too busy being a connector to ever close the sale?"
+      },
+      {
+        "house": 12,
+        "text": "You're retreating into your office to design offers in total silence. You pull brilliant business models out of thin air & then hide your best ideas behind complicated language when it comes time to publish the sales page. What happens to your revenue when you stop waiting for divine inspiration & start speaking your business aloud?"
+      }
+    ],
+    "Venus": [
+      {
+        "house": 1,
+        "text": "You lead with your aesthetic & your presence, making your business feel like an extension of your own charm. Your brand is personal & magnetic, drawn directly from how you look, speak, & show up. Is your business built to grow beyond your face, or does it need you in every frame to feel real?"
+      },
+      {
+        "house": 2,
+        "text": "You measure value in beauty & comfort, & your pricing carries the weight of what you believe you deserve. Money moves through your business the way you move through your own sense of worth, quietly & with feeling. Is your pricing a true mirror of what you believe you're worth, or are you still negotiating with an old number?"
+      },
+      {
+        "house": 3,
+        "text": "Your words carry beauty, & your messaging becomes a craft you refine until it feels just right. You can spend hours polishing a single sentence because how it sounds matters as much as what it says. Are you so devoted to making your message perfect that you keep delaying the moment you actually say it?"
+      },
+      {
+        "house": 4,
+        "text": "Your business carries the feeling of home, & you build it with roots that go deep into what feels emotionally true. Clients sense a warmth in how you work, a sense of being cared for from the inside out. Is your business built to feel like home for the people you serve, or is it structured to keep yourself safe?"
+      },
+      {
+        "house": 5,
+        "text": "You create like an artist, & every offer feels like something you're pouring yourself into. Your launches & projects carry a spark of play because you genuinely love the act of making. Are you building offers that light you up, or are you performing creativity to earn approval?"
+      },
+      {
+        "house": 6,
+        "text": "You bring beauty into the daily work, & your service feels refined, considered, & quietly devoted to getting it right. You can spend hours on details others would never notice because excellence matters to you on a personal level. Are you so committed to making the work exquisite that profitability keeps slipping to second place?"
+      },
+      {
+        "house": 7,
+        "text": "Your business lives in relationship, & every client feels like a collaboration rather than a transaction. You're drawn to partnerships that feel balanced & fair, & you read people quickly for whether the energy is right. Are you choosing clients who genuinely complement how you work, or are you filling seats to avoid working alone?"
+      },
+      {
+        "house": 8,
+        "text": "You're drawn to depth in your client work, & trust matters more to you than volume or speed. What you offer carries weight because you're willing to walk into rooms most people avoid. Are you charging for the depth you actually provide, or are you pricing for what feels safe to ask?"
+      },
+      {
+        "house": 9,
+        "text": "You see beauty in meaning, & your work carries a sense that knowledge should be shared with grace. You teach, write, & speak because ideas move you, & you want them to land with elegance. Are you sharing what you know because it genuinely matters to you, or are you holding back until you feel qualified enough?"
+      },
+      {
+        "house": 10,
+        "text": "Your visibility carries a desire to be admired, & your public image is something you shape with care. You want your reputation to feel beautiful because being seen well matters to you deeply. Are you building a reputation that reflects who you actually are, or one designed to be admired from a distance?"
+      },
+      {
+        "house": 11,
+        "text": "You build through connection, & your network feels like a living part of how your business grows. You value community & you're generous with the people who feel like your people. Are you growing a community that genuinely sustains your business, or are you maintaining relationships that quietly drain your resources?"
+      },
+      {
+        "house": 12,
+        "text": "You do your best work in private, & there's a part of you that finds beauty in the unseen. Your creativity flourishes in solitude, & being visible can feel like too much exposure of something precious. Are you creating in private because it's where you do your finest work, or because being seen still feels too vulnerable to bear?"
+      }
+    ],
+    "Mars": [
+      {
+        "house": 1,
+        "text": "You lead with your personal identity so fiercely that your business brand often feels like an extension of your physical energy. You charge forward into visibility with a warrior's hunger, & you exhaust your momentum trying to be the face of every single launch. What happens to your company's valuation when your personal presence is the only engine driving it?"
+      },
+      {
+        "house": 2,
+        "text": "Your drive for income is visceral, pushing you to fight for every dollar with a fierce grip on your cash flow. You tie your pricing directly to your personal endurance, & you sprint to secure assets before you ever feel safe. If your financial security requires constant combat to maintain, how will your business scale when you finally need to step back?"
+      },
+      {
+        "house": 3,
+        "text": "You fight your battles with words, turning your marketing & daily communications into a rapid-fire sparring match with your audience. Your mind moves at a sprint, scattering brilliant ideas across your content calendar before you can fully monetize them. Are you building a loyal client base or simply captivating a crowd that enjoys the spectacle of your speed?"
+      },
+      {
+        "house": 4,
+        "text": "You build your business foundation with a protective intensity, treating your company's inner workings & backend operations like a heavily guarded fortress. You pour your fighting spirit into your private setup, making sure your team & home office feel fiercely defended. How much of your operational friction comes from defending your base when you could be expanding your territory?"
+      },
+      {
+        "house": 5,
+        "text": "You throw yourself into your creative projects & product launches with a gambler's nerve, betting your passion on the thrill of the reveal. Your offers carry a bold, dramatic flair that demands attention, & you quickly move on to the next creation once the initial excitement fades. What would your retention rates look like if you gave your existing offers the same fierce energy you give your newest ideas?"
+      },
+      {
+        "house": 6,
+        "text": "You attack your daily operations & service delivery with an intense work ethic, grinding through your schedule like a soldier on the front lines. You expect your team & contractors to match your relentless pace, often jumping in to fix the details yourself when they falter. Is your business serving your clients effectively or simply acting as an arena for you to prove your own endurance?"
+      },
+      {
+        "house": 7,
+        "text": "You approach client relationships & business partnerships with a competitive fire, often attracting collaborators who challenge your authority. Your contracts & agreements become spaces where you negotiate your power, seeking balance through friction. Are you forging alliances that grow your revenue or simply sparring with mirrors to test your own strength?"
+      },
+      {
+        "house": 8,
+        "text": "You tackle joint finances & outside investments with a fearless aggression, willing to risk shared resources to force a major return. You handle the hidden mechanics of your business, like debts & royalties, with a sharp strategic edge. How does your appetite for financial risk impact the stability of the investors or partners who trust you with their capital?"
+      },
+      {
+        "house": 9,
+        "text": "You crusade for your business philosophy & expertise with a missionary's zeal, eager to convert your audience to your specific way of thinking. Your coaching & educational content push a bold worldview that demands your clients expand their horizons right alongside you. Are your premium programs actually guiding your clients or simply demanding they adopt your beliefs to stay in the room?"
+      },
+      {
+        "house": 10,
+        "text": "You pursue your public reputation & industry status with an undeniable ambition, charging up the ladder of your career with visible striving. Your brand projects an authority that comes from sheer willpower & a desire to dominate your market. When you finally reach the top of your industry, who will be left standing with you if you've conquered everyone to get there?"
+      },
+      {
+        "house": 11,
+        "text": "You mobilize your audience & professional networks with a commanding presence, treating your community like an army ready to execute your vision. You push your future goals & social impact forward by actively driving your following toward specific collective actions. How much of your community's engagement is built on genuine connection versus their compliance with your fierce direction?"
+      },
+      {
+        "house": 12,
+        "text": "You execute your business strategies from behind the scenes, launching your offers from a hidden vantage point before anyone sees you coming. Your drive operates in the shadows, pushing you to work in isolation on the backend mechanics of your company. What is the actual cost to your visibility when your instinct is to strike fast & then immediately retreat into privacy?"
+      }
+    ],
+    "Jupiter": [
+      {
+        "house": 1,
+        "text": "Your business expands directly through your personal presence, making your brand identity synonymous with your own boundless enthusiasm. You attract clients by showing up larger than life, pouring your visionary energy into every interaction, sale, & marketing message. What's happening to your revenue when you stop trying to be the biggest personality in the room and simply let your expertise speak for itself?"
+      },
+      {
+        "house": 2,
+        "text": "You measure your business success through sudden influxes of cash, creating a feast or famine cycle tied directly to your sense of value. Your pricing strategy swings from wildly accessible, to premium, & reflects your shifting belief in what you deserve to earn. How might your income stabilize if you viewed your financial worth as a steady hum rather than a sporadic jackpot?"
+      },
+      {
+        "house": 3,
+        "text": "You constantly generate a surplus of brilliant marketing ideas, scattering your focus across too many platforms, formats, & launch concepts. Your communication style is a whirlwind of valuable insights that sometimes leaves your audience overwhelmed by the sheer volume of your content. What's the single conversation that could actually double your client roster if you stopped chasing every new messaging trend?"
+      },
+      {
+        "house": 4,
+        "text": "You build your company's back end around an expanding need for personal comfort, creating operational systems that prioritize your private life over aggressive growth. Your business foundation grows roots so deep in familiar territory that you hesitate to scale beyond what you can manage from your own kitchen table. When your need for a cozy operational base bumps against a massive market opportunity, which one's actually winning?"
+      },
+      {
+        "house": 5,
+        "text": "Your business runs on a constant stream of new offers, creative experiments, & high energy launches designed to keep things exciting. You pour your resources into the thrill of creation, often leaving older, perfectly profitable services to gather dust while you chase the next big idea. Are you building a sustainable brand or just running a continuous creativity fair where profitability's optional?"
+      },
+      {
+        "house": 6,
+        "text": "You continually expand your client deliverables, over servicing accounts until your daily operations become a bloated web of unpaid favors. Your work ethic insists on delivering more than promised, turning simple projects into massive undertakings that drain your time, energy, & margins. What's going to happen to your schedule, & your profit, if you deliver exactly what was scoped and nothing more?"
+      },
+      {
+        "house": 7,
+        "text": "You seek out partnerships to expand your reach, often signing contracts that favor the other party because you believe in abundance for everyone. Your collaborative ventures multiply quickly, leaving you managing multiple alliances that drain your focus while bringing in very little direct revenue. Which of your current partnerships actually feeds your bottom line, & which ones aren't?"
+      },
+      {
+        "house": 8,
+        "text": "You scale your business through outside investments, risky financial gambles, & complex revenue shares that promise massive payouts down the line. Your approach to business debt and joint finances is wildly optimistic, assuming that tomorrow's exponential growth will easily cover today's bold expenses. If the next round of funding never materializes, doesn't your current pricing model actually sustain your company's weight?"
+      },
+      {
+        "house": 9,
+        "text": "You position yourself as a thought leader, sharing sweeping industry philosophies, grand visions, & high level theories that sometimes lack immediate practical application. Your marketing leans heavily on your credentials and your desire to teach the big picture, overlooking the simple step your clients need to take right now. Are you selling a genuine business solution or just a compelling ideology that keeps people listening but doesn't make them buy?"
+      },
+      {
+        "house": 10,
+        "text": "You chase an ever expanding public reputation, taking on visible leadership roles, press opportunities, & industry titles to cement your authority. Your ambition for public recognition pushes you to say yes to every speaking gig and interview, stretching your brand across too many stages. What's the public commitment you're maintaining right now that directly contradicts the private business goals you actually want to achieve?"
+      },
+      {
+        "house": 11,
+        "text": "You build massive online communities, gathering thousands of followers, free group members, & casual connections into your sphere. Your network is enormous and incredibly friendly, yet your conversion rates remain frustratingly low because you treat your audience like a social club rather than a buyer pool. How many of these loyal fans don't actually have the means, & the pressing need, to invest in your premium work?"
+      },
+      {
+        "house": 12,
+        "text": "You operate your business from behind the scenes, building out massive visions, secret projects, & quiet strategies that rarely see the light of day. Your visibility takes a back seat to your inner process, making you the invisible CEO who relies on others to do the selling while you manage the vast machinery in the shadows. If you suddenly had to step out from the back office and become the face of your brand tomorrow, what's going to happen to your sales?"
+      }
+    ],
+    "Saturn": [
+      {
+        "house": 1,
+        "text": "You build your brand like an architect laying bricks one by one, trusting the structure over the flash. Your public persona is a fortress that demands respect before it extends warmth. How much of your true professional fire are you holding back until you feel you've earned the right to show it?"
+      },
+      {
+        "house": 2,
+        "text": "You've built your pricing to reflect a ledger of hard hours, where every dollar earned feels like a physical weight you've carried. You guard your revenue with a fierce maturity that refuses to risk cash flow for a quick thrill. What if your current rates are actually pricing out the clients who would value your time the most?"
+      },
+      {
+        "house": 3,
+        "text": "Your marketing relies on facts, figures, & a step-by-step logic that leaves no room for misunderstanding. You write your emails & content as if drafting a legal contract, ensuring every word holds up under scrutiny. Are you so focused on being undeniably correct that you're forgetting to make your message genuinely magnetic?"
+      },
+      {
+        "house": 4,
+        "text": "Your business runs on a private infrastructure of strict routines, & you treat your operational base like a family legacy in the making. You pour your resources into the back end, making sure the roots are deeply entrenched before the branches see daylight. When will you feel that the foundation is finally secure enough to scale your visibility?"
+      },
+      {
+        "house": 5,
+        "text": "You approach your product launches with a director's patience, planning every detail long before the curtain rises. Your creative process is a disciplined practice rather than a sudden strike of inspiration. What would happen to your revenue if you let your audience see the messy, unfinished versions of your ideas?"
+      },
+      {
+        "house": 6,
+        "text": "You manage your team & daily operations with a foreman's eye, expecting everyone to clock in with the same intense dedication you bring. Your client delivery systems are a study in reliability, built to withstand immense pressure without cracking. Is your demand for flawless execution quietly exhausting the very people you rely on to grow your company?"
+      },
+      {
+        "house": 7,
+        "text": "You sign partnerships & take on high-level clients with the gravity of a marriage, expecting a lifelong commitment from the very first contract. You attract buyers who want a serious authority figure, but you test them heavily before letting them past the gate. How often are you turning away incredibly profitable collaborations because they don't meet your exacting standards?"
+      },
+      {
+        "house": 8,
+        "text": "You treat your business investments & joint ventures like a vault, only sharing resources after a rigorous audit of trust. Your pricing for deep, intensive work carries a heavy weight that filters out anyone seeking a casual exchange. What opportunities for funded growth are you missing because you refuse to share the reins?"
+      },
+      {
+        "house": 9,
+        "text": "You build your industry authority through slow, deliberate study, becoming the recognized expert who actually knows the material inside out. Your expansion strategies are mapped out like a master's curriculum, ensuring every market entry is fully justified by data. Are you keeping your expertise so formal & structured that you're missing the raw storytelling that actually drives movement?"
+      },
+      {
+        "house": 10,
+        "text": "You climb the ladder of your industry with a methodical certainty, building a reputation that can easily survive a sudden market shift. Your public image is one of unwavering competence, where you'd rather be respected for your results than liked for your charm. How long will you keep climbing toward a peak of authority before you ask if it's the right mountain for your soul?"
+      },
+      {
+        "house": 11,
+        "text": "You curate your professional network & audience with an eye for longevity, collecting contacts like blue-chip assets rather than passing acquaintances. Your community building is a managed investment, focusing on quality connections that yield tangible returns over time. Are you holding your audience at arm's length when they are actually waiting for you to lead them as a visible peer?"
+      },
+      {
+        "house": 12,
+        "text": "You run your business from the shadows, orchestrating the moving parts in private before revealing the finished product to the buying public. Your strategic mind works best in isolation, where the noise of the market can't distract you from the long-term vision. What revenue is currently sitting untouched because you're waiting for the absolute perfect moment to step out from behind the scenes?"
+      }
+    ]
+  },
+  "stellium": [
+    {
+      "type": "sign",
+      "key": "Aries",
+      "text": "You move on instinct, launching offers before the copy's even finished. Your business thrives on the adrenaline of the first strike, capturing market share because you simply refuse to wait for permission."
+    },
+    {
+      "type": "sign",
+      "key": "Taurus",
+      "text": "You build your client roster like a steady farm, planting seeds of value that compound into substantial, unshakeable revenue. Your pricing reflects a deep respect for your own worth, & your clients stay because the value you provide feels physically tangible."
+    },
+    {
+      "type": "sign",
+      "key": "Gemini",
+      "text": "You're running three brand identities at once, testing a new marketing hook before breakfast. Your audience buys because your mind's a rapid-fire broadcast of fresh angles, keeping your business perpetually relevant & conversational."
+    },
+    {
+      "type": "sign",
+      "key": "Cancer",
+      "text": "Your business feels like a private members club where the onboarding process is deeply personal. Clients invest in your services because they feel emotionally held by your brand, trusting you with their vulnerabilities & their budgets."
+    },
+    {
+      "type": "sign",
+      "key": "Leo",
+      "text": "You're the face of your company, turning your personal magnetism into your most profitable asset. Your launches succeed because people want to be part of the light you're generating, buying into your vision as much as your expertise."
+    },
+    {
+      "type": "sign",
+      "key": "Virgo",
+      "text": "You refine your service delivery until it runs like a precise, well-oiled machine. Your clients pay premium rates because they know every detail of their experience has been analyzed, organized, & perfected by your exacting eye."
+    },
+    {
+      "type": "sign",
+      "key": "Libra",
+      "text": "You curate your visual brand & client interactions to feel effortlessly beautiful & balanced. People buy from you because the experience of working with you feels like a high-end aesthetic relief from the chaotic market."
+    },
+    {
+      "type": "sign",
+      "key": "Scorpio",
+      "text": "You command absolute authority in your niche by knowing exactly what your clients aren't saying. Your income comes from intense, private transformations where people hand over their trust, & their cash, because they sense you see right through them."
+    },
+    {
+      "type": "sign",
+      "key": "Sagittarius",
+      "text": "You sell the vision of what's possible, expanding your clients' horizons before they even realize they were stuck. Your business grows through global reach & bold intellectual pivots, drawing in buyers who want to believe in something bigger."
+    },
+    {
+      "type": "sign",
+      "key": "Capricorn",
+      "text": "You structure your revenue streams for longevity, building a business that looks like an empire from day one. Clients pay your fees because your brand presence communicates an undeniable, institutional level of competence & staying power."
+    },
+    {
+      "type": "sign",
+      "key": "Aquarius",
+      "text": "You corner the market with ideas that're five years ahead of the current conversation. Your audience invests because they want to be part of the future you're conceptualizing, paying to access your highly original & distinct network."
+    },
+    {
+      "type": "sign",
+      "key": "Pisces",
+      "text": "You weave a dream so compelling that your clients buy the feeling of your brand before they even read the sales page. Your income flows when you trust your intuition with pricing & positioning, selling an experience that feels like magic."
+    },
+    {
+      "type": "house",
+      "key": "1",
+      "text": "Your personal identity's the business card, & your presence alone closes the deal. You attract clients simply by being visible, because your brand's entirely inseparable from who you're in the room."
+    },
+    {
+      "type": "house",
+      "key": "2",
+      "text": "Your focus is constantly locked on cash flow, pricing structures, & the physical assets of your business. You build wealth by intimately understanding the exact dollar value of your time, ensuring every energy expenditure's got a measurable return."
+    },
+    {
+      "type": "house",
+      "key": "3",
+      "text": "You turn your newsletters, podcasts, & daily content into a lead generation engine that never stops running. Your clients find you through your words, buying your offers because your consistent communication built a bridge of trust."
+    },
+    {
+      "type": "house",
+      "key": "4",
+      "text": "You're running your business from the inside out, treating your team & client base like an extended family. Your most loyal revenue comes from this deep sense of belonging you're cultivating, creating a private foundation that supports every public launch."
+    },
+    {
+      "type": "house",
+      "key": "5",
+      "text": "You're treating your business like a creative studio, launching products that feel like pure passion projects. Your audience buys your joy, investing in your offers because the act of creation's so visibly fun & alive for you."
+    },
+    {
+      "type": "house",
+      "key": "6",
+      "text": "You're the master of the daily operations, pouring your energy into the systems that keep your clients perfectly served. Your business retains high ticket clients because the backend logistics you're managing are flawlessly executed."
+    },
+    {
+      "type": "house",
+      "key": "7",
+      "text": "Your entire business model's built on high caliber partnerships & one-on-one client relationships. You generate income through the power of association, where your reputation's boosted by the caliber of people you choose to work beside."
+    },
+    {
+      "type": "house",
+      "key": "8",
+      "text": "You specialize in profound, high-stakes transformations that command top tier pricing. Clients seek you out for the deep structural changes you're facilitating, handing over their resources for the intense overhaul you provide."
+    },
+    {
+      "type": "house",
+      "key": "9",
+      "text": "You package your expertise into high level frameworks, retreats, & thought leadership that borders on philosophy. Your clients pay to learn your overarching worldview, trusting your guidance to steer their big picture directional shifts."
+    },
+    {
+      "type": "house",
+      "key": "10",
+      "text": "You're relentlessly focused on your public reputation & the ultimate legacy of your brand. Clients buy from you because your name carries weight in your industry, & you're accepting nothing less than top tier visibility."
+    },
+    {
+      "type": "house",
+      "key": "11",
+      "text": "You're building your business inside a bustling network, using community momentum to scale your income. Your launches succeed because you've cultivated a loyal audience that acts as an organic street team for your brand's vision."
+    },
+    {
+      "type": "house",
+      "key": "12",
+      "text": "You're operating your business behind the scenes, pulling the strings & developing offers that feel almost otherworldly. Your clients invest because they sense a profound depth to your work, paying for the quiet, unseen mastery you bring to the table."
+    }
+  ]
+}

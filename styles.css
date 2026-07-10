@@ -507,81 +507,38 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 /* ── PROFILE HERO ───────────────────────────────────── */
 
-.profile-hero {
-  text-align: center;
-  padding: 5rem 2rem 2rem;
-}
+.profile-hero { text-align: center; padding: 5rem 2rem 2rem; }
+.profile-hero h2 { font-size: 3.5rem; font-weight: 300; color: var(--mist); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.6rem; }
+.profile-subtitle { color: var(--stone); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
 
-.profile-hero h2 {
-  font-size: 3.5rem;
-  font-weight: 300;
-  color: var(--mist);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: 0.6rem;
-}
-
-.profile-subtitle {
-  color: var(--stone);
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-/* ── SECTION LABELS ─────────────────────────────────── */
+/* ── SECTIONS ───────────────────────────────────────── */
 
 .profile-section { margin-bottom: 3rem; }
-
-.section-label {
-  color: var(--golden);
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  font-weight: 400;
-}
+.section-label { color: var(--golden); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem; font-weight: 400; }
 
 /* ── BIG 3 BADGES ───────────────────────────────────── */
 
-.big3-row {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.widget-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-}
-
+.big3-row { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; }
+.widget-badge { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
 .badge-icon { font-size: 1.6rem; color: var(--golden); }
 .badge-sign { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--mist); font-weight: 400; }
 .badge-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stone); }
 
+/* ── CHART RULER (compact) ──────────────────────────── */
+
+.ruler-compact { display: flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.8rem 0; margin-bottom: 1rem; }
+.ruler-glyph { font-size: 1.1rem; color: var(--golden); }
+.ruler-text { font-size: 0.78rem; color: var(--stone); }
+.ruler-text strong { color: var(--mist); }
+
 /* ── WIDGET GRID ────────────────────────────────────── */
 
-.widget-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-}
+.widget-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; }
 
 /* ── WIDGET CARDS ───────────────────────────────────── */
 
-.widget-card {
-  background: var(--smoke-card);
-  padding: 2rem;
-  border: 1px solid var(--border);
-}
-
-.widget-card-glow {
-  border-color: rgba(186,145,107,0.2);
-  background: linear-gradient(135deg, var(--smoke-card), rgba(186,145,107,0.04));
-}
-
+.widget-card { background: var(--smoke-card); padding: 2rem; border: 1px solid var(--border); }
+.widget-card-glow { border-color: rgba(186,145,107,0.2); background: linear-gradient(135deg, var(--smoke-card), rgba(186,145,107,0.04)); }
 .widget-card-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--golden); margin-bottom: 1rem; }
 .widget-card-value { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--mist); font-weight: 300; margin-bottom: 0.4rem; }
 .widget-card-detail { font-size: 0.85rem; color: var(--stone); line-height: 1.5; }
@@ -595,56 +552,73 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease-out; }
 .bar-count { font-size: 0.75rem; color: var(--mist); width: 16px; text-align: right; flex-shrink: 0; }
 
-/* ── HEMISPHERE GRID ────────────────────────────────── */
+/* ── SPECTRUM SLIDERS ───────────────────────────────── */
 
-.hemisphere-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-.hemisphere-cell { text-align: center; }
-.hemisphere-count { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--mist); font-weight: 300; }
-.hemisphere-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); margin-top: 0.2rem; }
-.hemisphere-sub { font-size: 0.65rem; color: rgba(180,167,148,0.35); }
+.spectrum-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+.spectrum-label-left, .spectrum-label-right { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); width: 72px; flex-shrink: 0; }
+.spectrum-label-left { text-align: right; }
+.spectrum-label-right { text-align: left; }
+.spectrum-track { flex-grow: 1; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; position: relative; }
+.spectrum-dot { width: 12px; height: 12px; border-radius: 50%; position: absolute; top: 50%; transform: translate(-50%, -50%); transition: left 0.8s ease-out; box-shadow: 0 0 8px rgba(186,145,107,0.3); }
 
-/* ── PLANET CARDS ───────────────────────────────────── */
+/* ── QUADRANT (hemisphere) ──────────────────────────── */
 
-.planet-cards-scroll { display: flex; gap: 1px; overflow-x: auto; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; }
-.planet-cards-scroll::-webkit-scrollbar { height: 2px; }
-.planet-cards-scroll::-webkit-scrollbar-track { background: transparent; }
-.planet-cards-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 1px; }
+.quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 0.8rem; }
+.quad-cell { padding: 1rem; text-align: center; background: rgba(255,255,255,0.02); transition: opacity 0.4s; }
+.quad-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.2rem; }
+.quad-sub { font-size: 0.6rem; color: rgba(180,167,148,0.4); }
+.quad-summary { font-size: 0.68rem; color: var(--stone); text-align: center; }
 
-.planet-card {
-  flex-shrink: 0;
-  width: 120px;
-  background: var(--smoke-card);
-  border: 1px solid var(--border);
-  padding: 1.4rem 1rem;
-  text-align: center;
-}
+/* ── VISIBILITY METER ───────────────────────────────── */
 
-.planet-card-glyph { font-size: 1.5rem; color: var(--golden); margin-bottom: 0.6rem; }
-.planet-card-name { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.6rem; }
-.planet-card-sign { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--mist); margin-bottom: 0.2rem; }
-.planet-card-house { font-size: 0.72rem; color: var(--stone); }
-.planet-card-rx { font-size: 0.6rem; color: #C4654A; margin-top: 0.5rem; letter-spacing: 0.1em; }
+.vis-score { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--mist); font-weight: 300; }
+.vis-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); margin-top: 0.2rem; }
+.vis-mc { font-size: 0.72rem; color: rgba(180,167,148,0.5); margin-top: 0.4rem; }
 
-/* ── BUSINESS LENS ──────────────────────────────────── */
+/* ── STYLE BADGES (sales + leadership) ──────────────── */
 
-.biz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; }
-.biz-row { display: flex; justify-content: space-between; align-items: baseline; }
-.biz-house { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--golden); }
-.biz-detail { font-size: 0.85rem; color: var(--mist); }
-.biz-sub { font-size: 0.65rem; color: rgba(180,167,148,0.35); margin-top: 0.1rem; }
+.style-badge-card { text-align: center; }
+.style-badge-glyph { font-size: 1.8rem; color: var(--golden); margin-bottom: 0.4rem; }
+.style-badge-type { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--mist); font-weight: 400; margin-bottom: 0.3rem; }
+.style-badge-desc { font-size: 0.82rem; color: var(--stone); line-height: 1.4; margin-bottom: 0.6rem; }
+.style-badge-detail { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(180,167,148,0.4); }
 
-/* ── COSMIC DNA STRIP ───────────────────────────────── */
+/* ── PLANET RANKING ─────────────────────────────────── */
 
-.dna-strip { display: flex; gap: 2px; margin-bottom: 0.5rem; }
-.dna-segment { flex: 1; height: 24px; border-radius: 2px; opacity: 0.8; transition: opacity 0.3s; }
-.dna-segment:hover { opacity: 1; }
-.dna-labels { display: flex; gap: 2px; }
-.dna-label { flex: 1; text-align: center; font-size: 0.55rem; color: var(--stone); }
+.rank-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; }
+.rank-top .rank-glyph { color: var(--golden); }
+.rank-glyph { font-size: 1rem; color: var(--stone); width: 20px; text-align: center; flex-shrink: 0; }
+.rank-name { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); width: 55px; flex-shrink: 0; }
+.rank-bar-track { flex-grow: 1; height: 5px; background: rgba(255,255,255,0.04); border-radius: 2px; overflow: hidden; }
+.rank-bar-fill { height: 100%; background: var(--golden); border-radius: 2px; transition: width 0.8s ease-out; opacity: 0.6; }
+.rank-top .rank-bar-fill { opacity: 1; }
+.rank-sign { font-size: 0.65rem; color: var(--stone); width: 50px; flex-shrink: 0; text-align: right; }
 
-/* ── RETROGRADE BADGES ──────────────────────────────── */
+/* ── RETROGRADES (improved) ─────────────────────────── */
 
-.retro-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.retro-badge { font-size: 0.72rem; color: #C4654A; padding: 0.4rem 0.8rem; border: 1px solid rgba(196,101,74,0.2); border-radius: 2px; }
+.retro-none { font-size: 0.82rem; color: rgba(180,167,148,0.4); }
+.retro-item { margin-bottom: 1rem; }
+.retro-item:last-child { margin-bottom: 0; }
+.retro-planet { font-size: 0.88rem; color: #C4654A; margin-bottom: 0.2rem; }
+.retro-meaning { font-size: 0.78rem; color: var(--stone); line-height: 1.4; }
+
+/* ── TEXT SECTIONS ──────────────────────────────────── */
+
+.text-section { font-size: 0.92rem; color: var(--linen); line-height: 1.7; padding: 1.8rem 0; max-width: 620px; margin: 0 auto; }
+.biz-text-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+.biz-text-grid .text-section { padding: 1.2rem 2rem; font-size: 0.85rem; }
+
+/* ── SNIPPET TEXT (inside widget cards) ─────────────── */
+
+.snippet-text { font-size: 0.82rem; color: var(--linen); line-height: 1.6; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+/* ── UPSELL BANNERS ─────────────────────────────────── */
+
+.upsell-banner { text-align: center; padding: 3rem 2rem; margin: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.upsell-label { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--golden); margin-bottom: 0.8rem; }
+.upsell-hook { font-size: 0.88rem; color: var(--stone); line-height: 1.6; max-width: 480px; margin: 0 auto 1.2rem; }
+.upsell-cta { display: inline-block; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--golden); text-decoration: none; padding: 12px 32px; border: 1px solid rgba(186,145,107,0.3); transition: all 0.3s; }
+.upsell-cta:hover { background: var(--golden); color: var(--smoke); border-color: var(--golden); }
 
 /* ── CHART WHEEL ────────────────────────────────────── */
 
@@ -660,23 +634,21 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 /* ── PRODUCT CARDS ──────────────────────────────────── */
 
 .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 1.5rem; }
-
 .product-card { background: var(--smoke-card); padding: 2.2rem 2rem; border: 1px solid var(--border); }
 .product-card-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--golden); margin-bottom: 0.8rem; }
 .product-card-hook { font-size: 0.88rem; color: var(--stone); line-height: 1.5; margin-bottom: 1.2rem; }
 .product-card-status { font-size: 0.78rem; color: var(--stone); margin-bottom: 0.8rem; }
-
 .product-locked { opacity: 0.6; transition: opacity 0.3s; }
 .product-locked:hover { opacity: 0.9; }
 
-/* ── PROFILE RESPONSIVE ─────────────────────────────── */
+/* ── RESPONSIVE ─────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .profile-hero { padding: 3rem 1.4rem 1.5rem; }
   .profile-hero h2 { font-size: 2.4rem; }
   .big3-row { gap: 1.2rem; }
   .widget-grid { grid-template-columns: 1fr; }
-  .biz-grid { grid-template-columns: 1fr; }
+  .biz-text-grid { grid-template-columns: 1fr; }
   .product-grid { grid-template-columns: 1fr; }
-  .planet-card { width: 100px; }
+  .spectrum-label-left, .spectrum-label-right { width: 56px; font-size: 0.52rem; }
 }

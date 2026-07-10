@@ -44,13 +44,12 @@
       </div>
     </div>
 
-    <!-- Profile header -->
     <div class="profile-hero">
       <h2 id="profile-name"></h2>
       <p id="profile-subtitle" class="profile-subtitle"></p>
     </div>
 
-    <!-- Locked state: no cosmic profile -->
+    <!-- Locked state -->
     <div id="profile-locked" class="container" style="display:none">
       <div class="locked-banner">
         <h3>Your Cosmic Profile</h3>
@@ -62,58 +61,77 @@
     <!-- Widget sections -->
     <div id="profile-widgets" class="container" style="display:none">
 
-      <!-- Big 3 badges -->
+      <!-- Identity -->
       <div id="w-big3" class="big3-row"></div>
+      <div id="w-chart-ruler"></div>
+      <div id="t-welcome"></div>
 
-      <!-- Chart ruler -->
-      <div id="w-chart-ruler" style="margin:2rem 0"></div>
-
-      <!-- Chart wheel -->
+      <!-- Chart Wheel -->
       <section class="profile-section">
         <p class="section-label">Your Natal Chart</p>
         <div id="w-chart-wheel" class="chart-wheel-container"></div>
       </section>
 
-      <!-- Snapshot widgets grid -->
+      <!-- Snapshot -->
       <section class="profile-section">
         <p class="section-label">Chart Snapshot</p>
         <div class="widget-grid">
           <div id="w-elements"></div>
           <div id="w-modality"></div>
+          <div id="w-archetype"></div>
           <div id="w-hemispheres"></div>
-          <div id="w-stelliums"></div>
+        </div>
+        <div id="t-at-a-glance"></div>
+      </section>
+
+      <!-- Business Lens -->
+      <section class="profile-section">
+        <p class="section-label">Business Lens</p>
+
+        <div class="widget-grid">
+          <div id="w-money-style"></div>
+          <div id="w-visibility"></div>
+        </div>
+        <div class="biz-text-grid">
+          <div id="t-money"></div>
+          <div id="t-visibility"></div>
+        </div>
+
+        <div class="widget-grid" style="margin-top:1px">
+          <div id="w-sales-style"></div>
+          <div id="w-leadership-style"></div>
+        </div>
+        <div class="biz-text-grid">
+          <div id="t-sales"></div>
+          <div id="t-leadership"></div>
         </div>
       </section>
 
-      <!-- Planet placements -->
+      <!-- Upsell: Blueprint -->
+      <div id="upsell-blueprint"></div>
+
+      <!-- Strength + Retrogrades -->
       <section class="profile-section">
         <p class="section-label">Your Planets</p>
-        <div id="w-planets"></div>
-      </section>
-
-      <!-- Business lens -->
-      <section class="profile-section">
-        <p class="section-label">Business Lens</p>
-        <div id="w-business"></div>
-      </section>
-
-      <!-- Aspect web -->
-      <section class="profile-section">
-        <p class="section-label">Aspect Web</p>
-        <div id="w-aspect-web"></div>
-      </section>
-
-      <!-- Fun widgets -->
-      <section class="profile-section">
-        <p class="section-label">Your Cosmic Fingerprint</p>
         <div class="widget-grid">
-          <div id="w-cosmic-dna"></div>
+          <div id="w-planet-ranking"></div>
           <div id="w-retrogrades"></div>
         </div>
       </section>
+
+      <!-- Stellium -->
+      <div id="w-stelliums"></div>
+
+      <!-- The Question -->
+      <section class="profile-section">
+        <div id="t-question"></div>
+      </section>
+
+      <!-- Upsell: Transits -->
+      <div id="upsell-transits"></div>
     </div>
 
-    <!-- Product sections (dynamic: purchased + upsells) -->
+    <!-- Product sections -->
     <div class="container" style="margin-top:3rem">
       <p class="section-label" style="color:var(--golden)">Your Readings</p>
       <div id="product-sections" class="product-grid"></div>
@@ -122,16 +140,11 @@
 
   <script>
     window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
-
     async function init() {
       var session = await getSession();
-      if (!session) {
-        document.getElementById('login-screen').style.display = 'flex';
-        return;
-      }
+      if (!session) { document.getElementById('login-screen').style.display = 'flex'; return; }
       await loadProfile(session);
     }
-
     async function handleSendLink() {
       var email = document.getElementById('email-input').value.trim();
       var errEl = document.getElementById('login-error');
@@ -140,15 +153,9 @@
       if (!email) { errEl.textContent = 'Enter your email address.'; return; }
       btn.disabled = true; btn.textContent = 'Sending...';
       var result = await sendMagicLink(email);
-      if (result.error) {
-        errEl.textContent = result.error.message || 'Something went wrong.';
-        btn.disabled = false; btn.textContent = 'Send access link';
-      } else {
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('login-sent').style.display = 'block';
-      }
+      if (result.error) { errEl.textContent = result.error.message || 'Something went wrong.'; btn.disabled = false; btn.textContent = 'Send access link'; }
+      else { document.getElementById('login-form').style.display = 'none'; document.getElementById('login-sent').style.display = 'block'; }
     }
-
     init();
   </script>
 </body>
