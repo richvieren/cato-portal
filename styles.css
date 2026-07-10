@@ -504,3 +504,179 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .user-email { display: none; }
   .blueprint-wrap h1 { font-size: 2.2rem; }
 }
+
+/* ── PROFILE HERO ───────────────────────────────────── */
+
+.profile-hero {
+  text-align: center;
+  padding: 5rem 2rem 2rem;
+}
+
+.profile-hero h2 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--mist);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+
+.profile-subtitle {
+  color: var(--stone);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── SECTION LABELS ─────────────────────────────────── */
+
+.profile-section { margin-bottom: 3rem; }
+
+.section-label {
+  color: var(--golden);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+/* ── BIG 3 BADGES ───────────────────────────────────── */
+
+.big3-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.widget-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.badge-icon { font-size: 1.6rem; color: var(--golden); }
+.badge-sign { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--mist); font-weight: 400; }
+.badge-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stone); }
+
+/* ── WIDGET GRID ────────────────────────────────────── */
+
+.widget-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+}
+
+/* ── WIDGET CARDS ───────────────────────────────────── */
+
+.widget-card {
+  background: var(--smoke-card);
+  padding: 2rem;
+  border: 1px solid var(--border);
+}
+
+.widget-card-glow {
+  border-color: rgba(186,145,107,0.2);
+  background: linear-gradient(135deg, var(--smoke-card), rgba(186,145,107,0.04));
+}
+
+.widget-card-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--golden); margin-bottom: 1rem; }
+.widget-card-value { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--mist); font-weight: 300; margin-bottom: 0.4rem; }
+.widget-card-detail { font-size: 0.85rem; color: var(--stone); line-height: 1.5; }
+.widget-card-sub { font-size: 0.72rem; color: rgba(180,167,148,0.4); margin-top: 0.3rem; }
+
+/* ── BAR CHARTS ─────────────────────────────────────── */
+
+.bar-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+.bar-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); width: 60px; flex-shrink: 0; }
+.bar-track { flex-grow: 1; height: 6px; background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease-out; }
+.bar-count { font-size: 0.75rem; color: var(--mist); width: 16px; text-align: right; flex-shrink: 0; }
+
+/* ── HEMISPHERE GRID ────────────────────────────────── */
+
+.hemisphere-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.hemisphere-cell { text-align: center; }
+.hemisphere-count { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--mist); font-weight: 300; }
+.hemisphere-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); margin-top: 0.2rem; }
+.hemisphere-sub { font-size: 0.65rem; color: rgba(180,167,148,0.35); }
+
+/* ── PLANET CARDS ───────────────────────────────────── */
+
+.planet-cards-scroll { display: flex; gap: 1px; overflow-x: auto; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; }
+.planet-cards-scroll::-webkit-scrollbar { height: 2px; }
+.planet-cards-scroll::-webkit-scrollbar-track { background: transparent; }
+.planet-cards-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 1px; }
+
+.planet-card {
+  flex-shrink: 0;
+  width: 120px;
+  background: var(--smoke-card);
+  border: 1px solid var(--border);
+  padding: 1.4rem 1rem;
+  text-align: center;
+}
+
+.planet-card-glyph { font-size: 1.5rem; color: var(--golden); margin-bottom: 0.6rem; }
+.planet-card-name { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.6rem; }
+.planet-card-sign { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--mist); margin-bottom: 0.2rem; }
+.planet-card-house { font-size: 0.72rem; color: var(--stone); }
+.planet-card-rx { font-size: 0.6rem; color: #C4654A; margin-top: 0.5rem; letter-spacing: 0.1em; }
+
+/* ── BUSINESS LENS ──────────────────────────────────── */
+
+.biz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; }
+.biz-row { display: flex; justify-content: space-between; align-items: baseline; }
+.biz-house { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--golden); }
+.biz-detail { font-size: 0.85rem; color: var(--mist); }
+.biz-sub { font-size: 0.65rem; color: rgba(180,167,148,0.35); margin-top: 0.1rem; }
+
+/* ── COSMIC DNA STRIP ───────────────────────────────── */
+
+.dna-strip { display: flex; gap: 2px; margin-bottom: 0.5rem; }
+.dna-segment { flex: 1; height: 24px; border-radius: 2px; opacity: 0.8; transition: opacity 0.3s; }
+.dna-segment:hover { opacity: 1; }
+.dna-labels { display: flex; gap: 2px; }
+.dna-label { flex: 1; text-align: center; font-size: 0.55rem; color: var(--stone); }
+
+/* ── RETROGRADE BADGES ──────────────────────────────── */
+
+.retro-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.retro-badge { font-size: 0.72rem; color: #C4654A; padding: 0.4rem 0.8rem; border: 1px solid rgba(196,101,74,0.2); border-radius: 2px; }
+
+/* ── CHART WHEEL ────────────────────────────────────── */
+
+.chart-wheel-container { display: flex; justify-content: center; padding: 1rem 0; }
+.chart-wheel-container svg { width: 100%; }
+
+/* ── LOCKED BANNER ──────────────────────────────────── */
+
+.locked-banner { text-align: center; padding: 4rem 2rem; border: 1px solid var(--border); background: var(--smoke-card); margin-bottom: 3rem; }
+.locked-banner h3 { font-size: 2rem; color: var(--mist); font-weight: 300; margin-bottom: 0.8rem; }
+.locked-banner p { color: var(--stone); font-size: 0.88rem; max-width: 440px; margin: 0 auto; line-height: 1.6; }
+
+/* ── PRODUCT CARDS ──────────────────────────────────── */
+
+.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 1.5rem; }
+
+.product-card { background: var(--smoke-card); padding: 2.2rem 2rem; border: 1px solid var(--border); }
+.product-card-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--golden); margin-bottom: 0.8rem; }
+.product-card-hook { font-size: 0.88rem; color: var(--stone); line-height: 1.5; margin-bottom: 1.2rem; }
+.product-card-status { font-size: 0.78rem; color: var(--stone); margin-bottom: 0.8rem; }
+
+.product-locked { opacity: 0.6; transition: opacity 0.3s; }
+.product-locked:hover { opacity: 0.9; }
+
+/* ── PROFILE RESPONSIVE ─────────────────────────────── */
+
+@media (max-width: 768px) {
+  .profile-hero { padding: 3rem 1.4rem 1.5rem; }
+  .profile-hero h2 { font-size: 2.4rem; }
+  .big3-row { gap: 1.2rem; }
+  .widget-grid { grid-template-columns: 1fr; }
+  .biz-grid { grid-template-columns: 1fr; }
+  .product-grid { grid-template-columns: 1fr; }
+  .planet-card { width: 100px; }
+}

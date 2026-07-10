@@ -3,38 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cato Vermeulen — Client Portal</title>
+  <title>Cato Vermeulen — Your Cosmic Profile</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
   <script src="auth.js"></script>
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
+  <script src="chart-engine.js"></script>
+  <script src="chart-wheel.js"></script>
+  <script src="widgets.js"></script>
+  <script src="profile.js"></script>
 </head>
 <body>
 
-  <!-- ── Login screen ──────────────────────────────────── -->
+  <!-- Login -->
   <div id="login-screen" class="page-center" style="display:none">
     <div class="login-wrap">
       <img src="img/logo.png" alt="Cato Vermeulen" style="max-width:280px;margin-bottom:1.5rem;">
       <p>Client Portal</p>
-
       <div id="login-form">
         <input type="email" id="email-input" placeholder="Your email address" autocomplete="email">
         <button class="btn btn-primary" id="send-link-btn" onclick="handleSendLink()">Send access link</button>
         <div class="error-msg" id="login-error"></div>
       </div>
-
       <div id="login-sent" class="login-sent" style="display:none">
         <p>Check your inbox.</p>
-        <p style="margin-top:0.8rem;color:var(--stone);font-size:0.85rem">
-          We've sent a login link to your email.<br>Click it to enter your portal.
-        </p>
+        <p style="margin-top:0.8rem;color:var(--stone);font-size:0.85rem">We've sent a login link to your email.</p>
       </div>
     </div>
   </div>
 
-  <!-- ── Dashboard ─────────────────────────────────────── -->
-  <div id="dashboard-screen" style="display:none">
+  <!-- Profile -->
+  <div id="profile-screen" style="display:none">
     <div class="dashboard-header">
       <img src="img/logo.png" alt="Cato Vermeulen" style="height:60px;">
       <div class="header-right">
@@ -43,24 +44,79 @@
       </div>
     </div>
 
-    <div class="dashboard-hero">
-      <img src="img/icon.png" alt="Cato Vermeulen" style="height:80px;margin-bottom:1.2rem;display:block;margin-left:auto;margin-right:auto;">
-      <h2>Your <em>Portal.</em></h2>
-      <p>Everything you have access to, in one place.</p>
+    <!-- Profile header -->
+    <div class="profile-hero">
+      <h2 id="profile-name"></h2>
+      <p id="profile-subtitle" class="profile-subtitle"></p>
     </div>
 
-    <div class="container">
-      <!-- Purchased readings -->
-      <div id="purchased-section" style="display:none">
-        <p class="section-label" style="color:var(--golden);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;">Your Readings</p>
-        <div class="cards-grid" id="purchased-grid"></div>
+    <!-- Locked state: no cosmic profile -->
+    <div id="profile-locked" class="container" style="display:none">
+      <div class="locked-banner">
+        <h3>Your Cosmic Profile</h3>
+        <p>Your natal chart, element balance, business lens, and more. Computed from your exact birth data.</p>
+        <a href="https://catovermeulen.com" class="btn btn-primary" style="margin-top:1.5rem">Get your Cosmic Profile</a>
       </div>
+    </div>
 
-      <!-- Also available -->
-      <div id="available-section" style="display:none;margin-top:3rem;">
-        <p class="section-label" style="color:var(--stone);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;">Also Available</p>
-        <div class="cards-grid" id="available-grid"></div>
-      </div>
+    <!-- Widget sections -->
+    <div id="profile-widgets" class="container" style="display:none">
+
+      <!-- Big 3 badges -->
+      <div id="w-big3" class="big3-row"></div>
+
+      <!-- Chart ruler -->
+      <div id="w-chart-ruler" style="margin:2rem 0"></div>
+
+      <!-- Chart wheel -->
+      <section class="profile-section">
+        <p class="section-label">Your Natal Chart</p>
+        <div id="w-chart-wheel" class="chart-wheel-container"></div>
+      </section>
+
+      <!-- Snapshot widgets grid -->
+      <section class="profile-section">
+        <p class="section-label">Chart Snapshot</p>
+        <div class="widget-grid">
+          <div id="w-elements"></div>
+          <div id="w-modality"></div>
+          <div id="w-hemispheres"></div>
+          <div id="w-stelliums"></div>
+        </div>
+      </section>
+
+      <!-- Planet placements -->
+      <section class="profile-section">
+        <p class="section-label">Your Planets</p>
+        <div id="w-planets"></div>
+      </section>
+
+      <!-- Business lens -->
+      <section class="profile-section">
+        <p class="section-label">Business Lens</p>
+        <div id="w-business"></div>
+      </section>
+
+      <!-- Aspect web -->
+      <section class="profile-section">
+        <p class="section-label">Aspect Web</p>
+        <div id="w-aspect-web"></div>
+      </section>
+
+      <!-- Fun widgets -->
+      <section class="profile-section">
+        <p class="section-label">Your Cosmic Fingerprint</p>
+        <div class="widget-grid">
+          <div id="w-cosmic-dna"></div>
+          <div id="w-retrogrades"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Product sections (dynamic: purchased + upsells) -->
+    <div class="container" style="margin-top:3rem">
+      <p class="section-label" style="color:var(--golden)">Your Readings</p>
+      <div id="product-sections" class="product-grid"></div>
     </div>
   </div>
 
@@ -68,81 +124,25 @@
     window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
 
     async function init() {
-      const session = await getSession();
+      var session = await getSession();
       if (!session) {
         document.getElementById('login-screen').style.display = 'flex';
         return;
       }
-      await loadDashboard(session);
-    }
-
-    async function loadDashboard(session) {
-      document.getElementById('dashboard-screen').style.display = 'block';
-      document.getElementById('user-email').textContent = session.user.email;
-      const [grant, miniGrant, courseGrant, transitGrant, astroGrant, profile] = await Promise.all([
-        getBlueprintGrant(),
-        getMiniReadingGrant(),
-        getCourseGrant(),
-        getTransitGrant(),
-        getAstrocartographyGrant(),
-        getProfile(),
-      ]);
-
-      const purchasedGrid = document.getElementById('purchased-grid');
-      const availableGrid = document.getElementById('available-grid');
-
-      // All products with their grant status
-      const products = [
-        { id: 'blueprint', grant, render: () => { renderBlueprintCard(blueprintState(grant, profile), grant); } },
-        // mini-reading hidden — no longer offered
-        { id: 'transit', grant: transitGrant, render: () => { renderTransitCard(transitState(transitGrant, profile), transitGrant); } },
-        { id: 'astrocartography', grant: astroGrant, render: () => { renderAstrocartographyCard(astrocartographyState(astroGrant, profile), astroGrant); } },
-        { id: 'course', grant: courseGrant, render: () => { renderCourseCard(courseState(courseGrant)); } },
-      ];
-
-      let hasPurchased = false;
-      let hasAvailable = false;
-
-      products.forEach(({ id, grant: g, render }) => {
-        // Create the card element
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.id = id + '-card';
-
-        if (g) {
-          // Purchased — goes in top section
-          purchasedGrid.appendChild(card);
-          hasPurchased = true;
-        } else {
-          // Not purchased — goes in bottom section
-          availableGrid.appendChild(card);
-          hasAvailable = true;
-        }
-
-        render();
-      });
-
-      if (hasPurchased) document.getElementById('purchased-section').style.display = 'block';
-      if (hasAvailable) document.getElementById('available-section').style.display = 'block';
+      await loadProfile(session);
     }
 
     async function handleSendLink() {
-      const email = document.getElementById('email-input').value.trim();
-      const errEl = document.getElementById('login-error');
-      const btn = document.getElementById('send-link-btn');
+      var email = document.getElementById('email-input').value.trim();
+      var errEl = document.getElementById('login-error');
+      var btn = document.getElementById('send-link-btn');
       errEl.textContent = '';
-
       if (!email) { errEl.textContent = 'Enter your email address.'; return; }
-
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-
-      const { error } = await sendMagicLink(email);
-
-      if (error) {
-        errEl.textContent = error.message || 'Something went wrong. Try again.';
-        btn.disabled = false;
-        btn.textContent = 'Send access link';
+      btn.disabled = true; btn.textContent = 'Sending...';
+      var result = await sendMagicLink(email);
+      if (result.error) {
+        errEl.textContent = result.error.message || 'Something went wrong.';
+        btn.disabled = false; btn.textContent = 'Send access link';
       } else {
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('login-sent').style.display = 'block';

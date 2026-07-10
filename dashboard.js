@@ -16,6 +16,18 @@ function blueprintState(grant, profile) {
   return 'ready';
 }
 
+/**
+ * Determine cosmic profile state.
+ * locked  — no grant
+ * intake  — grant exists, no chart computed yet
+ * ready   — chart computed
+ */
+function cosmicProfileState(grant, chart) {
+  if (!grant) return 'locked';
+  if (!chart) return 'intake';
+  return 'ready';
+}
+
 // Alias — same logic works for mini reading, transit reading, and astrocartography
 const miniReadingState = blueprintState;
 const transitState = blueprintState;

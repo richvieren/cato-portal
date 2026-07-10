@@ -25,51 +25,57 @@ async function generateMagicLink(email: string): Promise<string> {
   return data.properties.action_link;
 }
 
+const SUPPORT_LINE = `<p style="color:#999;font-size:0.85em;margin-top:32px">Something not working? Email <a href="mailto:hello@catovermeulen.com" style="color:#9F8261">hello@catovermeulen.com</a> with a description of what's happening, any error messages you see, and the email address you used to purchase. We'll sort it out.</p>`;
+
+const FALLBACK_LINE = `<p style="font-size:0.85em;color:#666">If the link doesn't work or has expired, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email, and we'll send you a fresh one. Check your spam folder if you don't see it within a minute.</p>`;
+
 const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html: string }> = {
   blueprint: (link) => ({
     subject: 'Your Blueprint Portal Access',
     html: `
       <p>Your payment went through 🔥</p>
+      <p>Here's how to access your reading.</p>
 
-      <p>Here's what happens next.</p>
-
-      <p><strong>Step 1: Enter your portal</strong><br>
-      Click the link below. It takes you straight in.<br>
-      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+      <p><strong>Step 1: Log into your portal</strong><br>
+      Click the button below. It's a secure login link tied to your email. One click and you're in, no password needed.</p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#9F8261;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:500;display:inline-block">Enter your portal</a></p>
+      ${FALLBACK_LINE}
 
       <p><strong>Step 2: Fill in your details</strong><br>
-      Your reading is built on your birth data and your business context. Take 5 minutes and be ACCURATE. The more specific you are, the deeper I can go. This is your cosmic business blueprint... don't half-ass the intake, babe.</p>
+      Once you're logged in, you'll see your reading card. Click on it and fill in the form. You'll need your exact date of birth, time of birth, and city of birth. Then answer the business questions. Be specific and take your time. The more detail you give, the deeper your reading goes.</p>
 
-      <p><strong>Step 3: Your reading is prepared</strong><br>
-      Once you've submitted, I get to work. Your Blueprint will be ready within 48 hours.</p>
+      <p><strong>Step 3: Your reading is created</strong><br>
+      After you submit, your reading is generated. This takes up to 48 hours. You'll get an email the moment it's done.</p>
 
-      <p><strong>Step 4: Download your Blueprint</strong><br>
-      You'll find it waiting in your portal. A full PDF, yours to keep forever.</p>
+      <p><strong>Step 4: Download your reading</strong><br>
+      When you get that email, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email to get a login link, and your PDF will be waiting in your portal.</p>
 
       <p>See you on the other side ✨</p>
       <p>Cato</p>
-
-      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Blueprint, you can ignore this email.</p>
+      ${SUPPORT_LINE}
     `,
   }),
 
   mini_reading: (link) => ({
     subject: 'Your Business Astrology Roadmap Access',
     html: `
-      <p>Your payment went through. Here is what happens next.</p>
+      <p>Your payment went through 🔥</p>
+      <p>Here's how to access your reading.</p>
 
-      <p><strong>Step 1 — Enter your portal</strong><br>
-      Click the link below. It takes you straight in.<br>
-      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+      <p><strong>Step 1: Log into your portal</strong><br>
+      Click the button below. It's a secure login link tied to your email. One click and you're in, no password needed.</p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#9F8261;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:500;display:inline-block">Enter your portal</a></p>
+      ${FALLBACK_LINE}
 
-      <p><strong>Step 2 — Fill in your birth details</strong><br>
-      Your reading is built on your natal chart. Take a moment to fill in your birth date, time, and place accurately.</p>
+      <p><strong>Step 2: Fill in your birth details</strong><br>
+      Once you're logged in, you'll see your reading card. Click on it and fill in your birth date, time, and place accurately.</p>
 
-      <p><strong>Step 3 — Your reading is ready</strong><br>
+      <p><strong>Step 3: Download your reading</strong><br>
       Once you've submitted, your Business Astrology Roadmap is generated immediately. You'll find it waiting in your portal as a PDF to download and keep.</p>
 
-      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Business Astrology Roadmap, you can ignore this email.</p>
-      <p>— Cato</p>
+      <p>See you on the other side ✨</p>
+      <p>Cato</p>
+      ${SUPPORT_LINE}
     `,
   }),
 
@@ -77,26 +83,25 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
     subject: 'Your Transits Reading Portal Access',
     html: `
       <p>Your payment went through 🔥</p>
+      <p>Here's how to access your reading.</p>
 
-      <p>Here's what happens next.</p>
-
-      <p><strong>Step 1: Enter your portal</strong><br>
-      Click the link below. It takes you straight in.<br>
-      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+      <p><strong>Step 1: Log into your portal</strong><br>
+      Click the button below. It's a secure login link tied to your email. One click and you're in, no password needed.</p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#9F8261;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:500;display:inline-block">Enter your portal</a></p>
+      ${FALLBACK_LINE}
 
       <p><strong>Step 2: Fill in your details</strong><br>
-      Your reading is built on your birth data and what you're building right now. Take 5 minutes and be specific. The more detail you give me on your launches and offers, the more precise your timing guidance will be.</p>
+      Once you're logged in, you'll see your reading card. Click on it and fill in the form. You'll need your exact date of birth, time of birth, and city of birth. Then answer the business questions. Be specific and take your time. The more detail you give on your launches and offers, the more precise your timing guidance will be.</p>
 
-      <p><strong>Step 3: Your reading is prepared</strong><br>
-      Once you've submitted, I get to work. Your Transits Reading will be ready within 48 hours.</p>
+      <p><strong>Step 3: Your reading is created</strong><br>
+      After you submit, your reading is generated. This takes up to 48 hours. You'll get an email the moment it's done.</p>
 
       <p><strong>Step 4: Download your reading</strong><br>
-      You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+      When you get that email, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email to get a login link, and your PDF will be waiting in your portal.</p>
 
       <p>See you on the other side ✨</p>
       <p>Cato</p>
-
-      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase a Transits Reading, you can ignore this email.</p>
+      ${SUPPORT_LINE}
     `,
   }),
 
@@ -104,42 +109,67 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
     subject: 'Your Astrocartography Reading Portal Access',
     html: `
       <p>Your payment went through 🔥</p>
+      <p>Here's how to access your reading.</p>
 
-      <p>Here's what happens next.</p>
-
-      <p><strong>Step 1: Enter your portal</strong><br>
-      Click the link below. It takes you straight in.<br>
-      <a href="${link}" style="color:#9F8261">Enter your portal →</a></p>
+      <p><strong>Step 1: Log into your portal</strong><br>
+      Click the button below. It's a secure login link tied to your email. One click and you're in, no password needed.</p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#9F8261;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:500;display:inline-block">Enter your portal</a></p>
+      ${FALLBACK_LINE}
 
       <p><strong>Step 2: Fill in your details</strong><br>
-      Your reading is built on your birth data and the cities you want analyzed. Take 5 minutes and be specific. Include the country for each city so I can map your chart accurately.</p>
+      Once you're logged in, you'll see your reading card. Click on it and fill in the form. You'll need your exact date of birth, time of birth, and city of birth. Then list the cities you want analyzed. Include the country for each city so your chart can be mapped accurately.</p>
 
-      <p><strong>Step 3: Your reading is prepared</strong><br>
-      Once you've submitted, I get to work. Your Astrocartography Reading will be ready within 48 hours.</p>
+      <p><strong>Step 3: Your reading is created</strong><br>
+      After you submit, your reading is generated. This takes up to 48 hours. You'll get an email the moment it's done.</p>
 
       <p><strong>Step 4: Download your reading</strong><br>
-      You'll find it waiting in your portal. A full PDF, yours to keep.</p>
+      When you get that email, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email to get a login link, and your PDF will be waiting in your portal.</p>
 
       <p>See you on the other side ✨</p>
       <p>Cato</p>
+      ${SUPPORT_LINE}
+    `,
+  }),
 
-      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase an Astrocartography Reading, you can ignore this email.</p>
+  cosmic_profile: (link) => ({
+    subject: 'Your Cosmic Profile Access',
+    html: `
+      <p>Your payment went through 🔥</p>
+      <p>Here's how to access your cosmic profile.</p>
+
+      <p><strong>Step 1: Log into your portal</strong><br>
+      Click the button below. It's a secure login link tied to your email. One click and you're in, no password needed.</p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#9F8261;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:500;display:inline-block">Enter your portal</a></p>
+      ${FALLBACK_LINE}
+
+      <p><strong>Step 2: Fill in your birth details</strong><br>
+      Once you're logged in, you'll see a form asking for your date, time, and place of birth. Fill it in accurately. That's all you need.</p>
+
+      <p><strong>Step 3: Explore your profile</strong><br>
+      Your natal chart, planet placements, element balance, business lens, and more. It's all there, instantly.</p>
+
+      <p>See you on the other side ✨</p>
+      <p>Cato</p>
+      ${SUPPORT_LINE}
     `,
   }),
 
   course: (link) => ({
     subject: 'Your Introduction Course Access',
     html: `
-      <p>Your payment went through. Your course access is ready.</p>
+      <p>Your payment went through 🔥</p>
+      <p>Here's how to access your course.</p>
 
-      <p><strong>Enter your portal</strong><br>
-      Click the link below to go straight to your course.<br>
-      <a href="${link}" style="color:#9F8261">Enter your course →</a></p>
+      <p><strong>Step 1: Log into your portal</strong><br>
+      Click the button below. It's a secure login link tied to your email. One click and you're in, no password needed.</p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#9F8261;color:#ffffff;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:500;display:inline-block">Enter your course</a></p>
+      ${FALLBACK_LINE}
 
-      <p>Inside you'll find all 6 modules of the Astrology Business Reading Introduction Course — self-paced, with progress tracking so you can pick up where you left off.</p>
+      <p>Inside you'll find all 6 modules of the Astrology Business Reading Introduction Course. It's self-paced, with progress tracking so you can pick up where you left off.</p>
 
-      <p style="color:#888;font-size:0.85em">This link expires in 24 hours. If you didn't purchase the Introduction Course, you can ignore this email.</p>
-      <p>— Cato</p>
+      <p>See you on the other side ✨</p>
+      <p>Cato</p>
+      ${SUPPORT_LINE}
     `,
   }),
 };
@@ -209,6 +239,9 @@ Deno.serve(async (req) => {
     'price_1TGxqyPDOFXTchBMddOzggCy': 'mini_reading',
     'price_1TGxxePDOFXTchBMSohT0suK': 'course',
     'price_1SlAcFPDOFXTchBMxKJwlS00': 'transit_reading',
+    'price_1TeywIPDOFXTchBMB95vEfZN': 'astrocartography',
+    // cosmic_profile: add Stripe price ID here once created
+    // 'price_XXXXX': 'cosmic_profile',
   };
 
   let product = (session.metadata?.product as string) || '';
@@ -234,7 +267,7 @@ Deno.serve(async (req) => {
 
   // available_at: null for blueprint (set on intake submit) and mini_reading (set on intake submit)
   // course has no intake, so we set available_at immediately
-  const available_at = product === 'course' ? new Date().toISOString() : null;
+  const available_at = (product === 'course' || product === 'cosmic_profile') ? new Date().toISOString() : null;
 
   const supabase = supabaseAdmin();
 

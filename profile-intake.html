@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Cosmic Profile — Cato Vermeulen</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js"></script>
+  <script src="db.js"></script>
+  <script src="autocomplete.js"></script>
+</head>
+<body>
+  <div id="login-screen" class="page-center" style="display:none">
+    <div class="login-wrap">
+      <img src="img/logo.png" alt="Cato Vermeulen" style="max-width:280px;margin-bottom:1.5rem;">
+      <p>Client Portal</p>
+      <div id="login-form">
+        <input type="email" id="email-input" placeholder="Your email address" autocomplete="email">
+        <button class="btn btn-primary" id="send-link-btn" onclick="handleSendLink()">Send access link</button>
+        <div class="error-msg" id="login-error"></div>
+      </div>
+      <div id="login-sent" class="login-sent" style="display:none">
+        <p>Check your inbox.</p>
+        <p style="margin-top:0.8rem;color:var(--stone);font-size:0.85rem">We've sent a login link to your email.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="intake-screen" style="display:none;padding:3rem 2rem 6rem;">
+    <div class="blueprint-wrap">
+      <a href="index.html" class="back-link">&larr; Back to profile</a>
+      <h1>Your Birth Details</h1>
+      <p class="subtitle">Enter your exact birth data to generate your cosmic profile.</p>
+
+      <div id="intake-form">
+        <div class="field-group">
+          <label class="field-label">Full Name</label>
+          <input type="text" id="f-name" placeholder="Your full name">
+        </div>
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label">Date of Birth</label>
+            <input type="date" id="f-dob">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Time of Birth</label>
+            <input type="time" id="f-tob">
+          </div>
+        </div>
+        <div class="field-group" style="position:relative">
+          <label class="field-label">City of Birth</label>
+          <input type="text" id="f-city" placeholder="City" autocomplete="off">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Country of Birth</label>
+          <input type="text" id="f-country" placeholder="Country">
+        </div>
+
+        <div class="error-msg" id="intake-error"></div>
+        <button class="btn btn-primary" id="submit-btn" onclick="handleSubmit()" style="margin-top:2rem">Generate my profile</button>
+      </div>
+
+      <div id="intake-loading" style="display:none;text-align:center;padding:4rem 0;">
+        <p style="color:var(--golden);font-size:1.1rem">Computing your chart...</p>
+        <p style="color:var(--stone);font-size:0.85rem;margin-top:0.5rem">This takes about 10 seconds.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
+
+    async function init() {
+      var session = await getSession();
+      if (!session) {
+        document.getElementById('login-screen').style.display = 'flex';
+        return;
+      }
+      var chart = await getNatalChart();
+      if (chart) {
+        window.location.href = 'index.html';
+        return;
+      }
+      var profile = await getProfile();
+      if (profile) {
+        if (profile.full_name) document.getElementById('f-name').value = profile.full_name;
+        if (profile.dob) document.getElementById('f-dob').value = profile.dob;
+        if (profile.tob) document.getElementById('f-tob').value = profile.tob;
+        if (profile.city) document.getElementById('f-city').value = profile.city;
+        if (profile.country) document.getElementById('f-country').value = profile.country;
+      }
+      document.getElementById('intake-screen').style.display = 'block';
+      initCityAutocomplete('f-city', 'f-country');
+    }
+
+    async function handleSubmit() {
+      var errEl = document.getElementById('intake-error');
+      errEl.textContent = '';
+      var fields = {
+        full_name: document.getElementById('f-name').value.trim(),
+        dob: document.getElementById('f-dob').value,
+        tob: document.getElementById('f-tob').value,
+        city: document.getElementById('f-city').value.trim(),
+        country: document.getElementById('f-country').value.trim(),
+      };
+      if (!fields.full_name || !fields.dob || !fields.city || !fields.country) {
+        errEl.textContent = 'Please fill in all required fields.';
+        return;
+      }
+      var session = await getSession();
+      fields.email = session.user.email;
+
+      document.getElementById('intake-form').style.display = 'none';
+      document.getElementById('intake-loading').style.display = 'block';
+
+      var result = await submitCosmicProfileIntake(session.user.id, fields);
+      if (result.error) {
+        document.getElementById('intake-form').style.display = 'block';
+        document.getElementById('intake-loading').style.display = 'none';
+        errEl.textContent = typeof result.error === 'string' ? result.error : result.error.message || 'Something went wrong.';
+        return;
+      }
+      window.location.href = 'index.html';
+    }
+
+    async function handleSendLink() {
+      var email = document.getElementById('email-input').value.trim();
+      var errEl = document.getElementById('login-error');
+      var btn = document.getElementById('send-link-btn');
+      errEl.textContent = '';
+      if (!email) { errEl.textContent = 'Enter your email address.'; return; }
+      btn.disabled = true; btn.textContent = 'Sending...';
+      var result = await sendMagicLink(email);
+      if (result.error) {
+        errEl.textContent = result.error.message || 'Something went wrong.';
+        btn.disabled = false; btn.textContent = 'Send access link';
+      } else {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('login-sent').style.display = 'block';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -302,6 +302,73 @@ async function markLessonComplete(lessonId) {
  * Submit intake form: upsert profile row + call Edge Function to set available_at + trigger PDF pipeline.
  * Returns { error } or {}.
  */
+/**
+ * Fetch Cosmic Profile access grant for current user.
+ */
+async function getCosmicProfileGrant() {
+  const email = await _getUserEmail();
+  if (!email) return null;
+  const { data, error } = await window.sb
+    .from('access_grants')
+    .select('id, available_at, granted_at')
+    .eq('product', 'cosmic_profile')
+    .eq('email', email)
+    .is('revoked_at', null)
+    .limit(1)
+    .maybeSingle();
+  if (error) { console.error('getCosmicProfileGrant error:', error); return null; }
+  return data;
+}
+
+/**
+ * Fetch natal chart data for current user.
+ */
+async function getNatalChart() {
+  const { data, error } = await window.sb
+    .from('natal_charts')
+    .select('planets, houses, aspects, elements, modalities, hemispheres, stelliums, chart_ruler, computed_at')
+    .maybeSingle();
+  if (error) { console.error('getNatalChart error:', error); return null; }
+  return data;
+}
+
+/**
+ * Submit cosmic profile intake: upsert profile + call compute-chart edge function.
+ */
+async function submitCosmicProfileIntake(userId, fields) {
+  const { error: profileErr } = await window.sb
+    .from('profiles')
+    .upsert({
+      id: userId,
+      email: fields.email,
+      full_name: fields.full_name,
+      dob: fields.dob,
+      tob: fields.tob || null,
+      city: fields.city,
+      country: fields.country,
+      submitted_at: new Date().toISOString(),
+    }, { onConflict: 'id' });
+  if (profileErr) return { error: profileErr };
+
+  const { data: { session } } = await window.sb.auth.getSession();
+  const res = await fetch(
+    `${window.SUPABASE_URL}/functions/v1/compute-chart`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(fields),
+    }
+  );
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    return { error: body.error || 'Failed to compute chart' };
+  }
+  return {};
+}
+
 async function submitIntake(userId, fields) {
   // 1. Upsert profile
   const { error: profileErr } = await window.sb
