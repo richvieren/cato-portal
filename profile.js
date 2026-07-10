@@ -35,6 +35,47 @@ function findSnippet(section, key1, key2) {
   return '';
 }
 
+// ── Generate free profile for existing clients ──────
+
+async function generateFreeProfile() {
+  var btn = document.getElementById('generate-btn');
+  var area = document.getElementById('generate-area');
+  var loading = document.getElementById('generate-loading');
+
+  if (area) area.style.display = 'none';
+  if (loading) loading.style.display = 'block';
+
+  var session = await getSession();
+  if (!session) return;
+
+  var profile = await getProfile();
+  if (!profile || !profile.dob) {
+    if (area) area.style.display = 'block';
+    if (loading) loading.style.display = 'none';
+    return;
+  }
+
+  var fields = {
+    full_name: profile.full_name || session.user.email,
+    email: session.user.email,
+    dob: profile.dob,
+    tob: profile.tob || '',
+    city: profile.city || '',
+    country: profile.country || '',
+  };
+
+  var result = await submitCosmicProfileIntake(session.user.id, fields);
+  if (result.error) {
+    if (area) { area.style.display = 'block'; area.innerHTML = '<p style="color:#c97878;font-size:0.85rem;margin-top:1rem">Something went wrong. Please try again.</p>' +
+      '<button class="btn btn-primary" style="margin-top:1rem" onclick="generateFreeProfile()">Try Again</button>'; }
+    if (loading) loading.style.display = 'none';
+    return;
+  }
+
+  // Reload the page to show the full profile
+  window.location.reload();
+}
+
 // ── Entrance animation observer ──────────────────────
 
 function setupEntranceObserver() {
@@ -101,6 +142,33 @@ async function loadProfile(session) {
   if (state === 'intake') { window.location.href = 'profile-intake.html'; return; }
 
   if (state === 'locked') {
+    // Check if they have birth data from another product
+    var hasAnyGrant = blueprintGrant || transitGrant || astroGrant;
+    var hasBirthData = profile && profile.dob && profile.city;
+
+    if (hasAnyGrant && hasBirthData) {
+      // Existing client with birth data — show free generate button
+      document.getElementById('profile-locked').style.display = 'block';
+      document.getElementById('profile-widgets').style.display = 'none';
+      var lockedEl = document.getElementById('profile-locked');
+      lockedEl.innerHTML =
+        '<div class="locked-banner">' +
+          '<h3>Your Cosmic Business Profile</h3>' +
+          '<p>Your natal chart data is ready to be visualized. Element balance, business archetype, money style, visibility score, and more.</p>' +
+          '<div id="generate-area">' +
+            '<button class="btn btn-primary" style="margin-top:1.5rem" id="generate-btn" onclick="generateFreeProfile()">Generate My Profile</button>' +
+          '</div>' +
+          '<div id="generate-loading" style="display:none;margin-top:2rem">' +
+            '<div class="generate-spinner"></div>' +
+            '<p style="color:var(--golden);font-size:0.95rem;margin-top:1.2rem">Computing your chart...</p>' +
+            '<p style="color:var(--stone);font-size:0.78rem;margin-top:0.4rem">Reading the sky for your birth moment</p>' +
+          '</div>' +
+        '</div>';
+      renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
+      return;
+    }
+
+    // No birth data — show purchase CTA
     document.getElementById('profile-locked').style.display = 'block';
     document.getElementById('profile-widgets').style.display = 'none';
     renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);

@@ -1482,6 +1482,18 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 16px;
   margin-bottom: 3rem;
 }
+/* ── GENERATE SPINNER ────────────────────────────────── */
+
+.generate-spinner {
+  width: 36px; height: 36px;
+  margin: 0 auto;
+  border: 2px solid rgba(186,145,107,0.15);
+  border-top-color: var(--golden);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .locked-banner h3 {
   font-size: 2rem;
   color: var(--mist);
