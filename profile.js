@@ -218,7 +218,7 @@ async function loadProfile(session) {
       '</div>' +
       '<div class="profile-footer__vieren">' +
         '<a href="https://vieren.studio" target="_blank" rel="noopener">' +
-          '<img src="img/vieren-logo.png" alt="Vieren" class="profile-footer__vieren-logo">' +
+          '<img src="builtbyvieren.png" alt="Built by Vieren" class="profile-footer__vieren-logo">' +
         '</a>' +
       '</div>';
   }
