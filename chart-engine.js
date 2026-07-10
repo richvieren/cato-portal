@@ -12,7 +12,8 @@ const PLANET_GLYPHS = {
   Ascendant: 'AC', Medium_Coeli: 'MC', North_Node: '\u260A',
 };
 
-const PLANET_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'North_Node'];
+// API returns: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn (+ Ascendant, Medium_Coeli as angles)
+const PLANET_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
 
 const ELEMENT_COLORS = {
   fire: '#C4654A',

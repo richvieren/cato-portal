@@ -35,7 +35,9 @@ const SIGN_RULERS: Record<string, string> = {
   Sagittarius: 'Jupiter', Capricorn: 'Saturn', Aquarius: 'Saturn', Pisces: 'Jupiter',
 };
 
-const MAJOR_PLANETS = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+// API returns: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Ascendant, Medium_Coeli
+// Uranus/Neptune/Pluto not included in this API tier
+const MAJOR_PLANETS = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
 
 interface BirthData {
   full_name: string;
@@ -115,33 +117,47 @@ async function fetchNatalChart(birthData: BirthData) {
   return wsChart;
 }
 
+// Map 3-letter sign abbreviations to full names
+const SIGN_ABBR: Record<string, string> = {
+  Ari: 'Aries', Tau: 'Taurus', Gem: 'Gemini', Can: 'Cancer', Leo: 'Leo', Vir: 'Virgo',
+  Lib: 'Libra', Sco: 'Scorpio', Sag: 'Sagittarius', Cap: 'Capricorn', Aqu: 'Aquarius', Pis: 'Pisces',
+};
+
+function expandSign(abbr: string): string {
+  return SIGN_ABBR[abbr] || abbr;
+}
+
+function capitalizeAspect(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 function parseChart(rawChart: any) {
   const positions = rawChart.chart_data.planetary_positions;
-  const rawHouses = rawChart.chart_data.houses;
+  const rawHouses = rawChart.chart_data.house_cusps;
   const rawAspects = rawChart.chart_data.aspects || [];
 
   const planets = positions.map((p: any) => ({
     name: p.name,
-    sign: p.sign,
+    sign: expandSign(p.sign),
     degree: p.degree,
     house: p.house,
-    retrograde: p.retrograde || false,
-    full_degree: p.full_degree,
+    retrograde: p.is_retrograde || false,
+    full_degree: p.absolute_longitude,
   }));
 
   const houses = rawHouses.map((h: any) => ({
-    number: h.number,
-    sign: h.sign,
+    number: h.house,
+    sign: expandSign(h.sign),
     degree: h.degree,
   }));
 
-  const majorAspectTypes = ['Conjunction', 'Opposition', 'Trine', 'Square', 'Sextile'];
+  const majorAspectTypes = ['conjunction', 'opposition', 'trine', 'square', 'sextile'];
   const aspects = rawAspects
-    .filter((a: any) => majorAspectTypes.includes(a.type))
+    .filter((a: any) => majorAspectTypes.includes(a.aspect_type))
     .map((a: any) => ({
-      planet1: a.first_planet,
-      planet2: a.second_planet,
-      type: a.type,
+      planet1: a.point1,
+      planet2: a.point2,
+      type: capitalizeAspect(a.aspect_type),
       orb: a.orb,
     }));
 
