@@ -177,13 +177,15 @@ async function loadProfile(session) {
   var sunSign = biz.leadership.sun ? biz.leadership.sun.sign : '';
   renderBizText('t-leadership', 'ON LEADING', findSnippet('how_you_lead', sunSign));
 
-  // ── Upsell: Blueprint ──
-  renderUpsellBanner('upsell-blueprint', {
-    label: 'GO DEEPER',
-    hook: 'Your chart in full \u2014 income houses, offer design, and the year ahead, read by Cato.',
-    url: 'https://catovermeulen.com/category-of-one',
-    cta: 'BOOK THE BLUEPRINT \u00B7 $297',
-  });
+  // ── Upsell: Blueprint (only if not purchased) ──
+  if (!blueprintGrant) {
+    renderUpsellBanner('upsell-blueprint', {
+      label: 'GO DEEPER',
+      hook: 'Your chart in full \u2014 income houses, offer design, and the year ahead, read by Cato.',
+      url: 'https://catovermeulen.com/category-of-one',
+      cta: 'BOOK THE BLUEPRINT \u00B7 $297',
+    });
+  }
 
   // ── Planet Ranking + Retrogrades ──
   renderPlanetRanking('w-planet-ranking', cd);
@@ -198,13 +200,15 @@ async function loadProfile(session) {
     renderTextSection('t-question', findSnippet('question', ruler.planet, ruler.house), { label: 'THE QUESTION', italic: true });
   }
 
-  // ── Upsell: Transits ──
-  renderUpsellBanner('upsell-transits', {
-    label: 'TIMING',
-    hook: 'What is activating your chart this quarter \u2014 and when to launch, raise, and rest.',
-    url: 'https://catovermeulen.com/transits-reading',
-    cta: 'BOOK THE TRANSITS READING \u00B7 $197',
-  });
+  // ── Upsell: Transits (only if not purchased) ──
+  if (!transitGrant) {
+    renderUpsellBanner('upsell-transits', {
+      label: 'TIMING',
+      hook: 'What is activating your chart this quarter \u2014 and when to launch, raise, and rest.',
+      url: 'https://catovermeulen.com/transits-reading',
+      cta: 'BOOK THE TRANSITS READING \u00B7 $197',
+    });
+  }
 
   // ── Product sections ──
   renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);

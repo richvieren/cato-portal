@@ -668,7 +668,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   font-weight: 300;
   font-size: 68px;
   line-height: 1.05;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
   color: var(--mist);
 }
 .profile-hero__big3-line {
