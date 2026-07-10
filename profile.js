@@ -211,18 +211,16 @@ async function loadProfile(session) {
 
   // ── Footer ──
   var footerEl = document.getElementById('profile-footer');
-  if (footerEl && profile) {
-    var birthLine = '';
-    if (profile.birth_date) {
-      var d = new Date(profile.birth_date);
-      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      birthLine = 'Cast for ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
-      if (profile.birth_time) birthLine += ' \u00B7 ' + profile.birth_time;
-      if (profile.birth_city) birthLine += ' \u00B7 ' + profile.birth_city;
-    }
+  if (footerEl) {
     footerEl.innerHTML =
-      '<span>' + birthLine + '</span>' +
-      '<span>\u00A9 Cato Vermeulen \u2014 Business Astrology</span>';
+      '<div class="profile-footer__top">' +
+        '<span>\u00A9 Cato Vermeulen \u2014 Business Astrology</span>' +
+      '</div>' +
+      '<div class="profile-footer__vieren">' +
+        '<a href="https://vieren.studio" target="_blank" rel="noopener">' +
+          '<img src="img/vieren-logo.png" alt="Vieren" class="profile-footer__vieren-logo">' +
+        '</a>' +
+      '</div>';
   }
 
   // ── Entrance animations ──
