@@ -10,8 +10,8 @@ export function registerStartCommand(bot: Bot<BotContext>) {
     ctx.session.source = source;
 
     await ctx.reply(
-      "Welcome! I'm Cato's astrology bot. I deliver personalized transit alerts and course lessons based on your chart.\n\n" +
-      "To connect your account, send me the email you used at checkout.",
+      "Welcome! I deliver your personalized transit alerts and course content from Cato — right here in Telegram.\n\n" +
+      "Send me the email you used at checkout to activate.",
     );
   });
 
