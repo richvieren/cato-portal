@@ -1,12 +1,47 @@
-import { getNatalChart, insertAlerts, getActiveAlertUsers } from '../services/supabase.js';
-import { fetchDailyTransits } from '../services/astrology.js';
-import { detectSignificantTransits, formatTransitsForPrompt, formatNatalChartForPrompt } from '../services/transits.js';
-import { generateAlertText, generateQuietDayText } from '../services/glm.js';
+import { getNatalChart, insertAlerts, getActiveAlertUsers, findProfileByEmail } from '../services/supabase.js';
+import { fetchTransitAspects, NatalBirthData } from '../services/astrology.js';
+import { formatTransitsForPrompt, formatNatalChartForPrompt, formatTransitHeader } from '../services/transits.js';
+import { generateAlertText } from '../services/glm.js';
 import { ALERT_DURATIONS } from '../constants.js';
 import type { NewAlert } from '../services/supabase.js';
 
-const FALLBACK_TEMPLATE = (date: Date): string =>
-  `Your cosmic weather for ${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}. Take stock of where your energy is today and direct it toward your highest-priority business goal.`;
+async function getNatalBirthData(email: string): Promise<NatalBirthData | null> {
+  // We need the raw birth data to call the transit endpoint
+  // This comes from the profiles table
+  const { createClient } = await import('@supabase/supabase-js');
+  const { config } = await import('../config.js');
+  const sb = createClient(config.SUPABASE_URL, config.SUPABASE_SERVICE_KEY);
+
+  const { data } = await sb
+    .from('profiles')
+    .select('dob, tob, city, country')
+    .eq('email', email.toLowerCase())
+    .maybeSingle();
+
+  if (!data || !data.dob || !data.city) return null;
+
+  // Geocode the birth city
+  const geoRes = await fetch(
+    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(data.city + ', ' + (data.country || ''))}&format=json&limit=1`,
+    { headers: { 'User-Agent': 'cato-bot/1.0' } },
+  );
+  const geoResults = await geoRes.json();
+  if (!geoResults.length) return null;
+
+  const lat = parseFloat(geoResults[0].lat);
+  const lon = parseFloat(geoResults[0].lon);
+
+  const tzRes = await fetch(
+    `https://timeapi.io/api/timezone/coordinate?latitude=${lat}&longitude=${lon}`,
+  );
+  const tzData = await tzRes.json();
+  const tzone = (tzData.currentUtcOffset?.seconds ?? 0) / 3600;
+
+  const [year, month, day] = data.dob.split('-').map(Number);
+  const [hour, minute] = (data.tob || '12:00:00').split(':').map(Number);
+
+  return { year, month, day, hour, minute, lat, lon, tzone };
+}
 
 export async function generateAlertsForUser(
   userId: string,
@@ -20,6 +55,12 @@ export async function generateAlertsForUser(
     return 0;
   }
 
+  const birthData = await getNatalBirthData(email);
+  if (!birthData) {
+    console.error(`No birth data for ${email} — skipping alert generation`);
+    return 0;
+  }
+
   const chartContext = formatNatalChartForPrompt(chart);
   const alerts: NewAlert[] = [];
   const currentDate = new Date(startDate);
@@ -28,36 +69,38 @@ export async function generateAlertsForUser(
     const dateStr = currentDate.toISOString().split('T')[0];
 
     try {
-      const transitData = await fetchDailyTransits(currentDate);
-      const significant = detectSignificantTransits(transitData, chart);
+      const transitData = await fetchTransitAspects(birthData, currentDate);
+
+      // Skip quiet days — only generate alerts when there are actual transits
+      if (transitData.aspects.length === 0) {
+        currentDate.setDate(currentDate.getDate() + 1);
+        continue;
+      }
+
+      const transitContext = formatTransitsForPrompt(transitData);
+      const header = formatTransitHeader(transitData.aspects);
 
       let bodyText: string;
-
-      if (significant.length > 0) {
-        const transitContext = formatTransitsForPrompt(significant, currentDate);
+      try {
+        bodyText = await generateAlertText(chartContext, transitContext);
+      } catch (glmErr) {
+        console.error(`GLM failed for ${email} on ${dateStr}, retrying once...`);
         try {
           bodyText = await generateAlertText(chartContext, transitContext);
-        } catch (glmErr) {
-          console.error(`GLM failed for ${email} on ${dateStr}, retrying once...`);
-          try {
-            bodyText = await generateAlertText(chartContext, transitContext);
-          } catch {
-            console.error(`GLM retry failed for ${email} on ${dateStr}, using fallback`);
-            bodyText = FALLBACK_TEMPLATE(currentDate);
-          }
-        }
-      } else {
-        try {
-          bodyText = await generateQuietDayText(chartContext, currentDate);
         } catch {
-          bodyText = FALLBACK_TEMPLATE(currentDate);
+          console.error(`GLM retry failed for ${email} on ${dateStr}, skipping`);
+          currentDate.setDate(currentDate.getDate() + 1);
+          continue;
         }
       }
 
-      alerts.push({ user_id: userId, email, send_date: dateStr, body_text: bodyText });
+      const fullMessage = header
+        ? `🔮 _${header}_\n\n${bodyText}`
+        : `🔮\n\n${bodyText}`;
+
+      alerts.push({ user_id: userId, email, send_date: dateStr, body_text: fullMessage });
     } catch (err) {
-      console.error(`Failed to generate alert for ${email} on ${dateStr}:`, err);
-      alerts.push({ user_id: userId, email, send_date: dateStr, body_text: FALLBACK_TEMPLATE(currentDate) });
+      console.error(`Failed to process ${email} on ${dateStr}:`, err);
     }
 
     await new Promise(r => setTimeout(r, 500));
