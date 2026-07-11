@@ -55,3 +55,13 @@ CREATE POLICY "Service role full access on course_lessons"
   ON public.course_lessons FOR ALL
   USING (true)
   WITH CHECK (true);
+
+-- 5. Client type on profiles (paid, influencer, friend)
+ALTER TABLE public.profiles
+  ADD COLUMN IF NOT EXISTS client_type TEXT DEFAULT 'paid'
+  CHECK (client_type IN ('paid', 'influencer', 'friend'));
+
+-- 6. Grant source on access_grants (stripe, manual, comp)
+ALTER TABLE public.access_grants
+  ADD COLUMN IF NOT EXISTS source TEXT DEFAULT 'stripe'
+  CHECK (source IN ('stripe', 'manual', 'comp'));

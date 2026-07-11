@@ -10,8 +10,9 @@ export function registerStartCommand(bot: Bot<BotContext>) {
     ctx.session.source = source;
 
     await ctx.reply(
-      "Welcome! I deliver your personalized transit alerts and course content from Cato — right here in Telegram.\n\n" +
-      "Send me the email you used at checkout to activate.",
+      "✨ Welcome to Cato's cosmic corner.\n\n" +
+      "I deliver your personalized transit alerts and course content — right here in Telegram.\n\n" +
+      "📩 Send me the email you used at checkout to activate.",
     );
   });
 
@@ -24,7 +25,7 @@ export function registerStartCommand(bot: Bot<BotContext>) {
     const email = ctx.message.text.trim().toLowerCase();
 
     if (!email.includes('@') || !email.includes('.')) {
-      await ctx.reply("That doesn't look like an email address. Try again.");
+      await ctx.reply("🤔 That doesn't look like an email address. Try again.");
       return;
     }
 
@@ -32,8 +33,8 @@ export function registerStartCommand(bot: Bot<BotContext>) {
 
     if (!profile) {
       await ctx.reply(
-        "I couldn't find that email. Make sure it's the one you used at checkout.\n\n" +
-        "Try again or contact hello@catovermeulen.com",
+        "❌ I couldn't find that email.\n\n" +
+        "Make sure it's the one you used at checkout, or contact hello@catovermeulen.com",
       );
       return;
     }
@@ -53,15 +54,19 @@ export function registerStartCommand(bot: Bot<BotContext>) {
     if (alertGrants.length > 0) {
       const products = alertGrants.map(g => g.product.replace(/_/g, ' ')).join(', ');
       await ctx.reply(
-        `You're verified!\n\nActive access: ${products}\n\nYour daily transit alerts start tomorrow morning at 7am. Sit tight.`,
+        `🔮 You're in!\n\n` +
+        `Active: ${products}\n\n` +
+        `Your personalized daily transit alerts start tomorrow at 7am. ☀️`,
       );
     } else if (courseGrant) {
       await ctx.reply(
-        "You're verified!\n\nYour course is connected. Use /course to start your lessons.",
+        "🔮 You're in!\n\n" +
+        "Your course is ready. Tap /course to start your first lesson. 📚",
       );
     } else {
       await ctx.reply(
-        "I found your account! You don't have an active transit subscription yet.\n\nHere's what's available:",
+        "✅ Found your account!\n\n" +
+        "You don't have an active transit subscription yet. Here's what's available 👇",
       );
       await showProductMenu(ctx);
     }
