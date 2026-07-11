@@ -1,0 +1,25 @@
+{
+  "name": "cato-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/bot.ts",
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2",
+    "dotenv": "^16",
+    "grammy": "^1",
+    "node-cron": "^3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/node-cron": "^3",
+    "tsx": "^4",
+    "typescript": "^5",
+    "vitest": "^3"
+  }
+}
