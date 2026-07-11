@@ -1,0 +1,16 @@
+[Unit]
+Description=Cato Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/cato-bot
+ExecStart=/usr/bin/node dist/bot.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/cato-bot/.env
+
+[Install]
+WantedBy=multi-user.target
