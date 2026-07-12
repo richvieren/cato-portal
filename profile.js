@@ -138,11 +138,11 @@ async function loadProfile(session) {
   document.getElementById('profile-name').textContent = fullName;
 
   // ── Priority: reading intake forms come FIRST ──
-  // Only redirect to intake if user hasn't submitted birth data yet.
-  // Manual grants (no available_at) for users who already have birth data should NOT redirect.
-  var needsIntake = profile && !profile.submitted_at;
+  // Redirect to intake if: user has a grant with no available_at AND hasn't submitted birth data yet.
+  // Users who already submitted (profile.submitted_at exists) skip intake redirects.
+  var hasSubmitted = profile && profile.submitted_at;
 
-  if (needsIntake) {
+  if (!hasSubmitted) {
     var bpState = blueprintState(blueprintGrant, profile);
     if (bpState === 'intake') { window.location.href = 'blueprint.html'; return; }
 
