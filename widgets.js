@@ -199,10 +199,28 @@ function renderArchetype(containerId, chartData) {
     { left: 'COMMITTED', right: 'ADAPTABLE', value: a.adaptable },
   ];
 
+  var contexts = [
+    a.visionary < 35
+      ? 'You lead with systems, structure, and execution. Ideas without a plan don\'t interest you.'
+      : a.visionary > 65
+      ? 'You lead with ideas, vision, and possibility. You see the future before the spreadsheet catches up.'
+      : 'You balance vision with execution. You can dream it up and build it out.',
+    a.starter < 35
+      ? 'You finish what you start. Persistence is your edge. You outlast the competition.'
+      : a.starter > 65
+      ? 'You are wired to initiate. First moves come naturally. Your challenge is staying once the novelty fades.'
+      : 'You can start and finish. You pick your moments to launch and your moments to grind.',
+    a.adaptable < 35
+      ? 'Once you commit, you stay committed. Loyalty to your path is a strength. Rigidity is the shadow side.'
+      : a.adaptable > 65
+      ? 'You pivot fast and read the room. Flexibility is your superpower. The risk is spreading too thin.'
+      : 'You know when to hold your ground and when to adjust. That balance is rare.',
+  ];
+
   el.innerHTML = '<div class="frost-card" style="padding:30px 32px">' +
     '<div class="widget-label" style="margin-bottom:30px">BUSINESS&nbsp;ARCHETYPE</div>' +
     '<div class="spectrum-rows">' +
-    rows.map(function(r) {
+    rows.map(function(r, i) {
       var leftActive = r.value < 50;
       return '<div class="spectrum-item">' +
         '<div class="spectrum-item__poles">' +
@@ -214,6 +232,7 @@ function renderArchetype(containerId, chartData) {
           '<div class="spectrum-item__tick"></div>' +
           '<div class="spectrum-item__dot" style="left:' + r.value + '%"></div>' +
         '</div>' +
+        '<div class="spectrum-item__context">' + contexts[i] + '</div>' +
       '</div>';
     }).join('') +
     '</div>' +
@@ -246,6 +265,21 @@ function renderHemisphereBalance(containerId, chartData) {
   var dominantDesc = abovePct > 50 ? 'above the horizon' : 'below the horizon';
   var dominantFlavor = abovePct > 50 ? 'a chart that works in public' : 'a chart that works behind the scenes';
 
+  // Build plain-language summary
+  var hemiContext = '';
+  if (abovePct > 60) {
+    hemiContext = 'Most of your planets sit in the upper hemisphere. Your business energy is directed outward toward clients and public visibility. You work best when people can see what you do.';
+  } else if (abovePct < 40) {
+    hemiContext = 'Most of your planets sit below the horizon. Your business runs on behind-the-scenes work, internal process, and deep preparation. The output is public, but the engine is private.';
+  } else {
+    hemiContext = 'Your planets are spread across both hemispheres. You alternate between public-facing work and internal building. Neither mode dominates.';
+  }
+  if (eastPct > 60) {
+    hemiContext += ' With more planets in the eastern half, you are self-directed. You set the agenda.';
+  } else if (eastPct < 40) {
+    hemiContext += ' With more planets in the western half, your best opportunities come through other people. Partnerships and client work fuel your growth.';
+  }
+
   el.innerHTML = '<div class="frost-card" style="padding:30px 32px;display:flex;flex-direction:column">' +
     '<div class="widget-label" style="margin-bottom:24px">CHART&nbsp;FOCUS</div>' +
     '<div class="hemi-grid">' +
@@ -263,7 +297,7 @@ function renderHemisphereBalance(containerId, chartData) {
       '</div>';
     }).join('') +
     '</div>' +
-    '<div class="hemi-footer">Weight sits <span>' + dominantDesc + '</span> \u2014 ' + dominantFlavor + '.</div>' +
+    '<div class="hemi-footer">' + hemiContext + '</div>' +
   '</div>';
 }
 
@@ -359,6 +393,7 @@ function renderSalesStyle(containerId, chartData) {
     '<p class="badge-card__desc">' + s.desc + '</p>' +
     '<div class="badge-card__rule"></div>' +
     '<div class="badge-card__placement">' + placement + '</div>' +
+    (s.basis ? '<p class="badge-card__basis">' + s.basis + '</p>' : '') +
   '</div>';
 }
 
@@ -382,6 +417,7 @@ function renderLeadershipStyle(containerId, chartData) {
     '<p class="badge-card__desc">' + l.desc + '</p>' +
     '<div class="badge-card__rule"></div>' +
     '<div class="badge-card__placement">' + placement + '</div>' +
+    (l.basis ? '<p class="badge-card__basis">' + l.basis + '</p>' : '') +
   '</div>';
 }
 
@@ -396,6 +432,9 @@ function renderPlanetRanking(containerId, chartData) {
   var dim = 'rgba(180,167,148,0.55)';
   var delays = ranked.map(function(_, i) { return (0.1 + i * 0.08).toFixed(2) + 's'; });
 
+  // House type labels for explanation
+  var HOUSE_TYPES = { 1:'angular', 4:'angular', 7:'angular', 10:'angular', 2:'succedent', 5:'succedent', 8:'succedent', 11:'succedent', 3:'cadent', 6:'cadent', 9:'cadent', 12:'cadent' };
+
   el.innerHTML = '<div class="frost-card" style="padding:30px 32px">' +
     '<div class="widget-label" style="margin-bottom:26px">PLANET&nbsp;STRENGTH</div>' +
     '<div class="rank-rows">' +
@@ -409,11 +448,23 @@ function renderPlanetRanking(containerId, chartData) {
       var detail = p.sign + ' \u00B7 ' + ordinal(p.house);
       if (p.retrograde) detail += ' \u212E';
 
+      // Build explanation
+      var houseType = HOUSE_TYPES[p.house] || 'cadent';
+      var aspectCount = chartData.aspects.filter(function(a) { return a.planet1 === p.name || a.planet2 === p.name; }).length;
+      var reasons = [];
+      if (houseType === 'angular') reasons.push('angular house (high visibility)');
+      else if (houseType === 'succedent') reasons.push('succedent house (resource position)');
+      else reasons.push('cadent house (behind the scenes)');
+      if (aspectCount > 0) reasons.push(aspectCount + ' aspect' + (aspectCount > 1 ? 's' : '') + ' (actively connected)');
+      if (p.retrograde) reasons.push('retrograde (internalized)');
+      var explanation = reasons.join(' + ');
+
       return '<div class="rank-row">' +
         '<span class="rank-row__glyph" style="color:' + glyphCol + '">' + glyph + '</span>' +
         '<span class="rank-row__name" style="color:' + nameCol + '">' + p.name + '</span>' +
         '<div class="rank-row__bar"><div class="rank-row__bar-fill anim-grow" style="width:' + pct + '%;background:' + barCol + ';animation-delay:' + delays[i] + '"></div></div>' +
         '<span class="rank-row__detail">' + detail + '</span>' +
+        '<div class="rank-row__explain">' + explanation + '</div>' +
       '</div>';
     }).join('') +
     '</div>' +

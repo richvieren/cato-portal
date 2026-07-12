@@ -25,33 +25,33 @@ var SIGN_MODALITIES = {
 };
 
 var SALES_TYPES = {
-  Aries: { type: 'The Direct Closer', desc: 'You sell fast, bold, and first.' },
-  Taurus: { type: 'The Trust Builder', desc: 'You sell through patience and proof.' },
-  Gemini: { type: 'The Conversationalist', desc: 'You sell by talking it through.' },
-  Cancer: { type: 'The Empathic Listener', desc: 'You sell by making them feel heard.' },
-  Leo: { type: 'The Storyteller', desc: 'You sell through narrative and presence.' },
-  Virgo: { type: 'The Consultant', desc: 'You sell by diagnosing the problem.' },
-  Libra: { type: 'The Negotiator', desc: 'You sell through rapport and balance.' },
-  Scorpio: { type: 'The Investigator', desc: 'You sell by going deeper than anyone else.' },
-  Sagittarius: { type: 'The Educator', desc: 'You sell by teaching first.' },
-  Capricorn: { type: 'The Authority', desc: 'You sell through credibility and track record.' },
-  Aquarius: { type: 'The Original', desc: 'You sell by reframing the whole problem.' },
-  Pisces: { type: 'The Intuitive', desc: 'You sell by reading what they actually need.' },
+  Aries: { type: 'The Direct Closer', desc: 'You sell fast, bold, and first.', basis: 'Mercury in Aries processes information at speed and communicates with zero filter. You pitch before others finish their research.' },
+  Taurus: { type: 'The Trust Builder', desc: 'You sell through patience and proof.', basis: 'Mercury in Taurus thinks in tangible terms. You close deals by showing results, not by making promises.' },
+  Gemini: { type: 'The Conversationalist', desc: 'You sell by talking it through.', basis: 'Mercury in its home sign makes you a natural communicator. You sell because people enjoy talking to you.' },
+  Cancer: { type: 'The Empathic Listener', desc: 'You sell by making them feel heard.', basis: 'Mercury in Cancer picks up emotional cues most people miss. Your clients feel understood before you even pitch.' },
+  Leo: { type: 'The Storyteller', desc: 'You sell through narrative and presence.', basis: 'Mercury in Leo turns every pitch into a performance. You sell the experience, not just the product.' },
+  Virgo: { type: 'The Consultant', desc: 'You sell by diagnosing the problem.', basis: 'Mercury in Virgo analyzes before it speaks. You win clients by knowing their problem better than they do.' },
+  Libra: { type: 'The Negotiator', desc: 'You sell through rapport and balance.', basis: 'Mercury in Libra weighs every angle before responding. You close deals because both sides feel like they won.' },
+  Scorpio: { type: 'The Investigator', desc: 'You sell by going deeper than anyone else.', basis: 'Mercury in Scorpio asks the questions nobody else dares to. You find the real problem hiding under the surface.' },
+  Sagittarius: { type: 'The Educator', desc: 'You sell by teaching first.', basis: 'Mercury in Sagittarius thinks in big pictures and frameworks. You give away so much insight that buying feels obvious.' },
+  Capricorn: { type: 'The Authority', desc: 'You sell through credibility and track record.', basis: 'Mercury in Capricorn speaks with earned weight. You don\'t need hype because your results speak louder.' },
+  Aquarius: { type: 'The Original', desc: 'You sell by reframing the whole problem.', basis: 'Mercury in Aquarius thinks sideways. You win clients who are tired of hearing the same advice from everyone else.' },
+  Pisces: { type: 'The Intuitive', desc: 'You sell by reading what they actually need.', basis: 'Mercury in Pisces absorbs information through feeling. You sense what the client needs before they say it out loud.' },
 };
 
 var LEADERSHIP_TYPES = {
-  Aries: { type: 'The Initiator', desc: 'You lead by going first.' },
-  Taurus: { type: 'The Steady Hand', desc: 'You lead by outlasting everyone.' },
-  Gemini: { type: 'The Connector', desc: 'You lead by linking people and ideas.' },
-  Cancer: { type: 'The Protector', desc: 'You lead by building a safe base.' },
-  Leo: { type: 'The Standard-Setter', desc: 'You lead by embodying the work.' },
-  Virgo: { type: 'The Craftsman', desc: 'You lead through precision and process.' },
-  Libra: { type: 'The Diplomat', desc: 'You lead through relationships and fairness.' },
-  Scorpio: { type: 'The Strategist', desc: 'You lead from behind the curtain.' },
-  Sagittarius: { type: 'The Visionary', desc: 'You lead through big-picture thinking.' },
-  Capricorn: { type: 'The Builder', desc: 'You lead through structure and ambition.' },
-  Aquarius: { type: 'The Disruptor', desc: 'You lead by breaking the mold.' },
-  Pisces: { type: 'The Dreamer', desc: 'You lead through vision and empathy.' },
+  Aries: { type: 'The Initiator', desc: 'You lead by going first.', basis: 'The Sun in Aries gives you a need to be at the front. You set the pace and expect others to keep up.' },
+  Taurus: { type: 'The Steady Hand', desc: 'You lead by outlasting everyone.', basis: 'The Sun in Taurus gives you endurance that others can\'t match. You win by refusing to quit.' },
+  Gemini: { type: 'The Connector', desc: 'You lead by linking people and ideas.', basis: 'The Sun in Gemini makes you the hub. You lead because you see connections that others miss.' },
+  Cancer: { type: 'The Protector', desc: 'You lead by building a safe base.', basis: 'The Sun in Cancer makes loyalty your leadership currency. Your team stays because they feel protected.' },
+  Leo: { type: 'The Standard-Setter', desc: 'You lead by embodying the work.', basis: 'The Sun in its home sign gives you natural authority. You don\'t delegate the standard. You are the standard.' },
+  Virgo: { type: 'The Craftsman', desc: 'You lead through precision and process.', basis: 'The Sun in Virgo makes you the person who catches what everyone else missed. You lead through competence.' },
+  Libra: { type: 'The Diplomat', desc: 'You lead through relationships and fairness.', basis: 'The Sun in Libra makes you the person both sides trust. You lead because you keep the room together.' },
+  Scorpio: { type: 'The Strategist', desc: 'You lead from behind the curtain.', basis: 'The Sun in Scorpio gives you strategic depth. You don\'t need the spotlight because you control the board.' },
+  Sagittarius: { type: 'The Visionary', desc: 'You lead through big-picture thinking.', basis: 'The Sun in Sagittarius keeps your eyes on the horizon. You lead because you see where things are going before others do.' },
+  Capricorn: { type: 'The Builder', desc: 'You lead through structure and ambition.', basis: 'The Sun in Capricorn gives you a long-term game. You build things that outlast trends.' },
+  Aquarius: { type: 'The Disruptor', desc: 'You lead by breaking the mold.', basis: 'The Sun in Aquarius makes convention feel like a cage. You lead by offering a better way that nobody else considered.' },
+  Pisces: { type: 'The Dreamer', desc: 'You lead through vision and empathy.', basis: 'The Sun in Pisces gives you access to a frequency most leaders don\'t hear. You lead because people trust your instinct.' },
 };
 
 function ChartData(chartRow) {
@@ -160,7 +160,7 @@ ChartData.prototype.getSalesStyle = function () {
   var merc = this.planets.find(function(p) { return p.name === 'Mercury'; });
   if (!merc) return null;
   var info = SALES_TYPES[merc.sign] || { type: merc.sign, desc: '' };
-  return { planet: merc, type: info.type, desc: info.desc };
+  return { planet: merc, type: info.type, desc: info.desc, basis: info.basis || '' };
 };
 
 /** Leadership Style Badge from Sun sign */
@@ -168,7 +168,7 @@ ChartData.prototype.getLeadershipStyle = function () {
   var sun = this.planets.find(function(p) { return p.name === 'Sun'; });
   if (!sun) return null;
   var info = LEADERSHIP_TYPES[sun.sign] || { type: sun.sign, desc: '' };
-  return { planet: sun, type: info.type, desc: info.desc };
+  return { planet: sun, type: info.type, desc: info.desc, basis: info.basis || '' };
 };
 
 /** Planet Power Ranking: sorted by house position strength */
