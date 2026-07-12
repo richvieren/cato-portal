@@ -1749,3 +1749,34 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     gap: 0.8rem;
   }
 }
+
+/* ── Intake Welcome Screen ── */
+.intake-welcome {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.intake-welcome__logo {
+  max-width: 200px;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+.intake-welcome h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.intake-welcome__text {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--stone);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.intake-welcome .btn {
+  margin-top: 2rem;
+}
