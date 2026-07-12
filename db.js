@@ -117,6 +117,13 @@ async function getTransitGrant() {
  * Returns { error } or {}.
  */
 async function submitTransitIntake(userId, fields) {
+  // Block resubmission: if transit reading already has available_at, don't re-trigger
+  const grant = await getTransitGrant();
+  if (grant && grant.available_at) {
+    console.log('Transit reading already submitted and processing/ready — blocking resubmission');
+    return {};
+  }
+
   // 1. Upsert profile — only birth data, don't overwrite blueprint-specific fields
   const profile = await getProfile();
   const upsertData = {
@@ -192,6 +199,13 @@ async function getAstrocartographyGrant() {
  * Returns { error } or {}.
  */
 async function submitAstrocartographyIntake(userId, fields) {
+  // Block resubmission: if astrocartography already has available_at, don't re-trigger
+  const grant = await getAstrocartographyGrant();
+  if (grant && grant.available_at) {
+    console.log('Astrocartography already submitted and processing/ready — blocking resubmission');
+    return {};
+  }
+
   // 1. Upsert profile — only birth data, don't overwrite blueprint-specific fields
   const profile = await getProfile();
   const upsertData = {
@@ -370,6 +384,13 @@ async function submitCosmicProfileIntake(userId, fields) {
 }
 
 async function submitIntake(userId, fields) {
+  // Block resubmission: if blueprint already has available_at, don't re-trigger
+  const grant = await getBlueprintGrant();
+  if (grant && grant.available_at) {
+    console.log('Blueprint already submitted and processing/ready — blocking resubmission');
+    return {};
+  }
+
   // 1. Upsert profile
   const { error: profileErr } = await window.sb
     .from('profiles')
