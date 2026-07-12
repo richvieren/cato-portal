@@ -1696,3 +1696,56 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   /* Chart wheel caption */
   .chart-wheel-caption { font-size: 9px; letter-spacing: 0.16em; }
 }
+
+/* ── Purchased Readings (top section) ── */
+.reading-top-card {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 0.8rem;
+}
+.reading-top-card__icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.reading-top-card__info {
+  flex: 1;
+}
+.reading-top-card__name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+.reading-top-card__status {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.reading-top__status--ready { color: #7ec87e; }
+.reading-top__status--pending { color: var(--golden); }
+.reading-top__status--action { color: #e8a87c; }
+.reading-top-card__cta {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  color: var(--golden);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.reading-top-card__cta:hover { color: var(--golden-bright); }
+.reading-top-card__cta--muted {
+  color: var(--stone);
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .reading-top-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+}

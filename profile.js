@@ -305,7 +305,10 @@ async function loadProfile(session) {
     });
   }
 
-  // ── Product sections ──
+  // ── Purchased readings at top ──
+  renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
+
+  // ── Remaining product sections (unpurchased) at bottom ──
   renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
 
   // ── Footer ──

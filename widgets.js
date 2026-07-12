@@ -567,3 +567,58 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, courseG
     '</div>';
   }).join('');
 }
+
+function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, courseGrant, profile) {
+  var container = document.getElementById('purchased-readings');
+  var section = document.getElementById('section-readings-top');
+  if (!container || !section) return;
+
+  var purchased = [];
+
+  var readings = [
+    { name: 'Category of One Blueprint', grant: blueprintGrant, profile: profile, readyUrl: 'blueprint.html', intakeUrl: 'blueprint.html', icon: '📜' },
+    { name: 'Transits Reading', grant: transitGrant, profile: profile, readyUrl: 'transit-reading.html', intakeUrl: 'transit-reading.html', icon: '🔮' },
+    { name: 'Astrocartography Reading', grant: astroGrant, profile: profile, readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html', icon: '🌍' },
+    { name: 'Business Astrology Course', grant: courseGrant, profile: null, readyUrl: 'course.html', intakeUrl: null, icon: '📚', isCourse: true },
+  ];
+
+  readings.forEach(function(r) {
+    var state = r.isCourse ? courseState(r.grant) : blueprintState(r.grant, r.profile);
+    if (state === 'locked') return;
+
+    var statusText, ctaText, ctaHref, statusClass;
+
+    if (state === 'intake') {
+      statusText = 'COMPLETE DETAILS';
+      statusClass = 'reading-top__status--action';
+      ctaText = 'Fill in your details';
+      ctaHref = r.intakeUrl;
+    } else if (state === 'pending') {
+      statusText = 'PROCESSING';
+      statusClass = 'reading-top__status--pending';
+      ctaText = 'Being prepared';
+      ctaHref = null;
+    } else {
+      statusText = 'READY';
+      statusClass = 'reading-top__status--ready';
+      ctaText = 'View reading';
+      ctaHref = r.readyUrl;
+    }
+
+    purchased.push(
+      '<div class="frost-card reading-top-card">' +
+        '<div class="reading-top-card__icon">' + r.icon + '</div>' +
+        '<div class="reading-top-card__info">' +
+          '<div class="reading-top-card__name">' + r.name + '</div>' +
+          '<span class="reading-top-card__status ' + statusClass + '">' + statusText + '</span>' +
+        '</div>' +
+        (ctaHref ? '<a href="' + ctaHref + '" class="reading-top-card__cta">' + ctaText + ' →</a>' : '<span class="reading-top-card__cta reading-top-card__cta--muted">' + ctaText + '</span>') +
+      '</div>'
+    );
+  });
+
+  if (purchased.length > 0) {
+    container.innerHTML = purchased.join('');
+    section.style.display = 'block';
+  }
+}
