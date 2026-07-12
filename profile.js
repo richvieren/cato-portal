@@ -340,8 +340,11 @@ async function loadProfile(session) {
   // ── Purchased readings at top ──
   renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
 
-  // ── Remaining product sections (unpurchased) at bottom ──
-  renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
+  // ── Bottom CTA (hide if they already have blueprint) ──
+  if (blueprintGrant) {
+    var ctaSection = document.getElementById('section-cta');
+    if (ctaSection) ctaSection.style.display = 'none';
+  }
 
   // ── Footer ──
   var footerEl = document.getElementById('profile-footer');

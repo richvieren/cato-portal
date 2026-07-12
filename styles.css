@@ -1780,3 +1780,15 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .intake-welcome .btn {
   margin-top: 2rem;
 }
+
+/* ── Widget context text ── */
+.widget-context {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--stone);
+  line-height: 1.7;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(233,230,218,0.06);
+}

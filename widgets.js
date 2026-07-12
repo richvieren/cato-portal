@@ -25,9 +25,10 @@ function renderBig3(containerId, chartData) {
   if (!el) return;
   var big3 = chartData.getBig3();
   var items = [
-    { label: 'SUN \u2014 IDENTITY', sub: 'The core of the business', data: big3.sun, glyph: '\u2609' },
-    { label: 'MOON \u2014 INSTINCT', sub: 'How you work with people', data: big3.moon, glyph: '\u263D' },
-    { label: 'RISING \u2014 PRESENCE', sub: 'What clients meet first', data: big3.rising, glyph: '\u2191' },
+    { label: 'SUN', sub: 'Your core identity in business', data: big3.sun, glyph: '\u2609' },
+    { label: 'MOON', sub: 'What nourishes you as an entrepreneur', data: big3.moon, glyph: '\u263D' },
+    { label: 'RISING', sub: 'Why clients feel drawn to your brand', data: big3.rising, glyph: '\u2191' },
+    { label: 'MIDHEAVEN', sub: 'What you are destined to be known for', data: big3.mc, glyph: 'MC' },
   ];
   el.innerHTML = items.map(function(item) {
     if (!item.data) return '';
@@ -97,9 +98,21 @@ function renderElementBalance(containerId, chartData) {
       '</div>';
     }).join('') +
     '</div>' +
-    '<div class="bar-footer">Dominant element \u2014 <span>' + dominant.charAt(0).toUpperCase() + dominant.slice(1) + '</span></div>' +
+    '<div class="bar-footer">Dominant element: <span>' + dominant.charAt(0).toUpperCase() + dominant.slice(1) + '</span></div>' +
+    '<div class="widget-context" id="element-context"></div>' +
   '</div>';
   el.innerHTML = html;
+
+  var elementDescriptions = {
+    fire: 'You lead with bold action, vision, and momentum. Your business thrives when you trust your instincts and move fast. Sitting still kills your energy.',
+    earth: 'You build things that last. Slow, steady, tangible results. Your business grows through consistency, structure, and proof of concept.',
+    air: 'You lead with ideas, connections, and communication. Your business grows through networking, content, and intellectual positioning.',
+    water: 'You lead with intuition, emotional intelligence, and depth. Your business grows through trust, transformation, and genuine connection.',
+  };
+  var contextEl = document.getElementById('element-context');
+  if (contextEl && elementDescriptions[dominant]) {
+    contextEl.textContent = elementDescriptions[dominant];
+  }
 }
 
 // ── MODALITY SPLIT (bars) ─────────────────────────────
@@ -141,9 +154,20 @@ function renderModalitySplit(containerId, chartData) {
       '</div>';
     }).join('') +
     '</div>' +
-    '<div class="bar-footer">Dominant modality \u2014 <span>' + dominant.charAt(0).toUpperCase() + dominant.slice(1) + '</span></div>' +
+    '<div class="bar-footer">Dominant modality: <span>' + dominant.charAt(0).toUpperCase() + dominant.slice(1) + '</span></div>' +
+    '<div class="widget-context" id="modality-context"></div>' +
   '</div>';
   el.innerHTML = html;
+
+  var modalityDescriptions = {
+    cardinal: 'You are a starter. You initiate projects, lead from the front, and set things in motion. Your challenge is finishing what you start.',
+    fixed: 'You are a finisher. Once you commit, you see it through. Your business grows through persistence and depth. Your challenge is adapting when the plan stops working.',
+    mutable: 'You are adaptable. You pivot fast, read the room, and adjust your offer to what the market needs. Your challenge is sticking with one thing long enough to see it compound.',
+  };
+  var modContextEl = document.getElementById('modality-context');
+  if (modContextEl && modalityDescriptions[dominant]) {
+    modContextEl.textContent = modalityDescriptions[dominant];
+  }
 }
 
 // ── BUSINESS ARCHETYPE (3 spectrums) ──────────────────
@@ -239,7 +263,11 @@ function renderMoneyStyle(containerId, chartData) {
 
   // Build footer caption
   var footerParts = [];
-  if (secondSign) footerParts.push('2nd house ' + secondSign);
+  if (secondSign) {
+    var secondElement = SIGN_ELEMENTS[secondSign] || '';
+    footerParts.push(secondSign + ' on your 2nd house');
+    if (secondElement) footerParts.push(secondElement + ' approach to money');
+  }
 
   var rows = [
     { left: 'VOLATILE', right: 'STEADY', value: m.stability },

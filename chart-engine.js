@@ -68,7 +68,13 @@ function ChartData(chartRow) {
 
 ChartData.prototype.getBig3 = function () {
   var find = function(planets, name) { return planets.find(function(p) { return p.name === name; }); };
-  return { sun: find(this.planets, 'Sun'), moon: find(this.planets, 'Moon'), rising: find(this.planets, 'Ascendant') };
+  return { sun: find(this.planets, 'Sun'), moon: find(this.planets, 'Moon'), rising: find(this.planets, 'Ascendant'), mc: find(this.planets, 'Medium_Coeli') };
+};
+
+ChartData.prototype.getHouseCusps = function () {
+  var houses = this.houses || [];
+  var find = function(num) { return houses.find(function(h) { return h.number === num; }); };
+  return { second: find(2), sixth: find(6), tenth: find(10) };
 };
 
 ChartData.prototype.getElements = function () { return this.elements; };
