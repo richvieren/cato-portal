@@ -134,19 +134,46 @@ async function loadProfile(session) {
   var cosmicGrant = results[0], blueprintGrant = results[1], transitGrant = results[2];
   var astroGrant = results[3], courseGrant = results[4], chart = results[5], profile = results[6];
 
-  var state = cosmicProfileState(cosmicGrant, chart);
   var fullName = profile && profile.full_name ? profile.full_name : session.user.email;
-
   document.getElementById('profile-name').textContent = fullName;
 
+  // ── Priority: reading intake forms come FIRST ──
+  // Blueprint intake takes priority over everything
+  var bpState = blueprintState(blueprintGrant, profile);
+  if (bpState === 'intake') { window.location.href = 'blueprint.html'; return; }
+
+  // Transit intake next
+  var trState = transitState(transitGrant, profile);
+  if (trState === 'intake') { window.location.href = 'transit-reading.html'; return; }
+
+  // Astrocartography intake next
+  var acState = astrocartographyState(astroGrant, profile);
+  if (acState === 'intake') { window.location.href = 'astrocartography.html'; return; }
+
+  // ── Auto-grant cosmic profile for reading buyers ──
+  // Anyone with a blueprint, transit, or astrocartography grant gets cosmic profile free
+  var hasReadingGrant = blueprintGrant || transitGrant || astroGrant;
+  if (hasReadingGrant && !cosmicGrant) {
+    // Auto-grant cosmic_profile for reading buyers
+    var email = session.user.email.toLowerCase();
+    await window.sb.from('access_grants').insert({
+      email: email,
+      product: 'cosmic_profile',
+      source: 'comp',
+      available_at: new Date().toISOString(),
+    }).catch(function() {});
+    cosmicGrant = { id: 'auto', available_at: new Date().toISOString(), granted_at: new Date().toISOString() };
+  }
+
+  var state = cosmicProfileState(cosmicGrant, chart);
+
+  // Cosmic profile intake (only if they have a cosmic grant but no chart yet)
   if (state === 'intake') { window.location.href = 'profile-intake.html'; return; }
 
   if (state === 'locked') {
-    // Check if they have birth data from another product
-    var hasAnyGrant = blueprintGrant || transitGrant || astroGrant;
     var hasBirthData = profile && profile.dob && profile.city;
 
-    if (hasAnyGrant && hasBirthData) {
+    if (hasReadingGrant && hasBirthData) {
       // Existing client with birth data — show free generate button
       document.getElementById('profile-locked').style.display = 'block';
       document.getElementById('profile-widgets').style.display = 'none';
@@ -168,7 +195,7 @@ async function loadProfile(session) {
       return;
     }
 
-    // No birth data — show purchase CTA
+    // No reading grants, no birth data — show purchase CTA
     document.getElementById('profile-locked').style.display = 'block';
     document.getElementById('profile-widgets').style.display = 'none';
     renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
