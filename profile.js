@@ -138,17 +138,20 @@ async function loadProfile(session) {
   document.getElementById('profile-name').textContent = fullName;
 
   // ── Priority: reading intake forms come FIRST ──
-  // Blueprint intake takes priority over everything
-  var bpState = blueprintState(blueprintGrant, profile);
-  if (bpState === 'intake') { window.location.href = 'blueprint.html'; return; }
+  // Only redirect to intake if user hasn't submitted birth data yet.
+  // Manual grants (no available_at) for users who already have birth data should NOT redirect.
+  var needsIntake = profile && !profile.submitted_at;
 
-  // Transit intake next
-  var trState = transitState(transitGrant, profile);
-  if (trState === 'intake') { window.location.href = 'transit-reading.html'; return; }
+  if (needsIntake) {
+    var bpState = blueprintState(blueprintGrant, profile);
+    if (bpState === 'intake') { window.location.href = 'blueprint.html'; return; }
 
-  // Astrocartography intake next
-  var acState = astrocartographyState(astroGrant, profile);
-  if (acState === 'intake') { window.location.href = 'astrocartography.html'; return; }
+    var trState = transitState(transitGrant, profile);
+    if (trState === 'intake') { window.location.href = 'transit-reading.html'; return; }
+
+    var acState = astrocartographyState(astroGrant, profile);
+    if (acState === 'intake') { window.location.href = 'astrocartography.html'; return; }
+  }
 
   // ── Auto-grant cosmic profile for reading buyers ──
   // Anyone with a blueprint, transit, or astrocartography grant gets cosmic profile free
