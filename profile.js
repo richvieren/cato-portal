@@ -154,10 +154,10 @@ async function loadProfile(session) {
   }
 
   // ── Auto-grant cosmic profile for reading buyers ──
-  // Anyone with a blueprint, transit, or astrocartography grant gets cosmic profile free
   var hasReadingGrant = blueprintGrant || transitGrant || astroGrant;
+  var hasBirthData = profile && profile.dob && profile.city;
+
   if (hasReadingGrant && !cosmicGrant) {
-    // Auto-grant cosmic_profile for reading buyers
     var email = session.user.email.toLowerCase();
     await window.sb.from('access_grants').insert({
       email: email,
@@ -166,12 +166,41 @@ async function loadProfile(session) {
       available_at: new Date().toISOString(),
     }).catch(function() {});
     cosmicGrant = { id: 'auto', available_at: new Date().toISOString(), granted_at: new Date().toISOString() };
+
+    // If they already have birth data, auto-compute chart (no second form needed)
+    if (hasBirthData && !chart) {
+      await submitCosmicProfileIntake(session.user.id, {
+        full_name: profile.full_name || email,
+        email: email,
+        dob: profile.dob,
+        tob: profile.tob || '',
+        city: profile.city,
+        country: profile.country || '',
+      });
+      // Reload to show the computed profile
+      window.location.reload();
+      return;
+    }
   }
 
   var state = cosmicProfileState(cosmicGrant, chart);
 
-  // Cosmic profile intake (only if they have a cosmic grant but no chart yet)
-  if (state === 'intake') { window.location.href = 'profile-intake.html'; return; }
+  // Cosmic profile intake — only for standalone cosmic buyers without birth data
+  // Reading buyers with birth data already got auto-computed above
+  if (state === 'intake' && !hasBirthData) { window.location.href = 'profile-intake.html'; return; }
+  if (state === 'intake' && hasBirthData) {
+    // Has birth data but no chart — compute it now
+    await submitCosmicProfileIntake(session.user.id, {
+      full_name: profile.full_name || session.user.email,
+      email: session.user.email,
+      dob: profile.dob,
+      tob: profile.tob || '',
+      city: profile.city,
+      country: profile.country || '',
+    });
+    window.location.reload();
+    return;
+  }
 
   if (state === 'locked') {
     var hasBirthData = profile && profile.dob && profile.city;
