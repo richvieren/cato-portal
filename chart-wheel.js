@@ -75,10 +75,14 @@ function renderChartWheel(containerId, chartData) {
       .text(SIGN_GLYPHS[sign] || '');
   });
 
-  // ── Houses ──
-  // Use actual house cusps from chart data
+  // ── Houses (whole sign) ──
+  // In whole sign houses, house 1 = entire sign of ASC.
+  // House boundaries align to sign boundaries, not cusp degrees.
+  var ascSignStart = Math.floor(ascLon / 30) * 30;
+
   chartData.houses.forEach(function(house) {
-    var lon = house.cusp_degree !== undefined ? house.cusp_degree : (house.number - 1) * 30;
+    // Whole sign cusp: house N starts at 0° of the Nth sign from ASC sign
+    var lon = (ascSignStart + (house.number - 1) * 30) % 360;
     var isAngular = (house.number === 1 || house.number === 4 || house.number === 7 || house.number === 10);
     var p1 = xy(lon, 70);
     var p2 = xy(lon, 232);
@@ -88,16 +92,9 @@ function renderChartWheel(containerId, chartData) {
       .attr('stroke', isAngular ? 'rgba(186,145,107,0.35)' : 'rgba(186,175,163,0.1)')
       .attr('stroke-width', strokeScale);
 
-    // House number at r86
-    // Next house cusp for midpoint calculation
-    var nextHouse = chartData.houses.find(function(h) {
-      return h.number === (house.number % 12) + 1;
-    });
-    var nextLon = nextHouse
-      ? (nextHouse.cusp_degree !== undefined ? nextHouse.cusp_degree : (nextHouse.number - 1) * 30)
-      : lon + 30;
-    // Handle wrap-around
-    var midLon = lon + ((nextLon - lon + 360) % 360) / 2;
+    // House number at midpoint between this cusp and the next
+    var nextLon = (lon + 30) % 360;
+    var midLon = lon + 15; // Each whole sign house is exactly 30 degrees
     var numPos = xy(midLon, 86);
     svg.append('text')
       .attr('x', numPos[0]).attr('y', numPos[1])
