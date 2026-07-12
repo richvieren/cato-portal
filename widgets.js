@@ -261,10 +261,6 @@ function renderHemisphereBalance(containerId, chartData) {
     { t: 'Private Others', s: 'Home & foundations', active: eastPct <= 50 && abovePct <= 50, weight: 0 },
   ];
 
-  // Determine dominant description
-  var dominantDesc = abovePct > 50 ? 'above the horizon' : 'below the horizon';
-  var dominantFlavor = abovePct > 50 ? 'a chart that works in public' : 'a chart that works behind the scenes';
-
   // Build plain-language summary
   var hemiContext = '';
   if (abovePct > 60) {
@@ -474,6 +470,26 @@ function renderPlanetRanking(containerId, chartData) {
 // ── HEMISPHERE (quadrant visual) ──────────────────────
 // (already defined above as renderHemisphereBalance)
 
+// ── HOUSE THEME HELPER ────────────────────────────────
+
+function houseTheme(house) {
+  var themes = {
+    1: 'your personal brand and first impressions',
+    2: 'money, pricing, and self-worth',
+    3: 'communication, content, and daily outreach',
+    4: 'your foundation, home office, and private life',
+    5: 'creative projects, risk-taking, and self-expression',
+    6: 'daily routines, systems, and client delivery',
+    7: 'partnerships, contracts, and one-on-one client work',
+    8: 'joint finances, investments, and deep transformation',
+    9: 'education, publishing, and expanding your reach',
+    10: 'public reputation, career milestones, and authority',
+    11: 'community, networks, and long-term vision',
+    12: 'rest, recovery, and behind-the-scenes preparation',
+  };
+  return themes[house] || 'that area of life';
+}
+
 // ── RETROGRADES ─────────────────────────────────────
 
 function renderRetrogrades(containerId, chartData) {
@@ -481,12 +497,27 @@ function renderRetrogrades(containerId, chartData) {
   if (!el) return;
   var retros = chartData.getRetrogrades();
 
-  var RETRO_MEANINGS = {
-    Mercury: 'Communication style is internal-first \u2014 you process before you speak.',
-    Venus: 'Your relationship to value and pricing runs deeper than surface level.',
-    Mars: 'Your drive operates behind the scenes. Action happens internally before externally.',
-    Jupiter: 'Growth compounds inward first; refine the method before you scale it.',
-    Saturn: 'Authority is self-built \u2014 validation lands late, but permanent.',
+  var RETRO_BASE = {
+    Mercury: {
+      meaning: 'Your communication style runs inward first. You process deeply before you speak. Clients get a considered response, never a knee-jerk reaction.',
+      personal: true,
+    },
+    Venus: {
+      meaning: 'Your relationship to value, pricing, and beauty is unconventional. You probably re-evaluate what things are worth more often than most. Early in business, you likely undercharged.',
+      personal: true,
+    },
+    Mars: {
+      meaning: 'Your drive operates below the surface. You don\'t show effort. Action happens internally before it shows externally. People underestimate your intensity until they see the results.',
+      personal: true,
+    },
+    Jupiter: {
+      meaning: 'Growth compounds inward before it scales outward. You refine the method before expanding the reach. Your biggest wins come from depth, not breadth.',
+      personal: false,
+    },
+    Saturn: {
+      meaning: 'Authority is self-built. External validation arrives late, but when it does, it sticks. You probably spent years building credibility that others got handed.',
+      personal: false,
+    },
   };
 
   if (!retros.length) {
@@ -501,19 +532,61 @@ function renderRetrogrades(containerId, chartData) {
     '<div class="widget-label" style="margin-bottom:26px">RETROGRADES</div>' +
     '<div class="retro-rows">' +
     retros.map(function(p) {
-      var meaning = RETRO_MEANINGS[p.name] || '';
+      var info = RETRO_BASE[p.name] || {};
+      var meaning = info.meaning || '';
       var glyph = PLANET_GLYPHS[p.name] || '';
+      var houseNote = p.house ? ' In your ' + ordinal(p.house) + ' house, this plays out in how you handle ' + houseTheme(p.house) + '.' : '';
+      var personalFlag = info.personal ? '<span class="retro-item__flag">PERSONAL PLANET</span>' : '';
       return '<div class="retro-item">' +
         '<div class="retro-item__circle">' + glyph + '</div>' +
         '<div>' +
-          '<div class="retro-item__name">' + p.name + ' retrograde</div>' +
-          (meaning ? '<div class="retro-item__meaning">' + meaning + '</div>' : '') +
+          '<div class="retro-item__name">' + p.name + ' retrograde' + personalFlag + '</div>' +
+          '<div class="retro-item__placement">' + p.sign + ' \u00B7 ' + ordinal(p.house) + ' house</div>' +
+          (meaning ? '<div class="retro-item__meaning">' + meaning + houseNote + '</div>' : '') +
         '</div>' +
       '</div>';
     }).join('') +
     '</div>' +
-    '<div class="retro-footer">Retrograde planets internalise their function \u2014 slower to show, deeper when they do.</div>' +
   '</div>';
+}
+
+// ── HOUSE CUSPS (2nd, 6th, 10th) ─────────────────────
+
+function renderHouseCusps(containerId, chartData, snippets) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var cusps = chartData.getHouseCusps();
+
+  var items = [
+    { house: 2, label: 'HOW YOU MAKE MONEY', cusp: cusps.second },
+    { house: 6, label: 'HOW YOU DO DAILY WORK', cusp: cusps.sixth },
+    { house: 10, label: 'HOW YOU BUILD YOUR CAREER', cusp: cusps.tenth },
+  ];
+
+  el.innerHTML = items.map(function(item) {
+    if (!item.cusp) return '';
+    var sign = item.cusp.sign;
+    var element = SIGN_ELEMENTS[sign] || '';
+    var glyph = SIGN_GLYPHS[sign] || '';
+    var snippetText = '';
+    if (snippets && snippets.house_cusps) {
+      var match = snippets.house_cusps.find(function(s) {
+        return s.house === item.house && s.sign === sign;
+      });
+      if (match) snippetText = match.text;
+    }
+
+    return '<div class="frost-card house-cusp-card">' +
+      '<div class="house-cusp-card__header">' +
+        '<span class="house-cusp-card__glyph">' + glyph + '</span>' +
+        '<div>' +
+          '<div class="house-cusp-card__label">' + item.label + '</div>' +
+          '<div class="house-cusp-card__sign">' + sign + ' on the ' + ordinal(item.house) + ' house \u00B7 ' + element + '</div>' +
+        '</div>' +
+      '</div>' +
+      (snippetText ? '<p class="house-cusp-card__text">' + snippetText + '</p>' : '') +
+    '</div>';
+  }).join('');
 }
 
 // ── STELLIUM CALLOUT ──────────────────────────────────

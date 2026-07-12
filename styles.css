@@ -1826,3 +1826,80 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   padding: 0 4px;
   text-align: center;
 }
+
+/* ── Retrograde enhancements (Task 4) ── */
+.retro-item__placement {
+  font-family: Jost, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: rgba(180,167,148,0.6);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.retro-item__flag {
+  display: inline-block;
+  font-family: Jost, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 400;
+  color: var(--golden);
+  letter-spacing: 0.1em;
+  margin-left: 8px;
+  padding: 1px 6px;
+  border: 1px solid rgba(186,145,107,0.3);
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* ── House cusp cards (Task 4) ── */
+.house-cusps-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.house-cusp-card {
+  padding: 26px 28px;
+}
+
+.house-cusp-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.house-cusp-card__glyph {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  color: var(--golden);
+}
+
+.house-cusp-card__label {
+  font-family: Jost, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--golden);
+  text-transform: uppercase;
+}
+
+.house-cusp-card__sign {
+  font-family: Jost, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 200;
+  color: var(--stone);
+  margin-top: 2px;
+}
+
+.house-cusp-card__text {
+  font-family: Jost, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 200;
+  color: var(--linen);
+  line-height: 1.7;
+  margin: 0;
+}

@@ -307,6 +307,9 @@ async function loadProfile(session) {
   var sunSign = biz.leadership.sun ? biz.leadership.sun.sign : '';
   renderBizText('t-leadership', 'ON LEADING', findSnippet('how_you_lead', sunSign));
 
+  // ── House Cusps (2nd, 6th, 10th) ──
+  renderHouseCusps('w-house-cusps', cd, _snippets);
+
   // ── Planet Ranking + Retrogrades ──
   renderPlanetRanking('w-planet-ranking', cd);
   renderRetrogrades('w-retrogrades', cd);
