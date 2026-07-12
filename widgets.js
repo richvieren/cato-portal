@@ -28,7 +28,6 @@ function renderBig3(containerId, chartData) {
     { label: 'SUN', sub: 'Your core identity in business', data: big3.sun, glyph: '\u2609' },
     { label: 'MOON', sub: 'What nourishes you as an entrepreneur', data: big3.moon, glyph: '\u263D' },
     { label: 'RISING', sub: 'Why clients feel drawn to your brand', data: big3.rising, glyph: '\u2191' },
-    { label: 'MIDHEAVEN', sub: 'What you are destined to be known for', data: big3.mc, glyph: 'MC' },
   ];
   el.innerHTML = items.map(function(item) {
     if (!item.data) return '';
@@ -62,6 +61,23 @@ function renderChartRuler(containerId, chartData) {
       '<span class="ruler-pill__label">CHART&nbsp;RULER</span>' +
       '<span class="ruler-pill__divider"></span>' +
       '<span class="ruler-pill__text">' + ruler.planet + ' in ' + ruler.sign + ' \u00B7 ' + ordinal(ruler.house) + ' house</span>' +
+    '</div>';
+}
+
+// ── MIDHEAVEN PILL ──────────────────────────────────────
+
+function renderMidheavenPill(containerId, chartData) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var mc = chartData.planets.find(function(p) { return p.name === 'Medium_Coeli'; });
+  if (!mc) { el.style.display = 'none'; return; }
+  var glyph = SIGN_GLYPHS[mc.sign] || '';
+  el.innerHTML =
+    '<div class="ruler-pill">' +
+      '<span class="ruler-pill__glyph">' + glyph + '</span>' +
+      '<span class="ruler-pill__label">MIDHEAVEN</span>' +
+      '<span class="ruler-pill__divider"></span>' +
+      '<span class="ruler-pill__text">' + mc.sign + ' MC \u00B7 ' + ordinal(mc.house) + ' house</span>' +
     '</div>';
 }
 
