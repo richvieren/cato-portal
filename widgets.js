@@ -481,7 +481,7 @@ function houseTheme(house) {
     5: 'creative projects, risk-taking, and self-expression',
     6: 'daily routines, systems, and client delivery',
     7: 'partnerships, contracts, and one-on-one client work',
-    8: 'joint finances, investments, and deep transformation',
+    8: 'joint finances, investments, and shared resources',
     9: 'education, publishing, and expanding your reach',
     10: 'public reputation, career milestones, and authority',
     11: 'community, networks, and long-term vision',

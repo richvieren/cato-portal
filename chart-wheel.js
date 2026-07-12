@@ -92,9 +92,8 @@ function renderChartWheel(containerId, chartData) {
       .attr('stroke', isAngular ? 'rgba(186,145,107,0.35)' : 'rgba(186,175,163,0.1)')
       .attr('stroke-width', strokeScale);
 
-    // House number at midpoint between this cusp and the next
-    var nextLon = (lon + 30) % 360;
-    var midLon = lon + 15; // Each whole sign house is exactly 30 degrees
+    // House number at midpoint (each whole sign house is exactly 30 degrees)
+    var midLon = lon + 15;
     var numPos = xy(midLon, 86);
     svg.append('text')
       .attr('x', numPos[0]).attr('y', numPos[1])
