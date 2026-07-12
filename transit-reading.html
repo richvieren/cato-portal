@@ -13,7 +13,17 @@
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back-link">← Back to portal</a>
+    <header class="profile-header">
+      <div class="profile-header__left">
+        <span class="profile-header__email" id="user-email"></span>
+      </div>
+      <div class="profile-header__center">
+        <img src="img/icon.png" alt="Cato Vermeulen" class="profile-header__logo">
+      </div>
+      <div class="profile-header__right">
+        <button class="profile-header__signout" onclick="signOut()">SIGN&nbsp;OUT</button>
+      </div>
+    </header>
 
     <div class="blueprint-wrap">
 
@@ -115,6 +125,8 @@
         window.location.href = 'index.html';
         return;
       }
+
+      document.getElementById('user-email').textContent = session.user.email;
 
       const grant = await getTransitGrant();
       const profile = await getProfile();

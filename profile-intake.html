@@ -27,9 +27,20 @@
     </div>
   </div>
 
+  <header class="profile-header" id="intake-header" style="display:none">
+    <div class="profile-header__left">
+      <span class="profile-header__email" id="user-email-intake"></span>
+    </div>
+    <div class="profile-header__center">
+      <img src="img/icon.png" alt="Cato Vermeulen" class="profile-header__logo">
+    </div>
+    <div class="profile-header__right">
+      <button class="profile-header__signout" onclick="signOut()">SIGN&nbsp;OUT</button>
+    </div>
+  </header>
+
   <div id="intake-screen" style="display:none;padding:3rem 2rem 6rem;">
     <div class="blueprint-wrap">
-      <a href="index.html" class="back-link">&larr; Back to profile</a>
       <h1>Your Birth Details</h1>
       <p class="subtitle">Enter your exact birth data to generate your cosmic profile.</p>
 
@@ -91,6 +102,8 @@
         if (profile.country) document.getElementById('f-country').value = profile.country;
       }
       document.getElementById('intake-screen').style.display = 'block';
+      document.getElementById('intake-header').style.display = 'flex';
+      document.getElementById('user-email-intake').textContent = session.user.email;
       initCityAutocomplete('f-city', 'f-country');
     }
 
