@@ -129,6 +129,22 @@ function renderElementBalance(containerId, chartData) {
   if (contextEl && elementDescriptions[dominant]) {
     contextEl.textContent = elementDescriptions[dominant];
   }
+
+  // Element combo context (dominant + lowest)
+  var minCount = Infinity, lowElement = '';
+  ['fire','earth','air','water'].forEach(function(k) {
+    if (k === dominant) return;
+    var c = elements[k] ? elements[k].count : 0;
+    if (c < minCount) { minCount = c; lowElement = k; }
+  });
+  var comboText = findSnippet('element_combos', dominant, lowElement);
+  if (comboText && contextEl) {
+    var comboDiv = document.createElement('div');
+    comboDiv.className = 'widget-context';
+    comboDiv.style.marginTop = '8px';
+    comboDiv.textContent = comboText;
+    contextEl.parentNode.insertBefore(comboDiv, contextEl.nextSibling);
+  }
 }
 
 // ── MODALITY SPLIT (bars) ─────────────────────────────
@@ -492,7 +508,7 @@ function houseTheme(house) {
 
 // ── RETROGRADES ─────────────────────────────────────
 
-function renderRetrogrades(containerId, chartData) {
+function renderRetrogrades(containerId, chartData, snippets) {
   var el = document.getElementById(containerId);
   if (!el) return;
   var retros = chartData.getRetrogrades();
@@ -533,9 +549,14 @@ function renderRetrogrades(containerId, chartData) {
     '<div class="retro-rows">' +
     retros.map(function(p) {
       var info = RETRO_BASE[p.name] || {};
-      var meaning = info.meaning || '';
+      var snippetMeaning = '';
+      if (snippets && snippets.retrogrades) {
+        var rm = snippets.retrogrades.find(function(s) { return s.planet === p.name && s.house == p.house; });
+        if (rm) snippetMeaning = rm.text;
+      }
+      var meaning = snippetMeaning || info.meaning || '';
       var glyph = PLANET_GLYPHS[p.name] || '';
-      var houseNote = p.house ? ' In your ' + ordinal(p.house) + ' house, this plays out in how you handle ' + houseTheme(p.house) + '.' : '';
+      var houseNote = (!snippetMeaning && p.house) ? ' In your ' + ordinal(p.house) + ' house, this plays out in how you handle ' + houseTheme(p.house) + '.' : '';
       var personalFlag = info.personal ? '<span class="retro-item__flag">PERSONAL PLANET</span>' : '';
       return '<div class="retro-item">' +
         '<div class="retro-item__circle">' + glyph + '</div>' +

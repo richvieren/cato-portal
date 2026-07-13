@@ -20,7 +20,7 @@ function findSnippet(section, key1, key2) {
     var match = _snippets.at_a_glance.find(function(s) { return s.element === key1 && s.modality === key2; });
     return match ? match.text : '';
   }
-  if (section === 'money' || section === 'visibility' || section === 'how_you_sell' || section === 'how_you_lead') {
+  if (section === 'money' || section === 'visibility' || section === 'how_you_sell' || section === 'how_you_lead' || section === 'mc_signs' || section === 'moon_signs') {
     var arr = _snippets[section];
     if (!Array.isArray(arr)) return '';
     var m = arr.find(function(s) { return s.sign === key1; });
@@ -31,6 +31,21 @@ function findSnippet(section, key1, key2) {
     if (!Array.isArray(rulerData)) return '';
     var hm = rulerData.find(function(s) { return s.house == key2; });
     return hm ? hm.text : '';
+  }
+  if (section === 'retrogrades') {
+    if (!Array.isArray(_snippets.retrogrades)) return '';
+    var rm = _snippets.retrogrades.find(function(s) { return s.planet === key1 && s.house == key2; });
+    return rm ? rm.text : '';
+  }
+  if (section === 'element_combos') {
+    if (!Array.isArray(_snippets.element_combos)) return '';
+    var ecm = _snippets.element_combos.find(function(s) { return s.dominant === key1 && s.low === key2; });
+    return ecm ? ecm.text : '';
+  }
+  if (section === 'modality_summaries') {
+    if (!Array.isArray(_snippets.modality_summaries)) return '';
+    var msm = _snippets.modality_summaries.find(function(s) { return s.modality === key1; });
+    return msm ? msm.text : '';
   }
   return '';
 }
@@ -282,6 +297,11 @@ async function loadProfile(session) {
   renderArchetype('w-archetype', cd);
   renderHemisphereBalance('w-hemispheres', cd);
 
+  // ── Moon Nourishment ──
+  if (big3.moon) {
+    renderBizText('t-moon', 'WHAT NOURISHES YOU', findSnippet('moon_signs', big3.moon.sign));
+  }
+
   // ── At a Glance text ──
   renderTextSection('t-at-a-glance', findSnippet('at_a_glance', cd.getDominantElement(), cd.getDominantModality()), { label: 'AT A GLANCE' });
 
@@ -298,6 +318,11 @@ async function loadProfile(session) {
   var mcSign = biz.visibility.mc ? biz.visibility.mc.sign : '';
   renderBizText('t-visibility', 'ON VISIBILITY', findSnippet('visibility', mcSign));
 
+  // ── MC Career Destiny ──
+  if (mcSign) {
+    renderBizText('t-mc-destiny', 'CAREER DESTINY', findSnippet('mc_signs', mcSign));
+  }
+
   renderSalesStyle('w-sales-style', cd);
   renderLeadershipStyle('w-leadership-style', cd);
 
@@ -312,7 +337,7 @@ async function loadProfile(session) {
 
   // ── Planet Ranking + Retrogrades ──
   renderPlanetRanking('w-planet-ranking', cd);
-  renderRetrogrades('w-retrogrades', cd);
+  renderRetrogrades('w-retrogrades', cd, _snippets);
 
   // ── Stellium ──
   renderStelliums('w-stelliums', cd, _snippets);
