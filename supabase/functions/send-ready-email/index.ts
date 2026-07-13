@@ -54,7 +54,7 @@ function buildEmail(req: ReadyEmailRequest): { subject: string; html: string } {
         </p>
         <p style="font-size:0.9em;color:#666">This link expires in 7 days. You can always re-download from your portal:<br>
         <a href="${PORTAL_URL}" style="color:#9F8261">${PORTAL_URL}</a></p>
-        <p>One more thing. I built a Telegram bot that sends you daily transit alerts based on your chart. It tells you what's active today and what to focus on. Free for reading clients.</p>
+        <p>One more thing. I built a Telegram bot that sends you transit alerts based on your chart. Whenever a transit is hitting your chart, you get a message so you know exactly when to move and when to wait. Free for reading clients.</p>
         <p style="margin:20px 0">
           <a href="${TELEGRAM_BOT_URL}" style="color:#9F8261;font-weight:500">Start the bot on Telegram &rarr;</a>
         </p>
