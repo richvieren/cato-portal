@@ -351,9 +351,46 @@ async function loadProfile(session) {
   // ── Purchased readings at top ──
   renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
 
-  // ── Bottom CTA (hide if they already have blueprint) ──
-  if (blueprintGrant) {
-    var ctaSection = document.getElementById('section-cta');
+  // ── Upsell CTAs (conditional) ──
+  var upsellMid = document.getElementById('section-upsell-mid');
+  var ctaSection = document.getElementById('section-cta');
+
+  if (!blueprintGrant) {
+    // No blueprint — sell Blueprint in both spots
+    if (upsellMid) {
+      upsellMid.style.display = '';
+      upsellMid.innerHTML =
+        '<div class="frost-card" style="text-align:center;padding:2.5rem 2rem">' +
+          '<div class="upsell-label">GO DEEPER</div>' +
+          '<p style="color:var(--stone);font-size:0.92rem;line-height:1.75;max-width:480px;margin:0.8rem auto 1.5rem">This profile is your starting point. The Category of One Blueprint maps your full chart to your business strategy. Personally read by Cato.</p>' +
+          '<a href="https://catovermeulen.com/category-of-one" class="btn btn-primary">BOOK THE BLUEPRINT \u00B7 $197</a>' +
+        '</div>';
+    }
+    if (ctaSection) {
+      ctaSection.style.display = '';
+      ctaSection.querySelector('.btn').textContent = 'BOOK THE BLUEPRINT \u00B7 $197';
+    }
+  } else if (!transitGrant) {
+    // Has blueprint, no transits — sell Transits in both spots
+    if (upsellMid) {
+      upsellMid.style.display = '';
+      upsellMid.innerHTML =
+        '<div class="frost-card" style="text-align:center;padding:2.5rem 2rem">' +
+          '<div class="upsell-label">TIMING IS EVERYTHING</div>' +
+          '<p style="color:var(--stone);font-size:0.92rem;line-height:1.75;max-width:480px;margin:0.8rem auto 1.5rem">You know your chart. Now learn when to move. The Transits Reading maps your next 3 months of planetary activity to your launches, pricing windows & the exact weeks to sell. Personally read by Cato.</p>' +
+          '<a href="https://catovermeulen.com/transits-reading" class="btn btn-primary">BOOK THE TRANSITS READING \u00B7 $97</a>' +
+        '</div>';
+    }
+    if (ctaSection) {
+      ctaSection.style.display = '';
+      ctaSection.querySelector('h3').textContent = 'Know when to move';
+      ctaSection.querySelector('p').textContent = 'You know your chart. Now learn when to move. The Transits Reading maps your next 3 months of planetary activity to your business timing.';
+      ctaSection.querySelector('.btn').textContent = 'BOOK THE TRANSITS READING \u00B7 $97';
+      ctaSection.querySelector('.btn').href = 'https://catovermeulen.com/transits-reading';
+    }
+  } else {
+    // Has both — hide both CTAs
+    if (upsellMid) upsellMid.style.display = 'none';
     if (ctaSection) ctaSection.style.display = 'none';
   }
 

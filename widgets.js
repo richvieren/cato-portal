@@ -594,7 +594,6 @@ function renderHouseCusps(containerId, chartData, snippets) {
     }
 
     return '<div class="frost-card house-cusp-card">' +
-      '<span class="house-cusp-card__watermark">' + glyph + '</span>' +
       '<div class="house-cusp-card__header">' +
         '<span class="house-cusp-card__glyph">' + glyph + '</span>' +
         '<div>' +

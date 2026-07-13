@@ -1184,7 +1184,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   gap: 22px;
   text-align: center;
 }
-.upsell-banner__label {
+.upsell-banner__label,
+.upsell-label {
   font-size: 10px;
   letter-spacing: 0.32em;
   color: var(--golden);
@@ -1652,7 +1653,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .biz-divider { margin: 22px 0; }
   .biz-subsection { margin-top: 28px; }
   .house-cusp-card { padding: 22px 22px 24px; }
-  .house-cusp-card__watermark { font-size: 5rem; top: -6px; right: -2px; }
 
   /* Badge cards */
   .badge-card { padding: 36px 24px 30px; gap: 13px; }
@@ -1893,22 +1893,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .house-cusp-card {
   padding: 30px 32px;
   border-left: 2px solid rgba(186,145,107,0.4);
-  position: relative;
-  overflow: hidden;
 }
 
-.house-cusp-card__watermark {
-  position: absolute;
-  top: -10px;
-  right: -5px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 7rem;
-  font-weight: 300;
-  color: rgba(186,145,107,0.06);
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-}
 
 .house-cusp-card__header {
   display: flex;
