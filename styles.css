@@ -1651,8 +1651,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   /* Biz grouping */
   .biz-divider { margin: 22px 0; }
   .biz-subsection { margin-top: 28px; }
-  .house-cusp-card__img-wrap { height: 160px; }
-  .house-cusp-card__body { padding: 22px 22px 24px; }
+  .house-cusp-card { padding: 22px 22px 24px; }
 
   /* Badge cards */
   .badge-card { padding: 36px 24px 30px; gap: 13px; }
@@ -1891,24 +1890,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .house-cusp-card {
-  padding: 0;
-  overflow: hidden;
-}
-
-.house-cusp-card__img-wrap {
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-}
-
-.house-cusp-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.house-cusp-card__body {
   padding: 28px 30px 30px;
 }
 
