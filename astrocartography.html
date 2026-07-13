@@ -172,10 +172,10 @@
     }
 
     async function loadDownloadButton(email) {
-      const encodedEmail = email.replace('@', '%40');
+      // Pass raw email - Supabase JS client handles encoding
       const { data, error } = await window.sb.storage
         .from('blueprints')
-        .createSignedUrl(encodedEmail + '/astrocartography.pdf', 3600);
+        .createSignedUrl(email + '/astrocartography.pdf', 3600);
 
       const btnEl = document.getElementById('download-btn');
       const subtitleEl = document.getElementById('ready-subtitle');
