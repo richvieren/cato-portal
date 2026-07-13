@@ -37,7 +37,7 @@ function buildEmail(req: ReadyEmailRequest): { subject: string; html: string } {
         <a href="${PORTAL_URL}" style="color:#9F8261">${PORTAL_URL}</a></p>
         <p>Read it once all the way through. Let it land. Then come back to it whenever you need clarity or direction.</p>
         <p>Can't wait to hear what resonates.</p>
-        <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
+        <p>Cato</p>
         ${SUPPORT_LINE}
       `,
     };
@@ -58,7 +58,7 @@ function buildEmail(req: ReadyEmailRequest): { subject: string; html: string } {
         <p style="margin:20px 0">
           <a href="${TELEGRAM_BOT_URL}" style="color:#9F8261;font-weight:500">Start the bot on Telegram &rarr;</a>
         </p>
-        <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
+        <p>Cato</p>
         ${SUPPORT_LINE}
       `,
     };
@@ -76,7 +76,7 @@ function buildEmail(req: ReadyEmailRequest): { subject: string; html: string } {
       <p style="font-size:0.9em;color:#666">This link expires in 7 days. You can always re-download from your portal:<br>
       <a href="${PORTAL_URL}" style="color:#9F8261">${PORTAL_URL}</a></p>
       <p>Read it once all the way through. Let it land. Then come back to it whenever you're planning a move, a trip, or a retreat.</p>
-      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
+      <p>Cato</p>
       ${SUPPORT_LINE}
     `,
   };
