@@ -1651,6 +1651,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   /* Biz grouping */
   .biz-divider { margin: 22px 0; }
   .biz-subsection { margin-top: 28px; }
+  .house-cusp-card__img-wrap { height: 160px; }
+  .house-cusp-card__body { padding: 22px 22px 24px; }
 
   /* Badge cards */
   .badge-card { padding: 36px 24px 30px; gap: 13px; }
@@ -1882,14 +1884,38 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 /* ── House cusp cards (Task 4) ── */
 .house-cusps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   margin-top: 8px;
 }
 
 .house-cusp-card {
-  padding: 26px 28px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.house-cusp-card__img-wrap {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.house-cusp-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.85;
+  transition: opacity 0.4s;
+}
+
+.house-cusp-card:hover .house-cusp-card__img {
+  opacity: 1;
+}
+
+.house-cusp-card__body {
+  padding: 28px 30px 30px;
 }
 
 .house-cusp-card__header {

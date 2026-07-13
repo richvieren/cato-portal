@@ -575,9 +575,9 @@ function renderHouseCusps(containerId, chartData, snippets) {
   var cusps = chartData.getHouseCusps();
 
   var items = [
-    { house: 2, label: 'WHERE THE MONEY FLOWS', cusp: cusps.second },
-    { house: 6, label: 'YOUR WORK MODE', cusp: cusps.sixth },
-    { house: 10, label: 'YOUR PATH TO THE TOP', cusp: cusps.tenth },
+    { house: 2, label: 'WHERE THE MONEY FLOWS', img: 'img/cusp-money.jpg', cusp: cusps.second },
+    { house: 6, label: 'YOUR WORK MODE', img: 'img/cusp-work.jpg', cusp: cusps.sixth },
+    { house: 10, label: 'YOUR PATH TO THE TOP', img: 'img/cusp-career.jpg', cusp: cusps.tenth },
   ];
 
   el.innerHTML = items.map(function(item) {
@@ -594,14 +594,19 @@ function renderHouseCusps(containerId, chartData, snippets) {
     }
 
     return '<div class="frost-card house-cusp-card">' +
-      '<div class="house-cusp-card__header">' +
-        '<span class="house-cusp-card__glyph">' + glyph + '</span>' +
-        '<div>' +
-          '<div class="house-cusp-card__label">' + item.label + '</div>' +
-          '<div class="house-cusp-card__sign">' + sign + ' on the ' + ordinal(item.house) + ' house \u00B7 ' + element + '</div>' +
-        '</div>' +
+      '<div class="house-cusp-card__img-wrap">' +
+        '<img src="' + item.img + '" alt="" class="house-cusp-card__img">' +
       '</div>' +
-      (snippetText ? '<p class="house-cusp-card__text">' + snippetText + '</p>' : '') +
+      '<div class="house-cusp-card__body">' +
+        '<div class="house-cusp-card__header">' +
+          '<span class="house-cusp-card__glyph">' + glyph + '</span>' +
+          '<div>' +
+            '<div class="house-cusp-card__label">' + item.label + '</div>' +
+            '<div class="house-cusp-card__sign">' + sign + ' on the ' + ordinal(item.house) + ' house \u00B7 ' + element + '</div>' +
+          '</div>' +
+        '</div>' +
+        (snippetText ? '<p class="house-cusp-card__text">' + snippetText + '</p>' : '') +
+      '</div>' +
     '</div>';
   }).join('');
 }
