@@ -51,7 +51,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       When you get that email, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email to get a login link, and your PDF will be waiting in your portal.</p>
 
       <p>See you on the other side ✨</p>
-      <p>Cato</p>
+      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
       ${SUPPORT_LINE}
     `,
   }),
@@ -74,7 +74,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       Once you've submitted, your Business Astrology Roadmap is generated immediately. You'll find it waiting in your portal as a PDF to download and keep.</p>
 
       <p>See you on the other side ✨</p>
-      <p>Cato</p>
+      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
       ${SUPPORT_LINE}
     `,
   }),
@@ -100,7 +100,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       When you get that email, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email to get a login link, and your PDF will be waiting in your portal.</p>
 
       <p>See you on the other side ✨</p>
-      <p>Cato</p>
+      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
       ${SUPPORT_LINE}
     `,
   }),
@@ -126,7 +126,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       When you get that email, go to <a href="https://app.catovermeulen.com" style="color:#9F8261">app.catovermeulen.com</a>, enter your email to get a login link, and your PDF will be waiting in your portal.</p>
 
       <p>See you on the other side ✨</p>
-      <p>Cato</p>
+      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
       ${SUPPORT_LINE}
     `,
   }),
@@ -149,7 +149,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       Your natal chart, planet placements, element balance, business lens, and more. It's all there, instantly.</p>
 
       <p>See you on the other side ✨</p>
-      <p>Cato</p>
+      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
       ${SUPPORT_LINE}
     `,
   }),
@@ -168,7 +168,7 @@ const EMAIL_TEMPLATES: Record<string, (link: string) => { subject: string; html:
       <p>Inside you'll find all 6 modules of the Astrology Business Reading Introduction Course. It's self-paced, with progress tracking so you can pick up where you left off.</p>
 
       <p>See you on the other side ✨</p>
-      <p>Cato</p>
+      <p><img src="https://app.catovermeulen.com/img/cato-signature.png" alt="Cato" width="100" style="display:block;margin:8px 0"></p>
       ${SUPPORT_LINE}
     `,
   }),
