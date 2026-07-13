@@ -558,9 +558,9 @@ function renderHouseCusps(containerId, chartData, snippets) {
   var cusps = chartData.getHouseCusps();
 
   var items = [
-    { house: 2, label: 'HOW YOU MAKE MONEY', cusp: cusps.second },
-    { house: 6, label: 'HOW YOU DO DAILY WORK', cusp: cusps.sixth },
-    { house: 10, label: 'HOW YOU BUILD YOUR CAREER', cusp: cusps.tenth },
+    { house: 2, label: 'WHERE THE MONEY FLOWS', cusp: cusps.second },
+    { house: 6, label: 'YOUR WORK MODE', cusp: cusps.sixth },
+    { house: 10, label: 'YOUR PATH TO THE TOP', cusp: cusps.tenth },
   ];
 
   el.innerHTML = items.map(function(item) {
