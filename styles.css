@@ -1906,12 +1906,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   height: 100%;
   object-fit: cover;
   display: block;
-  opacity: 0.85;
-  transition: opacity 0.4s;
-}
-
-.house-cusp-card:hover .house-cusp-card__img {
-  opacity: 1;
 }
 
 .house-cusp-card__body {
