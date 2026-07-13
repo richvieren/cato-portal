@@ -299,7 +299,7 @@ async function loadProfile(session) {
 
   // ── Moon Nourishment ──
   if (big3.moon) {
-    renderBizText('t-moon', 'WHAT NOURISHES YOU', findSnippet('moon_signs', big3.moon.sign));
+    renderTextSection('t-moon', findSnippet('moon_signs', big3.moon.sign), { label: 'WHAT NOURISHES YOU' });
   }
 
   // ── At a Glance text ──

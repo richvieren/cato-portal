@@ -139,11 +139,7 @@ function renderElementBalance(containerId, chartData) {
   });
   var comboText = findSnippet('element_combos', dominant, lowElement);
   if (comboText && contextEl) {
-    var comboDiv = document.createElement('div');
-    comboDiv.className = 'widget-context';
-    comboDiv.style.marginTop = '8px';
-    comboDiv.textContent = comboText;
-    contextEl.parentNode.insertBefore(comboDiv, contextEl.nextSibling);
+    contextEl.textContent = contextEl.textContent + ' ' + comboText;
   }
 }
 

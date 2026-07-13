@@ -1082,6 +1082,30 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   color: var(--linen);
 }
 
+#t-mc-destiny {
+  grid-column: 1 / -1;
+}
+
+.biz-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(186,145,107,0.2) 30%, rgba(186,145,107,0.2) 70%, transparent 100%);
+  margin: 32px 0;
+}
+
+.biz-subsection {
+  margin-top: 40px;
+}
+
+.biz-subsection__header {
+  font-family: Jost, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  color: var(--golden);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
 /* ── BADGE REVEAL CARDS (sales + leadership) ─────────── */
 
 .badge-card {
@@ -1624,6 +1648,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .biz-text__label { font-size: 9px; letter-spacing: 0.24em; margin-bottom: 10px; }
   .biz-text__body { font-size: 13.5px; line-height: 1.8; }
 
+  /* Biz grouping */
+  .biz-divider { margin: 22px 0; }
+  .biz-subsection { margin-top: 28px; }
+
   /* Badge cards */
   .badge-card { padding: 36px 24px 30px; gap: 13px; }
   .badge-card__label { font-size: 9px; letter-spacing: 0.28em; }
@@ -1854,7 +1882,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 /* ── House cusp cards (Task 4) ── */
 .house-cusps-grid {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
