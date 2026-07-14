@@ -33,7 +33,7 @@ async function sendMagicLink(email) {
   const { error } = await window.sb.auth.signInWithOtp({
     email,
     options: {
-      shouldCreateUser: true,
+      shouldCreateUser: false,
       emailRedirectTo: 'https://app.catovermeulen.com'
     }
   });
