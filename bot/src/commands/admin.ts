@@ -1,6 +1,6 @@
-import { Bot } from 'grammy';
+import { Bot, InlineKeyboard } from 'grammy';
 import { config } from '../config.js';
-import { upsertLesson, deleteLesson, listLessons } from '../services/supabase.js';
+import { upsertLesson, deleteLesson, listLessons } from '../services/database.js';
 import { backfillExistingClients } from '../cron/generate-alerts.js';
 import type { BotContext } from '../types.js';
 
@@ -12,46 +12,32 @@ export function registerAdminCommands(bot: Bot<BotContext>) {
   bot.command('admin', async (ctx) => {
     if (!isAdmin(ctx.chat.id)) return;
     await ctx.reply(
-      "Admin commands:\n\n" +
-      "/addlesson <course_id> <lesson_number> <title>\n" +
-      "  Then send the lesson text\n\n" +
-      "/listlessons <course_id>\n" +
-      "  List all lessons in a course\n\n" +
-      "/deletelesson <lesson_id>\n" +
-      "  Delete a lesson by ID\n\n" +
-      "/backfill\n" +
-      "  Generate alerts for all existing clients",
+      "✨ Admin commands:\n\n" +
+      "/addlesson — Add a new lesson (guided)\n" +
+      "/listlessons — List all lessons in a course\n" +
+      "/deletelesson — Delete a lesson\n" +
+      "/backfill — Generate alerts for all clients",
     );
   });
 
+  // /addlesson — guided flow, no args needed
   bot.command('addlesson', async (ctx) => {
     if (!isAdmin(ctx.chat.id)) return;
 
-    const parts = ctx.match?.split(' ');
-    if (!parts || parts.length < 3) {
-      await ctx.reply("Usage: /addlesson <course_id> <lesson_number> <title>\nExample: /addlesson introduction 1 Your Saturn Return");
-      return;
-    }
-
-    const courseId = parts[0];
-    const lessonNumber = parseInt(parts[1]);
-    const title = parts.slice(2).join(' ');
-
-    if (isNaN(lessonNumber)) {
-      await ctx.reply("Lesson number must be a number.");
-      return;
-    }
-
     ctx.session.pendingLesson = {
-      courseId,
-      lessonNumber,
-      title,
-      step: 'awaiting_text',
+      courseId: '',
+      lessonNumber: 0,
+      title: '',
+      step: 'awaiting_course',
     };
 
-    await ctx.reply(`Adding lesson ${lessonNumber} to "${courseId}": "${title}"\n\nNow send me the lesson text.`);
+    await ctx.reply(
+      "📚 Let's add a lesson.\n\n" +
+      "Which course is this for? Type the course name (e.g. sovereign, introduction):",
+    );
   });
 
+  // Handle all admin text input based on pendingLesson step
   bot.on('message:text', async (ctx, next) => {
     if (!isAdmin(ctx.chat.id) || !ctx.session.pendingLesson) {
       await next();
@@ -59,15 +45,50 @@ export function registerAdminCommands(bot: Bot<BotContext>) {
     }
 
     const pending = ctx.session.pendingLesson;
+    const text = ctx.message.text.trim();
 
-    if (pending.step === 'awaiting_text') {
-      pending.bodyText = ctx.message.text;
-      pending.step = 'awaiting_voice';
-      await ctx.reply("Got the text. Now send a voice note for this lesson, or type /skip to skip.");
+    // Skip if it's a command
+    if (text.startsWith('/')) {
+      await next();
       return;
+    }
+
+    switch (pending.step) {
+      case 'awaiting_course':
+        pending.courseId = text.toLowerCase().replace(/\s+/g, '-');
+        pending.step = 'awaiting_number';
+        await ctx.reply(`Course: "${pending.courseId}"\n\nWhat lesson number? (e.g. 1, 2, 3):`);
+        break;
+
+      case 'awaiting_number':
+        const num = parseInt(text);
+        if (isNaN(num)) {
+          await ctx.reply("🤔 That's not a number. Try again:");
+          return;
+        }
+        pending.lessonNumber = num;
+        pending.step = 'awaiting_title';
+        await ctx.reply(`Lesson ${num}.\n\nWhat's the title?`);
+        break;
+
+      case 'awaiting_title':
+        pending.title = text;
+        pending.step = 'awaiting_text';
+        await ctx.reply(`Title: "${text}"\n\nNow send me the lesson content. Type or paste the full text:`);
+        break;
+
+      case 'awaiting_text':
+        pending.bodyText = text;
+        pending.step = 'awaiting_voice';
+        await ctx.reply("Got the text.\n\nWant to add a voice note? Send one now, or type /skip");
+        break;
+
+      default:
+        await next();
     }
   });
 
+  // Voice note for lesson
   bot.on('message:voice', async (ctx) => {
     if (!isAdmin(ctx.chat.id) || !ctx.session.pendingLesson) return;
 
@@ -75,10 +96,11 @@ export function registerAdminCommands(bot: Bot<BotContext>) {
     if (pending.step === 'awaiting_voice') {
       pending.voiceNoteUrl = ctx.message.voice.file_id;
       pending.step = 'awaiting_image';
-      await ctx.reply("Got the voice note. Now send an image, or type /skip to skip.");
+      await ctx.reply("Got the voice note.\n\nWant to add an image? Send one now, or type /skip");
     }
   });
 
+  // Image for lesson
   bot.on('message:photo', async (ctx) => {
     if (!isAdmin(ctx.chat.id) || !ctx.session.pendingLesson) return;
 
@@ -90,61 +112,74 @@ export function registerAdminCommands(bot: Bot<BotContext>) {
     }
   });
 
+  // /skip — skip optional fields
   bot.command('skip', async (ctx) => {
     if (!isAdmin(ctx.chat.id) || !ctx.session.pendingLesson) return;
 
     const pending = ctx.session.pendingLesson;
     if (pending.step === 'awaiting_voice') {
       pending.step = 'awaiting_image';
-      await ctx.reply("Skipped voice note. Now send an image, or type /skip again to finish.");
+      await ctx.reply("Skipped voice note.\n\nWant to add an image? Send one now, or type /skip");
     } else if (pending.step === 'awaiting_image') {
       await saveLesson(ctx);
     }
   });
 
+  // /cancel — cancel lesson in progress
+  bot.command('cancel', async (ctx) => {
+    if (!isAdmin(ctx.chat.id)) return;
+    if (ctx.session.pendingLesson) {
+      ctx.session.pendingLesson = undefined;
+      await ctx.reply("Cancelled. No lesson saved.");
+    }
+  });
+
+  // /listlessons
   bot.command('listlessons', async (ctx) => {
     if (!isAdmin(ctx.chat.id)) return;
 
     const courseId = ctx.match?.trim();
     if (!courseId) {
-      await ctx.reply("Usage: /listlessons <course_id>");
+      await ctx.reply("Which course? Type the name after the command, e.g.:\n/listlessons sovereign");
       return;
     }
 
     const lessons = await listLessons(courseId);
     if (lessons.length === 0) {
-      await ctx.reply(`No lessons found for course "${courseId}".`);
+      await ctx.reply(`No lessons found for "${courseId}".`);
       return;
     }
 
-    const list = lessons.map(l => `${l.lesson_number}. ${l.title} (${l.id})`).join('\n');
-    await ctx.reply(`Lessons in "${courseId}":\n\n${list}`);
+    const list = lessons.map(l => `${l.lesson_number}. ${l.title}`).join('\n');
+    await ctx.reply(`📚 Lessons in "${courseId}":\n\n${list}`);
   });
 
+  // /deletelesson
   bot.command('deletelesson', async (ctx) => {
     if (!isAdmin(ctx.chat.id)) return;
 
     const lessonId = ctx.match?.trim();
     if (!lessonId) {
-      await ctx.reply("Usage: /deletelesson <lesson_id>");
+      await ctx.reply("Usage: /deletelesson <lesson_id>\n\nUse /listlessons to find the ID.");
       return;
     }
 
     await deleteLesson(lessonId);
-    await ctx.reply(`Lesson ${lessonId} deleted.`);
+    await ctx.reply(`Lesson deleted.`);
   });
 
+  // /backfill
   bot.command('backfill', async (ctx) => {
     if (!isAdmin(ctx.chat.id)) return;
 
-    await ctx.reply("Starting backfill... This may take a while. I'll notify you when done.");
+    await ctx.reply("⏳ Starting backfill... This may take a while.");
 
     try {
       await backfillExistingClients();
-      await ctx.reply("Backfill complete! All existing clients now have pre-generated alerts.");
+      await ctx.reply("✅ Backfill complete! All existing clients now have pre-generated alerts.");
     } catch (err) {
       console.error('Backfill error:', err);
-      await ctx.reply(`Backfill failed: ${err}`);
+      await ctx.reply(`❌ Backfill failed: ${err}`);
     }
   });
 }
@@ -152,7 +187,7 @@ export function registerAdminCommands(bot: Bot<BotContext>) {
 async function saveLesson(ctx: BotContext): Promise<void> {
   const pending = ctx.session.pendingLesson;
   if (!pending || !pending.bodyText) {
-    await ctx.reply("Something went wrong. Try again with /addlesson.");
+    await ctx.reply("Something went wrong. Try again with /addlesson");
     ctx.session.pendingLesson = undefined;
     return;
   }
@@ -167,12 +202,13 @@ async function saveLesson(ctx: BotContext): Promise<void> {
   });
 
   await ctx.reply(
-    `Lesson ${pending.lessonNumber} saved!\n` +
+    `✅ Lesson saved!\n\n` +
     `Course: ${pending.courseId}\n` +
+    `Lesson: ${pending.lessonNumber}\n` +
     `Title: ${pending.title}\n` +
-    `Text: ${pending.bodyText.substring(0, 50)}...\n` +
     `Voice: ${pending.voiceNoteUrl ? 'Yes' : 'No'}\n` +
-    `Image: ${pending.imageUrl ? 'Yes' : 'No'}`,
+    `Image: ${pending.imageUrl ? 'Yes' : 'No'}\n\n` +
+    `Send /addlesson to add another.`,
   );
 
   ctx.session.pendingLesson = undefined;

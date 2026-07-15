@@ -1,5 +1,5 @@
 import { TransitData, TransitAspect } from './astrology.js';
-import { NatalChart } from './supabase.js';
+import { NatalChart } from './database.js';
 
 export function formatTransitHeader(aspects: TransitAspect[]): string {
   return aspects

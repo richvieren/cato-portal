@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { detectSignificantTransits, formatTransitsForPrompt, formatNatalChartForPrompt } from '../services/transits.js';
 import type { TransitData } from '../services/astrology.js';
-import type { NatalChart } from '../services/supabase.js';
+import type { NatalChart } from '../services/database.js';
 
 const mockNatalChart: NatalChart = {
   user_id: 'test-user',

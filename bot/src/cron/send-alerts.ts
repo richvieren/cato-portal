@@ -1,5 +1,5 @@
 import { Bot } from 'grammy';
-import { getTodayAlerts, getChatIdForUser, markAlertSent, markChatIdInactive } from '../services/supabase.js';
+import { getTodayAlerts, getChatIdForUser, markAlertSent, markChatIdInactive } from '../services/database.js';
 import type { BotContext } from '../types.js';
 
 const SEND_DELAY_MS = 100;
@@ -27,6 +27,7 @@ export async function sendDailyAlerts(bot: Bot<BotContext>): Promise<{
     try {
       await bot.api.sendMessage(chatId, alert.body_text, {
         protect_content: true,
+        parse_mode: 'Markdown',
       });
       await markAlertSent(alert.id);
       sent++;

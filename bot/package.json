@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2",
+    "better-sqlite3": "^9",
     "dotenv": "^16",
     "grammy": "^1",
     "node-cron": "^3"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7",
     "@types/node": "^20",
     "@types/node-cron": "^3",
     "tsx": "^4",

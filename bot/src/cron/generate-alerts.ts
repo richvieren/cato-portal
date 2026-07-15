@@ -1,22 +1,45 @@
-import { getNatalChart, insertAlerts, getActiveAlertUsers, findProfileByEmail } from '../services/supabase.js';
-import { fetchTransitAspects, NatalBirthData } from '../services/astrology.js';
+import { getNatalChart, insertAlerts, getActiveAlertUsers, getProfileBirthData } from '../services/database.js';
+import { fetchTransitAspects, NatalBirthData, TransitAspect } from '../services/astrology.js';
 import { formatTransitsForPrompt, formatNatalChartForPrompt, formatTransitHeader } from '../services/transits.js';
 import { generateAlertText } from '../services/glm.js';
 import { ALERT_DURATIONS } from '../constants.js';
-import type { NewAlert } from '../services/supabase.js';
+import type { NewAlert } from '../services/database.js';
+
+/**
+ * Build a signature string from outer planet aspects (excluding Moon).
+ * Used to detect when the transit picture actually changes day-to-day.
+ * Slow-moving planets (Neptune, Pluto, Uranus) can hold the same aspect
+ * for weeks — we only alert when something NEW enters the picture.
+ */
+function outerPlanetSignature(aspects: TransitAspect[]): string {
+  return aspects
+    .filter(a => a.transitPlanet !== 'Moon')
+    .map(a => `${a.transitPlanet}-${a.aspectType}-${a.natalPoint}`)
+    .sort()
+    .join('|');
+}
+
+/**
+ * Return aspects that are genuinely new compared to the previous day.
+ * A "new" aspect = an outer planet aspect not present yesterday,
+ * OR any Moon hard aspect (those change daily and add flavor).
+ */
+function getNewAspects(
+  todayAspects: TransitAspect[],
+  prevSignature: string,
+): TransitAspect[] {
+  const prevSet = new Set(prevSignature.split('|').filter(Boolean));
+  return todayAspects.filter(a => {
+    if (a.transitPlanet === 'Moon') return true; // Moon aspects always count as new
+    const sig = `${a.transitPlanet}-${a.aspectType}-${a.natalPoint}`;
+    return !prevSet.has(sig);
+  });
+}
 
 async function getNatalBirthData(email: string): Promise<NatalBirthData | null> {
   // We need the raw birth data to call the transit endpoint
   // This comes from the profiles table
-  const { createClient } = await import('@supabase/supabase-js');
-  const { config } = await import('../config.js');
-  const sb = createClient(config.SUPABASE_URL, config.SUPABASE_SERVICE_KEY);
-
-  const { data } = await sb
-    .from('profiles')
-    .select('dob, tob, city, country')
-    .eq('email', email.toLowerCase())
-    .maybeSingle();
+  const data = getProfileBirthData(email);
 
   if (!data || !data.dob || !data.city) return null;
 
@@ -64,6 +87,7 @@ export async function generateAlertsForUser(
   const chartContext = formatNatalChartForPrompt(chart);
   const alerts: NewAlert[] = [];
   const currentDate = new Date(startDate);
+  let prevOuterSig = '';
 
   while (currentDate <= endDate) {
     const dateStr = currentDate.toISOString().split('T')[0];
@@ -71,8 +95,24 @@ export async function generateAlertsForUser(
     try {
       const transitData = await fetchTransitAspects(birthData, currentDate);
 
-      // Skip quiet days — only generate alerts when there are actual transits
+      // Skip days with zero transits
       if (transitData.aspects.length === 0) {
+        currentDate.setDate(currentDate.getDate() + 1);
+        continue;
+      }
+
+      const todaySig = outerPlanetSignature(transitData.aspects);
+      const newAspects = getNewAspects(transitData.aspects, prevOuterSig);
+
+      // Always update the signature for comparison, even if we skip
+      prevOuterSig = todaySig;
+
+      // Skip if no new outer planet aspects entered the picture.
+      // Moon-only days are skipped too — Moon hard aspects add flavor
+      // to an alert but don't warrant a standalone notification.
+      const hasNewOuterAspect = newAspects.some(a => a.transitPlanet !== 'Moon');
+      if (!hasNewOuterAspect) {
+        console.log(`Skipping ${email} on ${dateStr} — same outer transits as previous day`);
         currentDate.setDate(currentDate.getDate() + 1);
         continue;
       }

@@ -4,7 +4,7 @@ import {
   getCompletedLessons,
   markLessonComplete,
   getLessonCount,
-} from '../services/supabase.js';
+} from '../services/database.js';
 import { showProductMenu } from './menu.js';
 import type { BotContext } from '../types.js';
 
