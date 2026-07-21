@@ -1,46 +1,88 @@
-// auth.js — Supabase client init + auth helpers
+// auth.js — VPS auth via /v2/auth/ API (SQLite + JWT)
 
-const SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_tPplh1HJNd6_YTQy300VSw_uH5OjEHo';
+const API_BASE = 'https://api.catovermeulen.com';
 
-const { createClient } = supabase;
-window.sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: {
-    detectSessionInUrl: true,
-    flowType: 'implicit',
-  }
-});
+// On page load, check for magic-link token in URL
+(function handleAuthToken() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('auth_token');
+  if (!token) return;
 
-// Listen for auth state changes. When a magic link is clicked,
-// Supabase detects the tokens in the URL hash and fires SIGNED_IN.
-// This handles the "different user already logged in" case by reloading
-// the page so the dashboard picks up the new session.
-window.sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN' && window.location.hash.includes('access_token')) {
-    // Clean the hash from the URL
-    window.history.replaceState(null, '', window.location.pathname);
-    // Reload to pick up the new session
-    window.location.reload();
-  }
-});
+  // Verify the token and get a JWT session
+  fetch(`${API_BASE}/v2/auth/verify`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.ok && data.access_token) {
+        localStorage.setItem('cato_token', data.access_token);
+        localStorage.setItem('cato_user', JSON.stringify(data.user));
+        // Clean the URL and reload
+        window.history.replaceState(null, '', window.location.pathname);
+        window.location.reload();
+      } else {
+        console.error('Auth verify failed:', data);
+      }
+    })
+    .catch(err => console.error('Auth verify error:', err));
+})();
 
+/** Get current session (JWT + user). Returns null if not logged in. */
 async function getSession() {
-  const { data: { session } } = await window.sb.auth.getSession();
-  return session;
-}
+  const token = localStorage.getItem('cato_token');
+  const userJson = localStorage.getItem('cato_user');
+  if (!token || !userJson) return null;
 
-async function sendMagicLink(email) {
-  const { error } = await window.sb.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: false,
-      emailRedirectTo: 'https://app.catovermeulen.com'
+  // Validate the token is still good
+  try {
+    const res = await fetch(`${API_BASE}/v2/auth/me`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (!res.ok) {
+      // Token expired or invalid — clear and return null
+      localStorage.removeItem('cato_token');
+      localStorage.removeItem('cato_user');
+      return null;
     }
-  });
-  return { error };
+    const data = await res.json();
+    // Return a session-like object matching the shape the portal expects
+    return {
+      access_token: token,
+      user: data.user,
+    };
+  } catch {
+    return null;
+  }
 }
 
+/** Send magic link via the VPS auth API. */
+async function sendMagicLink(email) {
+  try {
+    const res = await fetch(`${API_BASE}/v2/auth/send-magic-link`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (!res.ok) return { error: data.detail || 'Failed to send magic link' };
+    return {};
+  } catch (err) {
+    return { error: err.message };
+  }
+}
+
+/** Sign out — revoke server sessions and clear local storage. */
 async function signOut() {
-  await window.sb.auth.signOut();
+  const token = localStorage.getItem('cato_token');
+  if (token) {
+    fetch(`${API_BASE}/v2/auth/sign-out`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` },
+    }).catch(() => {});
+  }
+  localStorage.removeItem('cato_token');
+  localStorage.removeItem('cato_user');
   window.location.reload();
 }

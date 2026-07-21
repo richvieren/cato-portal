@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Transits Reading — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="auth.js"></script>
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
@@ -154,8 +153,6 @@
   </div>
 
   <script>
-    window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
-
     async function init() {
       const session = await getSession();
       if (!session) {
@@ -203,10 +200,11 @@
     }
 
     async function loadDownloadButton(email) {
-      // Pass raw email - Supabase JS client handles encoding
-      const { data, error } = await window.sb.storage
-        .from('blueprints')
-        .createSignedUrl(email + '/transit_reading.pdf', 3600);
+      const res = await fetch('https://api.catovermeulen.com/v2/api/download/transit_reading', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('cato_token') }
+      });
+      const data = res.ok ? await res.json() : null;
+      const error = !res.ok;
 
       const btnEl = document.getElementById('download-btn');
       const subtitleEl = document.getElementById('ready-subtitle');
@@ -220,7 +218,7 @@
 
       subtitleEl.textContent = 'Your reading is ready.';
       textEl.textContent = 'Your Transits Reading is ready to download.';
-      btnEl.href = data.signedUrl;
+      btnEl.href = data.url;
       btnEl.download = 'Transits-Reading.pdf';
       btnEl.style.display = 'inline-block';
     }
@@ -246,7 +244,7 @@
       btn.disabled = true;
       btn.textContent = 'Saving...';
 
-      const { data: { session } } = await window.sb.auth.getSession();
+      const session = await getSession();
 
       const { error } = await submitTransitIntake(session.user.id, {
         email: session.user.email,

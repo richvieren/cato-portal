@@ -174,11 +174,18 @@ async function loadProfile(session) {
 
   if (hasReadingGrant && !cosmicGrant) {
     var email = session.user.email.toLowerCase();
-    await window.sb.from('access_grants').insert({
-      email: email,
-      product: 'cosmic_profile',
-      source: 'comp',
-      available_at: new Date().toISOString(),
+    await fetch('https://api.catovermeulen.com/v2/api/access-grants', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('cato_token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        product: 'cosmic_profile',
+        source: 'comp',
+        available_at: new Date().toISOString(),
+      }),
     }).catch(function() {});
     cosmicGrant = { id: 'auto', available_at: new Date().toISOString(), granted_at: new Date().toISOString() };
 

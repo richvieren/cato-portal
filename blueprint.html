@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Blueprint — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="auth.js"></script>
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
@@ -143,8 +142,6 @@
   </div>
 
   <script>
-    window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
-
     async function init() {
       const session = await getSession();
       if (!session) {
@@ -192,10 +189,11 @@
     }
 
     async function loadDownloadButton(email) {
-      // Pass raw email - Supabase JS client handles encoding
-      const { data, error } = await window.sb.storage
-        .from('blueprints')
-        .createSignedUrl(email + '/blueprint.pdf', 3600);
+      const res = await fetch('https://api.catovermeulen.com/v2/api/download/blueprint', {
+        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('cato_token') }
+      });
+      const data = res.ok ? await res.json() : null;
+      const error = !res.ok;
 
       const loadingEl = document.getElementById('download-loading');
       const btnEl = document.getElementById('download-btn');
@@ -210,7 +208,7 @@
 
       subtitleEl.textContent = 'Your reading is ready.';
       textEl.textContent = 'Your Category of One Blueprint is ready to download.';
-      btnEl.href = data.signedUrl;
+      btnEl.href = data.url;
       btnEl.download = 'Category-of-One-Blueprint.pdf';
       btnEl.style.display = 'inline-block';
     }
@@ -236,7 +234,7 @@
       btn.disabled = true;
       btn.textContent = 'Saving...';
 
-      const { data: { session } } = await window.sb.auth.getSession();
+      const session = await getSession();
 
       const { error } = await submitIntake(session.user.id, {
         email: session.user.email,

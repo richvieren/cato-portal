@@ -1,402 +1,90 @@
-// db.js — access_grants + profiles + course_progress data layer
-// Depends on window.sb from auth.js
+// db.js — VPS data layer via /v2/api/ (SQLite backend)
+// Depends on auth.js being loaded first (for getSession / localStorage)
 
-/** Helper: get current user's email from session */
-async function _getUserEmail() {
-  const { data: { session } } = await window.sb.auth.getSession();
-  return session?.user?.email?.toLowerCase() || '';
+const API_BASE = 'https://api.catovermeulen.com';
+
+/** Helper: get auth headers for API calls. */
+function _authHeaders() {
+  const token = localStorage.getItem('cato_token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+  };
 }
 
-/**
- * Fetch Mini Business Reading access grant for current user.
- * Returns grant row or null.
- */
+/** Helper: get current user's email from local storage. */
+function _getUserEmail() {
+  try {
+    const user = JSON.parse(localStorage.getItem('cato_user') || '{}');
+    return user.email || '';
+  } catch { return ''; }
+}
+
+// --- Access Grants ---
+
 async function getMiniReadingGrant() {
-  const email = await _getUserEmail();
-  if (!email) return null;
-  const { data, error } = await window.sb
-    .from('access_grants')
-    .select('id, available_at, granted_at')
-    .eq('product', 'mini_reading')
-    .eq('email', email)
-    .is('revoked_at', null)
-    .limit(1)
-    .maybeSingle();
-  if (error) { console.error('getMiniReadingGrant error:', error); return null; }
+  const res = await fetch(`${API_BASE}/v2/api/grants/mini_reading`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Submit mini reading intake: upsert profile (birth data only) + set available_at + trigger pipeline.
- * Returns { error } or {}.
- */
-async function submitMiniIntake(userId, fields) {
-  // 1. Upsert profile (birth data only)
-  const { error: profileErr } = await window.sb
-    .from('profiles')
-    .upsert({
-      id: userId,
-      email: fields.email,
-      full_name: fields.full_name,
-      dob: fields.dob,
-      tob: fields.tob || null,
-      city: fields.city,
-      country: fields.country,
-      submitted_at: new Date().toISOString(),
-    }, { onConflict: 'id' });
-  if (profileErr) return { error: profileErr };
-
-  // 2. Set available_at immediately via Edge Function
-  const { data: { session } } = await window.sb.auth.getSession();
-  const res = await fetch(
-    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify({ product: 'mini_reading' }),
-    }
-  );
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    return { error: body.error || 'Failed to set available_at' };
-  }
-
-  // 3. Trigger VPS pipeline
-  await fetch('https://api.catovermeulen.com/mini-reading-portal', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Mini reading pipeline trigger failed:', err));
-
-  return {};
-}
-
-/**
- * Fetch Blueprint access grant for current user.
- * Returns grant row or null.
- */
 async function getBlueprintGrant() {
-  const email = await _getUserEmail();
-  if (!email) return null;
-  const { data, error } = await window.sb
-    .from('access_grants')
-    .select('id, available_at, granted_at')
-    .eq('product', 'blueprint')
-    .eq('email', email)
-    .is('revoked_at', null)
-    .limit(1)
-    .maybeSingle();
-  if (error) { console.error('getBlueprintGrant error:', error); return null; }
+  const res = await fetch(`${API_BASE}/v2/api/grants/blueprint`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Fetch Transit Reading access grant for current user.
- * Returns grant row or null.
- */
 async function getTransitGrant() {
-  const email = await _getUserEmail();
-  if (!email) return null;
-  const { data, error } = await window.sb
-    .from('access_grants')
-    .select('id, available_at, granted_at')
-    .eq('product', 'transit_reading')
-    .eq('email', email)
-    .is('revoked_at', null)
-    .limit(1)
-    .maybeSingle();
-  if (error) { console.error('getTransitGrant error:', error); return null; }
+  const res = await fetch(`${API_BASE}/v2/api/grants/transit_reading`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Submit transit intake: upsert profile + set available_at (12h) + trigger transit pipeline.
- * Returns { error } or {}.
- */
-async function submitTransitIntake(userId, fields) {
-  // Block resubmission: if transit reading already has available_at, don't re-trigger
-  const grant = await getTransitGrant();
-  if (grant && grant.available_at) {
-    console.log('Transit reading already submitted and processing/ready — blocking resubmission');
-    return {};
-  }
-
-  // 1. Upsert profile — only birth data, don't overwrite blueprint-specific fields
-  const profile = await getProfile();
-  const upsertData = {
-    id: userId,
-    email: fields.email,
-    full_name: fields.full_name,
-    dob: fields.dob,
-    tob: fields.tob || null,
-    city: fields.city,
-    country: fields.country,
-    submitted_at: new Date().toISOString(),
-  };
-  // Only set business fields if they don't already exist from a blueprint intake
-  if (!profile || !profile.submitted_at) {
-    upsertData.business_context = fields.business_niche;
-    upsertData.niche = fields.planned_launches;
-    upsertData.clarity = fields.clarity;
-  }
-  const { error: profileErr } = await window.sb
-    .from('profiles')
-    .upsert(upsertData, { onConflict: 'id' });
-  if (profileErr) return { error: profileErr };
-
-  // 2. Set available_at via Edge Function (12h delay for transit_reading)
-  const { data: { session } } = await window.sb.auth.getSession();
-  const res = await fetch(
-    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify({ product: 'transit_reading' }),
-    }
-  );
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    return { error: body.error || 'Failed to set available_at' };
-  }
-
-  // 3. Trigger transit pipeline on VPS
-  await fetch('https://api.catovermeulen.com/transit-portal', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Transit pipeline trigger failed:', err));
-
-  return {};
-}
-
-/**
- * Fetch Astrocartography access grant for current user.
- * Returns grant row or null.
- */
 async function getAstrocartographyGrant() {
-  const email = await _getUserEmail();
-  if (!email) return null;
-  const { data, error } = await window.sb
-    .from('access_grants')
-    .select('id, available_at, granted_at')
-    .eq('product', 'astrocartography')
-    .eq('email', email)
-    .is('revoked_at', null)
-    .limit(1)
-    .maybeSingle();
-  if (error) { console.error('getAstrocartographyGrant error:', error); return null; }
+  const res = await fetch(`${API_BASE}/v2/api/grants/astrocartography`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Submit astrocartography intake: upsert profile + set available_at (12h) + trigger pipeline.
- * Returns { error } or {}.
- */
-async function submitAstrocartographyIntake(userId, fields) {
-  // Block resubmission: if astrocartography already has available_at, don't re-trigger
-  const grant = await getAstrocartographyGrant();
-  if (grant && grant.available_at) {
-    console.log('Astrocartography already submitted and processing/ready — blocking resubmission');
-    return {};
-  }
-
-  // 1. Upsert profile — only birth data, don't overwrite blueprint-specific fields
-  const profile = await getProfile();
-  const upsertData = {
-    id: userId,
-    email: fields.email,
-    full_name: fields.full_name,
-    dob: fields.dob,
-    tob: fields.tob || null,
-    city: fields.city,
-    country: fields.country,
-    submitted_at: new Date().toISOString(),
-  };
-  // Only set business fields if they don't already exist from a blueprint intake
-  if (!profile || !profile.submitted_at) {
-    upsertData.business_context = fields.life_focus;
-  }
-  const { error: profileErr } = await window.sb
-    .from('profiles')
-    .upsert(upsertData, { onConflict: 'id' });
-  if (profileErr) return { error: profileErr };
-
-  // 2. Set available_at via Edge Function (12h delay for astrocartography)
-  const { data: { session } } = await window.sb.auth.getSession();
-  const res = await fetch(
-    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify({ product: 'astrocartography' }),
-    }
-  );
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    return { error: body.error || 'Failed to set available_at' };
-  }
-
-  // 3. Trigger astrocartography pipeline on VPS
-  await fetch('https://api.catovermeulen.com/astrocartography-portal', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Astrocartography pipeline trigger failed:', err));
-
-  return {};
-}
-
-/**
- * Fetch profiles row for current user.
- * Returns profile or null.
- */
-async function getProfile() {
-  const { data, error } = await window.sb
-    .from('profiles')
-    .select('id, full_name, dob, tob, city, country, submitted_at')
-    .maybeSingle();
-  if (error) { console.error('getProfile error:', error); return null; }
-  return data;
-}
-
-/**
- * Fetch Course access grant for current user.
- * Returns grant row or null.
- */
 async function getCourseGrant() {
-  const email = await _getUserEmail();
-  if (!email) return null;
-  const { data, error } = await window.sb
-    .from('access_grants')
-    .select('id, granted_at')
-    .eq('product', 'course')
-    .eq('email', email)
-    .is('revoked_at', null)
-    .limit(1)
-    .maybeSingle();
-  if (error) { console.error('getCourseGrant error:', error); return null; }
+  const res = await fetch(`${API_BASE}/v2/api/grants/course`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Fetch completed lesson IDs for current user.
- * Returns array of lesson_id strings.
- */
-async function getCourseProgress() {
-  const { data, error } = await window.sb
-    .from('course_progress')
-    .select('lesson_id');
-  if (error) { console.error('getCourseProgress error:', error); return []; }
-  return (data || []).map(r => r.lesson_id);
-}
-
-/**
- * Mark a lesson complete for current user.
- * Returns { error } or {}.
- */
-async function markLessonComplete(lessonId) {
-  const { data: { session } } = await window.sb.auth.getSession();
-  const { error } = await window.sb
-    .from('course_progress')
-    .upsert({ user_id: session.user.id, lesson_id: lessonId }, { onConflict: 'user_id,lesson_id' });
-  if (error) { console.error('markLessonComplete error:', error); return { error }; }
-  return {};
-}
-
-/**
- * Submit intake form: upsert profile row + call Edge Function to set available_at + trigger PDF pipeline.
- * Returns { error } or {}.
- */
-/**
- * Fetch Cosmic Profile access grant for current user.
- */
 async function getCosmicProfileGrant() {
-  const email = await _getUserEmail();
-  if (!email) return null;
-  const { data, error } = await window.sb
-    .from('access_grants')
-    .select('id, available_at, granted_at')
-    .eq('product', 'cosmic_profile')
-    .eq('email', email)
-    .is('revoked_at', null)
-    .limit(1)
-    .maybeSingle();
-  if (error) { console.error('getCosmicProfileGrant error:', error); return null; }
+  const res = await fetch(`${API_BASE}/v2/api/grants/cosmic_profile`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Fetch natal chart data for current user.
- */
-async function getNatalChart() {
-  const { data, error } = await window.sb
-    .from('natal_charts')
-    .select('planets, houses, aspects, elements, modalities, hemispheres, stelliums, chart_ruler, computed_at')
-    .maybeSingle();
-  if (error) { console.error('getNatalChart error:', error); return null; }
+// --- Profile ---
+
+async function getProfile() {
+  const res = await fetch(`${API_BASE}/v2/api/profile`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
   return data;
 }
 
-/**
- * Submit cosmic profile intake: upsert profile + call compute-chart edge function.
- */
-async function submitCosmicProfileIntake(userId, fields) {
-  const { error: profileErr } = await window.sb
-    .from('profiles')
-    .upsert({
-      id: userId,
-      email: fields.email,
-      full_name: fields.full_name,
-      dob: fields.dob,
-      tob: fields.tob || null,
-      city: fields.city,
-      country: fields.country,
-      submitted_at: new Date().toISOString(),
-    }, { onConflict: 'id' });
-  if (profileErr) return { error: profileErr };
-
-  const { data: { session } } = await window.sb.auth.getSession();
-  const res = await fetch(
-    `${window.SUPABASE_URL}/functions/v1/compute-chart`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify(fields),
-    }
-  );
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    return { error: body.error || 'Failed to compute chart' };
-  }
-  return {};
-}
+// --- Intake Submissions ---
 
 async function submitIntake(userId, fields) {
-  // Block resubmission: if blueprint already has available_at, don't re-trigger
+  // Block resubmission
   const grant = await getBlueprintGrant();
-  if (grant && grant.available_at) {
-    console.log('Blueprint already submitted and processing/ready — blocking resubmission');
-    return {};
-  }
+  if (grant && grant.available_at) return {};
 
   // 1. Upsert profile
-  const { error: profileErr } = await window.sb
-    .from('profiles')
-    .upsert({
-      id: userId,
-      email: fields.email,
+  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({
       full_name: fields.full_name,
       dob: fields.dob,
       tob: fields.tob || null,
@@ -405,33 +93,227 @@ async function submitIntake(userId, fields) {
       business_context: fields.business_context,
       niche: fields.niche,
       clarity: fields.clarity,
-      submitted_at: new Date().toISOString(),
-    }, { onConflict: 'id' });
-  if (profileErr) return { error: profileErr };
-
-  // 2. Set available_at via Edge Function (uses Postgres NOW() server-side)
-  const { data: { session } } = await window.sb.auth.getSession();
-  const res = await fetch(
-    `${window.SUPABASE_URL}/functions/v1/set-available-at`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.access_token}`,
-      },
-    }
-  );
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    return { error: body.error || 'Failed to set available_at' };
+    }),
+  });
+  if (!profileRes.ok) {
+    const err = await profileRes.json().catch(() => ({}));
+    return { error: err.detail || 'Profile save failed' };
   }
 
-  // 3. Trigger PDF pipeline on VPS — awaited so the request isn't cancelled by page navigation
-  await fetch('https://api.catovermeulen.com/blueprint-portal', {
+  // 2. Set available_at
+  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({ product: 'blueprint' }),
+  });
+  if (!availRes.ok) {
+    const err = await availRes.json().catch(() => ({}));
+    return { error: err.detail || 'Failed to set available_at' };
+  }
+
+  // 3. Trigger VPS pipeline
+  await fetch(`${API_BASE}/blueprint-portal`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(fields),
   }).catch(err => console.error('Pipeline trigger failed:', err));
 
+  return {};
+}
+
+async function submitMiniIntake(userId, fields) {
+  // 1. Upsert profile
+  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({
+      full_name: fields.full_name,
+      dob: fields.dob,
+      tob: fields.tob || null,
+      city: fields.city,
+      country: fields.country,
+    }),
+  });
+  if (!profileRes.ok) {
+    const err = await profileRes.json().catch(() => ({}));
+    return { error: err.detail || 'Profile save failed' };
+  }
+
+  // 2. Set available_at
+  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({ product: 'mini_reading' }),
+  });
+  if (!availRes.ok) {
+    const err = await availRes.json().catch(() => ({}));
+    return { error: err.detail || 'Failed to set available_at' };
+  }
+
+  // 3. Trigger pipeline
+  await fetch(`${API_BASE}/mini-reading-portal`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  }).catch(err => console.error('Mini reading pipeline trigger failed:', err));
+
+  return {};
+}
+
+async function submitTransitIntake(userId, fields) {
+  const grant = await getTransitGrant();
+  if (grant && grant.available_at) return {};
+
+  const profile = await getProfile();
+  const profileData = {
+    full_name: fields.full_name,
+    dob: fields.dob,
+    tob: fields.tob || null,
+    city: fields.city,
+    country: fields.country,
+  };
+  if (!profile || !profile.submitted_at) {
+    profileData.business_context = fields.business_niche;
+    profileData.niche = fields.planned_launches;
+    profileData.clarity = fields.clarity;
+  }
+
+  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify(profileData),
+  });
+  if (!profileRes.ok) {
+    const err = await profileRes.json().catch(() => ({}));
+    return { error: err.detail || 'Profile save failed' };
+  }
+
+  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({ product: 'transit_reading' }),
+  });
+  if (!availRes.ok) {
+    const err = await availRes.json().catch(() => ({}));
+    return { error: err.detail || 'Failed to set available_at' };
+  }
+
+  await fetch(`${API_BASE}/transit-portal`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  }).catch(err => console.error('Transit pipeline trigger failed:', err));
+
+  return {};
+}
+
+async function submitAstrocartographyIntake(userId, fields) {
+  const grant = await getAstrocartographyGrant();
+  if (grant && grant.available_at) return {};
+
+  const profile = await getProfile();
+  const profileData = {
+    full_name: fields.full_name,
+    dob: fields.dob,
+    tob: fields.tob || null,
+    city: fields.city,
+    country: fields.country,
+  };
+  if (!profile || !profile.submitted_at) {
+    profileData.business_context = fields.life_focus;
+  }
+
+  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify(profileData),
+  });
+  if (!profileRes.ok) {
+    const err = await profileRes.json().catch(() => ({}));
+    return { error: err.detail || 'Profile save failed' };
+  }
+
+  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({ product: 'astrocartography' }),
+  });
+  if (!availRes.ok) {
+    const err = await availRes.json().catch(() => ({}));
+    return { error: err.detail || 'Failed to set available_at' };
+  }
+
+  await fetch(`${API_BASE}/astrocartography-portal`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  }).catch(err => console.error('Astrocartography pipeline trigger failed:', err));
+
+  return {};
+}
+
+// --- Cosmic Profile / Natal Chart ---
+
+async function getNatalChart() {
+  const res = await fetch(`${API_BASE}/v2/api/natal-chart`, { headers: _authHeaders() });
+  if (!res.ok) return null;
+  const { data } = await res.json();
+  return data;
+}
+
+async function submitCosmicProfileIntake(userId, fields) {
+  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({
+      full_name: fields.full_name,
+      dob: fields.dob,
+      tob: fields.tob || null,
+      city: fields.city,
+      country: fields.country,
+    }),
+  });
+  if (!profileRes.ok) {
+    const err = await profileRes.json().catch(() => ({}));
+    return { error: err.detail || 'Profile save failed' };
+  }
+
+  const chartRes = await fetch(`${API_BASE}/v2/api/compute-chart`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify({
+      full_name: fields.full_name,
+      dob: fields.dob,
+      tob: fields.tob || '00:00',
+      city: fields.city,
+      country: fields.country,
+    }),
+  });
+  if (!chartRes.ok) {
+    const err = await chartRes.json().catch(() => ({}));
+    return { error: err.detail || 'Failed to compute chart' };
+  }
+
+  return {};
+}
+
+// --- Course Progress ---
+
+async function getCourseProgress() {
+  const res = await fetch(`${API_BASE}/v2/api/course-progress`, { headers: _authHeaders() });
+  if (!res.ok) return [];
+  const { data } = await res.json();
+  return data || [];
+}
+
+async function markLessonComplete(lessonId) {
+  const res = await fetch(`${API_BASE}/v2/api/course-progress/${lessonId}`, {
+    method: 'POST',
+    headers: _authHeaders(),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    return { error: err.detail || 'Failed to mark complete' };
+  }
   return {};
 }

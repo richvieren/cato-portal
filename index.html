@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cato Vermeulen — Your Cosmic Profile</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
   <script src="auth.js"></script>
   <script src="db.js"></script>
@@ -201,7 +200,6 @@
   </div>
 
   <script>
-    window.SUPABASE_URL = 'https://fdewbbrzetgqqsonpqvp.supabase.co';
     async function init() {
       var session = await getSession();
       if (!session) { document.getElementById('login-screen').style.display = 'flex'; return; }
