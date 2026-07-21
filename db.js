@@ -1,7 +1,5 @@
 // db.js — VPS data layer via /v2/api/ (SQLite backend)
-// Depends on auth.js being loaded first (for getSession / localStorage)
-
-const API_BASE = 'https://api.catovermeulen.com';
+// Depends on auth.js being loaded first (for getSession / API_BASE)
 
 /** Helper: get auth headers for API calls. */
 function _authHeaders() {
