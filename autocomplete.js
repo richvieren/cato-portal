@@ -1,114 +1,81 @@
-/* autocomplete.js — Nominatim city autocomplete for Cato portal */
+/* autocomplete.js — Google Places Autocomplete for birth city selection.
+   Uses Places API (New) with (cities) type restriction and session tokens.
+   Stores place_id for server-side verification. */
 
-function initCityAutocomplete(cityInputId, countryInputId) {
-  const cityInput = document.getElementById(cityInputId);
-  const countryInput = document.getElementById(countryInputId);
-  if (!cityInput || !countryInput) return;
+var _validatedLocation = null;
 
-  let debounceTimer = null;
-  let activeIndex = -1;
-  let results = [];
+function getValidatedLocation() {
+  return _validatedLocation;
+}
 
-  // Create dropdown
-  const dropdown = document.createElement('div');
-  dropdown.className = 'city-autocomplete-dropdown';
-  dropdown.style.display = 'none';
+function clearValidatedLocation() {
+  _validatedLocation = null;
+  var conf = document.getElementById('location-confirmation');
+  if (conf) conf.style.display = 'none';
+  var placeIdField = document.getElementById('birth-place-id');
+  if (placeIdField) placeIdField.value = '';
+}
 
-  // Position relative to the input's parent
-  const wrapper = cityInput.parentElement;
-  wrapper.style.position = 'relative';
-  wrapper.appendChild(dropdown);
+function initBirthCityAutocomplete(inputId) {
+  var input = document.getElementById(inputId);
+  if (!input) return;
 
-  function hide() {
-    dropdown.style.display = 'none';
-    activeIndex = -1;
-    results = [];
-  }
+  input.addEventListener('input', function () {
+    clearValidatedLocation();
+  });
 
-  function render() {
-    dropdown.innerHTML = '';
-    if (!results.length) { hide(); return; }
-    dropdown.style.display = 'block';
-    results.forEach(function (r, i) {
-      const item = document.createElement('div');
-      item.className = 'city-autocomplete-item' + (i === activeIndex ? ' active' : '');
-      item.textContent = r.display;
-      item.addEventListener('mousedown', function (e) {
-        e.preventDefault();
-        select(r);
-      });
-      dropdown.appendChild(item);
-    });
-  }
+  var autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ['(cities)'],
+    fields: ['place_id', 'formatted_address', 'address_components', 'geometry'],
+  });
 
-  function select(r) {
-    cityInput.value = r.city;
-    countryInput.value = r.country;
-    hide();
-  }
+  autocomplete.addListener('place_changed', function () {
+    var place = autocomplete.getPlace();
 
-  function parseResult(item) {
+    if (!place || !place.place_id) {
+      clearValidatedLocation();
+      return;
+    }
+
     var city = '';
     var country = '';
-    var addr = item.address || {};
-
-    city = addr.city || addr.town || addr.village || addr.municipality || item.name || '';
-    country = addr.country || '';
-
-    var display = city;
-    if (addr.state && addr.state !== city) display += ', ' + addr.state;
-    if (country) display += ', ' + country;
-
-    return { city: city, country: country, display: display };
-  }
-
-  async function fetchCities(query) {
-    try {
-      var url = 'https://nominatim.openstreetmap.org/search?q=' +
-        encodeURIComponent(query) +
-        '&format=json&addressdetails=1&limit=5&featuretype=city';
-      var resp = await fetch(url);
-      var data = await resp.json();
-      results = data.map(parseResult).filter(function (r) { return r.city; });
-      activeIndex = -1;
-      render();
-    } catch (e) {
-      hide();
+    var components = place.address_components || [];
+    for (var i = 0; i < components.length; i++) {
+      var types = components[i].types;
+      if (types.indexOf('locality') !== -1) {
+        city = components[i].long_name;
+      } else if (types.indexOf('administrative_area_level_1') !== -1 && !city) {
+        city = components[i].long_name;
+      }
+      if (types.indexOf('country') !== -1) {
+        country = components[i].long_name;
+      }
     }
-  }
 
-  cityInput.addEventListener('input', function () {
-    var val = cityInput.value.trim();
-    clearTimeout(debounceTimer);
-    if (val.length < 3) { hide(); return; }
-    debounceTimer = setTimeout(function () { fetchCities(val); }, 300);
-  });
+    if (!city) city = place.name || '';
+    var display = place.formatted_address || (city + ', ' + country);
+    var lat = place.geometry ? place.geometry.location.lat() : 0;
+    var lon = place.geometry ? place.geometry.location.lng() : 0;
 
-  cityInput.addEventListener('keydown', function (e) {
-    if (dropdown.style.display === 'none') return;
+    _validatedLocation = {
+      place_id: place.place_id,
+      city: city,
+      country: country,
+      display: display,
+      lat: lat,
+      lon: lon,
+    };
 
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      activeIndex = Math.min(activeIndex + 1, results.length - 1);
-      render();
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      activeIndex = Math.max(activeIndex - 1, 0);
-      render();
-    } else if (e.key === 'Enter' && activeIndex >= 0) {
-      e.preventDefault();
-      select(results[activeIndex]);
-    } else if (e.key === 'Escape') {
-      hide();
+    // Set hidden fields
+    var placeIdField = document.getElementById('birth-place-id');
+    if (placeIdField) placeIdField.value = place.place_id;
+
+    // Show confirmation
+    var conf = document.getElementById('location-confirmation');
+    if (conf) {
+      var span = document.getElementById('location-resolved-name');
+      if (span) span.textContent = display;
+      conf.style.display = 'block';
     }
-  });
-
-  cityInput.addEventListener('blur', function () {
-    // Small delay so mousedown on item fires first
-    setTimeout(hide, 150);
-  });
-
-  document.addEventListener('click', function (e) {
-    if (!wrapper.contains(e.target)) hide();
   });
 }

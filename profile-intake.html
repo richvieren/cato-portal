@@ -8,6 +8,7 @@
   <script src="auth.js"></script>
   <script src="db.js"></script>
   <script src="autocomplete.js"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async"></script>
 </head>
 <body>
   <div id="login-screen" class="page-center" style="display:none">
@@ -62,11 +63,13 @@
         </div>
         <div class="field-group" style="position:relative">
           <label class="field-label">City of Birth</label>
-          <input type="text" id="f-city" placeholder="City" autocomplete="off">
+          <input type="text" id="f-city" placeholder="Start typing your birth city..." autocomplete="off">
+          <input type="hidden" id="birth-place-id">
         </div>
-        <div class="field-group">
-          <label class="field-label">Country of Birth</label>
-          <input type="text" id="f-country" placeholder="Country">
+
+        <div id="location-confirmation" style="display:none;background:rgba(186,145,107,0.08);border:1px solid var(--golden);border-radius:8px;padding:1rem;margin-top:0.8rem;margin-bottom:1rem">
+          <p style="color:var(--mist);font-size:0.9rem;margin-bottom:0.5rem">Born in: <strong id="location-resolved-name" style="color:var(--golden)"></strong></p>
+          <p style="color:var(--stone);font-size:0.8rem">Not correct? Clear the field and type again.</p>
         </div>
 
         <div class="error-msg" id="intake-error"></div>
@@ -103,20 +106,26 @@
       document.getElementById('intake-screen').style.display = 'block';
       document.getElementById('intake-header').style.display = 'flex';
       document.getElementById('user-email-intake').textContent = session.user.email;
-      initCityAutocomplete('f-city', 'f-country');
+      initBirthCityAutocomplete('f-city');
     }
 
     async function handleSubmit() {
       var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
+      if (!getValidatedLocation()) {
+        errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
+        return;
+      }
+      var loc = getValidatedLocation();
       var fields = {
         full_name: document.getElementById('f-name').value.trim(),
         dob: document.getElementById('f-dob').value,
         tob: document.getElementById('f-tob').value,
-        city: document.getElementById('f-city').value.trim(),
-        country: document.getElementById('f-country').value.trim(),
+        place_id: loc.place_id,
+        city: loc.city,
+        country: loc.country,
       };
-      if (!fields.full_name || !fields.dob || !fields.city || !fields.country) {
+      if (!fields.full_name || !fields.dob) {
         errEl.textContent = 'Please fill in all required fields.';
         return;
       }

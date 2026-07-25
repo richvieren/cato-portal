@@ -9,6 +9,7 @@
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
   <script src="autocomplete.js"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async"></script>
 </head>
 <body>
   <div class="container">
@@ -62,15 +63,15 @@
             </div>
           </div>
 
-          <div class="two-col">
-            <div class="field-group">
-              <label class="field-label" for="city">City of birth</label>
-              <input type="text" id="city" placeholder="e.g. Amsterdam (city name only)" required>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="country">Country</label>
-              <input type="text" id="country" placeholder="e.g. Netherlands (country only)" required>
-            </div>
+          <div class="field-group">
+            <label class="field-label" for="birth-city">City of birth</label>
+            <input type="text" id="birth-city" placeholder="Start typing your birth city..." required autocomplete="off">
+            <input type="hidden" id="birth-place-id">
+          </div>
+
+          <div id="location-confirmation" style="display:none;background:rgba(186,145,107,0.08);border:1px solid var(--golden);border-radius:8px;padding:1rem;margin-top:0.8rem;margin-bottom:1rem">
+            <p style="color:var(--mist);font-size:0.9rem;margin-bottom:0.5rem">Born in: <strong id="location-resolved-name" style="color:var(--golden)"></strong></p>
+            <p style="color:var(--stone);font-size:0.8rem">Not correct? Clear the field and type again.</p>
           </div>
 
           <p class="field-hint" style="color:var(--stone);font-size:0.85rem;margin-top:0.5rem;margin-bottom:1.5rem">
@@ -161,7 +162,7 @@
       // If available_at is null, intake hasn't been submitted yet
       if (!grant.available_at) {
         document.getElementById('welcome-view').style.display = 'block';
-        initCityAutocomplete('city', 'country');
+        initBirthCityAutocomplete('birth-city');
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;
@@ -228,18 +229,26 @@
       const btn = document.getElementById('submit-btn');
       const errEl = document.getElementById('intake-error');
       errEl.textContent = '';
+
+      if (!getValidatedLocation()) {
+        errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Saving...';
 
       const session = await getSession();
 
+      const loc = getValidatedLocation();
       const { error } = await submitAstrocartographyIntake(session.user.id, {
         email: session.user.email,
         full_name: document.getElementById('full-name').value.trim(),
         dob: document.getElementById('dob').value,
         tob: document.getElementById('tob').value || null,
-        city: document.getElementById('city').value.trim(),
-        country: document.getElementById('country').value.trim(),
+        place_id: loc.place_id,
+        city: loc.city,
+        country: loc.country,
         life_focus: document.getElementById('life-focus').value.trim(),
         cities_to_analyze: document.getElementById('cities-to-analyze').value.trim(),
       });
