@@ -15,28 +15,7 @@
   <script src="profile.js"></script>
 </head>
 <body>
-
-  <!-- Maintenance mode -->
-  <div id="maintenance-screen" class="page-center" style="min-height:100vh;display:flex;align-items:center;justify-content:center;">
-    <div style="text-align:center;max-width:420px;padding:2rem;">
-      <img src="img/logo.png" alt="Cato Vermeulen" style="max-width:240px;margin-bottom:2rem;">
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:1rem;color:var(--mist);">We'll be right back</h2>
-      <p style="color:var(--stone);font-size:0.95rem;line-height:1.6;">The portal is temporarily offline for maintenance. Your readings and data are safe — we're making things better behind the scenes.</p>
-      <p style="color:var(--stone);font-size:0.85rem;margin-top:1.5rem;">Questions? Reach out to <a href="mailto:hello@catovermeulen.com" style="color:var(--golden);">hello@catovermeulen.com</a></p>
-    </div>
-  </div>
-
-  <script>
-    // Maintenance mode — block all other screens and auth
-    (function() {
-      document.querySelectorAll('#login-screen, #profile-screen').forEach(el => el.style.display = 'none');
-      // Override auth functions to prevent any background calls
-      window.handleSendLink = function() {};
-      window.getSession = async function() { return null; };
-    })();
-  </script>
-
-  <!-- Login (hidden during maintenance) -->
+  <!-- Login -->
   <div id="login-screen" class="page-center" style="display:none">
     <div class="login-wrap">
       <img src="img/logo.png" alt="Cato Vermeulen" style="max-width:280px;margin-bottom:1.5rem;">
