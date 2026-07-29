@@ -16,25 +16,22 @@ function clearValidatedLocation() {
   if (placeIdField) placeIdField.value = '';
 }
 
+/* Google Maps callback — called by &callback=initPlacesAutocomplete on the script tag.
+   Inits autocomplete on whichever birth-city field exists on the current page. */
+function initPlacesAutocomplete() {
+  // Standard field ID used by blueprint, transit, astrocartography
+  if (document.getElementById('birth-city')) {
+    initBirthCityAutocomplete('birth-city');
+  }
+  // Profile intake uses a different field ID
+  if (document.getElementById('f-city')) {
+    initBirthCityAutocomplete('f-city');
+  }
+}
+
 function initBirthCityAutocomplete(inputId) {
   var input = document.getElementById(inputId);
   if (!input) return;
-
-  // Wait for Google Maps to load if it hasn't yet (async script)
-  if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
-    var _waitAttempts = 0;
-    var _waitInterval = setInterval(function () {
-      _waitAttempts++;
-      if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-        clearInterval(_waitInterval);
-        initBirthCityAutocomplete(inputId);
-      } else if (_waitAttempts > 50) {
-        clearInterval(_waitInterval);
-        console.error('[autocomplete] Google Maps Places failed to load after 5s');
-      }
-    }, 100);
-    return;
-  }
 
   input.addEventListener('input', function () {
     clearValidatedLocation();

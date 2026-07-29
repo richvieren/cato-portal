@@ -10,7 +10,7 @@
   <script src="dashboard.js"></script>
   <script src="autocomplete.js"></script>
   <script src="intake-confirm.js"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
 </head>
 <body>
   <div class="container">
@@ -181,7 +181,6 @@
       // Show the form, pre-fill birth data if they have a profile from blueprint
       if (!grant.available_at) {
         document.getElementById('welcome-view').style.display = 'block';
-        initBirthCityAutocomplete('birth-city');
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;

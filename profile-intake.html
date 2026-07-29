@@ -8,7 +8,7 @@
   <script src="auth.js"></script>
   <script src="db.js"></script>
   <script src="autocomplete.js"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
 </head>
 <body>
   <div id="login-screen" class="page-center" style="display:none">
@@ -106,7 +106,6 @@
       document.getElementById('intake-screen').style.display = 'block';
       document.getElementById('intake-header').style.display = 'flex';
       document.getElementById('user-email-intake').textContent = session.user.email;
-      initBirthCityAutocomplete('f-city');
     }
 
     async function handleSubmit() {
