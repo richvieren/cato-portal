@@ -51,14 +51,14 @@ function buildConfirmView(containerId, fields) {
     rows.push(fields[i]);
   }
 
-  var html = '<h1>Please confirm your details</h1>';
+  var html = '<h1 style="margin-top:2rem">Please confirm your details</h1>';
   html += '<p class="subtitle">Birth details cannot be changed after submission.</p>';
   html += '<div style="background:rgba(186,145,107,0.06);border:1px solid rgba(186,145,107,0.15);border-radius:10px;padding:1.5rem 1.8rem;margin-bottom:2rem;text-align:left">';
 
   for (var j = 0; j < rows.length; j++) {
     var isLast = j === rows.length - 1;
     html += '<div id="' + rows[j].id + '-row" style="margin-bottom:' + (isLast ? '0' : '1rem') + '">';
-    html += '<span class="field-label" style="margin-bottom:0.2rem">' + rows[j].label + '</span>';
+    html += '<span class="field-label" style="margin-bottom:0.2rem;font-family:Jost,sans-serif;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase">' + rows[j].label + '</span>';
     html += '<p id="' + rows[j].id + '" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>';
     html += '</div>';
   }

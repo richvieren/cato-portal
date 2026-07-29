@@ -1,6 +1,6 @@
 /* styles.css — Cato Vermeulen portal v2 — luxury editorial */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Serif&family=Jost:wght@200;300;400;500&display=swap');
 
 :root {
   --stone: #B4A794;
@@ -394,11 +394,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .field-label {
   display: block;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'Instrument Serif', serif;
+  font-style: normal;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--golden);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
   font-weight: 400;
 }
 
