@@ -20,6 +20,22 @@ function initBirthCityAutocomplete(inputId) {
   var input = document.getElementById(inputId);
   if (!input) return;
 
+  // Wait for Google Maps to load if it hasn't yet (async script)
+  if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+    var _waitAttempts = 0;
+    var _waitInterval = setInterval(function () {
+      _waitAttempts++;
+      if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+        clearInterval(_waitInterval);
+        initBirthCityAutocomplete(inputId);
+      } else if (_waitAttempts > 50) {
+        clearInterval(_waitInterval);
+        console.error('[autocomplete] Google Maps Places failed to load after 5s');
+      }
+    }, 100);
+    return;
+  }
+
   input.addEventListener('input', function () {
     clearValidatedLocation();
   });
