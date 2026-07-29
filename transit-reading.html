@@ -58,8 +58,9 @@
               <input type="date" id="dob" required>
             </div>
             <div class="field-group">
-              <label class="field-label" for="tob">Exact birth time</label>
+              <label class="field-label" for="tob">Time of birth (24-hour)</label>
               <input type="time" id="tob">
+              <span class="field-hint" style="color:var(--stone);font-size:0.8rem;margin-top:0.3rem;display:block">e.g. 14:30 = 2:30 PM</span>
             </div>
           </div>
 
@@ -101,14 +102,59 @@
         </form>
       </div>
 
+      <!-- Confirmation view -->
+      <div id="confirm-view" style="display:none">
+        <h1>Please confirm your details</h1>
+        <p class="subtitle">Birth details cannot be changed after submission.</p>
+
+        <div style="background:rgba(186,145,107,0.06);border:1px solid rgba(186,145,107,0.15);border-radius:10px;padding:1.5rem 1.8rem;margin-bottom:2rem;text-align:left">
+          <div style="margin-bottom:1rem">
+            <span class="field-label" style="margin-bottom:0.2rem">Name</span>
+            <p id="confirm-name" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+          <div style="margin-bottom:1rem">
+            <span class="field-label" style="margin-bottom:0.2rem">Date of birth</span>
+            <p id="confirm-dob" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+          <div style="margin-bottom:1rem">
+            <span class="field-label" style="margin-bottom:0.2rem">Time of birth</span>
+            <p id="confirm-tob" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+          <div style="margin-bottom:1rem">
+            <span class="field-label" style="margin-bottom:0.2rem">Birthplace</span>
+            <p id="confirm-city" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+          <div style="margin-bottom:1rem">
+            <span class="field-label" style="margin-bottom:0.2rem">Niche / Industry</span>
+            <p id="confirm-niche" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+          <div style="margin-bottom:1rem">
+            <span class="field-label" style="margin-bottom:0.2rem">Current focus</span>
+            <p id="confirm-launches" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+          <div id="confirm-clarity-row" style="margin-bottom:0">
+            <span class="field-label" style="margin-bottom:0.2rem">Intention for this reading</span>
+            <p id="confirm-clarity" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn" onclick="backToForm()" style="background:transparent;border:1px solid rgba(186,145,107,0.3);color:var(--stone);padding:0.8rem 1.6rem;border-radius:6px;cursor:pointer;font-family:Jost,sans-serif;font-weight:400;font-size:0.85rem">Edit details</button>
+          <button class="btn btn-primary" id="confirm-submit-btn" onclick="confirmAndSubmit()">Confirm & submit</button>
+        </div>
+        <div class="error-msg" id="confirm-error"></div>
+      </div>
+
       <!-- Success view -->
       <div id="success-view" style="display:none">
-        <h1>You're all set, babe ✨</h1>
-        <p class="subtitle" style="line-height:1.8;max-width:480px;margin:2rem auto;">
-          Your details are in and I'm already pulling up your transits. Give me 48 hours to map out the next 3 months of your cosmic business timing.
-        </p>
-        <p style="color:var(--golden);font-size:1.1rem;margin-bottom:2rem;">You'll get an email the moment it's ready.</p>
-        <a href="index.html" class="btn btn-primary">Back to your portal</a>
+        <div style="max-width:30rem;margin:3rem auto;text-align:center">
+          <h1 style="margin-bottom:1.5rem">You're all set, babe ✨</h1>
+          <p style="color:var(--stone);font-size:1rem;line-height:1.6;margin-bottom:1.5rem">
+            Your details are in and I'm already pulling up your transits. Give me 48 hours to map out the next 3 months of your cosmic business timing.
+          </p>
+          <p style="color:var(--golden);font-size:1.05rem;line-height:1.5;margin-bottom:3rem">You'll get an email the moment it's ready.</p>
+          <a href="index.html" class="btn btn-primary">Back to your portal</a>
+        </div>
       </div>
 
       <!-- Pending view -->
@@ -235,26 +281,36 @@
       setInterval(tick, 60000);
     }
 
+    function formatDobHuman(isoDate) {
+      var d = new Date(isoDate + 'T00:00:00');
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+
+    function formatTobHuman(time24) {
+      if (!time24) return 'Not provided';
+      var parts = time24.split(':');
+      var h = parseInt(parts[0], 10);
+      var m = parts[1];
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      var h12 = h % 12 || 12;
+      return time24 + ' (= ' + h12 + ':' + m + ' ' + ampm + ')';
+    }
+
+    var _pendingIntakeData = null;
+
     async function handleTransitIntakeSubmit(e) {
       e.preventDefault();
-      const btn = document.getElementById('submit-btn');
-      const errEl = document.getElementById('intake-error');
+      var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
 
-      // Client-side validation: must select birth city from dropdown
       if (!getValidatedLocation()) {
         errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
         return;
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Saving...';
-
-      const session = await getSession();
-
-      const loc = getValidatedLocation();
-      const { error } = await submitTransitIntake(session.user.id, {
-        email: session.user.email,
+      var loc = getValidatedLocation();
+      _pendingIntakeData = {
         full_name: document.getElementById('full-name').value.trim(),
         dob: document.getElementById('dob').value,
         tob: document.getElementById('tob').value || null,
@@ -264,14 +320,52 @@
         business_niche: document.getElementById('business-niche').value.trim(),
         planned_launches: document.getElementById('planned-launches').value.trim(),
         clarity: document.getElementById('clarity').value.trim(),
-      });
+      };
 
-      if (error) {
-        errEl.textContent = typeof error === 'string' ? error : 'Something went wrong. Try again.';
-        btn.disabled = false;
-        btn.textContent = 'Submit details';
+      // Populate confirmation screen
+      document.getElementById('confirm-name').textContent = _pendingIntakeData.full_name;
+      document.getElementById('confirm-dob').textContent = formatDobHuman(_pendingIntakeData.dob);
+      document.getElementById('confirm-tob').textContent = formatTobHuman(_pendingIntakeData.tob);
+      document.getElementById('confirm-city').textContent = loc.display || (loc.city + ', ' + loc.country);
+      document.getElementById('confirm-niche').textContent = _pendingIntakeData.business_niche;
+      document.getElementById('confirm-launches').textContent = _pendingIntakeData.planned_launches;
+
+      var clarityRow = document.getElementById('confirm-clarity-row');
+      if (_pendingIntakeData.clarity) {
+        document.getElementById('confirm-clarity').textContent = _pendingIntakeData.clarity;
+        clarityRow.style.display = 'block';
       } else {
-        document.getElementById('intake-view').style.display = 'none';
+        clarityRow.style.display = 'none';
+      }
+
+      document.getElementById('intake-view').style.display = 'none';
+      document.getElementById('confirm-view').style.display = 'block';
+    }
+
+    function backToForm() {
+      document.getElementById('confirm-view').style.display = 'none';
+      document.getElementById('intake-view').style.display = 'block';
+    }
+
+    async function confirmAndSubmit() {
+      var btn = document.getElementById('confirm-submit-btn');
+      var errEl = document.getElementById('confirm-error');
+      errEl.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      var session = await getSession();
+      var data = _pendingIntakeData;
+      data.email = session.user.email;
+
+      var result = await submitTransitIntake(session.user.id, data);
+
+      if (result.error) {
+        errEl.textContent = typeof result.error === 'string' ? result.error : 'Something went wrong. Try again.';
+        btn.disabled = false;
+        btn.textContent = 'Confirm & submit';
+      } else {
+        document.getElementById('confirm-view').style.display = 'none';
         document.getElementById('success-view').style.display = 'block';
       }
     }
