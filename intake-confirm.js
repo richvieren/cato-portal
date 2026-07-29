@@ -68,6 +68,7 @@ function buildConfirmView(containerId, fields) {
   html += '<button class="btn" onclick="backToForm()" style="background:transparent;border:1px solid rgba(186,145,107,0.3);color:var(--stone);padding:0.8rem 1.6rem;border-radius:6px;cursor:pointer;font-family:Jost,sans-serif;font-weight:400;font-size:0.85rem">Edit details</button>';
   html += '<button class="btn btn-primary" id="confirm-submit-btn" onclick="confirmAndSubmit()">Confirm &amp; submit</button>';
   html += '</div>';
+  html += '<div id="confirm-waiting" style="display:none;text-align:center;margin-top:1.5rem"><p style="color:var(--stone);font-size:0.95rem;line-height:1.6;animation:confirmPulse 2s ease-in-out infinite">Preparing your reading\u2026 this can take up to a minute.</p></div>';
   html += '<div class="error-msg" id="confirm-error"></div>';
 
   container.innerHTML = html;

@@ -430,6 +430,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   text-transform: uppercase;
 }
 
+/* ── CONFIRM PULSE ───────────────────────────────────── */
+
+@keyframes confirmPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 /* ── ERROR / BACK ────────────────────────────────────── */
 
 .error-msg {
