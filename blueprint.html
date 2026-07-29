@@ -9,6 +9,7 @@
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
   <script src="autocomplete.js"></script>
+  <script src="intake-confirm.js"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async"></script>
 </head>
 <body>
@@ -58,8 +59,9 @@
               <input type="date" id="dob" required>
             </div>
             <div class="field-group">
-              <label class="field-label" for="tob">Time of birth</label>
+              <label class="field-label" for="tob">Time of birth (24-hour)</label>
               <input type="time" id="tob">
+              <span class="field-hint" style="color:var(--stone);font-size:0.8rem;margin-top:0.3rem;display:block">e.g. 14:30 = 2:30 PM</span>
             </div>
           </div>
 
@@ -97,14 +99,19 @@
         </form>
       </div>
 
-      <!-- Success view (shown right after submitting details) -->
+      <!-- Confirmation view (built dynamically by intake-confirm.js) -->
+      <div id="confirm-view" style="display:none"></div>
+
+      <!-- Success view -->
       <div id="success-view" style="display:none">
-        <h1>You're all set, babe ✨</h1>
-        <p class="subtitle" style="line-height:1.8;max-width:480px;margin:2rem auto;">
-          Your details are in and I'm already diving into your chart. Give me 48 hours to go DEEP on your cosmic blueprint. I don't do surface-level readings.
-        </p>
-        <p style="color:var(--golden);font-size:1.1rem;margin-bottom:2rem;">You'll get an email the moment it's ready.</p>
-        <a href="index.html" class="btn btn-primary">Back to your portal</a>
+        <div style="max-width:30rem;margin:3rem auto;text-align:center">
+          <h1 style="margin-bottom:1.5rem">You're all set, babe ✨</h1>
+          <p style="color:var(--stone);font-size:1rem;line-height:1.6;margin-bottom:1.5rem">
+            Your details are in and I'm already diving into your chart. Give me 48 hours to go DEEP on your cosmic blueprint. I don't do surface-level readings.
+          </p>
+          <p style="color:var(--golden);font-size:1.05rem;line-height:1.5;margin-bottom:3rem">You'll get an email the moment it's ready.</p>
+          <a href="index.html" class="btn btn-primary">Back to your portal</a>
+        </div>
       </div>
 
       <!-- Pending view -->
@@ -225,10 +232,18 @@
       setInterval(tick, 60000);
     }
 
+    // Build confirmation view with blueprint-specific business fields
+    buildConfirmView('confirm-view', [
+      {label: 'Niche / business type', id: 'confirm-business-context'},
+      {label: 'Rebrand / pivot', id: 'confirm-niche'},
+      {label: 'What you want clarity on', id: 'confirm-clarity'},
+    ]);
+
+    var _pendingIntakeData = null;
+
     async function handleIntakeSubmit(e) {
       e.preventDefault();
-      const btn = document.getElementById('submit-btn');
-      const errEl = document.getElementById('intake-error');
+      var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
 
       if (!getValidatedLocation()) {
@@ -236,14 +251,8 @@
         return;
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Saving...';
-
-      const session = await getSession();
-
-      const loc = getValidatedLocation();
-      const { error } = await submitIntake(session.user.id, {
-        email: session.user.email,
+      var loc = getValidatedLocation();
+      _pendingIntakeData = {
         full_name: document.getElementById('full-name').value.trim(),
         dob: document.getElementById('dob').value,
         tob: document.getElementById('tob').value || null,
@@ -253,14 +262,35 @@
         business_context: document.getElementById('business-context').value.trim(),
         niche: document.getElementById('niche').value.trim(),
         clarity: document.getElementById('clarity').value.trim(),
-      });
+      };
 
-      if (error) {
-        errEl.textContent = typeof error === 'string' ? error : 'Something went wrong. Try again.';
+      populateConfirmView(_pendingIntakeData, loc, [
+        {id: 'confirm-business-context', value: _pendingIntakeData.business_context},
+        {id: 'confirm-niche', value: _pendingIntakeData.niche},
+        {id: 'confirm-clarity', value: _pendingIntakeData.clarity, optional: true},
+      ]);
+      showConfirmView();
+    }
+
+    async function confirmAndSubmit() {
+      var btn = document.getElementById('confirm-submit-btn');
+      var errEl = document.getElementById('confirm-error');
+      errEl.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      var session = await getSession();
+      var data = _pendingIntakeData;
+      data.email = session.user.email;
+
+      var result = await submitIntake(session.user.id, data);
+
+      if (result.error) {
+        errEl.textContent = typeof result.error === 'string' ? result.error : 'Something went wrong. Try again.';
         btn.disabled = false;
-        btn.textContent = 'Submit details';
+        btn.textContent = 'Confirm & submit';
       } else {
-        document.getElementById('intake-view').style.display = 'none';
+        document.getElementById('confirm-view').style.display = 'none';
         document.getElementById('success-view').style.display = 'block';
       }
     }

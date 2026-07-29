@@ -9,6 +9,7 @@
   <script src="db.js"></script>
   <script src="dashboard.js"></script>
   <script src="autocomplete.js"></script>
+  <script src="intake-confirm.js"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async"></script>
 </head>
 <body>
@@ -102,48 +103,8 @@
         </form>
       </div>
 
-      <!-- Confirmation view -->
-      <div id="confirm-view" style="display:none">
-        <h1>Please confirm your details</h1>
-        <p class="subtitle">Birth details cannot be changed after submission.</p>
-
-        <div style="background:rgba(186,145,107,0.06);border:1px solid rgba(186,145,107,0.15);border-radius:10px;padding:1.5rem 1.8rem;margin-bottom:2rem;text-align:left">
-          <div style="margin-bottom:1rem">
-            <span class="field-label" style="margin-bottom:0.2rem">Name</span>
-            <p id="confirm-name" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-          <div style="margin-bottom:1rem">
-            <span class="field-label" style="margin-bottom:0.2rem">Date of birth</span>
-            <p id="confirm-dob" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-          <div style="margin-bottom:1rem">
-            <span class="field-label" style="margin-bottom:0.2rem">Time of birth</span>
-            <p id="confirm-tob" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-          <div style="margin-bottom:1rem">
-            <span class="field-label" style="margin-bottom:0.2rem">Birthplace</span>
-            <p id="confirm-city" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-          <div style="margin-bottom:1rem">
-            <span class="field-label" style="margin-bottom:0.2rem">Niche / Industry</span>
-            <p id="confirm-niche" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-          <div style="margin-bottom:1rem">
-            <span class="field-label" style="margin-bottom:0.2rem">Current focus</span>
-            <p id="confirm-launches" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-          <div id="confirm-clarity-row" style="margin-bottom:0">
-            <span class="field-label" style="margin-bottom:0.2rem">Intention for this reading</span>
-            <p id="confirm-clarity" style="color:var(--mist);font-size:1rem;line-height:1.5"></p>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-          <button class="btn" onclick="backToForm()" style="background:transparent;border:1px solid rgba(186,145,107,0.3);color:var(--stone);padding:0.8rem 1.6rem;border-radius:6px;cursor:pointer;font-family:Jost,sans-serif;font-weight:400;font-size:0.85rem">Edit details</button>
-          <button class="btn btn-primary" id="confirm-submit-btn" onclick="confirmAndSubmit()">Confirm & submit</button>
-        </div>
-        <div class="error-msg" id="confirm-error"></div>
-      </div>
+      <!-- Confirmation view (built dynamically by intake-confirm.js) -->
+      <div id="confirm-view" style="display:none"></div>
 
       <!-- Success view -->
       <div id="success-view" style="display:none">
@@ -281,21 +242,12 @@
       setInterval(tick, 60000);
     }
 
-    function formatDobHuman(isoDate) {
-      var d = new Date(isoDate + 'T00:00:00');
-      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    }
-
-    function formatTobHuman(time24) {
-      if (!time24) return 'Not provided';
-      var parts = time24.split(':');
-      var h = parseInt(parts[0], 10);
-      var m = parts[1];
-      var ampm = h >= 12 ? 'PM' : 'AM';
-      var h12 = h % 12 || 12;
-      return time24 + ' (= ' + h12 + ':' + m + ' ' + ampm + ')';
-    }
+    // Build confirmation view with transit-specific business fields
+    buildConfirmView('confirm-view', [
+      {label: 'Niche / Industry', id: 'confirm-niche'},
+      {label: 'Current focus', id: 'confirm-launches'},
+      {label: 'Intention for this reading', id: 'confirm-clarity'},
+    ]);
 
     var _pendingIntakeData = null;
 
@@ -322,29 +274,12 @@
         clarity: document.getElementById('clarity').value.trim(),
       };
 
-      // Populate confirmation screen
-      document.getElementById('confirm-name').textContent = _pendingIntakeData.full_name;
-      document.getElementById('confirm-dob').textContent = formatDobHuman(_pendingIntakeData.dob);
-      document.getElementById('confirm-tob').textContent = formatTobHuman(_pendingIntakeData.tob);
-      document.getElementById('confirm-city').textContent = loc.display || (loc.city + ', ' + loc.country);
-      document.getElementById('confirm-niche').textContent = _pendingIntakeData.business_niche;
-      document.getElementById('confirm-launches').textContent = _pendingIntakeData.planned_launches;
-
-      var clarityRow = document.getElementById('confirm-clarity-row');
-      if (_pendingIntakeData.clarity) {
-        document.getElementById('confirm-clarity').textContent = _pendingIntakeData.clarity;
-        clarityRow.style.display = 'block';
-      } else {
-        clarityRow.style.display = 'none';
-      }
-
-      document.getElementById('intake-view').style.display = 'none';
-      document.getElementById('confirm-view').style.display = 'block';
-    }
-
-    function backToForm() {
-      document.getElementById('confirm-view').style.display = 'none';
-      document.getElementById('intake-view').style.display = 'block';
+      populateConfirmView(_pendingIntakeData, loc, [
+        {id: 'confirm-niche', value: _pendingIntakeData.business_niche},
+        {id: 'confirm-launches', value: _pendingIntakeData.planned_launches},
+        {id: 'confirm-clarity', value: _pendingIntakeData.clarity, optional: true},
+      ]);
+      showConfirmView();
     }
 
     async function confirmAndSubmit() {
