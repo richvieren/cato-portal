@@ -51,8 +51,8 @@ function buildConfirmView(containerId, fields) {
     rows.push(fields[i]);
   }
 
-  var html = '<h1 style="margin-top:2rem">Please confirm your details</h1>';
-  html += '<p class="subtitle">Birth details cannot be changed after submission.</p>';
+  var html = '<h1 style="margin-top:2rem;text-align:center">Please confirm your details</h1>';
+  html += '<p class="subtitle" style="text-align:center">Birth details cannot be changed after submission.</p>';
   html += '<div style="background:rgba(186,145,107,0.06);border:1px solid rgba(186,145,107,0.15);border-radius:10px;padding:1.5rem 1.8rem;margin-bottom:2rem;text-align:left">';
 
   for (var j = 0; j < rows.length; j++) {
