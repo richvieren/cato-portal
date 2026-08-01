@@ -218,7 +218,7 @@ async function submitAstrocartographyIntake(userId, fields) {
     country: fields.country,
   };
   if (!profile || !profile.submitted_at) {
-    profileData.business_context = fields.life_focus;
+    profileData.business_context = fields.career_context;
   }
 
   const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
