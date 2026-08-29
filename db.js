@@ -74,9 +74,13 @@ async function getProfile() {
 // --- Intake Submissions ---
 
 async function submitIntake(userId, fields) {
-  // Block resubmission
+  // Block resubmission. available_at is only set at approval, so it does NOT
+  // catch a refresh/double-tap before then — submitted_at is the real signal.
+  // Server-side _claim_generation() is the authoritative guard; this is UX only.
   const grant = await getBlueprintGrant();
   if (grant && grant.available_at) return {};
+  const existing = await getProfile();
+  if (existing && existing.submitted_at) return { error: 'Your details are already submitted and your reading is being prepared.' };
 
   // 1. Upsert profile
   const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
@@ -161,6 +165,8 @@ async function submitMiniIntake(userId, fields) {
 async function submitTransitIntake(userId, fields) {
   const grant = await getTransitGrant();
   if (grant && grant.available_at) return {};
+  const existingT = await getProfile();
+  if (existingT && existingT.submitted_at) return { error: 'Your details are already submitted and your reading is being prepared.' };
 
   const profile = await getProfile();
   const profileData = {
@@ -208,6 +214,8 @@ async function submitTransitIntake(userId, fields) {
 async function submitAstrocartographyIntake(userId, fields) {
   const grant = await getAstrocartographyGrant();
   if (grant && grant.available_at) return {};
+  const existingA = await getProfile();
+  if (existingA && existingA.submitted_at) return { error: 'Your details are already submitted and your reading is being prepared.' };
 
   const profile = await getProfile();
   const profileData = {
