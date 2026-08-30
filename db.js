@@ -74,13 +74,16 @@ async function getProfile() {
 // --- Intake Submissions ---
 
 async function submitIntake(userId, fields) {
-  // Block resubmission. available_at is only set at approval, so it does NOT
-  // catch a refresh/double-tap before then — submitted_at is the real signal.
-  // Server-side _claim_generation() is the authoritative guard; this is UX only.
+  // Block resubmission of THIS product only. profiles.submitted_at is per-person,
+  // so keying on it blocked returning buyers from their second product
+  // (incident 2026-08-30: 4 paid buyers got a grant but no reading).
+  // intake_submitted_at lives on the grant, so this matches the (email, product)
+  // scope that server-side _claim_generation() uses. UX only — _claim_generation()
+  // remains the authoritative duplicate guard.
   const grant = await getBlueprintGrant();
-  if (grant && grant.available_at) return {};
-  const existing = await getProfile();
-  if (existing && existing.submitted_at) return { error: 'Your details are already submitted and your reading is being prepared.' };
+  if (grant && (grant.intake_submitted_at || grant.available_at)) {
+    return { error: 'Your details are already submitted and your reading is being prepared.' };
+  }
 
   // 1. Upsert profile
   const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
@@ -163,10 +166,16 @@ async function submitMiniIntake(userId, fields) {
 }
 
 async function submitTransitIntake(userId, fields) {
+  // Block resubmission of THIS product only. profiles.submitted_at is per-person,
+  // so keying on it blocked returning buyers from their second product
+  // (incident 2026-08-30: 4 paid buyers got a grant but no reading).
+  // intake_submitted_at lives on the grant, so this matches the (email, product)
+  // scope that server-side _claim_generation() uses. UX only — _claim_generation()
+  // remains the authoritative duplicate guard.
   const grant = await getTransitGrant();
-  if (grant && grant.available_at) return {};
-  const existingT = await getProfile();
-  if (existingT && existingT.submitted_at) return { error: 'Your details are already submitted and your reading is being prepared.' };
+  if (grant && (grant.intake_submitted_at || grant.available_at)) {
+    return { error: 'Your details are already submitted and your reading is being prepared.' };
+  }
 
   const profile = await getProfile();
   const profileData = {
@@ -212,10 +221,16 @@ async function submitTransitIntake(userId, fields) {
 }
 
 async function submitAstrocartographyIntake(userId, fields) {
+  // Block resubmission of THIS product only. profiles.submitted_at is per-person,
+  // so keying on it blocked returning buyers from their second product
+  // (incident 2026-08-30: 4 paid buyers got a grant but no reading).
+  // intake_submitted_at lives on the grant, so this matches the (email, product)
+  // scope that server-side _claim_generation() uses. UX only — _claim_generation()
+  // remains the authoritative duplicate guard.
   const grant = await getAstrocartographyGrant();
-  if (grant && grant.available_at) return {};
-  const existingA = await getProfile();
-  if (existingA && existingA.submitted_at) return { error: 'Your details are already submitted and your reading is being prepared.' };
+  if (grant && (grant.intake_submitted_at || grant.available_at)) {
+    return { error: 'Your details are already submitted and your reading is being prepared.' };
+  }
 
   const profile = await getProfile();
   const profileData = {
