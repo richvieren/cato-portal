@@ -3,14 +3,26 @@
 /**
  * Determine reading card state.
  *
- * locked   — no grant row
- * intake   — grant exists, profile not yet submitted
- * pending  — profile submitted, available_at in the future
- * ready    — available_at has passed
+ * locked    — no grant row
+ * intake    — grant exists, this product's intake not submitted
+ * submitted — intake submitted, awaiting review. No ETA exists yet.
+ * pending   — approved, available_at in the future
+ * ready     — available_at has passed
+ *
+ * available_at is written ONLY by the approve endpoint, so it stays NULL for the
+ * whole review window. Keying the intake state on it alone told clients to fill in
+ * a form they had already completed, for as long as review took — four days in
+ * Melanie Peck's case (2026-08-27 to 2026-08-31), with her finished reading
+ * sitting in the delivery store the whole time.
+ *
+ * intake_submitted_at lives on the grant, matching the (email, product) scope that
+ * server-side _claim_generation() uses.
  */
 function blueprintState(grant, profile) {
   if (!grant) return 'locked';
-  if (!grant.available_at) return 'intake';
+  if (!grant.available_at) {
+    return grant.intake_submitted_at ? 'submitted' : 'intake';
+  }
   const available = new Date(grant.available_at);
   if (Date.now() < available.getTime()) return 'pending';
   return 'ready';
@@ -70,6 +82,11 @@ function renderBlueprintCard(state, grant) {
     intake: {
       status: 'Complete your details to begin',
       ctaText: 'Complete your details →',
+      ctaHref: 'blueprint.html',
+    },
+    submitted: {
+      status: 'Your details are in. Your reading is being prepared.',
+      ctaText: 'Check status →',
       ctaHref: 'blueprint.html',
     },
     pending: {
@@ -168,6 +185,11 @@ function renderMiniReadingCard(state, grant) {
       ctaText: 'Complete your details →',
       ctaHref: 'mini-reading.html',
     },
+    submitted: {
+      status: 'Your details are in. Your reading is being prepared.',
+      ctaText: 'Check status →',
+      ctaHref: 'mini-reading.html',
+    },
     pending: {
       status: 'Your reading is being prepared',
       ctaText: null,
@@ -208,6 +230,11 @@ function renderTransitCard(state, grant) {
     intake: {
       status: 'Complete your details to begin',
       ctaText: 'Complete your details →',
+      ctaHref: 'transit-reading.html',
+    },
+    submitted: {
+      status: 'Your details are in. Your reading is being prepared.',
+      ctaText: 'Check status →',
       ctaHref: 'transit-reading.html',
     },
     pending: {
@@ -270,6 +297,11 @@ function renderAstrocartographyCard(state, grant) {
     intake: {
       status: 'Complete your details to begin',
       ctaText: 'Complete your details →',
+      ctaHref: 'astrocartography.html',
+    },
+    submitted: {
+      status: 'Your details are in. Your reading is being prepared.',
+      ctaText: 'Check status →',
       ctaHref: 'astrocartography.html',
     },
     pending: {

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=9d32a67b"></script>
   <script src="db.js?v=51abf99a"></script>
-  <script src="dashboard.js?v=8244dd6c"></script>
+  <script src="dashboard.js?v=c4993470"></script>
   <script src="autocomplete.js?v=6ecbb458"></script>
   <script src="intake-confirm.js?v=1f1560ab"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
@@ -182,6 +182,19 @@
 
       // If available_at is null, transit intake hasn't been submitted yet
       // Show the form, pre-fill birth data if they have a profile from blueprint
+      // Submitted, awaiting review: never show the form again. available_at is
+      // only written at approval, so it cannot distinguish these two states.
+      if (grant.intake_submitted_at) {
+        document.getElementById('pending-view').style.display = 'block';
+        const cd = document.getElementById('countdown-display');
+        if (cd) {
+          cd.textContent = '—';
+          const lbl = cd.nextElementSibling;
+          if (lbl) lbl.textContent = 'we will email you the moment it is ready';
+        }
+        return;
+      }
+
       if (!grant.available_at) {
         document.getElementById('welcome-view').style.display = 'block';
         if (profile) {

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=9d32a67b"></script>
   <script src="db.js?v=51abf99a"></script>
-  <script src="dashboard.js?v=8244dd6c"></script>
+  <script src="dashboard.js?v=c4993470"></script>
 </head>
 <body>
   <div class="container">
@@ -119,6 +119,18 @@
 
       if (state === 'intake') {
         document.getElementById('intake-view').style.display = 'block';
+        return;
+      }
+
+      // Submitted, awaiting review. No available_at yet, so no countdown to show.
+      if (state === 'submitted') {
+        document.getElementById('pending-view').style.display = 'block';
+        const cd = document.getElementById('countdown-display');
+        if (cd) {
+          cd.textContent = '—';
+          const lbl = cd.nextElementSibling;
+          if (lbl) lbl.textContent = 'we will email you the moment it is ready';
+        }
         return;
       }
 
