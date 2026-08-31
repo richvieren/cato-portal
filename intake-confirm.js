@@ -24,12 +24,6 @@ function formatTobHuman(time24) {
 }
 
 /**
- * Render the TOB field with 24-hour label and hint.
- * Call from HTML: renderTobField('tob')
- * Returns the field-group HTML string for insertion, or use the static HTML pattern.
- */
-
-/**
  * Build and inject confirmation view HTML into a container element.
  * @param {string} containerId - ID of an empty div to receive the confirm markup
  * @param {Array} fields - Array of {label, id} objects for the business-context fields

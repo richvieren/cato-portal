@@ -7,9 +7,10 @@
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=9d32a67b"></script>
   <script src="db.js?v=51abf99a"></script>
+  <script src="timefield.js?v=3df4b7a5"></script>
   <script src="dashboard.js?v=c4993470"></script>
   <script src="autocomplete.js?v=6ecbb458"></script>
-  <script src="intake-confirm.js?v=1f1560ab"></script>
+  <script src="intake-confirm.js?v=aeec9045"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
 </head>
 <body>
@@ -59,8 +60,9 @@
               <input type="date" id="dob" required>
             </div>
             <div class="field-group">
-              <label class="field-label" for="tob">Time of birth (24-hour)</label>
-              <input type="time" id="tob">
+              <label class="field-label">Time of birth</label>
+              <div id="tob-selects"></div>
+              <input type="hidden" id="tob">
             </div>
           </div>
 
@@ -175,7 +177,7 @@
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;
-          if (profile.tob) document.getElementById('tob').value = profile.tob;
+          if (profile.tob) setTobValue('tob', profile.tob);
         }
         return;
       }
@@ -258,6 +260,9 @@
       e.preventDefault();
       var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
+
+      var _tobErr = tobError('tob');
+      if (_tobErr) { errEl.textContent = _tobErr; return; }
 
       if (!getValidatedLocation()) {
         errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
