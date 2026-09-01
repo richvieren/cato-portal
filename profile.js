@@ -183,7 +183,7 @@ async function loadProfile(session) {
       body: JSON.stringify({
         email: email,
         product: 'cosmic_profile',
-        source: 'comp',
+        source: 'giveaway',
         available_at: new Date().toISOString(),
       }),
     }).catch(function() {});
