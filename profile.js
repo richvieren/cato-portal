@@ -174,20 +174,32 @@ async function loadProfile(session) {
 
   if (hasReadingGrant && !cosmicGrant) {
     var email = session.user.email.toLowerCase();
-    await fetch('https://api.catovermeulen.com/v2/api/access-grants', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('cato_token'),
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        product: 'cosmic_profile',
-        source: 'giveaway',
-        available_at: new Date().toISOString(),
-      }),
-    }).catch(function() {});
-    cosmicGrant = { id: 'auto', available_at: new Date().toISOString(), granted_at: new Date().toISOString() };
+    // This POST used to be .catch(function(){}) with the grant faked in memory
+    // on the next line. The endpoint did not exist for the whole SQLite
+    // migration, so every call 404'd, no row was ever written, and the page
+    // looked perfectly healthy. Eliza Pelham used the cosmic profile on
+    // 2026-09-07 and had no grant row. Use the server's answer, or surface the
+    // failure — never invent the grant.
+    var grantRes;
+    try {
+      var res = await fetch('https://api.catovermeulen.com/v2/api/access-grants', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('cato_token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product: 'cosmic_profile' }),
+      });
+      if (!res.ok) {
+        console.error('[cosmic-profile] grant failed: HTTP ' + res.status + ' ' + (await res.text()).slice(0, 200));
+        return;
+      }
+      grantRes = (await res.json()).data;
+    } catch (err) {
+      console.error('[cosmic-profile] grant request failed:', err);
+      return;
+    }
+    cosmicGrant = grantRes;
 
     // If they already have birth data, auto-compute chart (no second form needed)
     if (hasBirthData && !chart) {

@@ -95,3 +95,16 @@ document.addEventListener('DOMContentLoaded', function () {
   initTobField('tob');
   initTobField('f-tob');
 });
+
+
+// --- Birth date input bounds ----------------------------------------------
+// Sets min/max on every birth-date field so the native picker cannot offer an
+// impossible year in the first place. dobError() in db.js is the check that
+// actually blocks submission; this is the affordance, not the guard.
+document.addEventListener('DOMContentLoaded', function () {
+  var inputs = document.querySelectorAll('#dob, #f-dob, input[type="date"][data-birth]');
+  for (var i = 0; i < inputs.length; i++) {
+    if (typeof DOB_MIN !== 'undefined') inputs[i].min = DOB_MIN;
+    if (typeof dobMaxDate === 'function') inputs[i].max = dobMaxDate();
+  }
+});

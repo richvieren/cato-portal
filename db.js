@@ -2,6 +2,29 @@
 // Depends on auth.js being loaded first (for getSession / API_BASE)
 
 /** Helper: get auth headers for API calls. */
+// --- Birth date bounds ----------------------------------------------------
+// A bare <input type="date"> accepts any year. On 2026-09-07 a birth year of
+// 1893 passed the form, the astrology API, a finished PDF and Cato's approval
+// queue without anything objecting, and the client was shown a chart with the
+// wrong Moon. Bound it here, at the one point every intake page passes through.
+// The server repeats this check; the form must not be the only guard.
+var DOB_MIN = '1920-01-01';
+var MIN_AGE_YEARS = 16;
+
+function dobMaxDate() {
+  var d = new Date();
+  d.setFullYear(d.getFullYear() - MIN_AGE_YEARS);
+  return d.toISOString().slice(0, 10);
+}
+
+function dobError(dob) {
+  if (!dob) return 'Please enter your date of birth.';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) return 'Please enter your date of birth as a full date.';
+  if (dob < DOB_MIN) return 'That birth year looks wrong — please check it. It must be ' + DOB_MIN.slice(0, 4) + ' or later.';
+  if (dob > dobMaxDate()) return 'That birth date is in the future or too recent — please check it.';
+  return null;
+}
+
 function _authHeaders() {
   const token = localStorage.getItem('cato_token');
   return {
@@ -74,6 +97,8 @@ async function getProfile() {
 // --- Intake Submissions ---
 
 async function submitIntake(userId, fields) {
+  var _dobErr = dobError(fields.dob);
+  if (_dobErr) return { error: _dobErr };
   // Block resubmission of THIS product only. profiles.submitted_at is per-person,
   // so keying on it blocked returning buyers from their second product
   // (incident 2026-08-30: 4 paid buyers got a grant but no reading).
@@ -127,6 +152,8 @@ async function submitIntake(userId, fields) {
 }
 
 async function submitMiniIntake(userId, fields) {
+  var _dobErr = dobError(fields.dob);
+  if (_dobErr) return { error: _dobErr };
   // 1. Upsert profile
   const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
     method: 'POST',
@@ -166,6 +193,8 @@ async function submitMiniIntake(userId, fields) {
 }
 
 async function submitTransitIntake(userId, fields) {
+  var _dobErr = dobError(fields.dob);
+  if (_dobErr) return { error: _dobErr };
   // Block resubmission of THIS product only. profiles.submitted_at is per-person,
   // so keying on it blocked returning buyers from their second product
   // (incident 2026-08-30: 4 paid buyers got a grant but no reading).
@@ -221,6 +250,8 @@ async function submitTransitIntake(userId, fields) {
 }
 
 async function submitAstrocartographyIntake(userId, fields) {
+  var _dobErr = dobError(fields.dob);
+  if (_dobErr) return { error: _dobErr };
   // Block resubmission of THIS product only. profiles.submitted_at is per-person,
   // so keying on it blocked returning buyers from their second product
   // (incident 2026-08-30: 4 paid buyers got a grant but no reading).
@@ -283,6 +314,8 @@ async function getNatalChart() {
 }
 
 async function submitCosmicProfileIntake(userId, fields) {
+  var _dobErr = dobError(fields.dob);
+  if (_dobErr) return { error: _dobErr };
   const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
     method: 'POST',
     headers: _authHeaders(),
