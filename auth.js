@@ -8,6 +8,15 @@ const API_BASE = 'https://api.catovermeulen.com';
   const token = params.get('auth_token');
   if (!token) return;
 
+  // The welcome email names one product; carry it through. The reload below
+  // replaces the URL with the bare pathname, so the query string is gone by the
+  // time profile.js runs. Stash it first. sessionStorage, not localStorage:
+  // this is one hop, and it must not outlive the tab.
+  const product = params.get('product');
+  if (product && /^[a-z_]{3,32}$/.test(product)) {
+    try { sessionStorage.setItem('cato_intent_product', product); } catch (e) {}
+  }
+
   // Verify the token and get a JWT session
   fetch(`${API_BASE}/v2/auth/verify`, {
     method: 'POST',

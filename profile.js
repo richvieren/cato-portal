@@ -158,6 +158,32 @@ async function loadProfile(session) {
   var hasSubmitted = profile && profile.submitted_at;
 
   if (!hasSubmitted) {
+    var INTAKE_PAGE = {
+      blueprint: 'blueprint.html',
+      transit_reading: 'transit-reading.html',
+      astrocartography: 'astrocartography.html',
+    };
+    var GRANT_FOR = {
+      blueprint: blueprintGrant,
+      transit_reading: transitGrant,
+      astrocartography: astroGrant,
+    };
+
+    // The product the client was emailed about wins. Before this, routing was a
+    // fixed blueprint-first order regardless of what they had just bought, so a
+    // transits buyer holding an unstarted blueprint grant landed on the
+    // blueprint form (2026-09-09). Falls back to the old order when the link
+    // carries no product, which is every link sent before today.
+    var intent = null;
+    try { intent = sessionStorage.getItem('cato_intent_product'); } catch (e) {}
+    if (intent) {
+      try { sessionStorage.removeItem('cato_intent_product'); } catch (e) {}
+      if (INTAKE_PAGE[intent] && blueprintState(GRANT_FOR[intent], profile) === 'intake') {
+        window.location.href = INTAKE_PAGE[intent];
+        return;
+      }
+    }
+
     var bpState = blueprintState(blueprintGrant, profile);
     if (bpState === 'intake') { window.location.href = 'blueprint.html'; return; }
 
