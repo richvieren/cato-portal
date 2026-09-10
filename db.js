@@ -96,6 +96,69 @@ async function getProfile() {
 
 // --- Intake Submissions ---
 
+/**
+ * Trigger a generation pipeline and decide whether the server actually took the job.
+ *
+ * /blueprint-portal and its three siblings answer HTTP 200 with
+ * {"status":"rejected","reason":...} when the Google Places check fails closed,
+ * and 200 with {"status":"ignored","reason":...} when the duplicate guard
+ * refuses. This call used to be `.catch(err => console.error(...))`, so a
+ * rejection body reached nobody: the browser showed the success screen and no
+ * reading was ever generated. Halie Devlin sat on that screen for 19 hours
+ * (2026-09-09), and could not resubmit because intake_submitted_at had already
+ * been stamped.
+ *
+ * Only {"status":"accepted"} counts as success. A non-OK HTTP status, an
+ * unparseable body, a missing or different status field, and a network failure
+ * are all failures, and the reason travels back to the client.
+ */
+async function _triggerPipeline(url, fields) {
+  var res, text;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fields),
+    });
+    text = await res.text();
+  } catch (err) {
+    console.error('Pipeline trigger failed to reach the server:', url, err);
+    return "We couldn't reach the server to start your reading. Check your connection and try again.";
+  }
+
+  var data = null;
+  try { data = JSON.parse(text); } catch (e) { /* handled below */ }
+
+  if (data && data.status === 'accepted') return null;
+
+  console.error('Pipeline refused the job:', url, 'http=' + res.status, text.slice(0, 500));
+  if (data && typeof data.reason === 'string' && data.reason) return data.reason;
+  return "We couldn't start your reading just now. Please try again in a few minutes.";
+}
+
+/**
+ * Stamp intake_submitted_at, AFTER the pipeline has accepted the job.
+ *
+ * Never fatal. Once the server is generating, telling the client her submission
+ * failed is the same lie in the other direction: she would retry, hit the
+ * duplicate guard, and read "already_in_progress" as an error. A missing stamp
+ * is visible to the stranded sweeper; a false failure is not.
+ */
+async function _markIntakeSubmitted(product) {
+  try {
+    const res = await fetch(`${API_BASE}/v2/api/set-available`, {
+      method: 'POST',
+      headers: _authHeaders(),
+      body: JSON.stringify({ product: product }),
+    });
+    if (!res.ok) {
+      console.error('set-available failed after the pipeline accepted', product, res.status);
+    }
+  } catch (err) {
+    console.error('set-available threw after the pipeline accepted', product, err);
+  }
+}
+
 async function submitIntake(userId, fields) {
   var _dobErr = dobError(fields.dob);
   if (_dobErr) return { error: _dobErr };
@@ -130,23 +193,11 @@ async function submitIntake(userId, fields) {
     return { error: err.detail || 'Profile save failed' };
   }
 
-  // 2. Set available_at
-  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
-    method: 'POST',
-    headers: _authHeaders(),
-    body: JSON.stringify({ product: 'blueprint' }),
-  });
-  if (!availRes.ok) {
-    const err = await availRes.json().catch(() => ({}));
-    return { error: err.detail || 'Failed to set available_at' };
-  }
+  // 2. Trigger the pipeline, and only stamp the intake once it accepts.
+  const trigErr = await _triggerPipeline(`${API_BASE}/blueprint-portal`, fields);
+  if (trigErr) return { error: trigErr };
 
-  // 3. Trigger VPS pipeline
-  await fetch(`${API_BASE}/blueprint-portal`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Pipeline trigger failed:', err));
+  await _markIntakeSubmitted('blueprint');
 
   return {};
 }
@@ -171,23 +222,11 @@ async function submitMiniIntake(userId, fields) {
     return { error: err.detail || 'Profile save failed' };
   }
 
-  // 2. Set available_at
-  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
-    method: 'POST',
-    headers: _authHeaders(),
-    body: JSON.stringify({ product: 'mini_reading' }),
-  });
-  if (!availRes.ok) {
-    const err = await availRes.json().catch(() => ({}));
-    return { error: err.detail || 'Failed to set available_at' };
-  }
+  // 2. Trigger the pipeline, and only stamp the intake once it accepts.
+  const trigErr = await _triggerPipeline(`${API_BASE}/mini-reading-portal`, fields);
+  if (trigErr) return { error: trigErr };
 
-  // 3. Trigger pipeline
-  await fetch(`${API_BASE}/mini-reading-portal`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Mini reading pipeline trigger failed:', err));
+  await _markIntakeSubmitted('mini_reading');
 
   return {};
 }
@@ -230,21 +269,10 @@ async function submitTransitIntake(userId, fields) {
     return { error: err.detail || 'Profile save failed' };
   }
 
-  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
-    method: 'POST',
-    headers: _authHeaders(),
-    body: JSON.stringify({ product: 'transit_reading' }),
-  });
-  if (!availRes.ok) {
-    const err = await availRes.json().catch(() => ({}));
-    return { error: err.detail || 'Failed to set available_at' };
-  }
+  const trigErr = await _triggerPipeline(`${API_BASE}/transit-portal`, fields);
+  if (trigErr) return { error: trigErr };
 
-  await fetch(`${API_BASE}/transit-portal`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Transit pipeline trigger failed:', err));
+  await _markIntakeSubmitted('transit_reading');
 
   return {};
 }
@@ -285,21 +313,10 @@ async function submitAstrocartographyIntake(userId, fields) {
     return { error: err.detail || 'Profile save failed' };
   }
 
-  const availRes = await fetch(`${API_BASE}/v2/api/set-available`, {
-    method: 'POST',
-    headers: _authHeaders(),
-    body: JSON.stringify({ product: 'astrocartography' }),
-  });
-  if (!availRes.ok) {
-    const err = await availRes.json().catch(() => ({}));
-    return { error: err.detail || 'Failed to set available_at' };
-  }
+  const trigErr = await _triggerPipeline(`${API_BASE}/astrocartography-portal`, fields);
+  if (trigErr) return { error: trigErr };
 
-  await fetch(`${API_BASE}/astrocartography-portal`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields),
-  }).catch(err => console.error('Astrocartography pipeline trigger failed:', err));
+  await _markIntakeSubmitted('astrocartography');
 
   return {};
 }
