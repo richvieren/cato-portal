@@ -1,5 +1,5 @@
 // chart-wheel.js — D3.js natal chart wheel (Gilded Observatory spec)
-// Geometry: 560x560 SVG, center 280,280. ASC on left.
+// Geometry: 560x560 SVG, center 280,280. Rising sign starts on the left horizon.
 // Rings: r270 outer, r232 sign-inner, r70 hub, r186 dashed planet orbit.
 
 function renderChartWheel(containerId, chartData) {
@@ -17,9 +17,14 @@ function renderChartWheel(containerId, chartData) {
   var mcPlanet = chartData.planets.find(function(p) { return p.name === 'Medium_Coeli'; });
   var mcLon = mcPlanet ? mcPlanet.full_degree : 0;
 
-  // Projection: screen angle a = 180 + (lon - ascLon), x = cx + r*cos(a), y = cy - r*sin(a)
+  // Whole sign houses: house 1 is the entire rising sign. The wheel turns on the
+  // start of that sign, not on the ASC degree. Turning on the ASC degree left most
+  // of a late rising sign above the horizon and put the next sign in house 1's slot.
+  var ascSignStart = Math.floor(ascLon / 30) * 30;
+
+  // Projection: screen angle a = 180 + (lon - ascSignStart), x = cx + r*cos(a), y = cy - r*sin(a)
   function xy(lon, r) {
-    var a = (180 + (lon - ascLon)) * Math.PI / 180;
+    var a = (180 + (lon - ascSignStart)) * Math.PI / 180;
     return [Math.round((CX + r * Math.cos(a)) * 10) / 10, Math.round((CY - r * Math.sin(a)) * 10) / 10];
   }
 
@@ -78,8 +83,6 @@ function renderChartWheel(containerId, chartData) {
   // ── Houses (whole sign) ──
   // In whole sign houses, house 1 = entire sign of ASC.
   // House boundaries align to sign boundaries, not cusp degrees.
-  var ascSignStart = Math.floor(ascLon / 30) * 30;
-
   chartData.houses.forEach(function(house) {
     // Whole sign cusp: house N starts at 0° of the Nth sign from ASC sign
     var lon = (ascSignStart + (house.number - 1) * 30) % 360;
@@ -200,14 +203,24 @@ function renderChartWheel(containerId, chartData) {
   };
 
   // ── ASC / MC labels ──
-  var ascPos = xy(ascLon, 292);
+  // ASC marks the horizon, where house 1 (the rising sign) begins. It sits in the
+  // sign ring on the horizon, which is always a sign boundary with no glyph on it:
+  // "ASC" above the line, the exact degree below. r292 put it outside the SVG frame.
+  var ascPos = xy(ascSignStart, 251);
   svg.append('text')
-    .attr('x', ascPos[0]).attr('y', ascPos[1])
+    .attr('x', ascPos[0]).attr('y', ascPos[1] - 9)
     .attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
     .attr('font-family', 'Jost, sans-serif')
     .attr('font-size', '10px').attr('letter-spacing', '0.15em')
     .attr('fill', 'rgba(186,145,107,0.8)')
     .text('ASC');
+  svg.append('text')
+    .attr('x', ascPos[0]).attr('y', ascPos[1] + 10)
+    .attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
+    .attr('font-family', 'Jost, sans-serif')
+    .attr('font-size', '10px')
+    .attr('fill', 'rgba(186,145,107,0.8)')
+    .text(formatSignDegree(ascLon));
 
   var mcPos = xy(mcLon, 292);
   svg.append('text')

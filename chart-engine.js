@@ -12,6 +12,14 @@ var PLANET_GLYPHS = {
 
 var PLANET_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
 
+// Degrees and minutes within the sign: 358.85 -> "28°51′". Minutes are truncated,
+// not rounded, so 29°59.9′ never displays as 30°.
+function formatSignDegree(lon) {
+  var totalMinutes = Math.min(1799, Math.floor((((lon % 30) + 30) % 30) * 60 + 1e-9));
+  var m = totalMinutes % 60;
+  return Math.floor(totalMinutes / 60) + '\u00B0' + (m < 10 ? '0' : '') + m + '\u2032';
+}
+
 var ELEMENT_COLORS = { fire: '#C4654A', earth: '#8B7D5E', air: '#A3B5C4', water: '#5B7B7A' };
 
 var SIGN_ELEMENTS = {

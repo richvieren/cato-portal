@@ -27,7 +27,7 @@ function renderBig3(containerId, chartData) {
   var items = [
     { label: 'SUN', sub: 'Your core identity in business', data: big3.sun, glyph: '\u2609' },
     { label: 'MOON', sub: 'What nourishes you as an entrepreneur', data: big3.moon, glyph: '\u263D' },
-    { label: 'RISING', sub: 'Why clients feel drawn to your brand', data: big3.rising, glyph: '\u2191' },
+    { label: 'RISING', sub: 'Why clients feel drawn to your brand', data: big3.rising, glyph: '\u2191', showDegree: true },
   ];
   el.innerHTML = items.map(function(item) {
     if (!item.data) return '';
@@ -38,7 +38,10 @@ function renderBig3(containerId, chartData) {
         '<div class="big3-circle__inner" style="background:radial-gradient(closest-side,' + tint + ',transparent)"></div>' +
         '<span class="big3-circle__glyph">' + item.glyph + '</span>' +
       '</div>' +
-      '<div class="big3-sign">' + item.data.sign + '</div>' +
+      '<div class="big3-sign">' + item.data.sign +
+        // Every card gets the degree line so the three cards stay aligned; only RISING fills it.
+        '<span style="display:block;text-align:center;font-size:0.62em;color:var(--stone);margin-top:2px">' + (item.showDegree ? formatSignDegree(item.data.full_degree) : '\u00A0') + '</span>' +
+      '</div>' +
       '<div style="display:flex;flex-direction:column;align-items:center;gap:7px">' +
         '<div class="big3-label">' + item.label + '</div>' +
         '<div class="big3-sub">' + item.sub + '</div>' +
