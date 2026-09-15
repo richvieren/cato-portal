@@ -690,7 +690,7 @@ function renderBizText(containerId, label, text) {
 
 // ── PRODUCT READING CARDS (2x2 grid) ─────────────────
 
-function renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile) {
+function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile) {
   var container = document.getElementById('product-sections');
   if (!container) return;
 
@@ -707,15 +707,11 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, courseG
       price: '$247', desc: 'Where in the world your business thrives \u2014 mapped to your chart.',
       cta: 'Get your Reading', url: 'https://catovermeulen.com/astrocartography',
       readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html' },
-    { id: 'course', name: 'Business Astrology Course', grant: courseGrant, profile: null,
-      price: '', desc: 'Learn to read your own chart for business.',
-      cta: 'Get the Course', url: 'https://catovermeulen.com',
-      readyUrl: 'course.html', intakeUrl: null },
   ];
 
   container.innerHTML = products.map(function(p) {
-    var state = p.id === 'course' ? courseState(p.grant) : blueprintState(p.grant, p.profile);
-    var isPurchased = (state === 'ready' || state === 'pending' || state === 'intake');
+    var state = blueprintState(p.grant, p.profile);
+    var isPurchased = (state === 'ready' || state === 'pending' || state === 'submitted' || state === 'intake');
     var borderClass = isPurchased ? 'reading-card--purchased' : '';
     var statusClass = isPurchased ? 'reading-card__status--active' : 'reading-card__status--available';
     var statusText, ctaText, ctaHref;
@@ -729,7 +725,7 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, courseG
       statusText = 'PURCHASED';
       ctaText = 'COMPLETE DETAILS \u2192';
       ctaHref = p.intakeUrl;
-    } else if (state === 'pending') {
+    } else if (state === 'pending' || state === 'submitted') {
       statusText = 'PROCESSING';
       ctaText = '';
       ctaHref = '#';
@@ -753,7 +749,7 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, courseG
   }).join('');
 }
 
-function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, courseGrant, profile) {
+function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, profile) {
   var container = document.getElementById('purchased-readings');
   var section = document.getElementById('section-readings-top');
   if (!container || !section) return;
@@ -764,11 +760,10 @@ function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, co
     { name: 'Category of One Blueprint', grant: blueprintGrant, profile: profile, readyUrl: 'blueprint.html', intakeUrl: 'blueprint.html', icon: '📜' },
     { name: 'Transits Reading', grant: transitGrant, profile: profile, readyUrl: 'transit-reading.html', intakeUrl: 'transit-reading.html', icon: '🔮' },
     { name: 'Astrocartography Reading', grant: astroGrant, profile: profile, readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html', icon: '🌍' },
-    { name: 'Business Astrology Course', grant: courseGrant, profile: null, readyUrl: 'course.html', intakeUrl: null, icon: '📚', isCourse: true },
   ];
 
   readings.forEach(function(r) {
-    var state = r.isCourse ? courseState(r.grant) : blueprintState(r.grant, r.profile);
+    var state = blueprintState(r.grant, r.profile);
     if (state === 'locked') return;
 
     var statusText, ctaText, ctaHref, statusClass;
@@ -778,7 +773,7 @@ function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, co
       statusClass = 'reading-top__status--action';
       ctaText = 'Fill in your details';
       ctaHref = r.intakeUrl;
-    } else if (state === 'pending') {
+    } else if (state === 'pending' || state === 'submitted') {
       statusText = 'PROCESSING';
       statusClass = 'reading-top__status--pending';
       ctaText = 'Being prepared';

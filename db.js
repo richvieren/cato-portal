@@ -43,13 +43,6 @@ function _getUserEmail() {
 
 // --- Access Grants ---
 
-async function getMiniReadingGrant() {
-  const res = await fetch(`${API_BASE}/v2/api/grants/mini_reading`, { headers: _authHeaders() });
-  if (!res.ok) return null;
-  const { data } = await res.json();
-  return data;
-}
-
 async function getBlueprintGrant() {
   const res = await fetch(`${API_BASE}/v2/api/grants/blueprint`, { headers: _authHeaders() });
   if (!res.ok) return null;
@@ -66,13 +59,6 @@ async function getTransitGrant() {
 
 async function getAstrocartographyGrant() {
   const res = await fetch(`${API_BASE}/v2/api/grants/astrocartography`, { headers: _authHeaders() });
-  if (!res.ok) return null;
-  const { data } = await res.json();
-  return data;
-}
-
-async function getCourseGrant() {
-  const res = await fetch(`${API_BASE}/v2/api/grants/course`, { headers: _authHeaders() });
   if (!res.ok) return null;
   const { data } = await res.json();
   return data;
@@ -198,35 +184,6 @@ async function submitIntake(userId, fields) {
   if (trigErr) return { error: trigErr };
 
   await _markIntakeSubmitted('blueprint');
-
-  return {};
-}
-
-async function submitMiniIntake(userId, fields) {
-  var _dobErr = dobError(fields.dob);
-  if (_dobErr) return { error: _dobErr };
-  // 1. Upsert profile
-  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
-    method: 'POST',
-    headers: _authHeaders(),
-    body: JSON.stringify({
-      full_name: fields.full_name,
-      dob: fields.dob,
-      tob: fields.tob || null,
-      city: fields.city,
-      country: fields.country,
-    }),
-  });
-  if (!profileRes.ok) {
-    const err = await profileRes.json().catch(() => ({}));
-    return { error: err.detail || 'Profile save failed' };
-  }
-
-  // 2. Trigger the pipeline, and only stamp the intake once it accepts.
-  const trigErr = await _triggerPipeline(`${API_BASE}/mini-reading-portal`, fields);
-  if (trigErr) return { error: trigErr };
-
-  await _markIntakeSubmitted('mini_reading');
 
   return {};
 }
@@ -365,26 +322,5 @@ async function submitCosmicProfileIntake(userId, fields) {
     return { error: err.detail || 'Failed to compute chart' };
   }
 
-  return {};
-}
-
-// --- Course Progress ---
-
-async function getCourseProgress() {
-  const res = await fetch(`${API_BASE}/v2/api/course-progress`, { headers: _authHeaders() });
-  if (!res.ok) return [];
-  const { data } = await res.json();
-  return data || [];
-}
-
-async function markLessonComplete(lessonId) {
-  const res = await fetch(`${API_BASE}/v2/api/course-progress/${lessonId}`, {
-    method: 'POST',
-    headers: _authHeaders(),
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    return { error: err.detail || 'Failed to mark complete' };
-  }
   return {};
 }

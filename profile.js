@@ -141,13 +141,12 @@ async function loadProfile(session) {
     getBlueprintGrant(),
     getTransitGrant(),
     getAstrocartographyGrant(),
-    getCourseGrant(),
     getNatalChart(),
     getProfile(),
   ]);
 
   var cosmicGrant = results[0], blueprintGrant = results[1], transitGrant = results[2];
-  var astroGrant = results[3], courseGrant = results[4], chart = results[5], profile = results[6];
+  var astroGrant = results[3], chart = results[4], profile = results[5];
 
   var fullName = profile && profile.full_name ? profile.full_name : session.user.email;
   document.getElementById('profile-name').textContent = fullName;
@@ -288,14 +287,14 @@ async function loadProfile(session) {
             '<p style="color:var(--stone);font-size:0.78rem;margin-top:0.4rem">Reading the sky for your birth moment</p>' +
           '</div>' +
         '</div>';
-      renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
+      renderProductSections(blueprintGrant, transitGrant, astroGrant, profile);
       return;
     }
 
     // No reading grants, no birth data — show purchase CTA
     document.getElementById('profile-locked').style.display = 'block';
     document.getElementById('profile-widgets').style.display = 'none';
-    renderProductSections(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
+    renderProductSections(blueprintGrant, transitGrant, astroGrant, profile);
     return;
   }
 
@@ -399,7 +398,7 @@ async function loadProfile(session) {
   }
 
   // ── Purchased readings at top ──
-  renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, courseGrant, profile);
+  renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, profile);
 
   // ── Upsell CTAs (conditional) ──
   var upsellMid = document.getElementById('section-upsell-mid');

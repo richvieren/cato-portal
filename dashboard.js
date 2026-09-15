@@ -40,20 +40,9 @@ function cosmicProfileState(grant, chart) {
   return 'ready';
 }
 
-// Alias — same logic works for mini reading, transit reading, and astrocartography
-const miniReadingState = blueprintState;
+// Alias — same logic works for transit reading and astrocartography
 const transitState = blueprintState;
 const astrocartographyState = blueprintState;
-
-/**
- * Determine course card state.
- * locked — no grant row
- * ready  — grant exists (no intake, direct access)
- */
-function courseState(grant) {
-  if (!grant) return 'locked';
-  return 'ready';
-}
 
 /**
  * Format countdown: "Xh Ym"
@@ -132,86 +121,6 @@ function renderBlueprintCard(state, grant) {
       }
     }, 60000);
   }
-}
-
-/**
- * Render the Course card into #course-card.
- */
-function renderCourseCard(state) {
-  const card = document.getElementById('course-card');
-  if (!card) return;
-
-  const configs = {
-    locked: {
-      status: 'Coming soon',
-      ctaText: null,
-      ctaHref: null,
-    },
-    ready: {
-      status: 'You have access',
-      ctaText: 'Enter course →',
-      ctaHref: 'course.html',
-    },
-  };
-
-  const c = configs[state];
-
-  card.innerHTML = `
-    <img src="img/04-course.webp" alt="Course" class="card-img">
-    <div class="card-label">Introduction Course</div>
-    <h2>Business Astrology Introduction Course</h2>
-    <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
-    ${c.ctaText
-      ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
-      : ''}
-  `;
-}
-
-/**
- * Render the Your Business Astrology Roadmap card into #mini-reading-card.
- */
-function renderMiniReadingCard(state, grant) {
-  const card = document.getElementById('mini-reading-card');
-  if (!card) return;
-
-  const configs = {
-    locked: {
-      status: '',
-      ctaText: 'Get your reading',
-      ctaHref: 'https://catovermeulen.com',
-    },
-    intake: {
-      status: 'Complete your details to begin',
-      ctaText: 'Complete your details →',
-      ctaHref: 'mini-reading.html',
-    },
-    submitted: {
-      status: 'Your details are in. Your reading is being prepared.',
-      ctaText: 'Check status →',
-      ctaHref: 'mini-reading.html',
-    },
-    pending: {
-      status: 'Your reading is being prepared',
-      ctaText: null,
-      ctaHref: null,
-    },
-    ready: {
-      status: 'Your reading is ready',
-      ctaText: 'View reading →',
-      ctaHref: 'mini-reading.html',
-    },
-  };
-
-  const c = configs[state];
-
-  card.innerHTML = `
-    <div class="card-label">Mini Reading</div>
-    <h2>Your Mini Reading</h2>
-    <div class="card-status ${state === 'ready' ? 'ready' : ''}">${c.status}</div>
-    ${c.ctaText
-      ? `<a href="${c.ctaHref}" class="card-cta">${c.ctaText}</a>`
-      : ''}
-  `;
 }
 
 /**
