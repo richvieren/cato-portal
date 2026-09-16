@@ -693,7 +693,12 @@ function renderBizText(containerId, label, text) {
 
 // ── PRODUCT READING CARDS (2x2 grid) ─────────────────
 
-function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile) {
+// Flodesk checkout for the $27 Cosmic Profile. Live 2026-09-16.
+// Keep this a bare string with no whitespace: the mini-reading link died on a
+// trailing space inside the href.
+var COSMIC_CHECKOUT_URL = 'https://catovrmln.myflodesk.com/cosmicprofile';
+
+function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart) {
   var container = document.getElementById('product-sections');
   if (!container) return;
 
@@ -710,10 +715,18 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile
       price: '$247', desc: 'Where in the world your business thrives \u2014 mapped to your chart.',
       cta: 'Get your Reading', url: 'https://catovermeulen.com/astrocartography',
       readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html' },
+    // Cosmic Profile became a $27 product on 2026-09-16. It has no reading and
+    // no review step, so its state comes from the stored chart, not from
+    // available_at: stateFn overrides blueprintState for this row only.
+    { id: 'cosmic_profile', name: 'Cosmic Profile', grant: cosmicGrant, profile: profile,
+      price: '$27', desc: 'Your natal chart, element balance and business lens \u2014 in the portal, instantly.',
+      cta: 'Get your Cosmic Profile', url: COSMIC_CHECKOUT_URL,
+      readyUrl: 'index.html', intakeUrl: 'profile-intake.html',
+      stateFn: function() { return cosmicProfileState(cosmicGrant, chart); } },
   ];
 
   container.innerHTML = products.map(function(p) {
-    var state = blueprintState(p.grant, p.profile);
+    var state = p.stateFn ? p.stateFn() : blueprintState(p.grant, p.profile);
     var isPurchased = (state === 'ready' || state === 'pending' || state === 'submitted' || state === 'intake');
     var borderClass = isPurchased ? 'reading-card--purchased' : '';
     var statusClass = isPurchased ? 'reading-card__status--active' : 'reading-card__status--available';

@@ -52,6 +52,26 @@ function findSnippet(section, key1, key2) {
 
 // ── Generate free profile for existing clients ──────
 
+/**
+ * One visible failure state for every chart compute path.
+ * Silence is the defect this replaces: the auto-compute paths discarded the
+ * error and reloaded, so a failing chart looped forever behind a spinner.
+ */
+function showChartError(detail) {
+  var loading = document.getElementById('generate-loading');
+  if (loading) loading.style.display = 'none';
+  var host = document.getElementById('profile-locked') || document.body;
+  host.style.display = 'block';
+  host.innerHTML =
+    '<div class="locked-banner">' +
+      '<h3>Your Cosmic Profile</h3>' +
+      '<p style="color:#c97878;font-size:0.9rem">We could not build your chart just now.</p>' +
+      '<p style="color:var(--stone);font-size:0.8rem">' + String(detail || '').slice(0, 160) + '</p>' +
+      '<button class="btn btn-primary" style="margin-top:1.5rem" onclick="generateFreeProfile()">Try again</button>' +
+      '<p style="color:var(--stone);font-size:0.78rem;margin-top:1rem">If it keeps failing, reply to your welcome email and Cato will sort it.</p>' +
+    '</div>';
+}
+
 async function generateFreeProfile() {
   var btn = document.getElementById('generate-btn');
   var area = document.getElementById('generate-area');
@@ -160,6 +180,8 @@ async function loadProfile(session) {
     blueprint: 'blueprint.html',
     transit_reading: 'transit-reading.html',
     astrocartography: 'astrocartography.html',
+    // cosmic_profile has no reading form; its intake is the birth-data form.
+    cosmic_profile: 'profile-intake.html',
   };
   var GRANT_FOR = {
     blueprint: blueprintGrant,
@@ -178,7 +200,14 @@ async function loadProfile(session) {
   try { intent = sessionStorage.getItem('cato_intent_product'); } catch (e) {}
   if (intent) {
     try { sessionStorage.removeItem('cato_intent_product'); } catch (e) {}
-    if (INTAKE_PAGE[intent] && blueprintState(GRANT_FOR[intent], profile) === 'intake') {
+    // cosmic_profile has its own state function: it is driven by the stored
+    // chart, not by available_at, so blueprintState() would misread it.
+    if (intent === 'cosmic_profile') {
+      if (cosmicProfileState(cosmicGrant, chart) === 'intake') {
+        window.location.href = INTAKE_PAGE.cosmic_profile;
+        return;
+      }
+    } else if (INTAKE_PAGE[intent] && blueprintState(GRANT_FOR[intent], profile) === 'intake') {
       window.location.href = INTAKE_PAGE[intent];
       return;
     }
@@ -233,7 +262,7 @@ async function loadProfile(session) {
 
     // If they already have birth data, auto-compute chart (no second form needed)
     if (hasBirthData && !chart) {
-      await submitCosmicProfileIntake(session.user.id, {
+      var autoRes = await submitCosmicProfileIntake(session.user.id, {
         full_name: profile.full_name || email,
         email: email,
         dob: profile.dob,
@@ -241,7 +270,10 @@ async function loadProfile(session) {
         city: profile.city,
         country: profile.country || '',
       });
-      // Reload to show the computed profile
+      // The return value used to be discarded and the page reloaded regardless.
+      // A failed compute left chart null, the reload re-entered this branch and
+      // called it again: an invisible reload loop with no error and no alert.
+      if (autoRes && autoRes.error) { showChartError(autoRes.error); return; }
       window.location.reload();
       return;
     }
@@ -254,7 +286,7 @@ async function loadProfile(session) {
   if (state === 'intake' && !hasBirthData) { window.location.href = 'profile-intake.html'; return; }
   if (state === 'intake' && hasBirthData) {
     // Has birth data but no chart — compute it now
-    await submitCosmicProfileIntake(session.user.id, {
+    var intakeRes = await submitCosmicProfileIntake(session.user.id, {
       full_name: profile.full_name || session.user.email,
       email: session.user.email,
       dob: profile.dob,
@@ -262,6 +294,7 @@ async function loadProfile(session) {
       city: profile.city,
       country: profile.country || '',
     });
+    if (intakeRes && intakeRes.error) { showChartError(intakeRes.error); return; }
     window.location.reload();
     return;
   }
@@ -287,14 +320,14 @@ async function loadProfile(session) {
             '<p style="color:var(--stone);font-size:0.78rem;margin-top:0.4rem">Reading the sky for your birth moment</p>' +
           '</div>' +
         '</div>';
-      renderProductSections(blueprintGrant, transitGrant, astroGrant, profile);
+      renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart);
       return;
     }
 
     // No reading grants, no birth data — show purchase CTA
     document.getElementById('profile-locked').style.display = 'block';
     document.getElementById('profile-widgets').style.display = 'none';
-    renderProductSections(blueprintGrant, transitGrant, astroGrant, profile);
+    renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart);
     return;
   }
 

@@ -286,36 +286,6 @@ Deno.serve(async (req) => {
 
   console.log('Access granted:', email, product, sessionId);
 
-  // Notify Telegram with payment details
-  try {
-    const amountPaid = ((session.amount_total ?? 0) / 100).toFixed(2);
-    const currency = (session.currency ?? 'usd').toUpperCase();
-    const discount = ((session.total_details?.amount_discount ?? 0) / 100).toFixed(2);
-    const customerName = session.customer_details?.name ?? email;
-    const coupon = session.discounts?.[0]?.coupon?.name ?? '';
-
-    let msg = `💰 New purchase: ${customerName}\nProduct: ${product}\nPaid: ${currency} ${amountPaid}`;
-    if (parseFloat(discount) > 0) {
-      msg += `\nDiscount: ${currency} ${discount}`;
-      if (coupon) msg += ` (${coupon})`;
-    }
-    if (parseFloat(amountPaid) === 0) {
-      msg += `\n⚠️ 100% discount — free`;
-    }
-
-    const TELEGRAM_BOT_TOKEN = '8612517573:AAEuEgVAr6hjsA0nldPU7mdH1iq3JE9aGIE';
-    const chatIds = ['1168464793', '1479373068'];
-    for (const chatId of chatIds) {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: msg }),
-      });
-    }
-  } catch (err) {
-    console.error('Telegram notification error:', err);
-  }
-
   // Generate magic link + send welcome email
   try {
     const magicLink = await generateMagicLink(email);
