@@ -186,7 +186,11 @@
       // Show the form, pre-fill birth data if they have a profile from blueprint
       // Submitted, awaiting review: never show the form again. available_at is
       // only written at approval, so it cannot distinguish these two states.
-      if (grant.intake_submitted_at) {
+      // The guard must not outrank the ready check: with a bare
+      // intake_submitted_at test this returned before the availability branch,
+      // so every delivered reading still read "being prepared" (Jessica Kaiser,
+      // 17 days, 50 grants affected). Only pre-delivery does this state apply.
+      if (grant.intake_submitted_at && !grant.available_at) {
         document.getElementById('pending-view').style.display = 'block';
         const cd = document.getElementById('countdown-display');
         if (cd) {
