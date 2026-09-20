@@ -1,0 +1,37 @@
+{
+  "built": "2026-09-19T06:13:29.072Z",
+  "pages": [
+    {
+      "slug": "direction",
+      "angle": "direction",
+      "format": "listicle",
+      "price_display": "hero",
+      "tracking_slug": "cp-direction-lst-hero",
+      "reasons": 5,
+      "spotlight": [
+        "w-archetype",
+        "w-hemispheres",
+        "w-chart-ruler"
+      ],
+      "copy_placeholders": 0,
+      "config_placeholders": 0,
+      "unresolved_template_vars": []
+    },
+    {
+      "slug": "pivot",
+      "angle": "pivot",
+      "format": "listicle",
+      "price_display": "hero",
+      "tracking_slug": "cp-pivot-lst-hero",
+      "reasons": 5,
+      "spotlight": [
+        "w-archetype",
+        "w-hemispheres",
+        "w-chart-ruler"
+      ],
+      "copy_placeholders": 0,
+      "config_placeholders": 0,
+      "unresolved_template_vars": []
+    }
+  ]
+}

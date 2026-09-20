@@ -1,0 +1,462 @@
+/* ============================================================================
+   shared/product-widgets.css
+   Styles the LIVE product. The widgets are the portal's own pinned code
+   (widgets.js, chart-wheel.js, chart-engine.js, unmodified), so the markup and
+   class names below are theirs; only the appearance is ours.
+
+   This file exists because the portal's own stylesheet is not vendored here.
+   Without it the live widgets render unstyled. With it they render in Cato's
+   own tokens -- MIST / LINEN / STONE / GOLD / SMOKE -- which are the same
+   tokens the portal itself ships, so a widget on this page and the same widget
+   in the product are now the same object in the same colours. On a SMOKE band
+   the two tokens the widget code reads take their LITERAL portal values.
+
+   TWO MECHANISMS
+   1. The widgets reference exactly two portal tokens, var(--stone) and
+      var(--mist). Both are redefined here, so every inline style that uses
+      them adapts for free.
+   2. Twelve colour literals are emitted inline by widgets.js
+      (#BA916B, #F2F0E5, rgba(186,145,107,..), rgba(216,207,185,..) and
+      friends). An inline style cannot be overridden from a stylesheet without
+      !important, so those rules carry it, each one marked. The pinned files
+      are NOT patched: what this page shows is what actually ships.
+   ========================================================================== */
+
+.live-product {
+  /* The widget code reads var(--stone) and var(--mist) for text tones. In the
+     portal those sit on a SMOKE ground. On our light bands they have to be
+     inverted or the product's own type disappears, so they are rebound here. */
+  --stone: rgba(24, 24, 23, 0.72);
+  --mist: var(--smoke);
+
+  /* local roles, resolved against whichever band the module sits in */
+  --w-card: rgba(242, 240, 229, 0.62);
+  --w-card-edge: rgba(24, 24, 23, 0.20);
+  --w-fg: var(--smoke);
+  --w-muted: rgba(24, 24, 23, 0.72);
+  --w-accent: var(--smoke);
+  --w-hot: var(--golden);
+
+  color: var(--w-fg);
+  font-family: var(--font-body);
+}
+
+/* On a SMOKE band nothing needs inverting: this is the portal's own case, so
+   --stone and --mist get their literal portal values and the widget renders
+   exactly as it does inside the product. */
+.g-smoke .live-product,
+.section--proof .live-product,
+.section--reviewwall .live-product,
+.section--authority .live-product,
+.section--mirror .live-product,       /* the mirror band is SMOKE */
+.offer__plate.live-product,           /* the offer's plate column is SMOKE */
+.statp__media.live-product {          /* module 4: the square sits on SMOKE */
+  --stone: #B4A794;
+  --mist: #F2F0E5;
+  --w-card: rgba(242, 240, 229, 0.06);
+  --w-card-edge: rgba(180, 167, 148, 0.22);
+  --w-fg: var(--mist);
+  --w-muted: var(--stone);
+  --w-accent: var(--gold-bright);
+}
+
+/* ── the base card ─────────────────────────────────────────────────────── */
+
+.live-product .frost-card {
+  background: var(--w-card);
+  border: 1px solid var(--w-card-edge);
+  border-radius: var(--r-img);
+  padding: 28px 30px;
+}
+
+.live-product .widget-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--w-accent);
+  margin-bottom: 14px;
+}
+
+.live-product .widget-context {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--w-muted);
+  margin-top: 12px;
+}
+
+/* motion dial is 2: the widgets' entry animations are disabled, not inherited */
+.live-product .anim-fade-up,
+.live-product .anim-grow { animation: none !important; opacity: 1 !important; transform: none !important; }
+
+/* ── Big 3 ─────────────────────────────────────────────────────────────── */
+
+.live-product .big3-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 10px; padding: 26px 18px;
+}
+
+.live-product .big3-circle {
+  width: 62px; height: 62px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--w-accent);
+  background: none !important;                    /* inline radial-gradient literal */
+}
+
+.live-product .big3-circle__inner { display: grid; place-items: center; }
+.live-product .big3-circle__glyph { font-size: 1.25rem; color: var(--w-accent); }
+
+.live-product .big3-sign {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--w-fg);
+}
+
+.live-product .big3-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--w-hot);
+}
+
+.live-product .big3-sub { font-size: 0.86rem; line-height: 1.45; color: var(--w-muted); max-width: 22ch; }
+
+/* ── chart ruler / midheaven pills ─────────────────────────────────────── */
+
+.live-product .ruler-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 18px; border-radius: 999px;
+  border: 1px solid var(--w-card-edge);
+  background: var(--w-card);
+  font-size: 0.92rem; color: var(--w-fg);
+}
+
+.live-product .ruler-pill__glyph { color: var(--w-accent); font-size: 1rem; }
+.live-product .ruler-pill__label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--w-muted); }
+.live-product .ruler-pill__divider { width: 1px; height: 14px; background: var(--w-card-edge); }
+
+/* ── visibility meter ──────────────────────────────────────────────────── */
+
+.live-product .vis-card { text-align: center; }
+.live-product .vis-card svg { margin-inline: auto; }
+
+/* the gauge arc and its glow are inline literals in widgets.js */
+.live-product .gauge-fill { stroke: var(--w-hot) !important; filter: none !important; }
+.live-product .vis-card svg text { fill: var(--w-fg) !important; font-family: var(--font-display) !important; }
+.live-product .vis-card svg text:last-of-type { fill: var(--w-muted) !important; font-family: var(--font-mono) !important; }
+
+.live-product .vis-mc-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--w-card-edge);
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.07em;
+  color: var(--w-fg);
+}
+
+.live-product .vis-mc-pill__glyph { background: var(--w-hot) !important; color: var(--smoke); border-radius: 4px; padding: 2px 5px; }
+
+/* ── archetype / sales style / leadership badge ────────────────────────── */
+
+.live-product .badge-card { text-align: center; }
+.live-product .badge-card__label,
+.live-product .badge-card__placement {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--w-accent);
+}
+.live-product .badge-card__halo { display: grid; place-items: center; margin: 18px 0 10px; }
+.live-product .badge-card__halo-ring {
+  width: 54px; height: 54px; border-radius: 50%;
+  border: 1px solid var(--w-accent);
+  background: none !important;                    /* inline radial-gradient literal */
+}
+.live-product .badge-card__glyph { position: absolute; font-size: 1.4rem; color: var(--w-accent); }
+.live-product .badge-card__type {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem); letter-spacing: -0.04em; line-height: 1.1;
+  color: var(--w-fg); margin: 6px 0 8px;
+}
+.live-product .badge-card__desc { font-size: 1rem; line-height: 1.5; color: var(--w-fg); }
+.live-product .badge-card__rule { width: 34px; height: 1px; background: var(--w-card-edge) !important; margin: 16px auto; }
+.live-product .badge-card__basis { font-size: 0.86rem; line-height: 1.5; color: var(--w-muted) !important; }
+
+/* ── archetype spectrums ───────────────────────────────────────────────── */
+
+.live-product .spectrum-rows { display: grid; gap: 22px; }
+.live-product .spectrum-item__poles { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.live-product .spectrum-item__pole {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--w-muted);
+}
+.live-product .spectrum-item__track { position: relative; height: 2px; background: var(--w-card-edge) !important; border-radius: 2px; }
+.live-product .spectrum-item__line { position: absolute; inset: 0; background: none !important; }
+.live-product .spectrum-item__tick { position: absolute; top: -3px; width: 1px; height: 8px; background: var(--w-card-edge) !important; }
+.live-product .spectrum-item__dot {
+  position: absolute; top: -5px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--w-hot) !important; box-shadow: none !important; transform: translateX(-50%);
+}
+.live-product .spectrum-item__context { margin-top: 10px; font-size: 0.88rem; line-height: 1.5; color: var(--w-muted); }
+
+/* ── hemispheres ───────────────────────────────────────────────────────── */
+
+.live-product .hemi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.live-product .hemi-cell {
+  padding: 18px; border-radius: var(--r-img);
+  border: 1px solid var(--w-card-edge);
+  background: none !important;
+}
+.live-product .hemi-cell__title {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+  letter-spacing: -0.04em; color: var(--w-fg);
+}
+.live-product .hemi-cell__sub {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--w-muted); margin-top: 4px;
+}
+.live-product .hemi-footer { margin-top: 14px; font-size: 0.88rem; line-height: 1.5; color: var(--w-muted); }
+
+/* ── element / modality bars ───────────────────────────────────────────── */
+
+.live-product .bar-rows { display: grid; gap: 14px; }
+.live-product .bar-item__header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.live-product .bar-item__name { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--w-fg); }
+.live-product .bar-item__count { font-size: 0.8rem; color: var(--w-muted); font-variant-numeric: tabular-nums; }
+.live-product .bar-item__track { height: 6px; border-radius: 3px; background: var(--w-card-edge) !important; overflow: hidden; }
+.live-product .bar-item__fill { height: 100%; background: var(--w-hot) !important; border-radius: 3px; }
+.live-product .bar-footer { margin-top: 12px; font-size: 0.88rem; line-height: 1.5; color: var(--w-muted); }
+
+/* ── planet ranking ────────────────────────────────────────────────────── */
+
+.live-product .rank-rows { display: grid; gap: 18px; }
+/* the widget stacks a name, a placement line and a bar inside each row, so a
+   three-column grid laid them on top of one another. Flow, not grid. */
+.live-product .rank-row { display: block; padding-bottom: 14px; border-bottom: 1px solid var(--w-card-edge); }
+.live-product .rank-row:last-child { border-bottom: 0; }
+.live-product .rank-row__glyph { color: var(--w-accent) !important; font-size: 1rem; margin-right: 8px; }
+.live-product .rank-row__name { font-size: 1rem; color: var(--w-fg) !important; font-weight: 600; }  /* widget emits an inline light colour */
+.live-product .rank-row__bar { height: 4px; border-radius: 2px; background: var(--w-card-edge) !important; overflow: hidden; margin: 8px 0 6px; }
+.live-product .rank-row__bar-fill { height: 100%; background: var(--w-accent) !important; }
+.live-product .rank-row__detail { font-family: var(--font-mono); font-size: 0.66rem; color: var(--w-muted); }
+.live-product .rank-row__explain { font-size: 0.84rem; line-height: 1.5; color: var(--w-muted) !important; }
+
+/* ── retrogrades ───────────────────────────────────────────────────────── */
+
+.live-product .retro-rows { display: grid; gap: 16px; }
+.live-product .retro-item { display: grid; grid-template-columns: 42px 1fr; gap: 14px; align-items: start; }
+.live-product .retro-item__circle {
+  width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--w-accent); color: var(--w-accent);
+  background: none !important;
+}
+.live-product .retro-item__name { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; color: var(--w-fg); }
+.live-product .retro-item__flag { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--w-hot); }
+.live-product .retro-item__placement { font-family: var(--font-mono); font-size: 0.66rem; color: var(--w-muted); }
+.live-product .retro-item__meaning { margin-top: 6px; font-size: 0.92rem; line-height: 1.55; color: var(--w-muted); }
+
+/* ── stelliums ─────────────────────────────────────────────────────────── */
+
+.live-product .stellium-card { position: relative; border-radius: var(--r-img); overflow: hidden; }
+.live-product .stellium-card__overlay { background: none !important; }
+.live-product .stellium-card__inner { position: relative; padding: 24px 26px; }
+.live-product .stellium-card__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--w-accent); }
+.live-product .stellium-card__name { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.04em; color: var(--w-fg); margin: 6px 0 10px; }
+.live-product .stellium-card__pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.live-product .stellium-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--w-card-edge);
+  font-family: var(--font-mono); font-size: 0.66rem; color: var(--w-fg);
+}
+.live-product .stellium-pill__glyph { color: var(--w-accent); }
+.live-product .stellium-card__text,
+.live-product .stellium-card__desc { font-size: 0.94rem; line-height: 1.55; color: var(--w-muted); }
+
+/* ── house cusps ───────────────────────────────────────────────────────── */
+
+.live-product .house-cusp-card { padding: 24px 26px; }
+.live-product .house-cusp-card__header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.live-product .house-cusp-card__glyph { color: var(--w-accent); font-size: 1.1rem; }
+.live-product .house-cusp-card__label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--w-muted); }
+.live-product .house-cusp-card__sign { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; letter-spacing: -0.04em; color: var(--w-fg); }
+.live-product .house-cusp-card__text { font-size: 0.94rem; line-height: 1.55; color: var(--w-muted); }
+
+/* ── written sections ──────────────────────────────────────────────────── */
+
+.live-product .letter-section,
+.live-product .biz-text { padding: 26px 28px; }
+
+.live-product .letter-section__label,
+.live-product .biz-text__label {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--w-accent); margin-bottom: 12px;
+}
+
+.live-product .letter-section__rule { width: 34px; height: 1px; background: var(--w-card-edge) !important; margin-bottom: 16px; }
+
+.live-product .biz-text__body,
+.live-product .letter-section p {
+  font-size: 1rem; line-height: 1.65; color: var(--w-fg); margin: 0 0 0.9rem;
+}
+
+.live-product .biz-text__body:last-child,
+.live-product .letter-section p:last-child { margin-bottom: 0; }
+
+/* ── the wheel ─────────────────────────────────────────────────────────────
+   Targeted by the data-live slot, NOT by id: the id lives on the offscreen
+   staging node, so an id selector never reached the copy on the page and the
+   wheel rendered with its own dark-ground colours, invisible on Bone. */
+
+.live-product[data-live="w-chart-wheel"],
+.live-product [data-live="w-chart-wheel"] { display: block; width: 100%; }
+.live-product[data-live="w-chart-wheel"] svg,
+.live-product [data-live="w-chart-wheel"] svg { width: 100%; height: auto; display: block; }
+
+.live-product[data-live="w-chart-wheel"] svg text,
+.live-product [data-live="w-chart-wheel"] svg text {
+  fill: var(--w-muted) !important;
+  font-family: var(--font-mono) !important;
+}
+/* rings, spokes and aspect lines: strong enough to read on a light ground */
+.live-product[data-live="w-chart-wheel"] svg circle,
+.live-product [data-live="w-chart-wheel"] svg circle,
+.live-product[data-live="w-chart-wheel"] svg line,
+.live-product [data-live="w-chart-wheel"] svg line,
+.live-product[data-live="w-chart-wheel"] svg path,
+.live-product [data-live="w-chart-wheel"] svg path {
+  stroke: rgba(64, 42, 19, 0.45) !important;
+}
+.live-product[data-live="w-chart-wheel"] svg circle,
+.live-product [data-live="w-chart-wheel"] svg circle { fill: none !important; }
+/* the centre label is the one piece of display type inside the wheel */
+.live-product[data-live="w-chart-wheel"] svg text[font-size="16"],
+.live-product [data-live="w-chart-wheel"] svg text[font-size="16"],
+.live-product[data-live="w-chart-wheel"] svg,
+.live-product [data-live="w-chart-wheel"] svg .wheel-title {
+  fill: var(--w-fg) !important;
+  font-family: var(--font-display) !important;
+}
+
+/* portal-only modules that must never appear on a landing page */
+.live-product .reading-card,
+.live-product .reading-top-card,
+.live-product .upsell-banner { display: none !important; }
+
+/* ── context fixes found on the first live render ──────────────────────── */
+
+/* The Big 3 is three cards. In the hero strip it has the full page column and
+   sits three across; inside a 570px reason plate it stacked into a 735px
+   column, which is twice the height of the row beside it. */
+.reason__live[data-live="w-big3"],
+.spot__live[data-live="w-big3"] { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.reason__live[data-live="w-big3"] .big3-card,
+.spot__live[data-live="w-big3"] .big3-card { padding: 18px 10px; gap: 7px; }
+.reason__live[data-live="w-big3"] .big3-sign,
+.spot__live[data-live="w-big3"] .big3-sign { font-size: 1.25rem; }
+.reason__live[data-live="w-big3"] .big3-circle,
+.spot__live[data-live="w-big3"] .big3-circle { width: 44px; height: 44px; }
+.reason__live[data-live="w-big3"] .big3-sub,
+.spot__live[data-live="w-big3"] .big3-sub { font-size: 0.76rem; }
+
+/* REASON 4 shows the RISING card alone. The rule above puts the slot on a
+   three-column grid, which left the one visible card pinned to column 1. Same
+   specificity, so this has to come after it. */
+.reason__live--rising[data-live="w-big3"] {
+  grid-template-columns: minmax(0, 340px);
+  justify-content: center;
+}
+
+/* renderBizText and renderTextSection emit no frost-card, so the written
+   sections arrived flush on the band while every other plate read as an
+   object. They get the same card. */
+.reason__live .biz-text,
+.reason__live .letter-section,
+.spot__live .biz-text,
+.spot__live .letter-section {
+  background: var(--w-card);
+  border: 1px solid var(--w-card-edge);
+  border-radius: var(--r-img);
+}
+
+/* the chart ruler is a single pill; in the spotlight it needs presence */
+.spot__live[data-live="w-chart-ruler"] .ruler-pill { padding: 18px 28px; font-size: 1.1rem; }
+.spot__live[data-live="w-chart-ruler"] .ruler-pill__glyph { font-size: 1.35rem; }
+
+/* the gallery cells are windows, not full modules */
+.gallery__cell { max-height: 560px; overflow: hidden; border-radius: var(--r-img); }
+.gallery__cell--wide { max-height: none; }
+
+
+/* ── 2. THE PURPLE GLYPHS ──────────────────────────────────────────────────
+   Nothing in the widget code is purple. The zodiac and planet characters
+   (U+2648..U+2653, U+2609, U+263D, U+263F..U+2647) carry EMOJI presentation by
+   default, so macOS renders them through Apple Color Emoji as magenta chips.
+   On the portal's near-black ground that reads as a tint; on Bone it reads as
+   purple squares.
+
+   Forced to text presentation and to a symbol font that has real astrological
+   glyphs. `font-variant-emoji` is the standards route; the font stack is the
+   fallback for engines that do not support it yet.                         */
+
+.live-product .big3-circle__glyph,
+.live-product .badge-card__glyph,
+.live-product .ruler-pill__glyph,
+.live-product .rank-row__glyph,
+.live-product .retro-item__circle,
+.live-product .stellium-pill__glyph,
+.live-product .house-cusp-card__glyph,
+.live-product .vis-mc-pill__glyph,
+.live-product[data-live="w-chart-wheel"] svg text,
+.live-product [data-live="w-chart-wheel"] svg text {
+  font-variant-emoji: text;
+  font-family: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2",
+               "DejaVu Sans", var(--font-body) !important;
+}
+
+/* the wheel's glyph chips also carry their own fill; force them to the accent */
+.live-product[data-live="w-chart-wheel"] svg text,
+.live-product [data-live="w-chart-wheel"] svg text,
+.live-product[data-live="w-chart-wheel"] svg tspan,
+.live-product [data-live="w-chart-wheel"] svg tspan {
+  fill: var(--w-accent) !important;
+}
+.live-product[data-live="w-chart-wheel"] svg image,
+.live-product [data-live="w-chart-wheel"] svg image { display: none !important; }
+
+/* the wheel's own caption, which was rendering at body size and breaking out
+   of the plate it sits on */
+.live-product .chart-wheel-caption {
+  margin-top: var(--s3, 24px);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--w-muted);
+  text-align: center;
+}
+
+
+/* ── THE WHEEL ON A DARK PLATE ────────────────────────────────────────────
+   chart-wheel.js emits its rings and spokes with an inline
+   stroke: rgba(64, 42, 19, 0.45) -- a dark brown at 45%. On MIST that is
+   correct; on a SMOKE plate it is dark-on-dark and the wheel all but vanished.
+   The rule above at .live-product[data-live="w-chart-wheel"] re-asserts that
+   brown with !important at the same specificity, so this block has to come
+   last AND carry the extra class. It is the only correction, it applies only
+   on dark plates, and the pinned widget file is still untouched.          */
+.offer__plate.live-product[data-live="w-chart-wheel"] svg line,
+.offer__plate.live-product[data-live="w-chart-wheel"] svg path,
+.offer__plate.live-product[data-live="w-chart-wheel"] svg circle,
+.section--mirror .live-product[data-live="w-chart-wheel"] svg line,
+.section--mirror .live-product[data-live="w-chart-wheel"] svg path,
+.statp__media.live-product[data-live="w-chart-wheel"] svg line,
+.statp__media.live-product[data-live="w-chart-wheel"] svg path {
+  stroke: rgba(242, 240, 229, 0.30) !important;
+  stroke-width: 1.35px !important;
+}
+.section--mirror .live-product[data-live="w-chart-wheel"] svg circle,
+.statp__media.live-product[data-live="w-chart-wheel"] svg circle {
+  stroke: rgba(242, 240, 229, 0.42) !important;
+  stroke-width: 1.5px !important;
+}

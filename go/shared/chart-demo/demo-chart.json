@@ -1,0 +1,327 @@
+{
+ "planets": [
+  {
+   "name": "Ascendant",
+   "sign": "Gemini",
+   "degree": 12.4,
+   "full_degree": 72.4,
+   "house": 1,
+   "retrograde": false
+  },
+  {
+   "name": "Medium_Coeli",
+   "sign": "Pisces",
+   "degree": 6.15,
+   "full_degree": 336.15,
+   "house": 10,
+   "retrograde": false
+  },
+  {
+   "name": "Sun",
+   "sign": "Pisces",
+   "degree": 23.55,
+   "full_degree": 353.55,
+   "house": 10,
+   "retrograde": false
+  },
+  {
+   "name": "Moon",
+   "sign": "Scorpio",
+   "degree": 8.12,
+   "full_degree": 218.12,
+   "house": 6,
+   "retrograde": false
+  },
+  {
+   "name": "Mercury",
+   "sign": "Pisces",
+   "degree": 3.2,
+   "full_degree": 333.2,
+   "house": 10,
+   "retrograde": false
+  },
+  {
+   "name": "Venus",
+   "sign": "Aquarius",
+   "degree": 27.4,
+   "full_degree": 327.4,
+   "house": 9,
+   "retrograde": false
+  },
+  {
+   "name": "Mars",
+   "sign": "Aries",
+   "degree": 15.1,
+   "full_degree": 15.1,
+   "house": 11,
+   "retrograde": false
+  },
+  {
+   "name": "Jupiter",
+   "sign": "Gemini",
+   "degree": 2.3,
+   "full_degree": 62.3,
+   "house": 1,
+   "retrograde": false
+  },
+  {
+   "name": "Saturn",
+   "sign": "Capricorn",
+   "degree": 11.05,
+   "full_degree": 281.05,
+   "house": 8,
+   "retrograde": true
+  },
+  {
+   "name": "Uranus",
+   "sign": "Capricorn",
+   "degree": 4.5,
+   "full_degree": 274.5,
+   "house": 8,
+   "retrograde": false
+  },
+  {
+   "name": "Neptune",
+   "sign": "Capricorn",
+   "degree": 11.58,
+   "full_degree": 281.58,
+   "house": 8,
+   "retrograde": false
+  },
+  {
+   "name": "Pluto",
+   "sign": "Scorpio",
+   "degree": 15.3,
+   "full_degree": 225.3,
+   "house": 6,
+   "retrograde": false
+  }
+ ],
+ "houses": [
+  {
+   "number": 1,
+   "sign": "Gemini",
+   "degree": 0.0
+  },
+  {
+   "number": 2,
+   "sign": "Cancer",
+   "degree": 0.0
+  },
+  {
+   "number": 3,
+   "sign": "Leo",
+   "degree": 0.0
+  },
+  {
+   "number": 4,
+   "sign": "Virgo",
+   "degree": 0.0
+  },
+  {
+   "number": 5,
+   "sign": "Libra",
+   "degree": 0.0
+  },
+  {
+   "number": 6,
+   "sign": "Scorpio",
+   "degree": 0.0
+  },
+  {
+   "number": 7,
+   "sign": "Sagittarius",
+   "degree": 0.0
+  },
+  {
+   "number": 8,
+   "sign": "Capricorn",
+   "degree": 0.0
+  },
+  {
+   "number": 9,
+   "sign": "Aquarius",
+   "degree": 0.0
+  },
+  {
+   "number": 10,
+   "sign": "Pisces",
+   "degree": 0.0
+  },
+  {
+   "number": 11,
+   "sign": "Aries",
+   "degree": 0.0
+  },
+  {
+   "number": 12,
+   "sign": "Taurus",
+   "degree": 0.0
+  }
+ ],
+ "aspects": [
+  {
+   "planet1": "Moon",
+   "planet2": "Mercury",
+   "type": "Trine",
+   "orb": 4.92
+  },
+  {
+   "planet1": "Moon",
+   "planet2": "Saturn",
+   "type": "Sextile",
+   "orb": 2.93
+  },
+  {
+   "planet1": "Mercury",
+   "planet2": "Venus",
+   "type": "Conjunction",
+   "orb": 5.8
+  },
+  {
+   "planet1": "Mercury",
+   "planet2": "Jupiter",
+   "type": "Square",
+   "orb": 0.9
+  },
+  {
+   "planet1": "Venus",
+   "planet2": "Jupiter",
+   "type": "Square",
+   "orb": 4.9
+  },
+  {
+   "planet1": "Mars",
+   "planet2": "Saturn",
+   "type": "Square",
+   "orb": 4.05
+  }
+ ],
+ "elements": {
+  "fire": {
+   "count": 1,
+   "planets": [
+    "Mars"
+   ]
+  },
+  "earth": {
+   "count": 1,
+   "planets": [
+    "Saturn"
+   ]
+  },
+  "air": {
+   "count": 2,
+   "planets": [
+    "Venus",
+    "Jupiter"
+   ]
+  },
+  "water": {
+   "count": 3,
+   "planets": [
+    "Sun",
+    "Moon",
+    "Mercury"
+   ]
+  }
+ },
+ "modalities": {
+  "cardinal": {
+   "count": 2,
+   "planets": [
+    "Mars",
+    "Saturn"
+   ]
+  },
+  "fixed": {
+   "count": 2,
+   "planets": [
+    "Moon",
+    "Venus"
+   ]
+  },
+  "mutable": {
+   "count": 3,
+   "planets": [
+    "Sun",
+    "Mercury",
+    "Jupiter"
+   ]
+  }
+ },
+ "hemispheres": {
+  "above": {
+   "count": 5,
+   "planets": [
+    "Sun",
+    "Mercury",
+    "Venus",
+    "Mars",
+    "Saturn"
+   ]
+  },
+  "below": {
+   "count": 2,
+   "planets": [
+    "Moon",
+    "Jupiter"
+   ]
+  },
+  "east": {
+   "count": 4,
+   "planets": [
+    "Sun",
+    "Mercury",
+    "Mars",
+    "Jupiter"
+   ]
+  },
+  "west": {
+   "count": 3,
+   "planets": [
+    "Moon",
+    "Venus",
+    "Saturn"
+   ]
+  }
+ },
+ "stelliums": [
+  {
+   "type": "sign",
+   "key": "Capricorn",
+   "planets": [
+    "Saturn",
+    "Uranus",
+    "Neptune"
+   ]
+  },
+  {
+   "type": "house",
+   "key": "House 8",
+   "planets": [
+    "Saturn",
+    "Uranus",
+    "Neptune"
+   ]
+  }
+ ],
+ "chart_ruler": {
+  "planet": "Mercury",
+  "sign": "Pisces",
+  "house": 10,
+  "ascendant_sign": "Gemini"
+ },
+ "_sample": {
+  "notice": "SYNTHETIC SAMPLE CHART. The birth data below is invented and belongs to no client.",
+  "birth_data": {
+   "name": "Sample Profile",
+   "date": "1989-03-14",
+   "time": "09:42",
+   "city": "Lisbon",
+   "country": "Portugal"
+  },
+  "generated_by": "cosmic-landing/scripts/make-demo-chart (inlined)",
+  "swap_note": "If Cato approves her own chart, replace this file only. Nothing else changes."
+ }
+}

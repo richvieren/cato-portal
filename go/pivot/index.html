@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Your Cosmic Profile · The business you haven't started</title>
+<meta name="description" content="Torn between what you need &amp; what you want. Your chart reads the owner you'd be: what feeds you, how you'd lead, how you'd build from zero. $27, instant.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&amp;family=Inter+Tight:wght@300;400;500;600;700&amp;family=Fragment+Mono&amp;display=swap">
+<link rel="stylesheet" href="../shared/styles.css">
+<link rel="stylesheet" href="../shared/product-widgets.css">
+<style>
+  :root {
+    --mist: #F2F0E5;
+    --linen: #D8CFB9;
+    --stone: #B4A794;
+    --golden: #BA916B;
+    --gold-bright: #D4AF7A;
+    --smoke: #181817;
+    --maxw: 1140px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'Fragment Mono', ui-monospace, monospace;
+  }
+</style>
+<!-- build: 2026-09-19T06:13:29.071Z · angle: pivot · format: listicle · price: hero -->
+<!-- The product renders LIVE, not as screenshots. These are the portal's own
+     pinned files, unmodified; boot-live.js feeds them demo-chart.json and
+     snippets-subset.json. See shared/chart-demo/SOURCE.md -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js" defer></script>
+<script src="../shared/chart-demo/chart-engine.js" defer></script>
+<script src="../shared/chart-demo/widgets.js" defer></script>
+<script src="../shared/chart-demo/chart-wheel.js" defer></script>
+<script src="../shared/chart-demo/boot-live.js" defer></script>
+<!-- tracking slug: cp-pivot-lst-hero -->
+<!-- Meta Pixel. The id comes from config/brand.json .tracking.meta_pixel_id.
+     Browser events on this page: PageView, ViewContent on load, InitiateCheckout on any CTA click.
+     NEVER Purchase: that fires once per sale, server-side, from the Flodesk webhook (meta_capi.py).
+     See clients/Cato/meta-pixel-execution-brief.md -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1068908162428828');
+fbq('track', 'PageView');
+(function () {
+  var params = {
+    content_ids: ['cosmic_profile'],
+    content_type: 'product',
+    content_name: 'pivot',
+    value: 27,
+    currency: 'USD'
+  };
+  fbq('track', 'ViewContent', params);
+  /* One InitiateCheckout per CTA click, with its own event id. The click still
+     navigates to the checkout; the pixel call is fire-and-forget. */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-cta]') : null;
+    if (!a) return;
+    var id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+           : 'ic-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+    fbq('track', 'InitiateCheckout', Object.assign({ cta: a.getAttribute('data-cta') }, params), { eventID: id });
+  }, true);
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></noscript>
+
+
+</head>
+<!-- Built module by module against gruns.co/pages/first-order.
+     2026-09-17: the mirror, the "what lands in your portal" strip, the spotlight,
+     the gallery and the offer block were all removed on instruction. The offer
+     and a CTA banner had been sitting between reason 2 and reason 3; the banner
+     moved below the list and the offer is gone, so the five reasons now run
+     1 to 5 uninterrupted.
+     CONSEQUENCE WORTH KNOWING: with the offer block deleted, the only place the
+     page states what you get for $27 is the comparison table and the CTAs. -->
+<body class="fmt-listicle" data-angle="pivot" data-slug="pivot" data-price-display="hero">
+<!-- MODULE 1 · announcement bar, cloned from gruns.co/pages/first-order.
+     THEIR SPEC, read from their own inline tokens on .cro-bar (not estimated):
+       band height 55.5px · flex row, centred, gap 8px · padding 6px 8px
+       --cro-headline-size 16px / weight 800 / uppercase
+       --cro-subtext-size  13px / weight 600 / uppercase
+       --cro-timer-bg #ffffff · --cro-digits 18px/800 · --cro-label 11px/700
+       ground #007E40, their pop colour -- the same green as their primary CTA.
+     Ours takes the same shape in our palette: GOLD ground, SMOKE type, MIST pill.
+
+     THE PILL IS THE SCARCITY SLOT. It is a repeating group so a countdown drops
+     in as three groups (HRS / MIN / SEC) with no markup change. There is no
+     timer logic yet and the copy below is NOT APPROVED -- it is placeholder
+     that happens to be true, so the page cannot make a false urgency claim if
+     it ships in this state. -->
+<div class="announce" data-block="announce">
+  <a class="annbar" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="announce">
+    <span class="annbar__text">
+      <span class="annbar__headline">YOUR WHOLE CHART, READ AS A BUSINESS DOCUMENT</span>
+      <span class="annbar__sub">$27 · ONE PAYMENT · YOURS FOR GOOD</span>
+    </span>
+    <span class="annbar__pill">
+      <span class="annbar__group"><b>10</b><i>SEC</i></span>
+    </span>
+  </a>
+</div>
+
+<!-- FIXED BLOCK · sticky CTA · present from pixel one on all six teardown brands -->
+<div class="sticky-bar" data-block="sticky-cta">
+  <span class="sticky-bar__text">Your cosmic profile ・ instant</span>
+  <a class="btn btn--primary" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="sticky">SHOW ME HOW I'D RUN IT · $27</a>
+</div>
+
+<main class="wrap">
+<!-- MODULE 2 of 15 · hero, cloned from gruns.co section.hero-v2.
+     Measured live at 1788: section 600px, two equal columns, gap 32, content
+     left at x=167. Proof y87, headline y149 (44/700, two lines), bullets y262
+     (20/400, 31px apart), negation y361 (18/700), CTA pill 56x360 with the
+     badge overlapping its top edge at y393, reassurance y480 (16/600).
+     Ours runs five bullets against their three, so the column is taller. -->
+<header class="hero" data-block="hero">
+  <div class="hero__text">
+<!-- MODULE 2 · hero proof strip, their shape exactly: a row of stars, the rating
+     set bold, and one supporting line beneath.
+     Stars are SMOKE, not gold. Theirs measure 16x16 and render BLACK; gold on
+     MIST is 2.50:1, below the 3.0 floor for a meaningful graphic, so gold stars
+     would be both off-spec and non-compliant.
+     NO AVATARS AND NO NAMES: removed on instruction. Theirs carries three
+     customer avatars; we have no photographs of these women and will not invent
+     any, and the named attributions now live in the testimonial row below.
+     EVERY FIGURE HERE IS UNVERIFIED -- see angle.hero.proof._source. -->
+<div class="heroproof">
+  <span class="heroproof__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+  <b class="heroproof__rating">4.8 stars</b>
+  <span class="heroproof__line">
+    <b>dozens</b> of reviews · 
+    <b>hundreds</b> of charts generated
+  </span>
+</div>
+
+    <!-- Two-tone, their move. Theirs sets the product word in brand green on a
+         light ground; gold on MIST is 2.50:1 so that is not available to us.
+         The marked words therefore carry their OWN smoke ground and the gold
+         sits on that -- 6.22:1, gold used exactly where gold is legal. -->
+    <h1 class="hero__headline">You're torn between what you need &amp; <mark>what you want</mark>.</h1>
+    <ul class="hero__bullets">
+      <li><b>26 sections</b>, how you'd earn, work &amp; lead once it's yours</li>
+      <li><b>Employee or owner</b>, the conditions you were built to work under</li>
+      <li><b>10 seconds</b>, from typing your birth details to reading it</li>
+      <li><b>Free access</b>, to my Opulent Secret Podcast</li>
+    </ul>
+    <p class="hero__negation">Nurse, dentist, psychologist, project lead. You did the training, you're good at it, &amp; something in you has been pulling toward your own thing for years. Your profile reads the version of you that runs it, so the leap stops being a guess.</p>
+    <div class="hero__buy">
+      <div class="hero__cta">
+        <span class="hero__badge">26 SECTIONS · INSTANT</span>
+        <a class="btn btn--primary btn--lg btn--hero" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="hero">SHOW ME HOW I'D RUN IT · $27</a>
+      </div>
+      <p class="hero__price" data-price-position="hero">$27. One payment. Yours for good.</p>
+    </div>  </div>
+  <div class="hero__media">
+    <figure class="hero__shot hero__shot--wide">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/hero-portrait.jpg" alt="Cato Vermeulen" width="1440" height="1440">
+
+    </figure>
+    <figure class="hero__shot hero__shot--tall">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/hero-portrait-mobile.jpg" alt="Cato Vermeulen" width="1200" height="1500">
+
+    </figure>
+  </div>
+</header>
+
+<!-- Their hero is followed immediately by a row of testimonial cards. Ours uses
+     the three real quotes, with the attribution and the reading each woman
+     actually bought. The Big 3 preview strip that used to sit here is gone:
+     it was a product preview, which their hero does not carry. -->
+<section class="section section--herotestimonials" data-block="hero-testimonials">
+  <ul class="htest">
+    <li class="htest__item">
+      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+      <blockquote>This is the reading every coach out there NEEDS. Full stop. It answered EVERY question I had about my niche, my messaging, who I'm meant to serve… on a soul level.</blockquote>
+      <cite><b>Victoria Antonelli, Breathwork Coach</b><span>Category of One Blueprint</span></cite>
+    </li>
+    <li class="htest__item">
+      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+      <blockquote>This reading helped me nail my messaging for premium clients AND finally niche down with confidence. I keep coming back to it &amp; finding something new every single time.</blockquote>
+      <cite><b>Priya Biring, Chronic Illness Coach</b><span>Category of One Blueprint</span></cite>
+    </li>
+    <li class="htest__item">
+      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+      <blockquote>I'm a social psychologist. Sceptic by trade! Then Cato pinpointed Chiron sitting squarely in my relationships zone before I'd said a single word about my work.</blockquote>
+      <cite><b>louize Carroll, social psychologist</b><span>Business Transits Reading</span></cite>
+    </li>
+  </ul>
+</section>
+
+<!-- The press strip. Five marks, all from her own site's "featured in" row. -->
+<section class="section section--logos" data-block="press-logos">
+  <div class="logos__track" aria-label="MY WORK FEATURED IN">
+    <span class="logos__item"><img src="../shared/logos/auralis.png" alt="Auralis Magazine" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/goss-magazine.png" alt="Goss Magazine" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/nina.png" alt="Nina" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/astrology-com.png" alt="Astrology.com" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/flodesk.png" alt="Flodesk" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+  </div>
+</section>
+
+<!-- MODULE 3 · the positioning band. Grüns' equivalent sits directly under the
+     hero: a small centred eyebrow, one centred claim, a short centred paragraph,
+     then the product shown full width beneath it.
+     The shot is RE-SHOT, not the supplied asset. The live product was rendered
+     at 393x852 CSS / 1179x2556 device px and perspective-warped onto the phone's
+     screen quad. The asset Richard supplied carried the old purple glyphs; this
+     one is the current build, measured at zero purple pixels. -->
+<section class="section section--trusted" data-block="trusted">
+  <p class="trusted__label">Premium business astrology systems</p>
+  <h2 class="trusted__title">Trusted by the world's best female entrepreneurs and founders.</h2>
+  <p class="trusted__body">Written by business astrologer Cato Vermeulen, who reads charts for women who are already good at what they do. It tells you what to charge, who you're actually for, and what people decide about you before you speak.</p>
+  <figure class="trusted__portrait">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/cato-trusted.jpg" alt="Cato Vermeulen speaking on stage" width="1600" height="2400">
+
+    <figcaption>Cato Vermeulen &middot; Business Astrologer &amp; Speaker &middot; Cape Town</figcaption>
+  </figure>
+  <figure class="trusted__shot">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
+
+  </figure>
+</section>
+
+<!-- MODULE 4 · cloned from gruns.co section.usnacks-stats, measured live at 1788.
+     THEIR SPEC: a tinted band (#DAECE3) holding a WHITE inner panel 1440x720 at
+     20px radius. Left column: heading 44/700 centred, sub 20/500, then TWO
+     figures side by side at 100px/400 with captions under, then a pill CTA
+     269x56. Right column: a 720x720 photograph flush to the panel's edge.
+     Ours: LINEN band, MIST panel, and the square on the right is the live chart
+     wheel -- the closest thing we have to their "product in use" shot, and it is
+     the product itself rather than a picture of it. Both figures are read from
+     demo-chart.json at run time, never written into the copy. -->
+<section class="section section--stats" data-block="stats-panel">
+  <div class="statp">
+    <div class="statp__text">
+      <h2 class="statp__title">Two numbers decide whether you read as expensive or as available</h2>
+      <p class="statp__sub">The first is what she meets before you've said a word. The second is whether you're built to be everywhere or to be referred. Most women are running the opposite of both &amp; calling it a marketing problem.</p>
+      <div class="statp__pair">
+        <div class="stat">
+          <span class="stat__value" data-num="rising-degree"></span>
+          <span class="stat__lede">What she meets before you open your mouth</span>
+          <span class="stat__caption">Two minutes of birth time moves this number, &amp; it moves what people assume you cost.</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value" data-num="visibility"></span>
+          <span class="stat__lede">Whether you're built to be everywhere or to be referred</span>
+          <span class="stat__caption">It's why “just post more” works for her &amp; flattens you.</span>
+        </div>
+      </div>
+      <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="stats">GET MY COSMIC PROFILE ・ $27</a>
+    </div>
+    <div class="statp__media live-product" data-live="w-chart-wheel"></div>
+  </div>
+</section>
+
+<!-- THE FIVE REASONS · one list, 1 to 5, uninterrupted.
+     Was two blocks (reasonsa / reasonsb) with the offer and a CTA banner wedged
+     between reason 2 and reason 3, which broke the list in half. Merged.
+     Each row shows the section of the product it cites, rendered live, except
+     reason 2 which shows FOUR of the twelve sales styles rather than one. -->
+<section class="section section--reasons" data-block="reasons">
+  <h2 class="section__title">Five things your chart already knows about the business you haven't started</h2>
+  <article class="reason">
+    <div class="reason__text">
+      <p class="reason__meta"><span class="reason__num">1</span><span class="reason__cat">THE OWNER YOU'D BE</span></p>
+      <h3 class="reason__title">A character sketch of the business owner you'd be</h3>
+      <p class="reason__body">The profile opens with one paragraph on the owner you are, written in Cato's voice. 144 versions, one for you. Read it before you hand in notice &amp; see if it's you.</p>
+      <p class="reason__proof" data-section-id="t-welcome">In your profile: the opening paragraph.</p>
+    </div>
+    <div class="reason__live live-product" data-live="t-welcome"></div>
+  </article>
+  <article class="reason">
+    <div class="reason__text">
+      <p class="reason__meta"><span class="reason__num">2</span><span class="reason__cat">WHAT NOURISHES YOU</span></p>
+      <h3 class="reason__title">Why the day job drains your time, energy &amp; soul</h3>
+      <p class="reason__body">Her words. Your profile names what feeds you, what drains you fastest &amp; how to structure a week that's yours. The reason the current job costs so much usually sits in this paragraph.</p>
+      <p class="reason__proof" data-section-id="t-moon">In your profile: what nourishes you &amp; how to structure the week.</p>
+    </div>
+    <div class="reason__live live-product" data-live="t-moon"></div>
+  </article>
+  <article class="reason">
+    <div class="reason__text">
+      <p class="reason__meta"><span class="reason__num">3</span><span class="reason__cat">HOW YOU LEAD</span></p>
+      <h3 class="reason__title">You've led for someone else. This is how you lead your own.</h3>
+      <p class="reason__body">One paragraph on your leadership mode when the business has your name on it.</p>
+      <p class="reason__proof" data-section-id="t-leadership">In your profile: how you lead.</p>
+    </div>
+    <div class="reason__live live-product" data-live="t-leadership"></div>
+  </article>
+  <article class="reason">
+    <div class="reason__text">
+      <p class="reason__meta"><span class="reason__num">4</span><span class="reason__cat">YOUR PATH TO THE TOP</span></p>
+      <h3 class="reason__title">How you'd build a reputation from zero</h3>
+      <p class="reason__body">Three long blocks: where the money would come from, how you'd run the day-to-day &amp; how you'd build authority in a field where nobody knows you yet. The largest section in the product.</p>
+      <p class="reason__proof" data-section-id="w-house-cusps">In your profile: where the money flows, how you work &amp; how you rise.</p>
+    </div>
+    <div class="reason__live live-product" data-live="w-house-cusps"></div>
+  </article>
+  <article class="reason">
+    <div class="reason__text">
+      <p class="reason__meta"><span class="reason__num">5</span><span class="reason__cat">STARTER OR FINISHER</span></p>
+      <h3 class="reason__title">You can plan the leap forever</h3>
+      <p class="reason__body">Your profile reads whether you're built to start, to hold or to adapt, &amp; names the challenge that comes with it. For a woman who's been &quot;planning&quot; for two years, this is the paragraph that ends the planning.</p>
+      <p class="reason__proof" data-section-id="w-modality">In your profile: whether you start it, hold it or adapt it.</p>
+    </div>
+    <div class="reason__live live-product" data-live="w-modality"></div>
+  </article>
+</section>
+
+<!-- OUTCOMES · what she walks away with, not what the product contains.
+     Qualitative by instruction: there is not a number or a percentage anywhere
+     in this module, because we have no source for one. Four cards, one row at
+     desktop, stacked on a phone. Sits between the five reasons and the CTA
+     banner -- the case is made, the payoff lands, then the button. -->
+<section class="section section--outcomes" data-block="outcomes">
+  <p class="outcomes__label">WHAT CHANGES</p>
+  <h2 class="outcomes__title">What you actually walk away with</h2>
+  <p class="outcomes__lede">Four things you already have, written down in business language for the first time.</p>
+  <ul class="outcomes">
+    <li class="outcome">
+      <p class="outcome__label">ON MONEY</p>
+      <h3 class="outcome__title">Your pricing stops being a feeling</h3>
+      <p class="outcome__body">You find out whether your income is built to run steady or in waves, whether you are built to take the risk or hold the line, &amp; where your biggest money is actually meant to come from. Then you price for the setting you have instead of the one you keep apologising for.</p>
+    </li>
+    <li class="outcome">
+      <p class="outcome__label">ON WHO YOU'RE FOR</p>
+      <h3 class="outcome__title">The right woman stops walking past you</h3>
+      <p class="outcome__body">Your chart names what people meet before you have said a word, &amp; why some of them lean in while others were never going to. You stop rewriting the offer for a room that was never listening.</p>
+    </li>
+    <li class="outcome">
+      <p class="outcome__label">ON HOW YOU LEAD</p>
+      <h3 class="outcome__title">Your authority stops being borrowed</h3>
+      <p class="outcome__body">There is a way you are built to hold a room, &amp; it is probably not the one you have been imitating from somebody with a bigger account. Reading it ends the performance of a confidence that costs you energy to keep up.</p>
+    </li>
+    <li class="outcome">
+      <p class="outcome__label">ON HOW YOU COMMUNICATE</p>
+      <h3 class="outcome__title">Your messaging gets easier</h3>
+      <p class="outcome__body">You find out how you naturally explain, persuade &amp; close. Whether you diagnose it, tell it as a story, or go deeper than anyone else dares. The writing stops being a fight the day you put down somebody else's script.</p>
+    </li>
+  </ul>
+</section>
+
+<!-- THE OFFER · rebuilt against MUD\WTR and IM8.
+     Both sell one simple thing and both carry the module on a PRICED RECEIPT:
+     a checklist where every row has a number on the right, totalling more than
+     the price. Neither uses icons or a table. Their risk reversal is a line
+     INSIDE that list, not a badge -- MUD\WTR puts the guarantee at row 6 of 8.
+     What we do not copy: variant tiles, a radio, a BEST VALUE tag. All three
+     need a second option to be honest and we sell one product at one price.
+     Their height comes half from plan choice; ours comes from the receipt and
+     from three live plates of the actual product on the right. -->
+<section class="section section--offer" data-block="offer">
+  <p class="offer__label">THE COSMIC PROFILE</p>
+  <h2 class="offer__title">Everything your chart knows, in one place</h2>
+
+  <div class="offer__card">
+    <div class="offer__main">
+      <div class="offer__head">
+        <!-- The currency symbol is NOT set in the display face. Playfair's $
+             overshoots so far above and below the numerals at 64px that it reads
+             as a strike-through, which beside an actually-struck price is
+             unreadable. Symbol in the body face, raised and small; the digits
+             carry the display face. Same demotion the number decks use. -->
+        <p class="offer__price">
+          <s><i>$</i>60</s><b><i>$</i>27</b>
+        </p>
+        <p class="offer__note">ONE PAYMENT · NO SUBSCRIPTION</p>
+        <p class="offer__unit">26 sections · about 10 seconds</p>
+      </div>
+
+      <!-- MUD\WTR's right column carries FIVE DISTINCT values across five rows
+           and leaves three rows bare. Ours varies on section counts rather than
+           prices: her catalogue has two prices and neither decomposes per row,
+           so a cash figure for each line would be invented. These counts are
+           verified against PROFILE-CONTENTS.md and they total 26. -->
+      <ul class="receipt">
+        <li class="receipt__row">
+          <span class="receipt__item">The whole picture of how you're built, in one place</span>
+          <span class="receipt__worth">1 section</span>
+        </li>
+        <li class="receipt__row">
+          <span class="receipt__item">Who people decide you are before you speak, &amp; what you'll end up known for</span>
+          <span class="receipt__worth">4 sections</span>
+        </li>
+        <li class="receipt__row">
+          <span class="receipt__item">Why you keep starting over, &amp; whether you're built to be everywhere or to be referred</span>
+          <span class="receipt__worth">4 sections</span>
+        </li>
+        <li class="receipt__row">
+          <span class="receipt__item">Why your pricing stalls at the same number, &amp; why sales calls feel like dragging a weight</span>
+          <span class="receipt__worth">9 sections</span>
+        </li>
+        <li class="receipt__row">
+          <span class="receipt__item">Why you discount the loyal ones, why delivery still runs through you, &amp; why you avoid pressing publish</span>
+          <span class="receipt__worth">1 section</span>
+        </li>
+        <li class="receipt__row">
+          <span class="receipt__item">Which side of you to put in front, &amp; the money conversation you keep flinching at</span>
+          <span class="receipt__worth">3 sections</span>
+        </li>
+        <li class="receipt__row">
+          <span class="receipt__item">Why the way you work exhausts you, &amp; the one question you keep circling</span>
+          <span class="receipt__worth">4 sections</span>
+        </li>
+        <li class="receipt__row receipt__row--total">
+          <span class="receipt__item">Everything above</span>
+          <span class="receipt__worth">26 sections</span>
+        </li>
+        <li class="receipt__row receipt__row--rev">
+          <span class="receipt__item">Yours to keep, with nothing to renew &amp; nothing to cancel</span>
+          <span class="receipt__worth">included</span>
+        </li>
+      </ul>
+      <p class="receipt__note">Inside the $197 Category of One Blueprint when Cato reads it herself.</p>
+
+      <p class="offer__boundary">Cato reads the Category of One Blueprint ($197) &amp; the Business Transits Reading ($97) herself. This is the same chart underneath both of them, computed &amp; written the moment you buy, without her read on top. It's where you start, &amp; it doesn't replace either.</p>
+
+      <a class="btn btn--primary btn--offer" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="offer">GET MY COSMIC PROFILE · $27</a>
+      <p class="offer__reassure">Instant, with nothing to ship &amp; nothing to renew.</p>
+    </div>
+
+    <!-- IM8 shows the physical goods that arrive in the box. Ours is not a box.
+         This is Richard's own product shot, placed exactly as exported: the
+         image carries its own dark ground, so it IS this column rather than
+         sitting on one. Nothing cropped, padded, warped or composited.
+         It replaced three live widget plates that stood here before. -->
+    <figure class="offer__shot">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/phone2.webp" alt="The Cosmic Profile open on a phone: the Big 3, the chart ruler and the natal wheel" width="1213" height="2000">
+
+    </figure>
+  </div>
+</section>
+
+<!-- Grüns modules 7 / 12 / 14 · short saturated CTA banner. They run three, and
+     every one of theirs carries a product shot. Ours carried none, so the band
+     was a headline and a button on a red field. The shot is the delivered
+     profile on a phone, which is the form the buyer actually receives it in. -->
+<section class="section section--cta" data-block="cta-banner-1">
+  <div class="ctab">
+    <figure class="ctab__shot">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
+
+    </figure>
+    <div class="ctab__text">
+      <h2 class="ctab__headline">You're guessing at what she sees.</h2>
+      <p class="ctab__sub">Your chart has been answering it since the minute you were born.</p>
+    </div>
+    <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="banner-1">SHOW ME WHAT I PROJECT</a>
+  </div>
+</section>
+
+<!-- Grüns module 9 & 14 · UGC grid and the reviews widget. Ours is eight real
+     screenshots from Cato's own sales page, with the commenters' avatars and
+     handles intact. See shared/proof/SOURCE.md -->
+<section class="section section--reviewwall" data-block="review-wall">
+  <h2 class="section__title">Love letters from my clients</h2>
+  <div class="wall">
+    <figure class="wall__item"><img src="../shared/proof/review-1.jpg" alt="Instagram comment about the Category of One Blueprint" loading="lazy" width="800" height="194"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-2.jpg" alt="Instagram comment about the Category of One Blueprint" loading="lazy" width="800" height="250"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-3.jpg" alt="Instagram comment about a reading" loading="lazy" width="800" height="226"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-4.jpg" alt="Message about the business audit blueprint" loading="lazy" width="800" height="319"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-5.jpg" alt="Message about the astrological reading" loading="lazy" width="800" height="288"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-6.jpg" alt="Message about the reading" loading="lazy" width="800" height="427"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-7.jpg" alt="Message about the reading" loading="lazy" width="800" height="623"></figure>
+    <figure class="wall__item"><img src="../shared/proof/review-8.jpg" alt="Message about the reading" loading="lazy" width="800" height="794"></figure>
+  </div>
+</section>
+
+<!-- Grüns module 10 · us vs them. Theirs is a real table with a tick column and
+     an X column. Ours was prose; this is the table. -->
+<section class="section section--compare" data-block="compare">
+  <h2 class="section__title">Three ways to get your chart read</h2>
+  <p class="section__lede">Only one of them is written for a business.</p>
+  <div class="cmp-wrap">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th class="cmp__rowlabel"><span class="sr-only">Feature</span></th>
+          <th>Your Cosmic Profile</th>
+          <th>A free astrology app</th>
+          <th>A written reading</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Price</th>
+          <td class="cmp__ours" data-v="$27, once">$27, once</td>
+          <td data-v="Free">Free</td>
+          <td data-v="$197 &amp; up">$197 &amp; up</td>
+        </tr>
+        <tr>
+          <th scope="row">Uses your exact birth time</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="yes">yes</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Written in business language</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="no">no</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Tells you how to get seen</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="no">no</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Tells you how you close</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="no">no</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Your money, your delivery &amp; your reputation</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="no">no</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Arrives in</th>
+          <td class="cmp__ours" data-v="Ten seconds">Ten seconds</td>
+          <td data-v="Instant">Instant</td>
+          <td data-v="Up to 7 days">Up to 7 days</td>
+        </tr>
+        <tr>
+          <th scope="row">Cato reads it personally</th>
+          <td class="cmp__ours" data-v="no">no</td>
+          <td data-v="no">no</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Yours permanently</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="Until you delete it">Until you delete it</td>
+          <td data-v="yes">yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cmp__note">A free app gives you the same data. It won't tell you what any of it means for the way you sell.</p>
+</section>
+
+<!-- Grüns module 11 · celebrity endorsement. We have no celebrity; the honest
+     version is the practitioner herself.
+     2026-09-17: columns swapped to photo RIGHT / text LEFT, and the text is set
+     ragged-left so it reads INTO the photograph rather than away from it. The
+     figure stays first in the DOM so a phone still gets the picture before the
+     words; the swap is done in the grid, not the markup. -->
+<section class="section section--authority" data-block="authority">
+  <figure class="authority__shot">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/src-5.jpeg" alt="Cato Vermeulen" width="1066" height="1600">
+
+  </figure>
+  <div class="authority__text">
+    <p class="authority__label">WHO READS YOUR CHART</p>
+    <h2 class="authority__name">Cato Vermeulen</h2>
+    <p class="authority__line">I read charts for women who are already good at what they do. The work is never about whether you're capable. It's about what people can see from the outside, &amp; whether that matches what you're actually selling.</p>
+    <p class="authority__credit">Business astrologer. Writes the Category of One Blueprint &amp; the Business Transits Reading.</p>
+  </div>
+</section>
+
+<!-- Grüns modules 7 / 12 / 14 · short saturated CTA banner. They run three, and
+     every one of theirs carries a product shot. Ours carried none, so the band
+     was a headline and a button on a red field. The shot is the delivered
+     profile on a phone, which is the form the buyer actually receives it in. -->
+<section class="section section--cta" data-block="cta-banner-2">
+  <div class="ctab">
+    <figure class="ctab__shot">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
+
+    </figure>
+    <div class="ctab__text">
+      <h2 class="ctab__headline">You've read five reasons. Your chart has 26.</h2>
+      <p class="ctab__sub">All of it about you, all of it in business language.</p>
+    </div>
+    <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="banner-2">GET MY PROFILE ・ $27</a>
+  </div>
+</section>
+
+<!-- SLOT 13 of 15 · their FAQ is a COLLAPSED accordion of seven rows at 724px.
+     Ours ran five open Q&As at 1,624px, which was the single largest overshoot
+     against the spec. Same copy, collapsed. <details> so it works without JS
+     and stays keyboard accessible.
+     Note: redesign-existing-projects discourages accordion FAQs. Overruled here,
+     because the instruction is to clone their module and theirs is an accordion. -->
+<section class="section section--faq" data-block="faq">
+  <!-- the archetype widget that sat here is removed; a phone mockup goes in this slot later -->
+  <div class="faq__main">
+    <h2 class="section__title">Questions, answered</h2>
+    <div class="faq">
+      <details class="faq__row">
+        <summary>What if I don't know my exact birth time?</summary>
+        <div class="faq__a">You'll need it, babe. Your birth certificate is the usual place, &amp; in most countries the time is on the long-form version rather than the short one. Failing that: the hospital record, your baby book, or your mum. Without a time we can't tell you what people meet first, what you're known for, or how your money &amp; your delivery actually run. That's most of the profile gone, so go &amp; find it first.</div>
+      </details>
+      <details class="faq__row">
+        <summary>Is this the Category of One Blueprint?</summary>
+        <div class="faq__a">No. The Blueprint is 20 pages Cato writes for you, &amp; it lands within 48 hours. This is your chart computed &amp; explained in your portal, instantly, for $27. Plenty of women start here &amp; go deeper later.</div>
+      </details>
+      <details class="faq__row">
+        <summary>Do I need to know anything about astrology?</summary>
+        <div class="faq__a">Not a thing. Every section is written in plain business language: what it is, &amp; what it means for your money, your visibility &amp; your clients. No homework.</div>
+      </details>
+      <details class="faq__row">
+        <summary>How long do I keep access?</summary>
+        <div class="faq__a">It's yours. Log into the portal whenever you want it, &amp; it's still there.</div>
+      </details>
+      <details class="faq__row">
+        <summary>I already know my Big 3. Is there anything new here?</summary>
+        <div class="faq__a">Knowing your three signs is the first page. This goes to why your pricing stalls, why delivery still runs through you, what people decide about you before you speak, &amp; which side of you to put in front. Most women have never had any of it read through a business lens.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- THE CLOSE · every reference page ends on proof or a button, usually both.
+     One full-bleed SMOKE band: the strongest attributed quote on the page, set
+     large, then the button. It bookends the hero, where the same quote opens
+     the testimonial row. Every word here already exists and is attributed;
+     nothing is written for this slot. -->
+<section class="section section--closing" data-block="closing">
+  <p class="closing__label">BEFORE YOU GO</p>
+  <blockquote class="closing__quote">This is the reading every coach out there NEEDS. Full stop. It answered EVERY question I had about my niche, my messaging, who I'm meant to serve… on a soul level.</blockquote>
+  <p class="closing__cite"><b>Victoria Antonelli, Breathwork Coach</b><span>Category of One Blueprint</span></p>
+  <a class="btn btn--primary btn--lg btn--closing" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="closing">GET MY COSMIC PROFILE · $27</a>
+  <p class="closing__reassure">Instant, with nothing to ship &amp; nothing to renew.</p>
+</section>
+
+</main>
+<footer class="footer" data-block="footer">
+  <p class="footer__note">Business astrology is for insight and planning. It isn't financial, legal or medical advice.</p>
+  <p class="footer__links">
+    <a href="https://catovermeulen.com/terms-and-conditions">Terms</a> &middot;
+    <a href="https://catovermeulen.com/disclaimer">Disclaimer</a> &middot;
+    <a href="mailto:hello@catovermeulen.com">hello@catovermeulen.com</a>
+  </p>
+  <p class="footer__brand">&copy; Cato Vermeulen</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Payment received — Cato Vermeulen</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="tracking.js"></script>
+  <script src="auth.js"></script>
+  <style>
+    /* Reuses the login layout. Only what this page needs on top of styles.css. */
+    .ty-wrap { max-width: 520px; }
+    .ty-wrap h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 0.6rem; }
+    .ty-lead { color: var(--linen); font-size: 1rem; line-height: 1.55; margin: 0 0 1.4rem; }
+    .ty-steps { text-align: left; margin: 0 0 1.6rem; padding: 0; list-style: none; }
+    .ty-steps li { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0.6rem; align-items: start;
+                   padding: 0.7rem 0; border-top: 1px solid var(--border); color: var(--linen); line-height: 1.5; font-size: 0.95rem; }
+    .ty-steps li:last-child { border-bottom: 1px solid var(--border); }
+    .ty-steps b { color: var(--golden); font-variant-numeric: tabular-nums; }
+    .ty-sender { color: var(--stone); font-size: 0.85rem; margin: 0 0 1.6rem; }
+    .ty-sender code { color: var(--linen); font-family: inherit; }
+    .ty-resend { margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--border); }
+    .ty-resend p { color: var(--stone); font-size: 0.9rem; margin: 0 0 0.8rem; }
+    .ty-resend input { width: 100%; box-sizing: border-box; margin-bottom: 0.6rem; }
+    .ty-note { color: var(--stone); font-size: 0.8rem; margin-top: 1.4rem; }
+    .ty-note a { color: var(--golden); }
+  </style>
+</head>
+<body>
+  <div class="page-center">
+    <div class="login-wrap ty-wrap">
+      <img src="img/logo.png" alt="Cato Vermeulen" style="max-width:240px;margin-bottom:1.5rem;">
+
+      <h1 id="ty-title">Payment received.</h1>
+      <p class="ty-lead" id="ty-lead">Your login link is on its way.</p>
+
+      <ol class="ty-steps" id="ty-steps"></ol>
+
+      <p class="ty-sender">The email comes from <code>Cato Vermeulen &lt;noreply@mail.catovermeulen.com&gt;</code>. Check spam if it isn't in your inbox within a few minutes.</p>
+
+      <a class="btn btn-primary" href="/" id="ty-portal-link">Open your portal</a>
+
+      <div class="ty-resend">
+        <p>Nothing after five minutes? Type the email you paid with & we'll send the link again.</p>
+        <div id="resend-form">
+          <input type="email" id="resend-email" placeholder="The email you paid with" autocomplete="email">
+          <button class="btn btn-primary" id="resend-btn" onclick="handleResend()">Send my link again</button>
+          <div class="error-msg" id="resend-error"></div>
+        </div>
+        <div id="resend-sent" class="login-sent" style="display:none">
+          <p>Check your inbox.</p>
+          <p style="margin-top:0.8rem;color:var(--stone);font-size:0.85rem">If that address has access, a new login link is on its way. It's valid for a short time, so open it soon.</p>
+        </div>
+      </div>
+
+      <p class="ty-note">Wrong email at checkout, or still stuck? <a href="mailto:hello@catovermeulen.com">hello@catovermeulen.com</a></p>
+    </div>
+  </div>
+
+  <script>
+    /* What happens next, per product. Delivery times from clients/Cato/context.md
+       and the Blueprint sales page FAQ. Nothing here is a promise the pipeline
+       does not already make in its own emails. */
+    var PRODUCTS = {
+      cosmic_profile: {
+        title: 'Payment received. Your Cosmic Profile is minutes away.',
+        lead: 'Your login link is on its way. Once you\'re in, your profile takes about ten seconds.',
+        steps: [
+          'Open the login link in the email.',
+          'Type three things: your birth date, birth time & birth city.',
+          'Read your 26 sections. It\'s yours to come back to for good.'
+        ]
+      },
+      blueprint: {
+        title: 'Payment received. Cato reads your chart from here.',
+        lead: 'Your login link is on its way. Your Category of One Blueprint is written by Cato herself.',
+        steps: [
+          'Open the login link & fill in your birth details & the intake questions.',
+          'Cato reads your chart & records the reading.',
+          'Your Blueprint lands in your portal, normally within 48 hours, up to 7 days when demand is high. You get an email the moment it\'s there.'
+        ]
+      },
+      transit_reading: {
+        title: 'Payment received. Your Transit Reading is being prepared.',
+        lead: 'Your login link is on its way.',
+        steps: [
+          'Open the login link & fill in your birth details.',
+          'Your reading is written for the next three months of your business.',
+          'It lands in your portal within 48 hours. You get an email the moment it\'s there.'
+        ]
+      },
+      astrocartography: {
+        title: 'Payment received. Your Astrocartography Reading is being prepared.',
+        lead: 'Your login link is on its way.',
+        steps: [
+          'Open the login link & fill in your birth details & the places you\'re considering.',
+          'Your reading lands in your portal within 48 hours.',
+          'You get an email the moment it\'s there.'
+        ]
+      },
+      numerology: {
+        title: 'Payment received. Your Business Numerology Reading is being prepared.',
+        lead: 'Your login link is on its way.',
+        steps: [
+          'Open the login link & confirm your name & date of birth.',
+          'Your reading lands in your portal. You get an email the moment it\'s there.'
+        ]
+      },
+      _default: {
+        title: 'Payment received.',
+        lead: 'Your login link is on its way.',
+        steps: [
+          'Open the login link in the email.',
+          'Fill in what the portal asks for.',
+          'You get an email the moment your reading is there.'
+        ]
+      }
+    };
+
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var product = (q.get('product') || '').replace(/[^a-z_]/g, '');
+      var p = PRODUCTS[product] || PRODUCTS._default;
+      document.getElementById('ty-title').textContent = p.title;
+      document.getElementById('ty-lead').textContent = p.lead;
+      var ol = document.getElementById('ty-steps');
+      p.steps.forEach(function (s, i) {
+        var li = document.createElement('li');
+        var b = document.createElement('b'); b.textContent = String(i + 1).padStart(2, '0');
+        var span = document.createElement('span'); span.textContent = s;
+        li.appendChild(b); li.appendChild(span); ol.appendChild(li);
+      });
+      /* Custom event only. Never Purchase: that fires server-side, once per sale. */
+      if (window.catoTrack) window.catoTrack('ThankYouPage', { product: product || 'unknown' }, true);
+    })();
+
+    async function handleResend() {
+      var input = document.getElementById('resend-email');
+      var btn = document.getElementById('resend-btn');
+      var err = document.getElementById('resend-error');
+      var email = (input.value || '').trim();
+      err.textContent = '';
+      if (!email || email.indexOf('@') < 1) { err.textContent = 'Type the email you paid with.'; return; }
+      btn.disabled = true; btn.textContent = 'Sending…';
+      /* Same endpoint the portal login uses: POST /v2/auth/send-magic-link.
+         It never says whether the address exists. */
+      var r = await sendMagicLink(email);
+      btn.disabled = false; btn.textContent = 'Send my link again';
+      /* A 429 carries a plain-language detail from the API (per-email limit); show it as is. */
+      if (r && r.error) { err.textContent = /Too many/.test(r.error) ? r.error : 'That didn\'t go through. Try again in a moment.'; return; }
+      document.getElementById('resend-form').style.display = 'none';
+      document.getElementById('resend-sent').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
