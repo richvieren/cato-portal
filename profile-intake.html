@@ -74,6 +74,14 @@
           <p style="color:var(--stone);font-size:0.8rem">Not correct? Clear the field and type again.</p>
         </div>
 
+        <!-- Optional, and last on purpose. This is a $27 impulse purchase that
+             sells on being instant, so nothing here may gate the button: no
+             required attribute, and handleSubmit() does not check it. -->
+        <div class="field-group">
+          <label class="field-label" for="f-hopes">What are you hoping to get out of this? <span style="color:var(--stone);font-weight:300">(optional)</span></label>
+          <textarea id="f-hopes" rows="3" placeholder="Anything you want Cato to know" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;outline:none;resize:none"></textarea>
+        </div>
+
         <div class="error-msg" id="intake-error"></div>
         <button class="btn btn-primary" id="submit-btn" onclick="handleSubmit()" style="margin-top:2rem">Generate my profile</button>
       </div>
@@ -128,6 +136,7 @@
         place_id: loc.place_id,
         city: loc.city,
         country: loc.country,
+        hopes: document.getElementById('f-hopes').value.trim(),
       };
       if (!fields.full_name || !fields.dob) {
         errEl.textContent = 'Please fill in all required fields.';

@@ -698,7 +698,20 @@ function renderBizText(containerId, label, text) {
 // trailing space inside the href.
 var COSMIC_CHECKOUT_URL = 'https://catovrmln.myflodesk.com/cosmicprofile';
 
-function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart) {
+// Numerology checkout. Verified live 2026-09-20: HTTP 200, page title
+// "2027 Business Numerology Reading". A nonsense slug on the same host returns
+// 404, so the 200 is real and not a catch-all.
+//
+// Both of these are settled as of 2026-09-20, confirmed by Cato:
+//   Year:  the page sells 2027 and the pipeline now agrees. The cut-over in
+//          products/numerology.json moved from 12-01 to 09-01, so a buyer today
+//          generates a 2027 reading. It rolls to 2028 on 1 September 2027, and
+//          the page title has to move with it.
+//   Price: $97. The $55 that was here was the Blueprint order-bump price, not
+//          this checkout's. Cato is aligning the Flodesk page to $97.
+var NUMEROLOGY_CHECKOUT_URL = 'https://catovrmln.myflodesk.com/numerology';
+
+function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart, numerologyGrant) {
   var container = document.getElementById('product-sections');
   if (!container) return;
 
@@ -715,6 +728,10 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile
       price: '$247', desc: 'Where in the world your business thrives \u2014 mapped to your chart.',
       cta: 'Get your Reading', url: 'https://catovermeulen.com/astrocartography',
       readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html' },
+    { id: 'numerology', name: 'Business Numerology Reading', grant: numerologyGrant, profile: profile,
+      price: '$97', desc: 'Your Personal Year, month by month \u2014 when to launch, when to rest, when the money moves.',
+      cta: 'Get your Numerology Reading', url: NUMEROLOGY_CHECKOUT_URL,
+      readyUrl: 'numerology.html', intakeUrl: 'numerology.html' },
     // Cosmic Profile became a $27 product on 2026-09-16. It has no reading and
     // no review step, so its state comes from the stored chart, not from
     // available_at: stateFn overrides blueprintState for this row only.

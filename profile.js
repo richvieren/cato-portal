@@ -161,12 +161,16 @@ async function loadProfile(session) {
     getBlueprintGrant(),
     getTransitGrant(),
     getAstrocartographyGrant(),
+    getNumerologyGrant(),
     getNatalChart(),
     getProfile(),
   ]);
 
+  // Index order follows the Promise.all above exactly. Inserting a fetch without
+  // moving these shifted chart and profile by one, which is silent: the page still
+  // renders, with the wrong object in each variable.
   var cosmicGrant = results[0], blueprintGrant = results[1], transitGrant = results[2];
-  var astroGrant = results[3], chart = results[4], profile = results[5];
+  var astroGrant = results[3], numerologyGrant = results[4], chart = results[5], profile = results[6];
 
   var fullName = profile && profile.full_name ? profile.full_name : session.user.email;
   document.getElementById('profile-name').textContent = fullName;
@@ -182,11 +186,13 @@ async function loadProfile(session) {
     astrocartography: 'astrocartography.html',
     // cosmic_profile has no reading form; its intake is the birth-data form.
     cosmic_profile: 'profile-intake.html',
+    numerology: 'numerology.html',
   };
   var GRANT_FOR = {
     blueprint: blueprintGrant,
     transit_reading: transitGrant,
     astrocartography: astroGrant,
+    numerology: numerologyGrant,
   };
 
   // The product the client was emailed about wins, and this runs OUTSIDE the
@@ -320,14 +326,14 @@ async function loadProfile(session) {
             '<p style="color:var(--stone);font-size:0.78rem;margin-top:0.4rem">Reading the sky for your birth moment</p>' +
           '</div>' +
         '</div>';
-      renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart);
+      renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart, numerologyGrant);
       return;
     }
 
     // No reading grants, no birth data — show purchase CTA
     document.getElementById('profile-locked').style.display = 'block';
     document.getElementById('profile-widgets').style.display = 'none';
-    renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart);
+    renderProductSections(blueprintGrant, transitGrant, astroGrant, profile, cosmicGrant, chart, numerologyGrant);
     return;
   }
 

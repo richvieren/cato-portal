@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Transits Reading — Cato Vermeulen</title>
+  <title>Business Numerology Reading — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=dbd26df9"></script>
   <script src="db.js?v=b0e2e8cc"></script>
-  <script src="timefield.js?v=7e74c3d6"></script>
   <script src="dashboard.js?v=556ad098"></script>
-  <script src="autocomplete.js?v=6ecbb458"></script>
   <script src="intake-confirm.js?v=aeec9045"></script>
-  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
 </head>
 <body>
   <div class="container">
@@ -45,62 +42,29 @@
 
       <!-- Intake view -->
       <div id="intake-view" style="display:none">
-        <h1>Your Transits Reading</h1>
+        <h1>Your Business Numerology Reading</h1>
         <p class="subtitle">Enter your details so Cato can prepare your reading.</p>
 
-        <form id="intake-form" onsubmit="handleTransitIntakeSubmit(event)">
+        <form id="intake-form" onsubmit="handleNumerologyIntakeSubmit(event)">
           <div class="field-group">
             <label class="field-label" for="full-name">Full name</label>
-            <input type="text" id="full-name" placeholder="Your full name" required>
-          </div>
-
-          <div class="two-col">
-            <div class="field-group">
-              <label class="field-label" for="dob">Date of birth</label>
-              <input type="date" id="dob" required>
-            </div>
-            <div class="field-group">
-              <label class="field-label">Time of birth</label>
-              <div id="tob-selects"></div>
-              <input type="hidden" id="tob">
-            </div>
+            <input type="text" id="full-name" placeholder="The name you use in your business" required>
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="birth-city">City of birth</label>
-            <input type="text" id="birth-city" placeholder="Start typing your birth city..." required autocomplete="off">
-            <input type="hidden" id="birth-place-id">
-          </div>
-
-          <div id="location-confirmation" style="display:none;background:rgba(186,145,107,0.08);border:1px solid var(--golden);border-radius:8px;padding:1rem;margin-top:0.75rem;margin-bottom:2.5rem">
-            <p style="color:var(--mist);font-size:0.9rem;margin-bottom:0.5rem">Born in: <strong id="location-resolved-name" style="color:var(--golden)"></strong></p>
-            <p style="color:var(--stone);font-size:0.8rem">Not correct? Clear the field and type again.</p>
+            <label class="field-label" for="dob">Date of birth</label>
+            <input type="date" id="dob" required>
           </div>
 
           <p class="field-hint" style="color:var(--stone);font-size:0.85rem;margin-top:0.5rem;margin-bottom:1.5rem">
-            The more accurate your birth time is, the more accurate and aligned your reading will be.
+            Numerology runs on your name and your date of birth. No birth time and no birth city: those belong to the astrology readings.
           </p>
-
-          <div class="field-group" style="margin-top:0.8rem">
-            <label class="field-label" for="business-niche">What is your niche or industry?</label>
-            <textarea id="business-niche" placeholder="e.g. Health coaching, tech startup, consulting..." rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
-          </div>
-
-          <div class="field-group">
-            <label class="field-label" for="planned-launches">What programs, products, offers or launches are you focusing on right now?</label>
-            <textarea id="planned-launches" placeholder="Please be as specific as possible. The more detail you provide, the more tailored and dialled-in your reading will be." rows="4" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
-          </div>
-
-          <div class="field-group">
-            <label class="field-label" for="clarity">If you're not planning to launch anything within the next 3 months, what is your intention for this reading?</label>
-            <textarea id="clarity" placeholder="Please be specific" rows="3" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
-          </div>
 
           <div class="error-msg" id="intake-error"></div>
           <button type="submit" class="btn btn-primary" id="submit-btn" style="margin-top:1rem;display:block;margin-left:auto;margin-right:auto">
             Submit details
           </button>
-          <p style="color:rgba(180,167,148,0.6);font-size:0.75rem;line-height:1.6;margin-top:1.2rem;max-width:480px;text-align:center"><strong style="color:var(--stone)">Please double-check your birth details.</strong> Your reading is generated from your exact date, time, and place of birth. If any of these are incorrect, your reading will be inaccurate. Birth details cannot be changed after submission, and a new reading will not be issued for corrected information.</p>
+          <p style="color:rgba(180,167,148,0.6);font-size:0.75rem;line-height:1.6;margin-top:1.2rem;max-width:480px;text-align:center"><strong style="color:var(--stone)">Please double-check your name and date of birth.</strong> Your Personal Year, Life Path and best months are calculated from them, so if either is wrong the whole reading is wrong. Details cannot be changed after submission.</p>
         </form>
       </div>
 
@@ -124,7 +88,7 @@
 
       <!-- Pending view -->
       <div id="pending-view" style="display:none">
-        <h1>Your Transits Reading</h1>
+        <h1>Your Business Numerology Reading</h1>
         <p class="subtitle">Your reading is being prepared.</p>
         <div class="countdown" id="countdown-display">—</div>
         <div class="countdown-label">until your reading is ready</div>
@@ -132,15 +96,15 @@
 
       <!-- Ready view -->
       <div id="ready-view" style="display:none">
-        <h1>Your Transits Reading</h1>
+        <h1>Your Business Numerology Reading</h1>
         <p class="subtitle" id="ready-subtitle">Checking your reading...</p>
         <p id="ready-text" style="color:var(--stone);line-height:1.8;margin-top:2rem;margin-bottom:2rem"></p>
-        <a id="download-btn" class="btn btn-primary" style="display:none">Download your Transits Reading</a>
+        <a id="download-btn" class="btn btn-primary" style="display:none">Download your Business Numerology Reading</a>
         <p id="download-loading" style="color:var(--stone);font-size:0.85rem"></p>
 
         <div style="border-top:1px solid rgba(186,145,107,0.15);margin-top:3rem;padding-top:2rem;max-width:480px;margin-left:auto;margin-right:auto;text-align:center">
           <div style="font-family:Jost,sans-serif;font-size:0.68rem;font-weight:400;letter-spacing:0.18em;color:var(--golden);text-transform:uppercase;margin-bottom:12px">GO DEEPER</div>
-          <p style="color:var(--stone);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">Your Transits Reading has more in it than one read-through will catch. Upload the PDF and ask it anything. When to launch, when to hold back, which weeks to push hard on sales. The chart data is all in there. Let it work for you.</p>
+          <p style="color:var(--stone);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">Your Business Numerology Reading has more in it than one read-through will catch. Upload the PDF and ask it anything. When to launch, when to hold back, which weeks to push hard on sales. The chart data is all in there. Let it work for you.</p>
           <div style="display:flex;gap:1rem;justify-content:center;align-items:center;margin-bottom:2rem">
             <a href="https://claude.ai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.2rem;border:1px solid rgba(186,145,107,0.3);border-radius:8px;color:var(--stone);text-decoration:none;font-size:0.85rem;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--golden)'" onmouseout="this.style.borderColor='rgba(186,145,107,0.3)'">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16.28 2.477 9.581 21.523l-1.86-.646L14.42 1.831l1.86.646Z" fill="currentColor"/><path d="m8.063 7.072 3.77-4.607 1.451 1.188-3.77 4.607-1.451-1.188Zm4.654 9.669 3.77-4.607 1.451 1.188-3.77 4.607-1.451-1.188ZM5.654 13.846l-3.77-4.607L3.335 8.05l3.77 4.607-1.451 1.189Zm9.238-5.392 3.77 4.607-1.451 1.189-3.77-4.607 1.451-1.189Z" fill="currentColor"/></svg>
@@ -174,7 +138,7 @@
 
       document.getElementById('user-email').textContent = session.user.email;
 
-      const grant = await getTransitGrant();
+      const grant = await getNumerologyGrant();
       const profile = await getProfile();
 
       if (!grant) {
@@ -206,7 +170,6 @@
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;
-          if (profile.tob) setTobValue('tob', profile.tob);
         }
         return;
       }
@@ -226,7 +189,7 @@
     }
 
     async function loadDownloadButton(email) {
-      const res = await fetch('https://api.catovermeulen.com/v2/api/download/transit_reading', {
+      const res = await fetch('https://api.catovermeulen.com/v2/api/download/numerology', {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('cato_token') }
       });
       const data = res.ok ? await res.json() : null;
@@ -243,9 +206,9 @@
       }
 
       subtitleEl.textContent = 'Your reading is ready.';
-      textEl.textContent = 'Your Transits Reading is ready to download.';
+      textEl.textContent = 'Your Business Numerology Reading is ready to download.';
       btnEl.href = data.url;
-      btnEl.download = 'Transits-Reading.pdf';
+      btnEl.download = 'Business-Numerology-Reading.pdf';
       btnEl.style.display = 'inline-block';
     }
 
@@ -264,44 +227,32 @@
 
     // Build confirmation view with transit-specific business fields
     buildConfirmView('confirm-view', [
-      {label: 'Niche / Industry', id: 'confirm-niche'},
-      {label: 'Current focus', id: 'confirm-launches'},
-      {label: 'Intention for this reading', id: 'confirm-clarity'},
+      {label: 'Full name', id: 'confirm-name'},
+      {label: 'Date of birth', id: 'confirm-dob'},
     ]);
 
     var _pendingIntakeData = null;
 
-    async function handleTransitIntakeSubmit(e) {
+    async function handleNumerologyIntakeSubmit(e) {
       e.preventDefault();
       var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
 
-      var _tobErr = tobError('tob');
-      if (_tobErr) { errEl.textContent = _tobErr; return; }
-
-      if (!getValidatedLocation()) {
-        errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
-        return;
-      }
-
-      var loc = getValidatedLocation();
       _pendingIntakeData = {
         full_name: document.getElementById('full-name').value.trim(),
         dob: document.getElementById('dob').value,
-        tob: document.getElementById('tob').value || null,
-        place_id: loc.place_id,
-        city: loc.city,
-        country: loc.country,
-        business_niche: document.getElementById('business-niche').value.trim(),
-        planned_launches: document.getElementById('planned-launches').value.trim(),
-        clarity: document.getElementById('clarity').value.trim(),
       };
+      if (!_pendingIntakeData.full_name || !_pendingIntakeData.dob) {
+        errEl.textContent = 'Your full name and date of birth are both needed.';
+        return;
+      }
+      var _dobErr = dobError(_pendingIntakeData.dob);
+      if (_dobErr) { errEl.textContent = _dobErr; return; }
 
-      populateConfirmView(_pendingIntakeData, loc, [
-        {id: 'confirm-niche', value: _pendingIntakeData.business_niche},
-        {id: 'confirm-launches', value: _pendingIntakeData.planned_launches},
-        {id: 'confirm-clarity', value: _pendingIntakeData.clarity, optional: true},
-      ]);
+      // populateConfirmView() is for the astrology products: it writes birth time
+      // and birth city, which this product never collects. Fill the two rows we do.
+      document.getElementById('confirm-name').textContent = _pendingIntakeData.full_name;
+      document.getElementById('confirm-dob').textContent = formatDobHuman(_pendingIntakeData.dob);
       showConfirmView();
     }
 
@@ -318,7 +269,7 @@
       var data = _pendingIntakeData;
       data.email = session.user.email;
 
-      var result = await submitTransitIntake(session.user.id, data);
+      var result = await submitNumerologyIntake(session.user.id, data);
 
       if (result.error) {
         // Put her back on the form, with every field still filled, and the reason

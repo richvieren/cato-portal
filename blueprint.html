@@ -306,10 +306,19 @@
       var result = await submitIntake(session.user.id, data);
 
       if (result.error) {
+        // Put her back on the form, with every field still filled, and the reason
+        // above the button she is about to press again. Leaving the message on the
+        // confirmation screen made a failure look like a finished submission.
         if (waitEl) waitEl.style.display = 'none';
-        errEl.textContent = typeof result.error === 'string' ? result.error : 'Something went wrong. Try again.';
         btn.disabled = false;
         btn.textContent = 'Confirm & submit';
+        errEl.textContent = '';
+        backToForm();
+        var formErr = document.getElementById('intake-error');
+        if (formErr) {
+          formErr.textContent = typeof result.error === 'string' ? result.error : 'Something went wrong, please try again.';
+          formErr.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
       } else {
         document.getElementById('confirm-view').style.display = 'none';
         document.getElementById('success-view').style.display = 'block';
