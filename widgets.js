@@ -782,7 +782,11 @@ function renderProductSections(blueprintGrant, transitGrant, astroGrant, profile
   }).join('');
 }
 
-function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, profile) {
+// This is the ONLY product list that reaches a client. renderProductSections()
+// below writes into #product-sections, which exists in no page in this repo, so
+// it returns at its own first line and always has. A product added there is
+// invisible. Add it here.
+function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, profile, numerologyGrant) {
   var container = document.getElementById('purchased-readings');
   var section = document.getElementById('section-readings-top');
   if (!container || !section) return;
@@ -793,6 +797,7 @@ function renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, pr
     { name: 'Category of One Blueprint', grant: blueprintGrant, profile: profile, readyUrl: 'blueprint.html', intakeUrl: 'blueprint.html', icon: '📜' },
     { name: 'Transits Reading', grant: transitGrant, profile: profile, readyUrl: 'transit-reading.html', intakeUrl: 'transit-reading.html', icon: '🔮' },
     { name: 'Astrocartography Reading', grant: astroGrant, profile: profile, readyUrl: 'astrocartography.html', intakeUrl: 'astrocartography.html', icon: '🌍' },
+    { name: 'Business Numerology Reading', grant: numerologyGrant, profile: profile, readyUrl: 'numerology.html', intakeUrl: 'numerology.html', icon: '🔢' },
   ];
 
   readings.forEach(function(r) {

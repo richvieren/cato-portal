@@ -437,7 +437,7 @@ async function loadProfile(session) {
   }
 
   // ── Purchased readings at top ──
-  renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, profile);
+  renderPurchasedReadingsTop(blueprintGrant, transitGrant, astroGrant, profile, numerologyGrant);
 
   // ── Upsell CTAs (conditional) ──
   var upsellMid = document.getElementById('section-upsell-mid');
