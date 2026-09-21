@@ -6,7 +6,7 @@
   <title>Your Cosmic Profile — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=dbd26df9"></script>
-  <script src="db.js?v=b0e2e8cc"></script>
+  <script src="db.js?v=0e81bb41"></script>
   <script src="timefield.js?v=7e74c3d6"></script>
   <script src="autocomplete.js?v=6ecbb458"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
@@ -111,7 +111,10 @@
         if (profile.dob) document.getElementById('f-dob').value = profile.dob;
         if (profile.tob) setTobValue('f-tob', profile.tob);
         if (profile.city) document.getElementById('f-city').value = profile.city;
-        if (profile.country) document.getElementById('f-country').value = profile.country;
+        // No country field on this form: country comes back from the Places
+        // resolution on submit. A line here once wrote to a non-existent
+        // #f-country and threw, leaving a blank page for anyone whose profile
+        // carried a country (fixed 2026-09-21).
       }
       document.getElementById('intake-screen').style.display = 'block';
       document.getElementById('intake-header').style.display = 'flex';

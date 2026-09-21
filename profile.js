@@ -231,10 +231,18 @@ async function loadProfile(session) {
 
     var acState = astrocartographyState(astroGrant, profile);
     if (acState === 'intake') { window.location.href = 'astrocartography.html'; return; }
+
+    // Numerology was missing from this fallback (2026-09-21): a numerology buyer
+    // whose link carried no product, or who logged in from the login page, was
+    // left on the dashboard to find the card herself.
+    if (blueprintState(numerologyGrant, profile) === 'intake') { window.location.href = 'numerology.html'; return; }
   }
 
   // ── Auto-grant cosmic profile for reading buyers ──
-  var hasReadingGrant = blueprintGrant || transitGrant || astroGrant;
+  // Numerology counts as a reading (Richard, 2026-09-21). Without it a
+  // numerology-only buyer got the locked "Get your Cosmic Profile" banner and
+  // no readings list, so her own reading was invisible on the dashboard.
+  var hasReadingGrant = blueprintGrant || transitGrant || astroGrant || numerologyGrant;
   var hasBirthData = profile && profile.dob && profile.city;
 
   if (hasReadingGrant && !cosmicGrant) {

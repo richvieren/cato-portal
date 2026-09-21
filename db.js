@@ -200,6 +200,10 @@ async function submitIntake(userId, fields) {
       full_name: fields.full_name,
       dob: fields.dob,
       tob: fields.tob || null,
+      // Defence in depth on the coordinates. webhook_server._persist_birth_coords()
+      // is the primary writer and now upserts, but sending place_id here means the
+      // profile row carries the verified location even if that path never runs.
+      place_id: fields.place_id,
       city: fields.city,
       country: fields.country,
       business_context: fields.business_context,
@@ -305,19 +309,49 @@ async function getNatalChart() {
 }
 
 /**
- * Numerology intake: full name and date of birth, nothing else.
+ * Numerology intake: full name, date of birth, and the same three business
+ * questions the Blueprint asks (business_context, niche, clarity). The reading
+ * is written against them.
  *
- * No profile write. The astrology submits save birth city and time to profiles
- * because their charts need them; numerology needs neither, and writing a
- * half-filled profile row would overwrite the birth data a client already gave
- * for her Blueprint.
+ * Profile write, fill-only-empty (Richard, 2026-09-21): the business answers
+ * go to profiles for the audience data, but a client who already answered them
+ * for her Blueprint keeps those answers. POST /profile keeps an existing value
+ * only when the incoming one is null (COALESCE(excluded, existing)), so this
+ * sends a business field ONLY when the profile has none. Name and date of birth
+ * are sent as the profile already has them, or from the form when it has none,
+ * because the endpoint rejects a missing date of birth. Birth time, city and
+ * place are never sent from here: numerology does not collect them, and null
+ * leaves the astrology values untouched.
  */
 async function submitNumerologyIntake(userId, fields) {
   var _dobErr = dobError(fields.dob);
   if (_dobErr) return { error: _dobErr };
 
+  // Ask the server to take the job FIRST, as the other intakes do: a refusal is
+  // one round trip away and nothing has been written yet.
   const trigErr = await _triggerPipeline(`${API_BASE}/numerology-portal`, fields);
   if (trigErr) return { error: trigErr };
+
+  const profile = await getProfile();
+  const has = function (k) { return !!(profile && profile[k] && String(profile[k]).trim()); };
+  const profileData = {
+    full_name: has('full_name') ? profile.full_name : fields.full_name,
+    dob: has('dob') ? profile.dob : fields.dob,
+  };
+  ['business_context', 'niche', 'clarity'].forEach(function (k) {
+    if (!has(k) && fields[k]) profileData[k] = fields[k];
+  });
+
+  const profileRes = await fetch(`${API_BASE}/v2/api/profile`, {
+    method: 'POST',
+    headers: _authHeaders(),
+    body: JSON.stringify(profileData),
+  });
+  if (!profileRes.ok) {
+    // The reading is generating from the payload it already has, so this is not a
+    // failure for her: never turn an accepted job into an error on screen.
+    console.error('Profile save failed after the pipeline accepted', profileRes.status);
+  }
 
   return {};
 }

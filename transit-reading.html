@@ -6,11 +6,11 @@
   <title>Transits Reading — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=dbd26df9"></script>
-  <script src="db.js?v=b0e2e8cc"></script>
+  <script src="db.js?v=0e81bb41"></script>
   <script src="timefield.js?v=7e74c3d6"></script>
   <script src="dashboard.js?v=556ad098"></script>
   <script src="autocomplete.js?v=6ecbb458"></script>
-  <script src="intake-confirm.js?v=aeec9045"></script>
+  <script src="intake-confirm.js?v=284fcf4c"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
 </head>
 <body>
@@ -28,20 +28,6 @@
     </header>
 
     <div class="blueprint-wrap">
-
-      <!-- Welcome screen -->
-      <div id="welcome-view" style="display:none">
-        <div class="intake-welcome">
-          <img src="img/welcomephoto.jpeg" alt="Cato Vermeulen" style="width:220px;border-radius:12px;margin-bottom:14px;opacity:0.9">
-          <h1>Welcome to your portal</h1>
-          <p class="intake-welcome__text">This is where your readings live. To get started, I need your exact birth details and a bit about your business.</p>
-          <p class="intake-welcome__text">Take your time. The more specific you are, the better your reading gets.</p>
-          <div style="display:flex;flex-direction:column;align-items:center">
-            <img src="img/catosignature.png" alt="Cato" style="width:75px;margin-top:24px;margin-bottom:24px;opacity:0.85">
-            <button class="btn btn-primary" onclick="document.getElementById('welcome-view').style.display='none';document.getElementById('intake-view').style.display='block';">Let's go</button>
-          </div>
-        </div>
-      </div>
 
       <!-- Intake view -->
       <div id="intake-view" style="display:none">
@@ -202,7 +188,9 @@
       }
 
       if (!grant.available_at) {
-        document.getElementById('welcome-view').style.display = 'block';
+        // The form is the first screen. The welcome view that used to sit here
+        // repeated the email the client had just clicked (removed 2026-09-21).
+        document.getElementById('intake-view').style.display = 'block';
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;

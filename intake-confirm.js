@@ -27,18 +27,24 @@ function formatTobHuman(time24) {
  * Build and inject confirmation view HTML into a container element.
  * @param {string} containerId - ID of an empty div to receive the confirm markup
  * @param {Array} fields - Array of {label, id} objects for the business-context fields
+ * @param {Object} [opts] - {birthRows: 'astrology'|'numerology'}. The astrology
+ *   readings confirm name, date, time and place of birth. Numerology never
+ *   collects a time or a place, so it confirms name and date only; before this
+ *   option (2026-09-21) its confirm view showed two empty rows.
  */
-function buildConfirmView(containerId, fields) {
+function buildConfirmView(containerId, fields, opts) {
   var container = document.getElementById(containerId);
   if (!container) return;
+  opts = opts || {};
 
-  // Birth detail rows (always present)
   var rows = [
     {label: 'Name', id: 'confirm-name'},
     {label: 'Date of birth', id: 'confirm-dob'},
-    {label: 'Time of birth', id: 'confirm-tob'},
-    {label: 'Birthplace', id: 'confirm-city'},
   ];
+  if (opts.birthRows !== 'numerology') {
+    rows.push({label: 'Time of birth', id: 'confirm-tob'});
+    rows.push({label: 'Birthplace', id: 'confirm-city'});
+  }
 
   // Add business-context fields
   for (var i = 0; i < fields.length; i++) {

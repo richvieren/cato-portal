@@ -6,9 +6,9 @@
   <title>Business Numerology Reading — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=dbd26df9"></script>
-  <script src="db.js?v=b0e2e8cc"></script>
+  <script src="db.js?v=0e81bb41"></script>
   <script src="dashboard.js?v=556ad098"></script>
-  <script src="intake-confirm.js?v=aeec9045"></script>
+  <script src="intake-confirm.js?v=284fcf4c"></script>
 </head>
 <body>
   <div class="container">
@@ -26,20 +26,6 @@
 
     <div class="blueprint-wrap">
 
-      <!-- Welcome screen -->
-      <div id="welcome-view" style="display:none">
-        <div class="intake-welcome">
-          <img src="img/welcomephoto.jpeg" alt="Cato Vermeulen" style="width:220px;border-radius:12px;margin-bottom:14px;opacity:0.9">
-          <h1>Welcome to your portal</h1>
-          <p class="intake-welcome__text">This is where your readings live. To get started, I need your exact birth details and a bit about your business.</p>
-          <p class="intake-welcome__text">Take your time. The more specific you are, the better your reading gets.</p>
-          <div style="display:flex;flex-direction:column;align-items:center">
-            <img src="img/catosignature.png" alt="Cato" style="width:75px;margin-top:24px;margin-bottom:24px;opacity:0.85">
-            <button class="btn btn-primary" onclick="document.getElementById('welcome-view').style.display='none';document.getElementById('intake-view').style.display='block';">Let's go</button>
-          </div>
-        </div>
-      </div>
-
       <!-- Intake view -->
       <div id="intake-view" style="display:none">
         <h1>Your Business Numerology Reading</h1>
@@ -48,7 +34,7 @@
         <form id="intake-form" onsubmit="handleNumerologyIntakeSubmit(event)">
           <div class="field-group">
             <label class="field-label" for="full-name">Full name</label>
-            <input type="text" id="full-name" placeholder="The name you use in your business" required>
+            <input type="text" id="full-name" placeholder="Your full name" required>
           </div>
 
           <div class="field-group">
@@ -57,14 +43,31 @@
           </div>
 
           <p class="field-hint" style="color:var(--stone);font-size:0.85rem;margin-top:0.5rem;margin-bottom:1.5rem">
-            Numerology runs on your name and your date of birth. No birth time and no birth city: those belong to the astrology readings.
+            Your reading is calculated from your date of birth. Your name is only used to address you. No birth time and no birth city: those belong to the astrology readings.
           </p>
+
+          <!-- Same three questions as the Blueprint, same field names, so the answers
+               land in the same profile columns. The reading is written against them. -->
+          <div class="field-group" style="margin-top:0.8rem">
+            <label class="field-label" for="business-context">What niche are you currently working in? And do you work as a coach, healer, consultant, service-based provider, etc?</label>
+            <textarea id="business-context" placeholder="e.g. Health coaching for busy moms" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="niche">Are you happy with your current niche or thinking of a rebrand/pivot?</label>
+            <textarea id="niche" placeholder="Tell us more" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="clarity">What are you hoping to get clarity on from this reading?</label>
+            <textarea id="clarity" placeholder="Share anything specific you want Cato to address" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+          </div>
 
           <div class="error-msg" id="intake-error"></div>
           <button type="submit" class="btn btn-primary" id="submit-btn" style="margin-top:1rem;display:block;margin-left:auto;margin-right:auto">
             Submit details
           </button>
-          <p style="color:rgba(180,167,148,0.6);font-size:0.75rem;line-height:1.6;margin-top:1.2rem;max-width:480px;text-align:center"><strong style="color:var(--stone)">Please double-check your name and date of birth.</strong> Your Personal Year, Life Path and best months are calculated from them, so if either is wrong the whole reading is wrong. Details cannot be changed after submission.</p>
+          <p style="color:rgba(180,167,148,0.6);font-size:0.75rem;line-height:1.6;margin-top:1.2rem;max-width:480px;text-align:center"><strong style="color:var(--stone)">Please double-check your date of birth.</strong> Your Personal Year, Life Path and best months are calculated from it, so if it is wrong the whole reading is wrong. It cannot be changed after submission.</p>
         </form>
       </div>
 
@@ -76,7 +79,7 @@
         <div style="max-width:30rem;margin:3rem auto;text-align:center">
           <h1 style="margin-bottom:1.5rem">You're all set, babe ✨</h1>
           <p style="color:var(--stone);font-size:1rem;line-height:1.6;margin-bottom:1.5rem">
-            Your details are in and I'm already pulling up your transits. Give me 48 hours to map out the next 3 months of your cosmic business timing.
+            Your details are in and I'm reading your Personal Year against your business. Give me 48 hours to map the year, month by month.
           </p>
           <p style="color:var(--golden);font-size:1.05rem;line-height:1.5;margin-bottom:1.5rem">You'll get an email the moment it's ready.</p>
           <div style="margin-bottom:2rem;text-align:center">
@@ -104,7 +107,7 @@
 
         <div style="border-top:1px solid rgba(186,145,107,0.15);margin-top:3rem;padding-top:2rem;max-width:480px;margin-left:auto;margin-right:auto;text-align:center">
           <div style="font-family:Jost,sans-serif;font-size:0.68rem;font-weight:400;letter-spacing:0.18em;color:var(--golden);text-transform:uppercase;margin-bottom:12px">GO DEEPER</div>
-          <p style="color:var(--stone);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">Your Business Numerology Reading has more in it than one read-through will catch. Upload the PDF and ask it anything. When to launch, when to hold back, which weeks to push hard on sales. The chart data is all in there. Let it work for you.</p>
+          <p style="color:var(--stone);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">Your Business Numerology Reading has more in it than one read-through will catch. Upload the PDF and ask it anything. Which month to launch, when the money moves, what your Life Path does with this year. It's all in there.</p>
           <div style="display:flex;gap:1rem;justify-content:center;align-items:center;margin-bottom:2rem">
             <a href="https://claude.ai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.2rem;border:1px solid rgba(186,145,107,0.3);border-radius:8px;color:var(--stone);text-decoration:none;font-size:0.85rem;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--golden)'" onmouseout="this.style.borderColor='rgba(186,145,107,0.3)'">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16.28 2.477 9.581 21.523l-1.86-.646L14.42 1.831l1.86.646Z" fill="currentColor"/><path d="m8.063 7.072 3.77-4.607 1.451 1.188-3.77 4.607-1.451-1.188Zm4.654 9.669 3.77-4.607 1.451 1.188-3.77 4.607-1.451-1.188ZM5.654 13.846l-3.77-4.607L3.335 8.05l3.77 4.607-1.451 1.189Zm9.238-5.392 3.77 4.607-1.451 1.189-3.77-4.607 1.451-1.189Z" fill="currentColor"/></svg>
@@ -116,13 +119,9 @@
             </a>
           </div>
         </div>
-
-        <div style="border-top:1px solid rgba(186,145,107,0.15);margin-top:1rem;padding-top:2rem;max-width:480px;margin-left:auto;margin-right:auto;text-align:center">
-          <div style="font-family:Jost,sans-serif;font-size:0.68rem;font-weight:400;letter-spacing:0.18em;color:var(--golden);text-transform:uppercase;margin-bottom:12px">YOUR TRANSIT ALERTS</div>
-          <p style="color:var(--stone);font-size:0.9rem;line-height:1.7;margin-bottom:1.2rem">Your reading covers the big picture. The bot covers what's active right now. It sends you a message on Telegram whenever a transit is hitting your chart, so you know exactly when to move and when to wait.</p>
-          <a href="https://t.me/catcaitbot" target="_blank" rel="noopener" class="btn btn-primary" style="margin-bottom:1rem">Start the bot on Telegram</a>
-          <p style="color:rgba(180,167,148,0.5);font-size:0.75rem">Free for all reading clients. Takes 30 seconds to set up.</p>
-        </div>
+        <!-- The Telegram alerts block that sat here was copied from the Transits page.
+             Alerts are generated for transit_reading and masterclass grants only, so a
+             numerology buyer who tapped it got a bot with nothing for her (removed 2026-09-21). -->
       </div>
 
     </div>
@@ -166,7 +165,9 @@
       }
 
       if (!grant.available_at) {
-        document.getElementById('welcome-view').style.display = 'block';
+        // The form is the first screen. The welcome view that used to sit here
+        // repeated the email the client had just clicked (removed 2026-09-21).
+        document.getElementById('intake-view').style.display = 'block';
         if (profile) {
           if (profile.full_name) document.getElementById('full-name').value = profile.full_name;
           if (profile.dob) document.getElementById('dob').value = profile.dob;
@@ -201,7 +202,7 @@
 
       if (error || !data) {
         subtitleEl.textContent = 'Your reading is being prepared.';
-        textEl.textContent = "I'm mapping out your transits. This can take a little while. Come back soon.";
+        textEl.textContent = "I'm working through your year. This can take a little while. Come back soon.";
         return;
       }
 
@@ -225,11 +226,13 @@
       setInterval(tick, 60000);
     }
 
-    // Build confirmation view with transit-specific business fields
+    // Name and date rows only (no birth time, no birthplace), then the same three
+    // business rows the Blueprint confirms.
     buildConfirmView('confirm-view', [
-      {label: 'Full name', id: 'confirm-name'},
-      {label: 'Date of birth', id: 'confirm-dob'},
-    ]);
+      {label: 'Niche / business type', id: 'confirm-business-context'},
+      {label: 'Rebrand / pivot', id: 'confirm-niche'},
+      {label: 'What you want clarity on', id: 'confirm-clarity'},
+    ], { birthRows: 'numerology' });
 
     var _pendingIntakeData = null;
 
@@ -241,18 +244,28 @@
       _pendingIntakeData = {
         full_name: document.getElementById('full-name').value.trim(),
         dob: document.getElementById('dob').value,
+        business_context: document.getElementById('business-context').value.trim(),
+        niche: document.getElementById('niche').value.trim(),
+        clarity: document.getElementById('clarity').value.trim(),
       };
       if (!_pendingIntakeData.full_name || !_pendingIntakeData.dob) {
         errEl.textContent = 'Your full name and date of birth are both needed.';
         return;
       }
+      if (!_pendingIntakeData.business_context || !_pendingIntakeData.niche || !_pendingIntakeData.clarity) {
+        errEl.textContent = 'The three questions about your business are needed too. Your reading is written against them.';
+        return;
+      }
       var _dobErr = dobError(_pendingIntakeData.dob);
       if (_dobErr) { errEl.textContent = _dobErr; return; }
 
-      // populateConfirmView() is for the astrology products: it writes birth time
-      // and birth city, which this product never collects. Fill the two rows we do.
+      // populateConfirmView() writes birth time and birth city, which this product
+      // never collects. Fill the rows this page has.
       document.getElementById('confirm-name').textContent = _pendingIntakeData.full_name;
       document.getElementById('confirm-dob').textContent = formatDobHuman(_pendingIntakeData.dob);
+      document.getElementById('confirm-business-context').textContent = _pendingIntakeData.business_context;
+      document.getElementById('confirm-niche').textContent = _pendingIntakeData.niche;
+      document.getElementById('confirm-clarity').textContent = _pendingIntakeData.clarity;
       showConfirmView();
     }
 
