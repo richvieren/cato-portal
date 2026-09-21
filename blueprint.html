@@ -64,13 +64,15 @@
           </div>
 
           <div class="field-group" style="margin-top:0.8rem">
-            <label class="field-label" for="business-context">What niche are you currently working in? And do you work as a coach, healer, consultant, service-based provider, etc?</label>
-            <textarea id="business-context" placeholder="e.g. Health coaching for busy moms" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+            <label class="field-label" for="business-context">Tell me about your work right now.</label>
+            <p style="color:var(--stone);font-size:0.85rem;line-height:1.55;margin:-0.2rem 0 0.4rem">If you're self-employed: what do you offer, who do you serve, and what do you call yourself &mdash; coach, healer, consultant, practitioner? If you work a 9-to-5: what's your role?</p>
+            <textarea id="business-context" placeholder="In your own words" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="niche">Are you happy with your current niche or thinking of a rebrand/pivot?</label>
-            <textarea id="niche" placeholder="Tell us more" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
+            <label class="field-label" for="niche">Where do you want your work to go?</label>
+            <p style="color:var(--stone);font-size:0.85rem;line-height:1.55;margin:-0.2rem 0 0.4rem">Are you happy with what you're doing, thinking about a rebrand or pivot, or building something on the side you want to grow?</p>
+            <textarea id="niche" placeholder="In your own words" rows="3" required style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--stone);color:var(--mist);font-family:Jost,sans-serif;font-weight:300;font-size:1rem;padding:0.6rem 0;margin-bottom:1.6rem;outline:none;resize:none"></textarea>
           </div>
 
           <div class="field-group">
@@ -237,8 +239,8 @@
 
     // Build confirmation view with blueprint-specific business fields
     buildConfirmView('confirm-view', [
-      {label: 'Niche / business type', id: 'confirm-business-context'},
-      {label: 'Rebrand / pivot', id: 'confirm-niche'},
+      {label: 'Your work right now', id: 'confirm-business-context'},
+      {label: 'Where you want it to go', id: 'confirm-niche'},
       {label: 'What you want clarity on', id: 'confirm-clarity'},
     ]);
 
