@@ -76,12 +76,23 @@ function setTobValue(id, hhmm) {
  * null when valid, otherwise a plain-English message naming what is missing.
  * All three empty is valid — birth time is optional and always has been.
  */
-function tobError(id) {
+function tobError(id, required) {
   var e = _tobEls(id);
   if (!e[0]) return null;
   var filled = 0;
   for (var i = 0; i < 3; i++) if (e[i].value) filled++;
-  if (filled === 0 || filled === 3) return null;
+  // A blank birth time used to pass here and become 00:00 at the handler, so a
+  // client who did not know her time was given a midnight chart as though she
+  // had. Every product that builds a chart now passes required = true
+  // (2026-09-23). Callers that pass nothing keep the old behaviour.
+  if (filled === 0) {
+    return required
+      ? 'Your birth time is required. It sets your Ascendant and your house placements, '
+        + 'and a reading without it would be wrong. If you do not know your birth time, '
+        + 'reply to your welcome email before submitting.'
+      : null;
+  }
+  if (filled === 3) return null;
   var missing = [];
   if (!e[0].value) missing.push('hour');
   if (!e[1].value) missing.push('minutes');

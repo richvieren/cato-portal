@@ -389,7 +389,9 @@ async function submitCosmicProfileIntake(userId, fields) {
     body: JSON.stringify({
       full_name: fields.full_name,
       dob: fields.dob,
-      tob: fields.tob || '00:00',
+      // No midnight fallback. Cosmic Profile builds a chart, so a blank birth
+      // time must fail rather than silently become 00:00 (2026-09-23).
+      tob: fields.tob,
       city: fields.city,
       country: fields.country,
     }),

@@ -251,7 +251,7 @@
       var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
 
-      var _tobErr = tobError('tob');
+      var _tobErr = tobError('tob', true);
       if (_tobErr) { errEl.textContent = _tobErr; return; }
 
       if (!getValidatedLocation()) {
@@ -263,7 +263,7 @@
       _pendingIntakeData = {
         full_name: document.getElementById('full-name').value.trim(),
         dob: document.getElementById('dob').value,
-        tob: document.getElementById('tob').value || null,
+        tob: document.getElementById('tob').value,
         place_id: loc.place_id,
         city: loc.city,
         country: loc.country,

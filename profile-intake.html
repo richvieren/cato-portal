@@ -125,7 +125,7 @@
       var errEl = document.getElementById('intake-error');
       errEl.textContent = '';
 
-      var _tobErr = tobError('f-tob');
+      var _tobErr = tobError('f-tob', true);
       if (_tobErr) { errEl.textContent = _tobErr; return; }
       if (!getValidatedLocation()) {
         errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
