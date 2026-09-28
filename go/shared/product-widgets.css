@@ -50,6 +50,7 @@
 .section--authority .live-product,
 .section--mirror .live-product,       /* the mirror band is SMOKE */
 .offer__plate.live-product,           /* the offer's plate column is SMOKE */
+.showcase__screen.live-product,     /* the showcase phone screen is SMOKE */
 .statp__media.live-product {          /* module 4: the square sits on SMOKE */
   --stone: #B4A794;
   --mist: #F2F0E5;

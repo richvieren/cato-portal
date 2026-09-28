@@ -23,7 +23,7 @@
     --font-mono: 'Fragment Mono', ui-monospace, monospace;
   }
 </style>
-<!-- build: 2026-09-28T20:51:00.517Z · angle: direction · format: listicle · price: hero -->
+<!-- build: 2026-09-28T21:46:47.999Z · angle: direction · format: listicle · price: hero -->
 <!-- The product renders LIVE, not as screenshots. These are the portal's own
      pinned files, unmodified; boot-live.js feeds them demo-chart.json and
      snippets-subset.json. See shared/chart-demo/SOURCE.md -->
@@ -495,6 +495,90 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     </figure>
   </div>
 </section>
+
+<!-- SHOWCASE · the "podcast" module from the reference: a full-bleed looping
+     video on the left, a phone showing the LIVE product on the right with a
+     numbered list of five product sections beside it. Clicking a row swaps
+     what the phone shows; the rows are sections of the product, not episodes.
+     Ships without video until Cato films the b-roll: the poster still renders
+     alone, and <video> appears only when shared/video/<file> exists at build.
+     Reduced-motion viewers get the poster only. -->
+<section class="section section--showcase" data-block="showcase">
+  <div class="showcase">
+    <figure class="showcase__media">
+      <img class="showcase__poster" src="../shared/photography/src-2.jpeg" alt="Cato Vermeulen at the window" width="1066" height="1600" loading="lazy">
+    </figure>
+    <div class="phone" aria-label="The Cosmic Profile on a phone">
+      <div class="phone__notch"></div>
+      <div class="phone__screen"><div class="showcase__screen live-product" data-live="t-at-a-glance"></div></div>
+    </div>
+    <header class="showcase__head">
+      <p class="showcase__eyebrow"><span>INSIDE THE PROFILE</span></p>
+      <h2 class="showcase__title">Scroll it before you buy it.</h2>
+      <p class="showcase__sub">Every section below is your actual profile, built live on this page from a sample chart. Tap one &amp; it opens in the phone.</p>
+    </header>
+    <div class="showcase__listwrap">
+      <p class="showcase__listhead">Five sections to start with</p>
+      <ol class="showcase__list">
+        <li class="showcase__item is-active">
+          <button type="button" class="showcase__row" data-section="t-at-a-glance" aria-pressed="true">
+            <span class="showcase__num">01</span>
+            <span class="showcase__label">At a Glance</span>
+            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
+          </button>
+        </li>
+        <li class="showcase__item">
+          <button type="button" class="showcase__row" data-section="w-archetype" aria-pressed="false">
+            <span class="showcase__num">02</span>
+            <span class="showcase__label">Business Archetype</span>
+            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
+          </button>
+        </li>
+        <li class="showcase__item">
+          <button type="button" class="showcase__row" data-section="t-mc-destiny" aria-pressed="false">
+            <span class="showcase__num">03</span>
+            <span class="showcase__label">Career Destiny</span>
+            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
+          </button>
+        </li>
+        <li class="showcase__item">
+          <button type="button" class="showcase__row" data-section="w-hemispheres" aria-pressed="false">
+            <span class="showcase__num">04</span>
+            <span class="showcase__label">Chart Focus</span>
+            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
+          </button>
+        </li>
+        <li class="showcase__item">
+          <button type="button" class="showcase__row" data-section="t-moon" aria-pressed="false">
+            <span class="showcase__num">05</span>
+            <span class="showcase__label">What Nourishes You</span>
+            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
+          </button>
+        </li>
+      </ol>
+    </div>
+    <a class="btn btn--primary showcase__cta" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="showcase">GET MY COSMIC PROFILE · $27</a>
+  </div>
+  <script>
+  (function () {
+    var root = document.querySelector('[data-block="showcase"]'); if (!root) return;
+    var screen = root.querySelector('.showcase__screen');
+    var rows = root.querySelectorAll('.showcase__row');
+    function show(id) {
+      screen.setAttribute('data-live', id);
+      var src = document.getElementById(id);            /* boot-live's staging node */
+      if (src && src.innerHTML) { screen.innerHTML = src.innerHTML; screen.scrollTop = 0; }
+      rows.forEach(function (b) {
+        var on = b.getAttribute('data-section') === id;
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.parentNode.classList.toggle('is-active', on);
+      });
+    }
+    rows.forEach(function (b) { b.addEventListener('click', function () { show(b.getAttribute('data-section')); }); });
+  })();
+  </script>
+</section>
+
 
 <!-- Grüns modules 7 / 12 / 14 · short saturated CTA banner. They run three, and
      every one of theirs carries a product shot. Ours carried none, so the band
