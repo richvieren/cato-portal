@@ -1751,6 +1751,17 @@ a { color: var(--accent); text-underline-offset: 3px; }
   .showcase__cta { position: absolute; left: calc(var(--pad-vx) + 474px); top: 918px; }
 }
 
+/* showcase--h1: the page H1 lives here (2026-09-29 restructure). 59 characters
+   hold three lines at 46px in the 633px title box; the list and the button drop
+   by one extra line (52px) and the band grows by the same. */
+.showcase--h1 .showcase__title { font-size: 46px; }
+@media (min-width: 1180px) {
+  .showcase--h1 { height: 1098px; }
+  .showcase--h1 .showcase__listwrap { top: 433px; }
+  .showcase--h1 .showcase__cta { top: 970px; }
+}
+@media (max-width: 1179px) { .showcase--h1 .showcase__title { font-size: 32px; } }
+
 /* <1180: their 320px phone stack, scaled with the viewport up to 600px, then held */
 @media (max-width: 1179px) {
   .showcase { --u: min(1px, 0.3125vw); display: flex; flex-direction: column; align-items: center; padding-bottom: 64px; }

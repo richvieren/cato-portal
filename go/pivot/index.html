@@ -23,7 +23,7 @@
     --font-mono: 'Fragment Mono', ui-monospace, monospace;
   }
 </style>
-<!-- build: 2026-09-29T11:31:51.788Z · angle: pivot · format: listicle · price: hero -->
+<!-- build: 2026-09-29T13:31:06.868Z · angle: pivot · format: listicle · price: hero -->
 <!-- The product renders LIVE, not as screenshots. These are the portal's own
      pinned files, unmodified; boot-live.js feeds them demo-chart.json and
      snippets-subset.json. See shared/chart-demo/SOURCE.md -->
@@ -117,7 +117,11 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
      left at x=167. Proof y87, headline y149 (44/700, two lines), bullets y262
      (20/400, 31px apart), negation y361 (18/700), CTA pill 56x360 with the
      badge overlapping its top edge at y393, reassurance y480 (16/600).
-     Ours runs five bullets against their three, so the column is taller. -->
+     Ours runs five bullets against their three, so the column is taller.
+     2026-09-29: on the direction page the headline moved to the showcase
+     (angle.hero.no_headline) and this block is the buy block: proof strip,
+     bullets, plain-language line, button, price line, photo on the right.
+     The testimonial row and press strip now live in herotestimonials.html. -->
 <header class="hero" data-block="hero">
   <div class="hero__text">
 <!-- MODULE 2 · hero proof strip, their shape exactly: a row of stars, the rating
@@ -264,15 +268,6 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
   </div>
 </section>
-
-<!-- SHOWCASE · the "podcast" module from the reference: a full-bleed looping
-     video on the left, a phone showing the LIVE product on the right with a
-     numbered list of five product sections beside it. Clicking a row swaps
-     what the phone shows; the rows are sections of the product, not episodes.
-     Ships without video until Cato films the b-roll: the poster still renders
-     alone, and <video> appears only when shared/video/<file> exists at build.
-     Reduced-motion viewers get the poster only. -->
-
 
 <!-- MODULE 3 · the positioning band. Grüns' equivalent sits directly under the
      hero: a small centred eyebrow, one centred claim, a short centred paragraph,
