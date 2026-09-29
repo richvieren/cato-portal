@@ -1586,6 +1586,11 @@ a { color: var(--accent); text-underline-offset: 3px; }
   display: block; width: 100%; height: auto; border-radius: 0;
 }
 
+/* photo band: the product shot alone, edge to edge, no padding, no copy. */
+.section--photoband { padding: 0; background: var(--mist); }
+.photoband__shot { margin: 0; }
+.photoband__shot img, .photoband__shot .slot { display: block; width: 100%; height: auto; border-radius: 0; }
+
 @media (max-width: 720px) {
   .section--trusted { padding-block: var(--s8) 0; }
   .trusted__shot { margin-top: var(--s6); }
