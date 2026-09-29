@@ -1769,3 +1769,103 @@ a { color: var(--accent); text-underline-offset: 3px; }
   .showcase__mark { padding-top: 21px; } .showcase__mark svg { width: 25px; height: 25px; }
   .showcase__cta { margin-top: 32px; align-self: flex-start; margin-left: max(20px, calc(50% - 240px)); }
 }
+
+/* ── about ── the reference's "about the coach" band, measured in
+   research/showit-about-intro-measurements.md, scaled 0.95 onto the 1140
+   grid. Their lime becomes GOLD-BRIGHT, their 4px #0D0D0D borders become
+   SMOKE, the portrait keeps its 0/50/0/50 radius (48 at 0.95). The right
+   column flows (script, two paragraphs, button) so copy length can never
+   collide with the button; everything else sits at their coordinates. */
+.section--about { --bg: var(--mist); --rule-c: var(--smoke); padding: 0; --pad-vx: max(20px, calc((100vw - var(--page)) / 2)); overflow: hidden; }
+.about { position: relative; }
+.about__head { text-align: center; }
+.about__eyebrow { margin: 0 0 12px; font-family: var(--font-body); font-weight: 700; font-size: 21px; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--fg); }
+.about__eyebrow span { position: relative; display: inline-block; padding: 0 2px; isolation: isolate; }
+.about__eyebrow span::before { content: ""; position: absolute; left: 26%; right: 26%; bottom: -3px; height: 12px; background: var(--gold-bright); z-index: -1; opacity: 0.85; }
+.about__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 63px; line-height: 0.9; letter-spacing: 0; text-transform: uppercase; color: var(--fg); text-wrap: balance; }
+.about__portrait, .about__small { margin: 0; overflow: hidden; box-sizing: border-box; border: 4px solid var(--smoke); background: var(--linen); }
+.about__portrait { border-radius: 0 48px 0 48px; }
+.about__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; }
+.about__small img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 60% 60%; }
+.about__star svg, .intro__star svg { display: block; width: 100%; height: 100%; fill: var(--gold-bright); }
+.about__quote { margin: 0; font-family: var(--font-body); font-weight: 400; font-size: 27px; line-height: 1.15; color: var(--fg); }
+.about__script { margin: 0 0 14px; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 36px; line-height: 0.7; color: var(--fg); }
+.about__p { margin: 0 0 21px; font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.5; color: var(--fg); }
+.about__p strong { font-weight: 700; }
+.about__cta { min-width: 207px; height: 44px; padding: 0 24px; display: inline-grid; place-items: center; font-size: 0.9rem; white-space: nowrap; margin-top: 8px; }
+
+@media (min-width: 1180px) {
+  .about { height: 839px; }                                   /* theirs 883 × 0.95 */
+  .about__head { position: absolute; left: 0; right: 0; top: 114px; }
+  .about__quote { position: absolute; left: calc(var(--pad-vx) + 76px); top: 238px; width: 251px; }
+  .about__small { position: absolute; left: calc(var(--pad-vx) + 77px); top: 518px; width: 250px; height: 197px; }
+  .about__portrait { position: absolute; left: calc(var(--pad-vx) + 364px); top: 238px; width: 412px; height: 482px; }
+  .about__star { position: absolute; left: calc(var(--pad-vx) + 404px); top: 290px; width: 53px; height: 53px; z-index: 2; }
+  .about__col { position: absolute; left: calc(var(--pad-vx) + 809px); top: 352px; width: 257px; }
+}
+
+/* <1180: their 320 canvas stack. Portrait right with the small image overlapping
+   it off the left edge, star between them, then the left-aligned text column. */
+@media (max-width: 1179px) {
+  .about { --u: min(1px, 0.3125vw); display: flex; flex-direction: column; padding-bottom: 56px; }
+  .about__head { order: 2; text-align: left; padding-inline: 20px; margin-top: calc(26 * var(--u) * 1.22); }
+  .about__portrait { order: 1; position: relative; width: calc(186 * var(--u) * 1.22); height: calc(226 * var(--u) * 1.22); margin: calc(54 * var(--u) * 1.22) 0 0 calc(141 * var(--u) * 1.22); border-radius: 0 0 0 20px; }
+  .about__small { order: 1; position: absolute; left: calc(-8 * var(--u) * 1.22); top: calc(102 * var(--u) * 1.22); width: calc(133 * var(--u) * 1.22); height: calc(134 * var(--u) * 1.22); z-index: 1; }
+  .about__star { order: 1; position: absolute; left: calc(154 * var(--u) * 1.22); top: calc(84 * var(--u) * 1.22); width: calc(36 * var(--u) * 1.22); height: calc(36 * var(--u) * 1.22); z-index: 2; }
+  .about__eyebrow { font-size: 16px; }
+  .about__title { font-size: 36px; }
+  .about__quote { order: 3; font-size: 20px; padding-inline: 20px; margin-top: 24px; max-width: 520px; }
+  .about__col { order: 4; padding-inline: 20px; margin-top: 40px; max-width: 520px; }
+  .about__script { font-size: 26px; }
+}
+
+/* ── intro ── the reference's "you're allowed to want more" band, same
+   source and scale. Left column centred within their 474px title box; the
+   small photograph starts inside the page and runs off the viewport edge
+   (the section clips it), as theirs runs off its canvas. The badge is inline
+   SVG text on a circle, one turn every 30s, and holds still under
+   prefers-reduced-motion. */
+.section--intro { --bg: var(--linen); --rule-c: var(--smoke); padding: 0; --pad-vx: max(20px, calc((100vw - var(--page)) / 2)); overflow: hidden; position: relative; z-index: 1; }
+.intro { position: relative; }
+.intro__text { text-align: center; }
+.intro__eyebrow { margin: 0 0 12px; font-family: var(--font-body); font-weight: 700; font-size: 21px; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--fg); }
+.intro__title { margin: 0 0 24px; font-family: var(--font-display); font-weight: 400; font-size: 54px;   /* their 66 × 0.95 = 63 wraps "YOUR DIRECTION." in the 470px box; 54 holds the line */ line-height: 0.9; letter-spacing: 0; text-transform: uppercase; color: var(--fg); }
+.intro__line { display: block; }
+.intro__hl { position: relative; display: inline-block; isolation: isolate; }
+.intro__hl::before { content: ""; position: absolute; left: -4px; right: -4px; bottom: -8px; height: 30px; background: var(--gold-bright); z-index: -1; }
+.intro__body { margin: 0 auto; font-family: var(--font-body); font-weight: 400; font-size: 27px; line-height: 1.15; color: var(--fg); }
+.intro__large, .intro__small { margin: 0; overflow: hidden; box-sizing: border-box; border: 4px solid var(--smoke); background: var(--mist); }
+.intro__large img, .intro__small img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.intro__large img { object-position: 50% 30%; }
+.intro__small img { object-position: 50% 40%; }
+.intro__badge svg { display: block; width: 100%; height: 100%; animation: intro-spin 30s linear infinite; }
+.intro__badge text { font-family: var(--font-body); font-weight: 700; font-size: 58px; letter-spacing: 4px; text-transform: uppercase; fill: var(--smoke); }
+@keyframes intro-spin { to { transform: rotate(-360deg); } }
+@media (prefers-reduced-motion: reduce) { .intro__badge svg { animation: none; } }
+
+@media (min-width: 1180px) {
+  .intro { height: 740px; }                                   /* theirs 779 × 0.95 */
+  .intro__media { display: contents; }
+  .intro__text { position: absolute; left: calc(var(--pad-vx) + 47px); top: 184px; width: 470px; }
+  .intro__body { max-width: 412px; }
+  .intro__large { position: absolute; left: calc(var(--pad-vx) + 561px); top: 116px; width: 469px; height: 505px; }
+  .intro__star { position: absolute; left: calc(var(--pad-vx) + 600px); top: 157px; width: 53px; height: 53px; z-index: 2; }
+  .intro__small { position: absolute; left: calc(var(--pad-vx) + 1081px); top: 186px; width: 339px; height: 366px; }
+  .intro__badge { position: absolute; left: calc(var(--pad-vx) + 953px); top: 59px; width: 133px; height: 133px; z-index: 3; }
+}
+
+@media (max-width: 1179px) {
+  .intro { --u: min(1px, 0.3125vw); display: flex; flex-direction: column; }
+  .intro__text { padding: 48px 20px 0; max-width: 520px; align-self: center; width: 100%; }
+  .intro__eyebrow { font-size: 16px; }
+  .intro__title { font-size: 36px; margin-bottom: 20px; }
+  .intro__hl::before { height: 18px; bottom: -4px; }
+  .intro__body { font-size: 20px; }
+  /* their 320 canvas below the body copy: large image at (-7,349) 203x229, small at (212,406) 121x141,
+     badge at (150,311) 86, star at (11,530) 36, canvas bottom 631. Offsets here are from the image top. */
+  .intro__media { position: relative; width: 100%; margin-top: calc(51 * var(--u) * 1.22); height: calc(282 * var(--u) * 1.22); }
+  .intro__large { position: absolute; left: calc(-7 * var(--u) * 1.22); top: 0; width: calc(203 * var(--u) * 1.22); height: calc(229 * var(--u) * 1.22); }
+  .intro__small { position: absolute; left: calc(212 * var(--u) * 1.22); top: calc(57 * var(--u) * 1.22); width: calc(121 * var(--u) * 1.22); height: calc(141 * var(--u) * 1.22); }
+  .intro__badge { position: absolute; left: calc(150 * var(--u) * 1.22); top: calc(-38 * var(--u) * 1.22); width: calc(86 * var(--u) * 1.22); height: calc(86 * var(--u) * 1.22); z-index: 3; }
+  .intro__star { position: absolute; left: calc(11 * var(--u) * 1.22); top: calc(181 * var(--u) * 1.22); width: calc(36 * var(--u) * 1.22); height: calc(36 * var(--u) * 1.22); z-index: 2; }
+}
