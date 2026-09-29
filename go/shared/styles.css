@@ -1339,6 +1339,12 @@ a { color: var(--accent); text-underline-offset: 3px; }
   margin: var(--s2) 0 0;
   font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--fg-muted);
 }
+/* closing__legal: the footer's three lines at the foot of the closing band (direction
+   page, 2026-09-29), so the page ends on one dark band instead of two. */
+.closing__legal { margin-top: var(--s8); padding-top: var(--s4); border-top: 1px solid rgba(242, 240, 229, 0.16); width: 100%; max-width: var(--page); text-align: left; }
+.closing__legal p { margin: 0 0 6px; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.7; color: var(--stone); }
+.closing__legal a { color: var(--stone); }
+
 @media (max-width: 720px) { .section--closing { padding-block: var(--s8); } .btn.btn--closing { min-width: 0; width: 100%; } }
 
 /* ── OUTCOMES ────────────────────────────────────────────────────────────
@@ -1501,6 +1507,12 @@ a { color: var(--accent); text-underline-offset: 3px; }
   .statp__text { padding: var(--s12) var(--s8); }
   .statp__media { padding: var(--s6); }
 }
+
+/* statp--text: no media square (2026-09-29, Richard: the wheel illustrated nothing
+   in that copy). One centred column at reading width. */
+.statp--text { grid-template-columns: 1fr; }
+.statp--text .statp__sub { max-width: 52ch; }
+@media (min-width: 960px) { .statp--text { grid-template-columns: 1fr; } .statp--text .statp__text { padding: var(--s12) var(--s8); } }
 
 /* ── MODULE 3 · the positioning band ─────────────────────────────────────
    Their equivalent sits right under the hero and is centred throughout: a
@@ -1717,6 +1729,7 @@ a { color: var(--accent); text-underline-offset: 3px; }
 .showcase__screen::-webkit-scrollbar { display: none; }
 .showcase__screen .frost-card { padding: 22px 20px; }
 .showcase__screen .letter-section, .showcase__screen .biz-text { padding: 20px 18px; }
+.showcase__screen svg { max-width: 100%; height: auto; }   /* the visibility gauge is a fixed 240px SVG; the screen is 241 wide inside its padding */
 
 /* head block */
 .showcase__head { text-align: center; }

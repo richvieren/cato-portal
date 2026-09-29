@@ -23,7 +23,7 @@
     --font-mono: 'Fragment Mono', ui-monospace, monospace;
   }
 </style>
-<!-- build: 2026-09-29T13:31:06.852Z · angle: direction · format: listicle · price: hero -->
+<!-- build: 2026-09-29T14:10:17.251Z · angle: direction · format: listicle · price: hero -->
 <!-- The product renders LIVE, not as screenshots. These are the portal's own
      pinned files, unmodified; boot-live.js feeds them demo-chart.json and
      snippets-subset.json. See shared/chart-demo/SOURCE.md -->
@@ -126,53 +126,61 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     </figure>
     <div class="phone phone--image" aria-label="The Cosmic Profile on a phone">
       <img class="phone__frame" src="../shared/photography/phone-frame.png" alt="" width="969" height="1959" aria-hidden="true">
-      <div class="phone__screen"><div class="showcase__screen live-product" data-live="t-at-a-glance"></div></div>
+      <div class="phone__screen"><div class="showcase__screen live-product" data-live="w-chart-wheel"></div></div>
     </div>
     <header class="showcase__head">
-      <p class="showcase__eyebrow"><span>INSIDE THE PROFILE</span></p>
+      <p class="showcase__eyebrow"><span>YOUR COSMIC PROFILE</span></p>
       <h1 class="showcase__title">Are you ready to stop guessing what to do with your career?</h1>
-      <p class="showcase__sub">Every section below is your actual profile, built live on this page from a sample chart. Tap one &amp; it opens in the phone.</p>
+      <p class="showcase__sub">Your chart, read as a business plan: 26 short sections on the work you were built for. This is a live sample. Tap a row &amp; it opens in the phone.</p>
     </header>
     <div class="showcase__listwrap">
-      <p class="showcase__listhead">Five sections to start with</p>
+      <p class="showcase__listhead">Start with these five</p>
       <ol class="showcase__list">
         <li class="showcase__item is-active">
-          <button type="button" class="showcase__row" data-section="t-at-a-glance" aria-pressed="true">
+          <button type="button" class="showcase__row" data-section="w-chart-wheel" aria-pressed="true">
             <span class="showcase__num">01</span>
-            <span class="showcase__label">At a Glance</span>
+            <span class="showcase__label">Chart image</span>
+            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
+          </button>
+        </li>
+        <li class="showcase__item">
+          <button type="button" class="showcase__row" data-section="w-leadership-style" aria-pressed="false">
+            <span class="showcase__num">02</span>
+            <span class="showcase__label">Leadership Style</span>
             <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
           </button>
         </li>
         <li class="showcase__item">
           <button type="button" class="showcase__row" data-section="w-archetype" aria-pressed="false">
-            <span class="showcase__num">02</span>
+            <span class="showcase__num">03</span>
             <span class="showcase__label">Business Archetype</span>
             <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
           </button>
         </li>
         <li class="showcase__item">
-          <button type="button" class="showcase__row" data-section="t-mc-destiny" aria-pressed="false">
-            <span class="showcase__num">03</span>
-            <span class="showcase__label">Career Destiny</span>
-            <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
-          </button>
-        </li>
-        <li class="showcase__item">
-          <button type="button" class="showcase__row" data-section="w-hemispheres" aria-pressed="false">
+          <button type="button" class="showcase__row" data-section="w-visibility" aria-pressed="false">
             <span class="showcase__num">04</span>
-            <span class="showcase__label">Chart Focus</span>
+            <span class="showcase__label">Visibility</span>
             <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
           </button>
         </li>
         <li class="showcase__item">
-          <button type="button" class="showcase__row" data-section="t-moon" aria-pressed="false">
+          <button type="button" class="showcase__row" data-section="t-money" aria-pressed="false">
             <span class="showcase__num">05</span>
-            <span class="showcase__label">What Nourishes You</span>
+            <span class="showcase__label">On Money</span>
             <span class="showcase__mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M256 464c114.875 0 208-93.125 208-208S370.875 48 256 48 48 141.125 48 256s93.125 208 208 208zm-32-112V160l96 96-96 96z"/></svg></span>
           </button>
         </li>
       </ol>
     </div>
+    <!-- boot-live stages a section only when a [data-live] slot for it exists at
+         boot, and the phone screen carries one id at a time. These hidden slots
+         make every row's section stage, so a tap can always find its source. -->
+    <div data-live="w-chart-wheel" hidden></div>
+    <div data-live="w-leadership-style" hidden></div>
+    <div data-live="w-archetype" hidden></div>
+    <div data-live="w-visibility" hidden></div>
+    <div data-live="t-money" hidden></div>
     <a class="btn btn--primary showcase__cta" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="showcase">GET MY COSMIC PROFILE · $27</a>
   </div>
   <script>
@@ -276,6 +284,27 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   </div>
 </section>
 
+<!-- MODULE 4 · cloned from gruns.co section.usnacks-stats, measured live at 1788.
+     THEIR SPEC: a tinted band (#DAECE3) holding a WHITE inner panel 1440x720 at
+     20px radius. Left column: heading 44/700 centred, sub 20/500, then TWO
+     figures side by side at 100px/400 with captions under, then a pill CTA
+     269x56. Right column: a 720x720 photograph flush to the panel's edge.
+     Ours: LINEN band, MIST panel, and the square on the right is the live chart
+     wheel -- the closest thing we have to their "product in use" shot, and it is
+     the product itself rather than a picture of it. Both figures are read from
+     demo-chart.json at run time, never written into the copy. -->
+<section class="section section--stats" data-block="stats-panel">
+  <div class="statp statp--text">
+    <div class="statp__text">
+      <h2 class="statp__title">The deciding keeps getting postponed.</h2>
+      <p class="statp__sub">The training's done. The certifications are on the wall. You've got more ideas than you can act on and no energy to pick one, because everything you have goes into keeping the current thing upright.</p>
+      <p class="statp__sub">So it waits. Another month. Another year.</p>
+      <p class="statp__sub">Ten seconds, twenty-seven dollars, and it's decided for you.</p>
+      <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="stats">GET MY COSMIC PROFILE ・ $27</a>
+    </div>
+  </div>
+</section>
+
 <!-- MODULE 2 of 15 · hero, cloned from gruns.co section.hero-v2.
      Measured live at 1788: section 600px, two equal columns, gap 32, content
      left at x=167. Proof y87, headline y149 (44/700, two lines), bullets y262
@@ -320,6 +349,7 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
          light ground; gold on MIST is 2.50:1 so that is not available to us.
          The marked words therefore carry their OWN smoke ground and the gold
          sits on that -- 6.22:1, gold used exactly where gold is legal. -->
+    <h2 class="hero__headline">Turn Your Chart Into Income</h2>
     <ul class="hero__bullets">
       <li><b>26 sections</b>, every one about the work you were built to do</li>
       <li><b>Direction, clients &amp; money</b>, read from your unique astrology chart</li>
@@ -351,6 +381,34 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     </figure>
   </div>
 </header>
+
+<!-- MODULE 3 · the positioning band. Grüns' equivalent sits directly under the
+     hero: a small centred eyebrow, one centred claim, a short centred paragraph,
+     then the product shown full width beneath it.
+     The shot is RE-SHOT, not the supplied asset. The live product was rendered
+     at 393x852 CSS / 1179x2556 device px and perspective-warped onto the phone's
+     screen quad. The asset Richard supplied carried the old purple glyphs; this
+     one is the current build, measured at zero purple pixels. -->
+<section class="section section--trusted" data-block="trusted">
+  <p class="trusted__label">PREMIUM BUSINESS ASTROLOGY SYSTEMS</p>
+  <h2 class="trusted__title">Written for women who are done guessing which way to go.</h2>
+  <p class="trusted__body">It tells you the work that's actually yours, who it's for, and which of the things you're weighing up is the one.</p>
+  <figure class="trusted__portrait">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/cato-trusted.jpg" alt="Cato Vermeulen speaking on stage" width="1600" height="2400">
+
+    <figcaption>Cato Vermeulen &middot; Business Astrologer &amp; Speaker &middot; Cape Town</figcaption>
+  </figure>
+  <figure class="trusted__shot">
+<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
+     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
+     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
+      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
+
+  </figure>
+</section>
 
 <!-- ABOUT · the "about the coach" band from the reference, measured at
      research/showit-about-intro-measurements.md and scaled 0.95 onto our
@@ -411,56 +469,6 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   </div>
 </section>
 
-
-<!-- MODULE 3 · the positioning band. Grüns' equivalent sits directly under the
-     hero: a small centred eyebrow, one centred claim, a short centred paragraph,
-     then the product shown full width beneath it.
-     The shot is RE-SHOT, not the supplied asset. The live product was rendered
-     at 393x852 CSS / 1179x2556 device px and perspective-warped onto the phone's
-     screen quad. The asset Richard supplied carried the old purple glyphs; this
-     one is the current build, measured at zero purple pixels. -->
-<section class="section section--trusted" data-block="trusted">
-  <p class="trusted__label">PREMIUM BUSINESS ASTROLOGY SYSTEMS</p>
-  <h2 class="trusted__title">Written for women who are done guessing which way to go.</h2>
-  <p class="trusted__body">It tells you the work that's actually yours, who it's for, and which of the things you're weighing up is the one.</p>
-  <figure class="trusted__portrait">
-<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
-     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
-     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
-      <img src="../shared/photography/cato-trusted.jpg" alt="Cato Vermeulen speaking on stage" width="1600" height="2400">
-
-    <figcaption>Cato Vermeulen &middot; Business Astrologer &amp; Speaker &middot; Cape Town</figcaption>
-  </figure>
-  <figure class="trusted__shot">
-<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
-     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
-     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
-      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
-
-  </figure>
-</section>
-
-<!-- MODULE 4 · cloned from gruns.co section.usnacks-stats, measured live at 1788.
-     THEIR SPEC: a tinted band (#DAECE3) holding a WHITE inner panel 1440x720 at
-     20px radius. Left column: heading 44/700 centred, sub 20/500, then TWO
-     figures side by side at 100px/400 with captions under, then a pill CTA
-     269x56. Right column: a 720x720 photograph flush to the panel's edge.
-     Ours: LINEN band, MIST panel, and the square on the right is the live chart
-     wheel -- the closest thing we have to their "product in use" shot, and it is
-     the product itself rather than a picture of it. Both figures are read from
-     demo-chart.json at run time, never written into the copy. -->
-<section class="section section--stats" data-block="stats-panel">
-  <div class="statp">
-    <div class="statp__text">
-      <h2 class="statp__title">The deciding keeps getting postponed.</h2>
-      <p class="statp__sub">The training's done. The certifications are on the wall. You've got more ideas than you can act on and no energy to pick one, because everything you have goes into keeping the current thing upright.</p>
-      <p class="statp__sub">So it waits. Another month. Another year.</p>
-      <p class="statp__sub">Ten seconds, twenty-seven dollars, and it's decided for you.</p>
-      <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="stats">GET MY COSMIC PROFILE ・ $27</a>
-    </div>
-    <div class="statp__media live-product" data-live="w-chart-wheel"></div>
-  </div>
-</section>
 
 <!-- THE FIVE REASONS · one list, 1 to 5, uninterrupted.
      Was two blocks (reasonsa / reasonsb) with the offer and a CTA banner wedged
@@ -822,18 +830,14 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   <p class="closing__label">BEFORE YOU GO</p>
   <a class="btn btn--primary btn--lg btn--closing" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="closing">GET MY COSMIC PROFILE · $27</a>
   <p class="closing__reassure">Instant, with nothing to ship &amp; nothing to renew.</p>
+  <div class="closing__legal" data-block="footer">
+    <p class="footer__note">Business astrology is for insight and planning. It isn't financial, legal or medical advice.</p>
+    <p class="footer__links"><a href="https://catovermeulen.com/terms-and-conditions">Terms</a> &middot; <a href="https://catovermeulen.com/disclaimer">Disclaimer</a> &middot; <a href="mailto:hello@catovermeulen.com">hello@catovermeulen.com</a></p>
+    <p class="footer__brand">&copy; Cato Vermeulen</p>
+  </div>
 </section>
 
 </main>
-<footer class="footer" data-block="footer">
-  <p class="footer__note">Business astrology is for insight and planning. It isn't financial, legal or medical advice.</p>
-  <p class="footer__links">
-    <a href="https://catovermeulen.com/terms-and-conditions">Terms</a> &middot;
-    <a href="https://catovermeulen.com/disclaimer">Disclaimer</a> &middot;
-    <a href="mailto:hello@catovermeulen.com">hello@catovermeulen.com</a>
-  </p>
-  <p class="footer__brand">&copy; Cato Vermeulen</p>
-</footer>
 
 </body>
 </html>
