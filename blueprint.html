@@ -6,10 +6,10 @@
   <title>Blueprint — Cato Vermeulen</title>
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js?v=dbd26df9"></script>
-  <script src="db.js?v=0e81bb41"></script>
+  <script src="db.js?v=506cd0a8"></script>
   <script src="timefield.js?v=7e74c3d6"></script>
   <script src="dashboard.js?v=556ad098"></script>
-  <script src="autocomplete.js?v=6ecbb458"></script>
+  <script src="autocomplete.js?v=7c8e0470"></script>
   <script src="intake-confirm.js?v=284fcf4c"></script>
   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCQ1AQ29LoWZg84BqzHmf6FyJ2wJDi498&libraries=places&loading=async&callback=initPlacesAutocomplete"></script>
 </head>
@@ -252,10 +252,17 @@
       errEl.textContent = '';
 
       var _tobErr = tobError('tob', true);
-      if (_tobErr) { errEl.textContent = _tobErr; return; }
+      if (_tobErr) {
+        errEl.textContent = _tobErr;
+        reportIntakeBlocked('blueprint', 'birth_time', '');
+        return;
+      }
 
       if (!getValidatedLocation()) {
         errEl.textContent = 'Please select your birth city from the dropdown suggestions. Start typing and pick the correct match.';
+        // She is stuck here with no way through. Say so, so she becomes a
+        // finding in stranded_check rather than a client who never came back.
+        reportIntakeBlocked('blueprint', 'birth_city', (document.getElementById('birth-city') || {}).value);
         return;
       }
 

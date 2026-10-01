@@ -4,6 +4,13 @@
 
 var _validatedLocation = null;
 
+/* Which address component names the birth city, most specific first. */
+var CITY_COMPONENT_RANK = [
+  'locality', 'postal_town', 'sublocality',
+  'administrative_area_level_3', 'administrative_area_level_2',
+  'administrative_area_level_1',
+];
+
 function getValidatedLocation() {
   return _validatedLocation;
 }
@@ -78,7 +85,20 @@ function initCityAutocomplete(inputId) {
   });
 
   var autocomplete = new google.maps.places.Autocomplete(input, {
-    types: ['(cities)'],
+    // Was ['(cities)'], which returns only locality and
+    // administrative_area_level_3. Measured against the Places API on
+    // 2026-09-25, that filter returns ZERO suggestions for real birth places:
+    //   Bjerkreim (Norwegian municipality, ~2,800 people)  0 -> 5
+    //   Warszawa Ochota (a Warsaw district)                0 -> 5
+    // A client whose birth place is one of those cannot submit the form at
+    // all, ever, and until the beacon landed we could not see it happening.
+    // NOT fixed by this: an institution name. "Rikshospitalet Oslo" still
+    // returns zero, because a hospital is an establishment and no admin type
+    // covers it. That case needs the manual fallback, which is not built.
+    // The server still validates whatever she picks through
+    // resolve_place(place_id), so forced selection is unchanged.
+    types: ['locality', 'administrative_area_level_2',
+            'administrative_area_level_3', 'sublocality', 'postal_town'],
     fields: ['place_id', 'formatted_address', 'address_components', 'geometry'],
   });
 
@@ -91,14 +111,21 @@ function initCityAutocomplete(inputId) {
     }
 
     var city = '';
+    var cityRank = -1;
     var country = '';
     var components = place.address_components || [];
     for (var i = 0; i < components.length; i++) {
       var types = components[i].types;
-      if (types.indexOf('locality') !== -1) {
-        city = components[i].long_name;
-      } else if (types.indexOf('administrative_area_level_1') !== -1 && !city) {
-        city = components[i].long_name;
+      // Most specific name first. Widening the type filter on 2026-09-25 let
+      // through places with no `locality` at all: Bjerkreim Municipality is
+      // administrative_area_level_2, and the old locality-or-level_1 rule
+      // would have labelled it "Rogaland", its county. The city goes on the
+      // cover of the reading, so a wrong one is worse than a missing one.
+      for (var r = 0; r < CITY_COMPONENT_RANK.length; r++) {
+        if (types.indexOf(CITY_COMPONENT_RANK[r]) !== -1) {
+          if (cityRank === -1 || r < cityRank) { city = components[i].long_name; cityRank = r; }
+          break;
+        }
       }
       if (types.indexOf('country') !== -1) {
         country = components[i].long_name;
@@ -139,7 +166,20 @@ function initBirthCityAutocomplete(inputId) {
   });
 
   var autocomplete = new google.maps.places.Autocomplete(input, {
-    types: ['(cities)'],
+    // Was ['(cities)'], which returns only locality and
+    // administrative_area_level_3. Measured against the Places API on
+    // 2026-09-25, that filter returns ZERO suggestions for real birth places:
+    //   Bjerkreim (Norwegian municipality, ~2,800 people)  0 -> 5
+    //   Warszawa Ochota (a Warsaw district)                0 -> 5
+    // A client whose birth place is one of those cannot submit the form at
+    // all, ever, and until the beacon landed we could not see it happening.
+    // NOT fixed by this: an institution name. "Rikshospitalet Oslo" still
+    // returns zero, because a hospital is an establishment and no admin type
+    // covers it. That case needs the manual fallback, which is not built.
+    // The server still validates whatever she picks through
+    // resolve_place(place_id), so forced selection is unchanged.
+    types: ['locality', 'administrative_area_level_2',
+            'administrative_area_level_3', 'sublocality', 'postal_town'],
     fields: ['place_id', 'formatted_address', 'address_components', 'geometry'],
   });
 
@@ -152,14 +192,21 @@ function initBirthCityAutocomplete(inputId) {
     }
 
     var city = '';
+    var cityRank = -1;
     var country = '';
     var components = place.address_components || [];
     for (var i = 0; i < components.length; i++) {
       var types = components[i].types;
-      if (types.indexOf('locality') !== -1) {
-        city = components[i].long_name;
-      } else if (types.indexOf('administrative_area_level_1') !== -1 && !city) {
-        city = components[i].long_name;
+      // Most specific name first. Widening the type filter on 2026-09-25 let
+      // through places with no `locality` at all: Bjerkreim Municipality is
+      // administrative_area_level_2, and the old locality-or-level_1 rule
+      // would have labelled it "Rogaland", its county. The city goes on the
+      // cover of the reading, so a wrong one is worse than a missing one.
+      for (var r = 0; r < CITY_COMPONENT_RANK.length; r++) {
+        if (types.indexOf(CITY_COMPONENT_RANK[r]) !== -1) {
+          if (cityRank === -1 || r < cityRank) { city = components[i].long_name; cityRank = r; }
+          break;
+        }
       }
       if (types.indexOf('country') !== -1) {
         country = components[i].long_name;

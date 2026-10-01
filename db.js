@@ -43,6 +43,27 @@ function _getUserEmail() {
 
 // --- Access Grants ---
 
+/* Record that the intake form turned a client away at its own validation.
+   Both dead-ends return before any network call, so before this a stuck client
+   left no trace at all: Bogusia Wardein signed in on 2026-09-14 and 2026-09-15,
+   made no POST on either day, and sat with nothing for ten days while every
+   audit read her as someone who could not be bothered.
+
+   Fire and forget. It must never block, never throw, and never delay the form
+   it watches — the client is already stuck when this runs. `typed` is the
+   point: it records the place Places would not resolve. */
+function reportIntakeBlocked(product, gate, typed) {
+  try {
+    fetch(`${API_BASE}/v2/api/intake-blocked`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ..._authHeaders() },
+      body: JSON.stringify({ product: product, gate: gate, typed: typed || '' }),
+      keepalive: true,
+    }).catch(function () {});
+  } catch (e) { /* never let the beacon break the form */ }
+}
+
+
 async function getBlueprintGrant() {
   const res = await fetch(`${API_BASE}/v2/api/grants/blueprint`, { headers: _authHeaders() });
   if (!res.ok) return null;
