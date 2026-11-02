@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Your Cosmic Profile · What your thing is</title>
-<meta name="description" content="Stop guessing what you're built for. $27 · your chart already answered it.">
+<title>Your Cosmic Profile · Your zone of genius, in business language</title>
+<meta name="description" content="You have a zone of genius. Are you actually getting paid for it? Your chart read as a business plan. 26 sections, written from your exact birth time. $27.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&amp;family=Inter+Tight:wght@300;400;500;600;700&amp;family=Fragment+Mono&amp;display=swap">
-<link rel="stylesheet" href="../shared/styles.css?v=cd035596c2">
-<link rel="stylesheet" href="../shared/product-widgets.css?v=cd035596c2">
+<link rel="stylesheet" href="../shared/styles.css?v=7a84540863">
+<link rel="stylesheet" href="../shared/product-widgets.css?v=7a84540863">
 <style>
   :root {
     --mist: #F2F0E5;
@@ -23,15 +23,15 @@
     --font-mono: 'Fragment Mono', ui-monospace, monospace;
   }
 </style>
-<!-- build: 2026-11-02T09:52:01.782Z · angle: direction · format: listicle · price: hero -->
+<!-- build: 2026-11-02T10:09:01.758Z · angle: direction · format: direction · price: hero -->
 <!-- The product renders LIVE, not as screenshots. These are the portal's own
      pinned files, unmodified; boot-live.js feeds them demo-chart.json and
      snippets-subset.json. See shared/chart-demo/SOURCE.md -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js" defer></script>
-<script src="../shared/chart-demo/chart-engine.js?v=cd035596c2" defer></script>
-<script src="../shared/chart-demo/widgets.js?v=cd035596c2" defer></script>
-<script src="../shared/chart-demo/chart-wheel.js?v=cd035596c2" defer></script>
-<script src="../shared/chart-demo/boot-live.js?v=cd035596c2" defer></script>
+<script src="../shared/chart-demo/chart-engine.js?v=7a84540863" defer></script>
+<script src="../shared/chart-demo/widgets.js?v=7a84540863" defer></script>
+<script src="../shared/chart-demo/chart-wheel.js?v=7a84540863" defer></script>
+<script src="../shared/chart-demo/boot-live.js?v=7a84540863" defer></script>
 <!-- tracking slug: cp-direction-lst-hero -->
 <!-- Meta Pixel. The id comes from config/brand.json .tracking.meta_pixel_id.
      Browser events on this page: PageView, ViewContent on load, InitiateCheckout on any CTA click.
@@ -70,15 +70,22 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
 
 
 </head>
-<!-- Built module by module against gruns.co/pages/first-order.
-     2026-09-17: the mirror, the "what lands in your portal" strip, the spotlight,
-     the gallery and the offer block were all removed on instruction. The offer
-     and a CTA banner had been sitting between reason 2 and reason 3; the banner
-     moved below the list and the offer is gone, so the five reasons now run
-     1 to 5 uninterrupted.
-     CONSEQUENCE WORTH KNOWING: with the offer block deleted, the only place the
-     page states what you get for $27 is the comparison table and the CTAs. -->
-<body class="fmt-listicle" data-angle="direction" data-slug="direction" data-price-display="hero">
+<!-- SPINE FOR THE DIRECTION ANGLE · built 2026-11-02 from Cato's build
+     document, SECTION 4 — PAGE ORDER, which she marked final.
+
+     Why this is its own file and not an edit to listicle.html: pivot/ is also
+     format "listicle". Her order drops the mirror, spotlight, gallery, how,
+     boundary, trusted, intro, review wall, CTA banners and authority blocks,
+     and adds seven new ones. Applying that to the shared spine would have
+     gutted the pivot page, which she did not ask for. pivot.json still points
+     at listicle.html and is untouched.
+
+     The dropped blocks' COPY is still in variants/direction.json. Nothing was
+     deleted, so any of them can come back by adding one line here.
+
+     SECTION 5 keeps: the phone mockups live in showcase, and photoband is the
+     existing Cato photography she asked to keep. -->
+<body class="fmt-direction" data-angle="direction" data-slug="direction" data-price-display="hero">
 <!-- MODULE 1 · announcement bar, cloned from gruns.co/pages/first-order.
      THEIR SPEC, read from their own inline tokens on .cro-bar (not estimated):
        band height 55.5px · flex row, centred, gap 8px · padding 6px 8px
@@ -128,8 +135,8 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     </div>
     <header class="showcase__head">
       <p class="showcase__eyebrow"><span>YOUR COSMIC PROFILE</span></p>
-      <h1 class="showcase__title">Are you ready to stop guessing what to do with your career?</h1>
-      <p class="showcase__sub">Your chart, read as a business plan: 26 short sections on the work you were built for. This is a live sample. Tap a row and it opens in the phone.</p>
+      <h1 class="showcase__title">You have a zone of genius. Are you actually getting paid for it?</h1>
+      <p class="showcase__sub">Your chart, read as a business plan. 26 sections on the work you were built for, the way you are built to make money, and the version of success that is actually yours. Not the one you copied off someone with a bigger account.</p>
     </header>
     <div class="showcase__listwrap">
       <p class="showcase__listhead">Start with these five</p>
@@ -201,107 +208,6 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   </script>
 </section>
 
-
-<!-- Their hero is followed immediately by a row of testimonial cards. Ours uses
-     the three real quotes, with the attribution and the reading each woman
-     actually bought. The Big 3 preview strip that used to sit here is gone:
-     it was a product preview, which their hero does not carry. -->
-<section class="section section--herotestimonials" data-block="hero-testimonials">
-  <ul class="htest">
-    <li class="htest__item">
-      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
-     that holds it, never here, so the hero row and the testimonial rows can
-     differ without a second copy of the path data. -->
-<span class="stars" role="img" aria-label="5 out of 5">
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-</span>
-</span>
-      <blockquote>This is the reading every coach out there NEEDS. Full stop. It answered EVERY question I had about my niche, my messaging, who I'm meant to serve… on a soul level.</blockquote>
-      <cite><b>Victoria Antonelli, Breathwork Coach</b><span>Category of One Blueprint</span></cite>
-    </li>
-    <li class="htest__item">
-      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
-     that holds it, never here, so the hero row and the testimonial rows can
-     differ without a second copy of the path data. -->
-<span class="stars" role="img" aria-label="5 out of 5">
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-</span>
-</span>
-      <blockquote>This reading helped me nail my messaging for premium clients AND finally niche down with confidence. I keep coming back to it and finding something new every single time.</blockquote>
-      <cite><b>Priya Biring, Chronic Illness Coach</b><span>Category of One Blueprint</span></cite>
-    </li>
-    <li class="htest__item">
-      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
-     that holds it, never here, so the hero row and the testimonial rows can
-     differ without a second copy of the path data. -->
-<span class="stars" role="img" aria-label="5 out of 5">
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
-</span>
-</span>
-      <blockquote>I'm a social psychologist. Sceptic by trade! Then Cato pinpointed Chiron sitting squarely in my relationships zone before I'd said a single word about my work.</blockquote>
-      <cite><b>louize Carroll, social psychologist</b><span>Business Transits Reading</span></cite>
-    </li>
-  </ul>
-</section>
-
-<!-- The press strip. Five marks, all from her own site's "featured in" row. -->
-<section class="section section--logos" data-block="press-logos">
-  <div class="logos__track" aria-label="MY WORK FEATURED IN">
-    <span class="logos__item"><img src="../shared/logos/auralis.png" alt="Auralis Magazine" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
-    <span class="logos__item"><img src="../shared/logos/goss-magazine.png" alt="Goss Magazine" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
-    <span class="logos__item"><img src="../shared/logos/nina.png" alt="Nina" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
-    <span class="logos__item"><img src="../shared/logos/astrology-com.png" alt="Astrology.com" style="--lh:28px; --nudge:0px" loading="lazy"></span>
-    <span class="logos__item"><img src="../shared/logos/flodesk.png" alt="Flodesk" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
-    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
-  </div>
-</section>
-
-<!-- MODULE 4 · cloned from gruns.co section.usnacks-stats, measured live at 1788.
-     THEIR SPEC: a tinted band (#DAECE3) holding a WHITE inner panel 1440x720 at
-     20px radius. Left column: heading 44/700 centred, sub 20/500, then TWO
-     figures side by side at 100px/400 with captions under, then a pill CTA
-     269x56. Right column: a 720x720 photograph flush to the panel's edge.
-     Ours: LINEN band, MIST panel, and the square on the right is the live chart
-     wheel -- the closest thing we have to their "product in use" shot, and it is
-     the product itself rather than a picture of it. Both figures are read from
-     demo-chart.json at run time, never written into the copy. -->
-<section class="section section--stats" data-block="stats-panel">
-  <div class="statp statp--text">
-    <div class="statp__text">
-      <h2 class="statp__title">The deciding keeps getting postponed.</h2>
-      <p class="statp__sub">The training's done. The certifications are on the wall. You've got more ideas than you can act on and no energy to pick one, because everything you have goes into keeping the current thing upright.</p>
-      <p class="statp__sub">So it waits. Another month. Another year.</p>
-      <p class="statp__sub">Twenty-seven dollars, and it's decided for you.</p>
-      <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="stats">GET MY COSMIC PROFILE ・ $27</a>
-    </div>
-  </div>
-</section>
 
 <!-- MODULE 2 of 15 · hero, cloned from gruns.co section.hero-v2.
      Measured live at 1788: section 600px, two equal columns, gap 32, content
@@ -393,25 +299,189 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   </figure>
 </section>
 
-<!-- MODULE 3 · the positioning band. Grüns' equivalent sits directly under the
-     hero: a small centred eyebrow, one centred claim, a short centred paragraph,
-     then the product shown full width beneath it.
-     The shot is RE-SHOT, not the supplied asset. The live product was rendered
-     at 393x852 CSS / 1179x2556 device px and perspective-warped onto the phone's
-     screen quad. The asset Richard supplied carried the old purple glyphs; this
-     one is the current build, measured at zero purple pixels. -->
-<section class="section section--trusted" data-block="trusted">
-  <p class="trusted__label">PREMIUM BUSINESS ASTROLOGY SYSTEMS</p>
-  <h2 class="trusted__title">Written for people who are done guessing which way to go.</h2>
-  <p class="trusted__body">It tells you the work that's actually yours, who it's for, and which of the things you're weighing up is the one.</p>
-  <figure class="trusted__portrait">
-<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
-     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
-     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
-      <img src="../shared/photography/cato-trusted.jpg" alt="Cato Vermeulen speaking on stage" width="1600" height="2400">
+<!-- §3.3 PAIN BLOCK · Cato's build document, 2026-11-02.
+     Her words, unchanged. No product talk in this block: the first mention of
+     the profile is deliberately held back until after the turn. -->
+<section class="section section--painblock" data-block="painblock">
+  <h2 class="section__title">You have been building someone else’s business.</h2>
+  <div class="prose">
+    <p>You took the course. You copied the funnel. You did the thing that worked for her.</p>
+    <p>And it sort of worked. Which is almost worse, because now you cannot tell if you are doing it wrong or if it is just not for you.</p>
+    <p>So you keep tweaking. New offer. New bio. New content pillar. New niche you picked because someone on a podcast said it was lucrative.</p>
+    <p>Meanwhile the thing you are actually brilliant at, the thing people come to you for without you even trying, is sitting there unpaid while you grind on the stuff that was never yours.</p>
+    <p class="prose__turn">You are not behind. You are building on the wrong blueprint.</p>
+    <div class="prose__aside">
+      <p class="prose__aside-title">Here is what nobody says out loud.</p>
+      <p>The strategy that made someone else rich might be actively wrong for you.</p>
+      <p>Their scaling model. Their offer structure. Their content cadence. Their whole operating system. Built for their chart, their energy, their capacity, their life.</p>
+      <p>You cannot copy and paste your way into a business that fits you. You can only build one that does.</p>
+      <p>And you cannot build it until you know what you are actually working with.</p>
+    </div>
+  </div>
+</section>
 
-    <figcaption>Cato Vermeulen &middot; business astrologer and speaker &middot; Cape Town</figcaption>
-  </figure>
+<!-- Their hero is followed immediately by a row of testimonial cards. Ours uses
+     the three real quotes, with the attribution and the reading each woman
+     actually bought. The Big 3 preview strip that used to sit here is gone:
+     it was a product preview, which their hero does not carry. -->
+<section class="section section--herotestimonials" data-block="hero-testimonials">
+  <ul class="htest">
+    <li class="htest__item">
+      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+      <blockquote>I'm a social psychologist. Sceptic by trade! Then Cato pinpointed Chiron sitting squarely in my relationships zone before I'd said a single word about my work.</blockquote>
+      <cite><b>Louize Carroll, Social Psychologist</b><span>Business Transits Reading</span></cite>
+    </li>
+    <li class="htest__item">
+      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+      <blockquote>This is the reading every coach out there NEEDS. Full stop. It answered EVERY question I had about my niche, my messaging, who I'm meant to serve… on a soul level.</blockquote>
+      <cite><b>Victoria Antonelli, Breathwork Coach</b><span>Category of One Blueprint</span></cite>
+    </li>
+    <li class="htest__item">
+      <span class="htest__stars"><!-- One star row. `this` is the list to repeat. The colour is set by the block
+     that holds it, never here, so the hero row and the testimonial rows can
+     differ without a second copy of the path data. -->
+<span class="stars" role="img" aria-label="5 out of 5">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .9l2.2 4.5 5 .7-3.6 3.5.9 4.9L8 12.2l-4.5 2.3.9-4.9L.8 6.1l5-.7z"/></svg>
+</span>
+</span>
+      <blockquote>This reading helped me nail my messaging for premium clients AND finally niche down with confidence. I keep coming back to it and finding something new every single time.</blockquote>
+      <cite><b>Priya Biring, Chronic Illness Coach</b><span>Category of One Blueprint</span></cite>
+    </li>
+  </ul>
+</section>
+
+<!-- The press strip. Five marks, all from her own site's "featured in" row. -->
+<section class="section section--logos" data-block="press-logos">
+  <div class="logos__track" aria-label="MY WORK FEATURED IN">
+    <span class="logos__item"><img src="../shared/logos/auralis.png" alt="Auralis Magazine" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/goss-magazine.png" alt="Goss Magazine" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/nina.png" alt="Nina" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/astrology-com.png" alt="Astrology.com" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item"><img src="../shared/logos/flodesk.png" alt="Flodesk" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/auralis.png" alt="" style="--lh:41px; --nudge:5.8px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/goss-magazine.png" alt="" style="--lh:44px; --nudge:6.6px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/nina.png" alt="" style="--lh:24px; --nudge:-0.3px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/astrology-com.png" alt="" style="--lh:28px; --nudge:0px" loading="lazy"></span>
+    <span class="logos__item" aria-hidden="true"><img src="../shared/logos/flodesk.png" alt="" style="--lh:26px; --nudge:-1.9px" loading="lazy"></span>
+  </div>
+</section>
+
+<!-- §3.5 ZONE OF GENIUS -->
+<section class="section section--zonegenius" data-block="zonegenius">
+  <h2 class="section__title">Your zone of genius is real. It is also probably underpriced.</h2>
+  <div class="prose">
+    <p>Everyone has one. The thing that is effortless for you and impossible for everyone else. The thing people say “how do you just do that?” about.</p>
+    <p>Most people never monetise it. Not because they do not have it, but because they were told to build the business first and figure out the gifts later.</p>
+    <p>That is backwards.</p>
+    <p>Your gifts are the business. Everything else, the offers, the pricing, the content, the scaling, is just the delivery mechanism.</p>
+    <p class="prose__turn">Your chart names the gift. Then it tells you how to charge for it.</p>
+  </div>
+</section>
+
+<!-- §3.6 ASTROLOGY AS STRATEGIC ADVANTAGE -->
+<section class="section section--advantage" data-block="advantage">
+  <h2 class="section__title">Astrology is the most underused strategic advantage in business.</h2>
+  <div class="prose">
+    <p>Most people use it for fun. A horoscope at breakfast. A mercury retrograde joke when the wifi dies.</p>
+    <p>Meanwhile the people who use it strategically are quietly building businesses that fit them like a glove, because they stopped guessing and started reading the manual.</p>
+    <p class="prose__listhead">Your chart tells you:</p>
+    <ul class="prose__list">
+      <li>What you are built to be paid for</li>
+      <li>How you are built to make money, steady or in waves, risk or hold the line</li>
+      <li>How you are built to be seen, and by whom</li>
+      <li>How you are built to lead, sell and close</li>
+      <li>What actually fills your tank versus what drains it</li>
+    </ul>
+    <p>That is not decoration. That is a strategic advantage nobody is using because they think it is fluffy.</p>
+    <p>It is the shortcut. It has just been hiding in plain sight.</p>
+  </div>
+</section>
+
+<!-- §3.7 WHO THIS IS FOR
+     A definition list, not a numbered list: PIVOT / REBRAND / SCALE / DEEPEN /
+     GET PERMISSION are five alternatives, not five steps in a sequence. -->
+<section class="section section--whofor" data-block="whofor">
+  <h2 class="section__title">This is for you if you are ready to:</h2>
+  <dl class="whofor">
+    <div class="whofor__row">
+      <dt class="whofor__key">PIVOT</dt>
+      <dd class="whofor__body">You have outgrown what you built and you are scared to say it out loud.</dd>
+    </div>
+    <div class="whofor__row">
+      <dt class="whofor__key">REBRAND</dt>
+      <dd class="whofor__body">Third time is the charm, but only if you stop guessing.</dd>
+    </div>
+    <div class="whofor__row">
+      <dt class="whofor__key">SCALE</dt>
+      <dd class="whofor__body">You have hit a ceiling and you suspect it is you, not the market.</dd>
+    </div>
+    <div class="whofor__row">
+      <dt class="whofor__key">DEEPEN</dt>
+      <dd class="whofor__body">The work is good. You want it to be yours.</dd>
+    </div>
+    <div class="whofor__row">
+      <dt class="whofor__key">GET PERMISSION</dt>
+      <dd class="whofor__body">You already know what you want. You just need someone to tell you it is allowed.</dd>
+    </div>
+  </dl>
+  <p class="whofor__close">Whether you are a founder, an entrepreneur, a coach, an educator, an artist, or you work in corporate and want to build something of your own, this is the reading for you.</p>
+</section>
+
+<!-- §3.8 PERMISSION SLIP · the one dark prose block on the page -->
+<section class="section section--permission" data-block="permission">
+  <h2 class="section__title">Consider this your permission slip.</h2>
+  <div class="prose">
+    <p>You already know what you want. You have known for a while.</p>
+    <p>You have just been waiting for someone to tell you it is allowed. That the thing you are drawn to is not reckless. That the way you want to work is not lazy. That the money you want is not greedy.</p>
+    <p class="prose__turn">Your chart already said it. You just have not read it yet.</p>
+  </div>
+</section>
+
+<!-- §3.9 CLARITY -->
+<section class="section section--clarity" data-block="clarity">
+  <h2 class="section__title">Clarity gives direction. Direction gives fire.</h2>
+  <div class="prose">
+    <p>You know the feeling. The week where something clicks and suddenly you are up at 6am, phone in hand, ideas pouring out, actually excited.</p>
+    <p>That is not discipline. That is clarity.</p>
+    <p>When you know what you are building and why it is yours, the motivation stops being a daily battle. You do not have to force yourself to show up. You want to.</p>
+    <p class="prose__price">$27 for the thing that ends the wondering.</p>
+    <p>No more guessing. No more what ifs. No more maybe next year.</p>
+    <p>This is the start of a new chapter in leadership, in business, in wealth, and in having a career that actually fulfils you.</p>
+  </div>
 </section>
 
 <!-- ABOUT · the "about the coach" band from the reference, measured at
@@ -436,39 +506,9 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     </figure>
     <div class="about__col">
       <p class="about__script">behind the chart</p>
-      <p class="about__p"><strong>I'm a business astrologer and speaker,</strong> and I read charts for people who can do six things and can't say which one is theirs. The Cosmic Profile is that reading in its shortest form: your chart in business language, direction question first.</p>
-      <p class="about__p">When I'm not reading charts, I'm at home in Cape Town with my son, on a stage somewhere between South Africa and the States, or hosting a retreat in Mallorca, Costa Rica or Italy. I am proof of the work.</p>
+      <p class="about__p"><strong>I am a business astrologer and speaker,</strong> and I read charts for people who are excellent at what they do and still cannot say what they are here to be known for. The Cosmic Profile is that reading in its shortest form. Your chart in business language, direction question first.</p>
+      <p class="about__p">When I am not reading charts, I am at home in Cape Town with my son, on a stage somewhere between South Africa and the States, or hosting a retreat in Mallorca, Costa Rica or Italy. I am proof of the work.</p>
       <a class="btn btn--primary about__cta" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="about">GET MY COSMIC PROFILE · $27</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- INTRO · the "you're allowed to want more" band from the reference,
-     measured at research/showit-about-intro-measurements.md and scaled 0.95.
-     Left: eyebrow, a three-line uppercase title with a gold bar behind the
-     last line, centred body copy. Right: two bordered photographs, the small
-     one running off the page edge as theirs does, a gold star on the large
-     one and a rotating circular text badge over its top-right corner. The
-     badge is inline SVG (their iframe replaced), paused for reduced motion. -->
-<section class="section section--intro" id="intro" data-block="intro">
-  <div class="intro">
-    <div class="intro__text">
-      <p class="intro__eyebrow">YOU'RE ALLOWED TO STOP GUESSING</p>
-      <h2 class="intro__title"><span class="intro__line">YOUR NICHE.</span><span class="intro__line">YOUR PEOPLE.</span><span class="intro__line intro__line--last">YOUR <span class="intro__hl">DIRECTION.</span></span></h2>
-      <p class="intro__body">Your chart already answered all three. $27, and you finally get to read it.</p>
-    </div>
-    <div class="intro__media">
-      <figure class="intro__large">
-        <img src="../shared/photography/src-7.jpeg" alt="Cato Vermeulen by the window" width="1066" height="1600" loading="lazy">
-      </figure>
-      <span class="intro__star" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 2 L61 38 L98 38 L68 60 L79 96 L50 74 L21 96 L32 60 L2 38 L39 38 Z"/></svg></span>
-      <figure class="intro__small">
-        <img src="../shared/photography/src-1.jpeg" alt="Cato Vermeulen on the veranda ledge" width="1066" height="1600" loading="lazy">
-      </figure>
-      <div class="intro__badge" aria-hidden="true">
-        <svg viewBox="0 0 500 500"><defs><path id="intro-badge-path" d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0"/></defs><text><textPath href="#intro-badge-path" textLength="1255" lengthAdjust="spacingAndGlyphs">IT'S IN YOUR CHART • IT'S IN YOUR CHART •</textPath></text></svg>
-      </div>
     </div>
   </div>
 </section>
@@ -480,31 +520,31 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
      Each row shows the section of the product it cites, rendered live, except
      reason 2 which shows FOUR of the twelve sales styles rather than one. -->
 <section class="section section--reasons" data-block="reasons">
-  <h2 class="section__title">Five things your chart already knows about what your thing is</h2>
+  <h2 class="section__title">The five things your chart already knows</h2>
   <article class="reason">
     <div class="reason__text">
       <p class="reason__meta"><span class="reason__num">1</span><span class="reason__cat">WHAT THEY PAY YOU FOR</span></p>
-      <h3 class="reason__title">Looking for your niche? It's in here.</h3>
-      <p class="reason__body">&quot;What I would be good at, and who is my ideal client.&quot; Your profile answers that in one paragraph: what the market pays you for, when the money flows and the one edge to watch. Read it and see if it's you.</p>
+      <h3 class="reason__title">Looking for your zone of genius? It is in here.</h3>
+      <p class="reason__body">“What I would be good at, and who is my ideal client.” Your profile answers that in one paragraph. What the market pays you for, when the money flows, and the one edge to watch. Read it and see if it is you.</p>
       <p class="reason__proof" data-section-id="t-at-a-glance">In your profile: what the market pays you for.</p>
     </div>
     <div class="reason__live live-product" data-live="t-at-a-glance"></div>
   </article>
   <article class="reason">
     <div class="reason__text">
-      <p class="reason__meta"><span class="reason__num">2</span><span class="reason__cat">HOW YOU'RE BUILT</span></p>
+      <p class="reason__meta"><span class="reason__num">2</span><span class="reason__cat">HOW YOU ARE BUILT</span></p>
       <h3 class="reason__title">Your Business Archetype.</h3>
-      <p class="reason__body">Your profile puts you on three dials: dreamer or builder, starter or finisher, committed or adaptable. The scattered feeling gets a name and a reason, so you stop treating it as a character flaw.</p>
-      <p class="reason__proof" data-section-id="w-archetype">In your profile: how you're built to operate.</p>
+      <p class="reason__body">Your profile puts you on three dials. Dreamer or builder. Starter or finisher. Committed or adaptable. The scattered feeling gets a name and a reason, so you stop treating it as a character flaw.</p>
+      <p class="reason__proof" data-section-id="w-archetype">In your profile: how you are built to operate.</p>
     </div>
     <div class="reason__live live-product" data-live="w-archetype"></div>
   </article>
   <article class="reason">
     <div class="reason__text">
-      <p class="reason__meta"><span class="reason__num">3</span><span class="reason__cat">WHAT YOU'RE KNOWN FOR</span></p>
-      <h3 class="reason__title">&quot;What am I actually here to be known for?&quot;</h3>
-      <p class="reason__body">Your profile names the reputation you're built to have, the authority style that comes with it, where your credibility comes from and the blind spot that makes your expertise read as fuzzy.</p>
-      <p class="reason__proof" data-section-id="t-mc-destiny">In your profile: what you're built to be known for.</p>
+      <p class="reason__meta"><span class="reason__num">3</span><span class="reason__cat">WHAT YOU ARE KNOWN FOR</span></p>
+      <h3 class="reason__title">“What am I actually here to be known for?”</h3>
+      <p class="reason__body">Your profile names the reputation you are built to have, the authority style that comes with it, where your credibility comes from, and the blind spot that makes your expertise read as fuzzy.</p>
+      <p class="reason__proof" data-section-id="t-mc-destiny">In your profile: what you are built to be known for.</p>
     </div>
     <div class="reason__live live-product" data-live="t-mc-destiny"></div>
   </article>
@@ -521,8 +561,8 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     <div class="reason__text">
       <p class="reason__meta"><span class="reason__num">5</span><span class="reason__cat">WHAT NOURISHES YOU</span></p>
       <h3 class="reason__title">How your week is actually meant to be built</h3>
-      <p class="reason__body">Your Moon sign decides what fills your tank and what empties it: back-to-back calls, the networking you dread, the Voxer thread that never closes. Your profile names both, then lays out the week. Long deep-work blocks or short bursts, one client a day or five, meetings first or never. Read it on a Sunday night and move things.</p>
-      <p class="reason__proof" data-section-id="t-moon">In your profile: what nourishes you and how to build your week.</p>
+      <p class="reason__body">Your Moon sign decides what fills your tank and what empties it. Back to back calls. The networking you dread. The Voxer thread that never closes. Your profile names both, then lays out the week. Long deep work blocks or short bursts. One client a day or five. Meetings first or never. Read it on a Sunday night and move things.</p>
+      <p class="reason__proof" data-section-id="t-moon">In your profile: what nourishes you, and how to build your week.</p>
     </div>
     <div class="reason__live live-product" data-live="t-moon"></div>
   </article>
@@ -540,23 +580,23 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   <ul class="outcomes">
     <li class="outcome">
       <p class="outcome__label">ON MONEY</p>
-      <h3 class="outcome__title">Your pricing stops being a feeling</h3>
-      <p class="outcome__body">You find out whether your income is built to run steady or in waves, whether you are built to take the risk or hold the line and where your biggest money is actually meant to come from. Then you price for the setting you have instead of the one you keep apologising for.</p>
+      <h3 class="outcome__title">Your pricing stops being a feeling.</h3>
+      <p class="outcome__body">You find out whether your income is built to run steady or in waves, whether you are built to take the risk or hold the line, and where your biggest money is actually meant to come from. Then you price for the setting you have instead of the one you keep apologising for.</p>
     </li>
     <li class="outcome">
-      <p class="outcome__label">ON WHO YOU'RE FOR</p>
-      <h3 class="outcome__title">The right client stops walking past you</h3>
-      <p class="outcome__body">Your chart names what people meet before you have said a word and why some of them lean in while others were never going to. You stop rewriting the offer for a room that was never listening.</p>
+      <p class="outcome__label">ON WHO YOU ARE FOR</p>
+      <h3 class="outcome__title">The right client stops walking past you.</h3>
+      <p class="outcome__body">Your chart names what people meet before you have said a word, and why some of them lean in while others were never going to. You stop rewriting the offer for a room that was never listening.</p>
     </li>
     <li class="outcome">
       <p class="outcome__label">ON HOW YOU LEAD</p>
-      <h3 class="outcome__title">Your authority stops being borrowed</h3>
-      <p class="outcome__body">There is a way you are built to hold a room and it is probably not the one you have been imitating from somebody with a bigger account. Reading it ends the performance of a confidence that costs you energy to keep up.</p>
+      <h3 class="outcome__title">Your authority stops being borrowed.</h3>
+      <p class="outcome__body">There is a way you are built to hold a room, and it is probably not the one you have been imitating from somebody with a bigger account. Reading it ends the performance of a confidence that costs you energy to keep up.</p>
     </li>
     <li class="outcome">
       <p class="outcome__label">ON HOW YOU COMMUNICATE</p>
-      <h3 class="outcome__title">Your messaging gets easier</h3>
-      <p class="outcome__body">You find out how you naturally explain, persuade and close. Whether you diagnose it, tell it as a story, or go deeper than anyone else dares. The writing stops being a fight the day you put down somebody else's script.</p>
+      <h3 class="outcome__title">Your messaging gets easier.</h3>
+      <p class="outcome__body">You find out how you naturally explain, persuade and close. Whether you diagnose it, tell it as a story, or go deeper than anyone else dares. The writing stops being a fight the day you put down somebody else’s script.</p>
     </li>
   </ul>
 </section>
@@ -586,7 +626,7 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
           <s><i>$</i>60</s><b><i>$</i>27</b>
         </p>
         <p class="offer__note">ONE PAYMENT · NO SUBSCRIPTION</p>
-        <p class="offer__unit">26 sections · yours to keep</p>
+        <p class="offer__unit">26 sections · written from your exact birth time</p>
       </div>
 
       <!-- MUD\WTR's right column carries FIVE DISTINCT values across five rows
@@ -632,12 +672,12 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
           <span class="receipt__worth">included</span>
         </li>
       </ul>
-      <p class="receipt__note">Inside the $197 Category of One Blueprint when Cato reads it herself.</p>
+      <p class="receipt__note">26 answers. One of them is the one you have been avoiding.</p>
 
       <p class="offer__boundary">Cato reads the Category of One Blueprint ($197) and the Business Transits Reading ($97) herself. This is the same chart underneath both of them, computed and written from your own birth data, without her read on top. It's where you start, and it doesn't replace either.</p>
 
       <a class="btn btn--primary btn--offer" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="offer">GET MY COSMIC PROFILE · $27</a>
-      <p class="offer__reassure">Nothing to ship and nothing to renew.</p>
+      <p class="offer__reassure">No shipping. No subscription. No “let me think about it.”</p>
     </div>
 
     <!-- IM8 shows the physical goods that arrive in the box. Ours is not a box.
@@ -655,43 +695,20 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
   </div>
 </section>
 
-<!-- Grüns modules 7 / 12 / 14 · short saturated CTA banner. They run three, and
-     every one of theirs carries a product shot. Ours carried none, so the band
-     was a headline and a button on a red field. The shot is the delivered
-     profile on a phone, which is the form the buyer actually receives it in. -->
-<section class="section section--cta" data-block="cta-banner-1">
-  <div class="ctab">
-    <figure class="ctab__shot">
-<!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
-     otherwise a labelled placeholder at the identical aspect ratio. The layout does not
-     move when the photograph arrives. Spec lives in config/brand.json → photography. -->
-      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
-
-    </figure>
-    <div class="ctab__text">
-      <h2 class="ctab__headline">You're guessing at what they see.</h2>
-      <p class="ctab__sub">Your chart has been answering it since the minute you were born.</p>
-    </div>
-    <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="banner-1">SHOW ME WHAT I PROJECT</a>
+<!-- §3.14 RISK REVERSAL AND URGENCY · sits directly under the price block -->
+<section class="section section--risk" data-block="riskreversal">
+  <div class="risk">
+    <p class="risk__guarantee">If it does not name something you have been circling for years, email me and I will refund you. I am not going to argue with you about $27.</p>
+    <p class="risk__urgency">Your chart is not going to change. Your willingness to look at it might.</p>
   </div>
 </section>
 
-<!-- Grüns module 9 & 14 · UGC grid and the reviews widget. Ours is eight real
-     screenshots from Cato's own sales page, with the commenters' avatars and
-     handles intact. See shared/proof/SOURCE.md -->
-<section class="section section--reviewwall" data-block="review-wall">
-  <h2 class="section__title">Love letters from my clients</h2>
-  <div class="wall">
-    <figure class="wall__item"><img src="../shared/proof/review-1.jpg" alt="Instagram comment about the Category of One Blueprint" loading="lazy" width="800" height="194"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-2.jpg" alt="Instagram comment about the Category of One Blueprint" loading="lazy" width="800" height="250"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-3.jpg" alt="Instagram comment about a reading" loading="lazy" width="800" height="226"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-4.jpg" alt="Message about the business audit blueprint" loading="lazy" width="800" height="319"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-5.jpg" alt="Message about the astrological reading" loading="lazy" width="800" height="288"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-6.jpg" alt="Message about the reading" loading="lazy" width="800" height="427"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-7.jpg" alt="Message about the reading" loading="lazy" width="800" height="623"></figure>
-    <figure class="wall__item"><img src="../shared/proof/review-8.jpg" alt="Message about the reading" loading="lazy" width="800" height="794"></figure>
-  </div>
-</section>
+<!-- §3.15 FREE CTA · BLOCKED.
+     Cato's Section 7 item 1: the lead magnet has no name and no link yet, so
+     angle.freecta.enabled is false and nothing renders. Her own doc says the
+     block can be hidden until there is one. Flip enabled to true and fill
+     cta_url + the name once she supplies them. -->
+
 
 <!-- Grüns module 10 · us vs them. Theirs is a real table with a tick column and
      an X column. Ours was prose; this is the table. -->
@@ -705,7 +722,7 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
           <th class="cmp__rowlabel"><span class="sr-only">Feature</span></th>
           <th>Your Cosmic Profile</th>
           <th>A free astrology app</th>
-          <th>A written reading</th>
+          <th>A deep dive</th>
         </tr>
       </thead>
       <tbody>
@@ -723,6 +740,12 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
         </tr>
         <tr>
           <th scope="row">Written in business language</th>
+          <td class="cmp__ours" data-v="yes">yes</td>
+          <td data-v="no">no</td>
+          <td data-v="yes">yes</td>
+        </tr>
+        <tr>
+          <th scope="row">Names your zone of genius</th>
           <td class="cmp__ours" data-v="yes">yes</td>
           <td data-v="no">no</td>
           <td data-v="yes">yes</td>
@@ -766,27 +789,25 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
       </tbody>
     </table>
   </div>
-  <p class="cmp__note">A free app gives you the same data. It won't tell you what any of it means for the way you sell.</p>
+  <p class="cmp__note">A free app gives you the same data. It will not tell you what any of it means for the way you sell.</p>
 </section>
 
-<!-- Grüns modules 7 / 12 / 14 · short saturated CTA banner. They run three, and
-     every one of theirs carries a product shot. Ours carried none, so the band
-     was a headline and a button on a red field. The shot is the delivered
-     profile on a phone, which is the form the buyer actually receives it in. -->
-<section class="section section--cta" data-block="cta-banner-2">
-  <div class="ctab">
-    <figure class="ctab__shot">
+<!-- FIXED BLOCK · final CTA · repeats the hero promise, one button, nothing new introduced.
+     VISUAL: the working shot runs behind this band, scrimmed, so the page closes on her
+     doing the thing it has spent 13,000 pixels describing. -->
+<section class="section section--final" data-block="final-cta">
+  <figure class="final__shot">
 <!-- PHOTOGRAPHY SLOT · renders the real file when it exists in shared/photography/,
      otherwise a labelled placeholder at the identical aspect ratio. The layout does not
      move when the photograph arrives. Spec lives in config/brand.json → photography. -->
-      <img src="../shared/photography/phone.webp" alt="The Cosmic Profile open on a phone: the natal wheel and the chart snapshot" width="1440" height="824">
+      <img src="../shared/photography/closing-composed.jpg" alt="Cato Vermeulen, seated, looking out" width="1600" height="1067">
 
-    </figure>
-    <div class="ctab__text">
-      <h2 class="ctab__headline">You've read five reasons. Your chart has 26.</h2>
-      <p class="ctab__sub">All of it about you, all of it in business language.</p>
-    </div>
-    <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="banner-2">GET MY PROFILE ・ $27</a>
+  </figure>
+  <div class="final__text">
+    <h2 class="section__title">You have read five reasons. Your chart has 26.</h2>
+    <p class="section__lede">All of it about you, all of it in business language.</p>
+    <a class="btn btn--primary btn--lg" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="final">GET MY PROFILE · $27</a>
+    <p class="final__price"></p>
   </div>
 </section>
 
@@ -802,20 +823,28 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
     <h2 class="section__title">Questions, answered</h2>
     <div class="faq">
       <details class="faq__row">
-        <summary>What if I don't know my exact birth time?</summary>
-        <div class="faq__a">You'll need it. Your birth certificate is the usual place, and in most countries the time is on the long-form version rather than the short one. Failing that: the hospital record, your baby book, or your mum. Without a time we can't tell you what people meet first, what you're known for, or how your money and your delivery actually run. That's most of the profile gone, so go and find it first.</div>
+        <summary>Who is this for?</summary>
+        <div class="faq__a">Founders, entrepreneurs, coaches, educators, artists, and people in corporate who are quietly building their exit plan. If you are pivoting, rebranding, scaling, deepening your work, or you just want confirmation and permission to go after what you actually want, this is for you. It is also for anyone who has been copying someone else’s business model and wondering why it feels like wearing someone else’s shoes.</div>
       </details>
       <details class="faq__row">
-        <summary>Is this the Category of One Blueprint?</summary>
-        <div class="faq__a">No. The Blueprint is 20 pages Cato writes for you, and it lands within 48 hours. This is your chart computed and explained in your portal, for $27. Plenty of people start here and go deeper later.</div>
+        <summary>What if I do not know my exact birth time?</summary>
+        <div class="faq__a">You will need it. Your birth certificate is the usual place, and in most countries the time is on the long form version rather than the short one. Failing that, the hospital record, your baby book, or your mum. Without a time we cannot tell you what people meet first, what you are known for, or how your money and your delivery actually run. That is most of the profile gone, so go and find it first.</div>
+      </details>
+      <details class="faq__row">
+        <summary>How deep does this reading go?</summary>
+        <div class="faq__a">26 sections, written from your exact birth time, covering how you are built, what you are known for, where your money comes from, how you close, and how your week should actually run. It is a full read of your chart through a business lens. Not a horoscope, not a summary. What it is not: a live session with Cato. If you want her reading it herself, that is a separate, deeper thing.</div>
+      </details>
+      <details class="faq__row">
+        <summary>When will I receive it?</summary>
+        <div class="faq__a">You will get a full overview of your Cosmic Profile in your portal, laid out so you can read it in one sitting or come back to it section by section. Nothing to download, nothing to wait for in the post.</div>
       </details>
       <details class="faq__row">
         <summary>Do I need to know anything about astrology?</summary>
-        <div class="faq__a">Not a thing. Every section is written in plain business language: what it is and what it means for your money, your visibility and your clients. No homework.</div>
+        <div class="faq__a">Not a thing. Every section is written in plain business language. What it is, and what it means for your money, your visibility and your clients. No homework.</div>
       </details>
       <details class="faq__row">
         <summary>How long do I keep access?</summary>
-        <div class="faq__a">It's yours. Log into the portal whenever you want it and it's still there.</div>
+        <div class="faq__a">It is yours. Log into the portal whenever you want it, and it is still there.</div>
       </details>
       <details class="faq__row">
         <summary>I already know my Big 3. Is there anything new here?</summary>
@@ -833,15 +862,19 @@ src="https://www.facebook.com/tr?id=1068908162428828&ev=PageView&noscript=1"/></
 <section class="section section--closing" data-block="closing">
   <p class="closing__label">BEFORE YOU GO</p>
   <a class="btn btn--primary btn--lg btn--closing" href="https://catovrmln.myflodesk.com/cosmicprofile" data-cta="closing">GET MY COSMIC PROFILE · $27</a>
-  <p class="closing__reassure">Nothing to ship and nothing to renew.</p>
-  <div class="closing__legal" data-block="footer">
-    <p class="footer__note">Business astrology is for insight and planning. It isn't financial, legal or medical advice.</p>
-    <p class="footer__links"><a href="https://catovermeulen.com/terms-and-conditions">Terms</a> &middot; <a href="https://catovermeulen.com/disclaimer">Disclaimer</a> &middot; <a href="mailto:hello@catovermeulen.com">hello@catovermeulen.com</a></p>
-    <p class="footer__brand">&copy; Cato Vermeulen</p>
-  </div>
+  <p class="closing__reassure">No shipping. No subscription. No “let me think about it.”</p>
 </section>
 
 </main>
+<footer class="footer" data-block="footer">
+  <p class="footer__note">Business astrology is for insight and planning. It is not financial, legal or medical advice.</p>
+  <p class="footer__links">
+    <a href="https://catovermeulen.com/terms-and-conditions">Terms</a> &middot;
+    <a href="https://catovermeulen.com/disclaimer">Disclaimer</a> &middot;
+    <a href="mailto:hello@catovermeulen.com">hello@catovermeulen.com</a>
+  </p>
+  <p class="footer__brand">&copy; Cato Vermeulen</p>
+</footer>
 
 </body>
 </html>

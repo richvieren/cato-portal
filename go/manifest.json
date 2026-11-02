@@ -1,10 +1,10 @@
 {
-  "built": "2026-11-02T09:52:01.795Z",
+  "built": "2026-11-02T10:09:01.764Z",
   "pages": [
     {
       "slug": "direction",
       "angle": "direction",
-      "format": "listicle",
+      "format": "direction",
       "price_display": "hero",
       "tracking_slug": "cp-direction-lst-hero",
       "reasons": 5,

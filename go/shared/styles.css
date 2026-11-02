@@ -1898,3 +1898,81 @@ a { color: var(--accent); text-underline-offset: 3px; }
   .intro__badge { position: absolute; left: calc(150 * var(--u) * 1.22); top: calc(-38 * var(--u) * 1.22); width: calc(86 * var(--u) * 1.22); height: calc(86 * var(--u) * 1.22); z-index: 3; }
   .intro__star { position: absolute; left: calc(11 * var(--u) * 1.22); top: calc(181 * var(--u) * 1.22); width: calc(36 * var(--u) * 1.22); height: calc(36 * var(--u) * 1.22); z-index: 2; }
 }
+
+/* ── PROSE SECTIONS ────────────────────────────────────────────────────────
+   Added 2026-11-02 for Cato's Section 3 blocks: pain, zone of genius,
+   the advantage, who this is for, permission slip, clarity, risk reversal.
+   ONE primitive with small variants rather than seven bespoke blocks. No new
+   colours, no new type scale: grounds come from the existing .g-* groups and
+   every value below is an existing token. The "turn" line is the page's own
+   device, already used by .mirror__turn, kept so a new section reads as part
+   of the same page rather than a bolt-on. */
+
+.prose { max-width: 54ch; }
+.prose > p { margin: 0 0 1.15em; color: var(--fg-muted); }
+.prose > p:last-child { margin-bottom: 0; }
+
+/* the one line that lands the block. Matches .mirror__turn's job. */
+.prose__turn {
+  margin: 1.6em 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: var(--t-lead, 1.25rem);
+  line-height: 1.3;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+/* §3.3's "Here is what nobody says out loud" turn. Set off by a rule, not a box. */
+.prose__aside { margin-top: var(--s8); padding-top: var(--s6); border-top: 1px solid var(--rule-c); }
+.prose__aside-title { margin: 0 0 1em; font-weight: 700; color: var(--fg); }
+
+/* §3.6's list of what the chart tells you. */
+.prose__listhead { margin: var(--s6) 0 0.8em; font-weight: 700; color: var(--fg); }
+.prose__list { margin: 0 0 var(--s6); padding: 0; list-style: none; max-width: 54ch; }
+.prose__list li { position: relative; padding-left: 1.4em; margin-bottom: 0.65em; color: var(--fg-muted); }
+.prose__list li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em;
+  width: 0.6em; height: 1px; background: var(--rule-c);
+}
+
+/* §3.7 "who this is for". A definition list, because each item is a label and
+   its meaning, not a step in a sequence. */
+.whofor { margin: 0 0 var(--s8); max-width: 60ch; }
+.whofor__row { display: grid; grid-template-columns: minmax(8.5rem, max-content) 1fr; gap: 0 var(--s4);
+               padding: var(--s3) 0; border-top: 1px solid var(--rule-c); align-items: baseline; }
+.whofor__row:last-of-type { border-bottom: 1px solid var(--rule-c); }
+.whofor__key { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; color: var(--fg); }
+.whofor__body { margin: 0; color: var(--fg-muted); }
+.whofor__close { max-width: 54ch; color: var(--fg-muted); margin: 0; }
+
+/* §3.14 risk reversal. Two lines, the second quieter. */
+.risk { max-width: 54ch; }
+.risk__guarantee { margin: 0 0 1em; color: var(--fg); font-weight: 600; }
+.risk__urgency { margin: 0; color: var(--fg-muted); }
+
+/* §3.9 clarity carries the price line inside the prose. */
+.prose__price { margin: 1.6em 0 1em; font-family: var(--font-display); font-weight: 700;
+                letter-spacing: -0.04em; color: var(--fg); }
+
+@media (max-width: 640px) {
+  .whofor__row { grid-template-columns: 1fr; gap: 0.2em 0; }
+}
+
+/* grounds for the new sections, slotted into the existing groups so the page
+   alternates instead of running seven identical blocks in a row. */
+.section--zonegenius,
+.section--clarity,
+.section--painblock { --bg: var(--linen); --fg-muted: rgba(24, 24, 23, 0.74); --rule-c: rgba(24, 24, 23, 0.24); }
+
+.section--whofor,
+.section--risk { --bg: var(--stone); --fg-muted: rgba(24, 24, 23, 0.80); --rule-c: rgba(24, 24, 23, 0.26); }
+
+.section--permission {
+  --bg: var(--smoke); --fg: var(--mist);
+  --fg-muted: rgba(242, 240, 229, 0.76);
+  --rule-c: rgba(242, 240, 229, 0.20);
+  --accent: var(--gold-bright);
+  --cta: var(--mist); --cta-label: var(--smoke);
+}
