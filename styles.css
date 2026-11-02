@@ -673,6 +673,32 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   margin-bottom: 26px;
   text-transform: uppercase;
 }
+
+/* COSMIC PROFILE LOGO. Cato's artwork, 2026-11-02, cream #EAE1CD on transparent.
+   The cream measures 13.66 against SMOKE and 1.14 against MIST, so this file is
+   a dark-ground asset only. Light grounds take the -smoke colourway instead.
+   The lockup replaces the text overline: the logo now says what it said. */
+.profile-hero__logo {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin: 0 auto 10px;
+}
+.locked-banner__logo {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}
+.intake__logo {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  margin: 0 auto 1.5rem;
+}
 .profile-hero__name {
   margin: 0;
   font-family: 'Cormorant Garamond', serif;
@@ -1574,6 +1600,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   /* Hero */
   .profile-hero { padding: 56px 0 0; }
   .profile-hero__overline { font-size: 9px; letter-spacing: 0.3em; margin-bottom: 18px; }
+  .profile-hero__logo { max-width: 280px; margin-bottom: 4px; }
+  .intake__logo { max-width: 240px; }
+  .locked-banner__logo { max-width: 220px; }
   .profile-hero__name { font-size: 40px; line-height: 1.1; }
   .profile-hero__big3-line {
     margin-top: 16px;
