@@ -1976,3 +1976,40 @@ a { color: var(--accent); text-underline-offset: 3px; }
   --accent: var(--gold-bright);
   --cta: var(--mist); --cta-label: var(--smoke);
 }
+
+/* ── RULE 7 · "Numbers in the price block set large. Big number, small
+   description beside it." (Cato's build document, Section 1, 2026-11-02)
+   The row read the other way round: the count sat last at 0.83rem in 55%
+   grey while the description carried the weight. The count now leads the row
+   at display size and the copy sits beside it, smaller. The tick is dropped
+   because the number is now the row's leading mark, and two leading marks is
+   one too many. Each .receipt__row is its own grid, so the first column is
+   pinned at 2.6rem to keep the numbers in a column. */
+.fmt-direction .receipt__row { grid-template-columns: 2.6rem minmax(0, 1fr); }
+.fmt-direction .receipt__row::before { content: none; }
+.fmt-direction .receipt__worth {
+  grid-column: 1; grid-row: 1;
+  font-family: var(--font-display);
+  font-size: 1.55rem; font-weight: 700; letter-spacing: -0.05em;
+  line-height: 1.05; color: var(--fg); text-align: left;
+}
+.fmt-direction .receipt__item { grid-column: 2; grid-row: 1; font-size: 0.875rem; color: var(--fg-muted); }
+.fmt-direction .receipt__row--total .receipt__worth { font-size: 1.55rem; color: var(--fg); }
+.fmt-direction .receipt__row--total .receipt__item { font-weight: 600; color: var(--fg); }
+/* "Included" is a word, not a count, so it keeps the quiet body treatment and
+   its own column width rather than being set at display size. */
+.fmt-direction .receipt__row--rev { grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--s2); }
+.fmt-direction .receipt__row--rev .receipt__worth {
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0; color: var(--accent);
+}
+
+/* ── §3.2 mobile fallback headline ────────────────────────────────────────
+   Her spec: swap the H1 for the shorter line when the main one would wrap to
+   three lines on a 375px screen. Both strings ship; CSS picks one, so there
+   is no layout shift and no JS. Only rendered when title_mobile exists. */
+.showcase__title--narrow { display: none; }
+@media (max-width: 420px) {
+  .showcase__title--wide   { display: none; }
+  .showcase__title--narrow { display: inline; }
+}
